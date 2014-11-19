@@ -77,7 +77,7 @@ private
   def copy(uploadable, path)
     File.open(path, "wb") do |write|
       read = uploadable.to_io
-      read.each("", 3000) do |chunk|
+      read.each("", Defile.read_chunk_size) do |chunk|
         write.write(chunk)
       end
       read.close
