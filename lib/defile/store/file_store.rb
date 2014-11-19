@@ -74,13 +74,17 @@ class Defile::Store::FileStore < Defile::Store
 
 private
 
-  def copy(uploadable, path)
-    File.open(path, "wb") do |write|
-      read = uploadable.to_io
-      read.each("", Defile.read_chunk_size) do |chunk|
-        write.write(chunk)
+  def copy(uploadable, destination)
+    if uploadable.respond_to?(:path)
+      FileUtils.cp(uploadable.path, destination)
+    else
+      File.open(destination, "wb") do |write|
+        read = uploadable.to_io
+        read.each("", Defile.read_chunk_size) do |chunk|
+          write.write(chunk)
+        end
+        read.close
       end
-      read.close
     end
   end
 
