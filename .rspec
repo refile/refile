@@ -1,1 +1,1 @@
--r pry
+-r defile/spec_helper

@@ -15,7 +15,7 @@ class Defile::Store::FileStore < Defile::Store
 
     id = @hasher.hash(uploadable)
 
-    File.write(cache_path(id), uploadable.read)
+    copy(uploadable, cache_path(id))
 
     Defile::File.new(self, id)
   end
@@ -25,7 +25,7 @@ class Defile::Store::FileStore < Defile::Store
 
     id = @hasher.hash(uploadable)
 
-    File.write(store_path(id), uploadable.read)
+    copy(uploadable, store_path(id))
 
     Defile::File.new(self, id)
   end
@@ -35,6 +35,19 @@ class Defile::Store::FileStore < Defile::Store
   end
 
   def delete(id)
+    path = get_path_from_id(id)
+    FileUtils.rm(path) if path
+  end
+
+  def open(id)
+    path = get_path_from_id(id)
+    if path
+      if block_given?
+        File.open(path, "r") { |file| yield(file) }
+      else
+        File.open(path, "r")
+      end
+    end
   end
 
   def read(id)
@@ -60,6 +73,16 @@ class Defile::Store::FileStore < Defile::Store
   end
 
 private
+
+  def copy(uploadable, path)
+    File.open(path, "wb") do |write|
+      read = uploadable.to_io
+      read.each("", 3000) do |chunk|
+        write.write(chunk)
+      end
+      read.close
+    end
+  end
 
   def get_path_from_id(id)
     if File.exist?(store_path(id))

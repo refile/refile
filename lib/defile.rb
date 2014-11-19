@@ -1,6 +1,6 @@
 module Defile
   def self.verify_uploadable(uploadable)
-    [:size, :read].each do |m|
+    [:size, :to_io].each do |m|
       raise ArgumentError, "#{uploadable} does not respond to `#{m}` cannot upload" unless uploadable.respond_to?(m)
     end
     true
