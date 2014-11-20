@@ -23,6 +23,10 @@ module Defile
       store.delete(id)
     end
 
+    def stream
+      store.stream(id)
+    end
+
     def exists?
       store.exists?(id)
     end

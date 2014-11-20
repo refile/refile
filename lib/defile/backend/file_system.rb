@@ -1,23 +1,14 @@
 module Defile
   module Backend
     class FileSystem
-      def initialize(directory, hasher: Defile::RandomHasher.new)
+      def initialize(type = :store, directory, hasher: Defile::RandomHasher.new)
+        @type = type
         @directory = directory
         @hasher = hasher
-        @cache_directory = ::File.join(directory, "cache")
-        @store_directory = ::File.join(directory, "store")
-        FileUtils.mkdir_p(@cache_directory)
-        FileUtils.mkdir_p(@store_directory)
-      end
+        @directory = directory
+        @full_directory = ::File.join(directory, @type.to_s)
 
-      def cache(uploadable)
-        Defile.verify_uploadable(uploadable)
-
-        id = @hasher.hash(uploadable)
-
-        copy(uploadable, cache_path(id))
-
-        Defile::File.new(self, id)
+        FileUtils.mkdir_p(@full_directory)
       end
 
       def upload(uploadable)
@@ -25,7 +16,15 @@ module Defile
 
         id = @hasher.hash(uploadable)
 
-        copy(uploadable, store_path(id))
+        if uploadable.respond_to?(:path)
+          FileUtils.cp(uploadable.path, path(id))
+        else
+          ::File.open(path(id), "wb") do |write|
+            Defile.stream(uploadable).each do |chunk|
+              write.write(chunk)
+            end
+          end
+        end
 
         Defile::File.new(self, id)
       end
@@ -35,73 +34,44 @@ module Defile
       end
 
       def delete(id)
-        path = get_path_from_id(id)
-        FileUtils.rm(path) if path
+        FileUtils.rm(path(id)) if exists?(id)
       end
 
-      def open(id)
-        path = get_path_from_id(id)
-        if path
-          if block_given?
-            ::File.open(path, "r") { |file| yield(file) }
-          else
-            ::File.open(path, "r")
-          end
-        end
+      def stream(id)
+        Defile::Stream.new(::File.open(path(id), "r")).each
       end
 
       def read(id)
-        path = get_path_from_id(id)
-        ::File.read(path) if path
+        ::File.read(path(id)) if exists?(id)
       end
 
       def size(id)
-        path = get_path_from_id(id)
-        ::File.size(path) if path
+        ::File.size(path(id)) if exists?(id)
       end
 
       def exists?(id)
-        !!get_path_from_id(id)
+        ::File.exists?(path(id))
       end
 
-      def clear_cache!(older_than = nil)
+      def clear!(older_than = nil)
+        raise "for safety reasons, refusing to clear store" if @type == :store
         if older_than
         else
-          FileUtils.rm_rf(@cache_directory)
-          FileUtils.mkdir_p(@cache_directory)
+          FileUtils.rm_rf(@full_directory)
+          FileUtils.mkdir_p(@full_directory)
         end
       end
 
-    private
-
-      def copy(uploadable, destination)
-        if uploadable.respond_to?(:path)
-          FileUtils.cp(uploadable.path, destination)
-        else
-          ::File.open(destination, "wb") do |write|
-            read = uploadable.to_io
-            read.each("", Defile.read_chunk_size) do |chunk|
-              write.write(chunk)
-            end
-            read.close
-          end
-        end
+      def path(id)
+        ::File.join(@full_directory, id)
       end
 
-      def get_path_from_id(id)
-        if ::File.exist?(store_path(id))
-          store_path(id)
-        elsif ::File.exist?(cache_path(id))
-          cache_path(id)
-        end
+      def to_store
+        self.class.new(:store, @directory, hasher: @hasher)
       end
 
-      def cache_path(id)
-        ::File.join(@cache_directory, id)
-      end
-
-      def store_path(id)
-        ::File.join(@store_directory, id)
+      def to_cache
+        self.class.new(:cache, @directory, hasher: @hasher)
       end
     end
   end

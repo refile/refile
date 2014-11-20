@@ -9,15 +9,31 @@ module Defile
     end
 
     def verify_uploadable(uploadable)
-      [:size, :to_io].each do |m|
-        raise ArgumentError, "#{uploadable} does not respond to `#{m}` cannot upload" unless uploadable.respond_to?(m)
+      unless uploadable.respond_to?(:size)
+        raise ArgumentError, "can not determine size of #{uploadable}, it does not respond to `size` cannot upload"
+      end
+      unless uploadable.respond_to?(:to_io) or uploadable.respond_to?(:stream)
+        raise ArgumentError, "#{uploadable} does not respond to `stream` and cannot be cast to IO via `to_io` cannot upload"
       end
       true
+    end
+
+    def stream(uploadable)
+      verify_uploadable(uploadable)
+
+      if uploadable.respond_to?(:stream)
+        uploadable.stream
+      else
+        # FIXME: do we really want to use `Defile::Stream`? This could
+        # potentially close FDs which we don't want to close yet.
+        Defile::Stream.new(uploadable.to_io).each
+      end
     end
   end
 
   require "defile/version"
   require "defile/random_hasher"
+  require "defile/stream"
   require "defile/file"
   require "defile/backend/file_system"
 end
