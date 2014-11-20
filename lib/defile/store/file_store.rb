@@ -1,5 +1,3 @@
-require "fileutils"
-
 class Defile::Store::FileStore < Defile::Store
   def initialize(directory, hasher: Defile::RandomHasher.new)
     @directory = directory

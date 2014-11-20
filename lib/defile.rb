@@ -1,3 +1,5 @@
+require "fileutils"
+
 module Defile
   class << self
     attr_accessor :read_chunk_size

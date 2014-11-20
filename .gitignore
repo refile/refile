@@ -20,3 +20,5 @@ tmp
 *.o
 *.a
 mkmf.log
+
+s3.yml
