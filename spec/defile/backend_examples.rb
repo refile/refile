@@ -134,28 +134,41 @@ RSpec.shared_examples_for :backend do
       file = backend.upload(uploadable)
 
       buffer = ""
+      result = ""
 
-      expect(file.read(3, buffer)).to eq("hel")
-      expect(file.eof?).to be_falsy
-      expect(buffer).to eq("hel")
+      until file.eof?
+        chunk = file.read(2, buffer)
+        result << chunk
+        expect("hello").to include(buffer)
+      end
 
-      expect(file.read(1, buffer)).to eq("l")
-      expect(file.eof?).to be_falsy
-      expect(buffer).to eq("l")
-
-      expect(file.read(1, buffer)).to eq("o")
-      expect(file.eof?).to be_truthy
-      expect(buffer).to eq("o")
-
-      expect(file.read(1, buffer)).to be_nil
-      expect(file.eof?).to be_truthy
-      expect(buffer).to eq("")
+      expect(result).to eq("hello")
 
       file.close
 
       expect { file.read(1, buffer) }.to raise_error
 
       expect(open_files).to eq(before)
+    end
+
+    describe "#read" do
+      it "can read file contents" do
+        file = backend.upload(uploadable)
+
+        buffer = ""
+
+        expect(file.read).to eq("hello")
+      end
+
+      it "can read entire file contents into buffer" do
+        file = backend.upload(uploadable)
+
+        buffer = ""
+
+        file.read(nil, buffer)
+
+        expect(buffer).to eq("hello")
+      end
     end
   end
 end

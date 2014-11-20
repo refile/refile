@@ -8,15 +8,15 @@ module Defile
     end
 
     def read(*args)
-      fd.read(*args)
+      io.read(*args)
     end
 
     def eof?
-      fd.eof?
+      io.eof?
     end
 
     def close
-      fd.close
+      io.close
     end
 
     def size
@@ -32,13 +32,13 @@ module Defile
     end
 
     def to_io
-      fd
+      io
     end
 
   private
 
-    def fd
-      @fd ||= store.open(id)
+    def io
+      @io ||= store.open(id)
     end
   end
 end
