@@ -16,7 +16,7 @@ module Defile
 
         id = @hasher.hash(uploadable)
 
-        if uploadable.respond_to?(:path)
+        if uploadable.respond_to?(:path) and ::File.exist?(uploadable.path)
           FileUtils.cp(uploadable.path, path(id))
         else
           ::File.open(path(id), "wb") do |file|

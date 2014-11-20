@@ -16,6 +16,14 @@ RSpec.describe Defile::Backend::FileSystem do
 
       expect(backend.get(file.id).read).to eq("hello")
     end
+
+    it "ignores path if it doesn't exist" do
+      path = File.expand_path("tmp/doesnotexist.txt", Dir.pwd)
+
+      file = backend.upload(double(size: 1234, to_io: StringIO.new("yes"), path: path))
+
+      expect(backend.get(file.id).read).to eq("yes")
+    end
   end
 
   describe "#stream" do
