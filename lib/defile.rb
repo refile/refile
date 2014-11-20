@@ -2,7 +2,16 @@ require "fileutils"
 
 module Defile
   class << self
-    attr_accessor :read_chunk_size
+    attr_accessor :read_chunk_size, :backend
+    attr_writer :store, :cache
+
+    def store
+      @store ||= backend.to_store
+    end
+
+    def cache
+      @cache ||= backend.to_cache
+    end
 
     def configure
       yield self
@@ -19,6 +28,7 @@ module Defile
   end
 
   require "defile/version"
+  require "defile/attachment"
   require "defile/random_hasher"
   require "defile/file"
   require "defile/backend/file_system"

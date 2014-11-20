@@ -14,6 +14,8 @@ else
   end
 end
 
+Defile.backend = Defile::Backend::FileSystem.new(File.expand_path("default_store", tmp_path))
+
 class Defile::FileDouble
   def initialize(data)
     @io = StringIO.new(data)
