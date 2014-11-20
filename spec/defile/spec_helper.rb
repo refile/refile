@@ -1,6 +1,6 @@
 require "pry"
 require "defile"
-require "defile/store_examples"
+require "defile/backend_examples"
 
 tmp_path = File.expand_path("tmp", Dir.pwd)
 
