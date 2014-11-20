@@ -54,12 +54,13 @@ module Defile
 
       attr_reader :access_key_id
 
-      def initialize(type = :store, access_key_id:, secret_access_key:,bucket:, hasher: Defile::RandomHasher.new)
+      def initialize(type = :store, access_key_id:, secret_access_key:, bucket:, hasher: Defile::RandomHasher.new)
         @type = type
         @access_key_id = access_key_id
         @secret_access_key = secret_access_key
         @s3 = AWS::S3.new(access_key_id: access_key_id, secret_access_key: secret_access_key)
         @bucket_name = bucket
+        @bucket = @s3.buckets[@bucket_name]
         @hasher = hasher
       end
 
@@ -115,13 +116,7 @@ module Defile
       end
 
       def object(id)
-        bucket.objects[[@type, id].join("/")]
-      end
-
-    private
-
-      def bucket
-        @bucket ||= @s3.buckets[@bucket_name]
+        @bucket.objects[[@type, id].join("/")]
       end
     end
   end
