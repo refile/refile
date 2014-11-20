@@ -2,15 +2,27 @@ require "fileutils"
 
 module Defile
   class << self
-    attr_accessor :read_chunk_size, :backend
+    attr_accessor :read_chunk_size
     attr_writer :store, :cache
 
+    def backends
+      @backends ||= {}
+    end
+
     def store
-      @store ||= backend.to_store
+      backends["store"]
+    end
+
+    def store=(backend)
+      backends["store"] = backend
     end
 
     def cache
-      @cache ||= backend.to_cache
+      backends["cache"]
+    end
+
+    def cache=(backend)
+      backends["cache"] = backend
     end
 
     def configure

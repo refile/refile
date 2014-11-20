@@ -54,8 +54,7 @@ module Defile
 
       attr_reader :access_key_id
 
-      def initialize(type = :store, access_key_id:, secret_access_key:, bucket:, hasher: Defile::RandomHasher.new)
-        @type = type
+      def initialize(access_key_id:, secret_access_key:, bucket:, hasher: Defile::RandomHasher.new)
         @access_key_id = access_key_id
         @secret_access_key = secret_access_key
         @s3 = AWS::S3.new(access_key_id: access_key_id, secret_access_key: secret_access_key)
@@ -102,9 +101,9 @@ module Defile
         object(id).exists?
       end
 
-      def clear!(older_than = nil)
-        raise "for safety reasons, refusing to clear store" if @type == :store
-        @bucket.objects.with_prefix(@type).delete_all
+      def clear!(confirm = nil)
+        raise ArgumentError, "are you sure? this will remove all files in the backend, call as `clear!(:confirm)` if you're sure you want to do this" unless confirm == :confirm
+        @bucket.objects.delete_all
       end
 
       def to_store
@@ -116,7 +115,7 @@ module Defile
       end
 
       def object(id)
-        @bucket.objects[[@type, id].join("/")]
+        @bucket.objects[id]
       end
     end
   end

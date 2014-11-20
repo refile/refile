@@ -14,7 +14,8 @@ else
   end
 end
 
-Defile.backend = Defile::Backend::FileSystem.new(File.expand_path("default_store", tmp_path))
+Defile.store = Defile::Backend::FileSystem.new(File.expand_path("default_store", tmp_path))
+Defile.cache = Defile::Backend::FileSystem.new(File.expand_path("default_cache", tmp_path))
 
 class Defile::FileDouble
   def initialize(data)

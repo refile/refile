@@ -7,9 +7,6 @@ RSpec.shared_examples_for :backend do
     ObjectSpace.each_object(File).reject { |f| f.closed? } if defined?(ObjectSpace)
   end
 
-  let(:cache) { backend.to_cache }
-  let(:store) { backend.to_store }
-
   describe "#upload" do
     it "raises ArgumentError when invalid object is uploaded" do
       expect { backend.upload(double(size: 123)) }.to raise_error(ArgumentError)
@@ -110,18 +107,18 @@ RSpec.shared_examples_for :backend do
   end
 
   describe "#clear!" do
-    it "removes files when called on cache" do
-      file = cache.upload(uploadable)
+    it "removes files when called with :confirm" do
+      file = backend.upload(uploadable)
 
-      cache.clear!
+      backend.clear!(:confirm)
 
-      expect(cache.get(file.id).exists?).to be_falsy
+      expect(backend.get(file.id).exists?).to be_falsy
     end
 
-    it "complains when called on store" do
-      file = store.upload(uploadable)
+    it "complains when called without confirm" do
+      file = backend.upload(uploadable)
 
-      expect { store.clear! }.to raise_error(/refusing to clear store/)
+      expect { backend.clear! }.to raise_error(ArgumentError)
 
       expect(backend.get(file.id).exists?).to be_truthy
     end

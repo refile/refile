@@ -1,14 +1,11 @@
 module Defile
   module Backend
     class FileSystem
-      def initialize(type = :store, directory, hasher: Defile::RandomHasher.new)
-        @type = type
-        @directory = directory
+      def initialize(directory, hasher: Defile::RandomHasher.new)
         @hasher = hasher
         @directory = directory
-        @full_directory = ::File.join(directory, @type.to_s)
 
-        FileUtils.mkdir_p(@full_directory)
+        FileUtils.mkdir_p(@directory)
       end
 
       def upload(uploadable)
@@ -56,25 +53,14 @@ module Defile
         ::File.exists?(path(id))
       end
 
-      def clear!(older_than = nil)
-        raise "for safety reasons, refusing to clear store" if @type == :store
-        if older_than
-        else
-          FileUtils.rm_rf(@full_directory)
-          FileUtils.mkdir_p(@full_directory)
-        end
+      def clear!(confirm = nil)
+        raise ArgumentError, "are you sure? this will remove all files in the backend, call as `clear!(:confirm)` if you're sure you want to do this" unless confirm == :confirm
+        FileUtils.rm_rf(@directory)
+        FileUtils.mkdir_p(@directory)
       end
 
       def path(id)
-        ::File.join(@full_directory, id)
-      end
-
-      def to_store
-        self.class.new(:store, @directory, hasher: @hasher)
-      end
-
-      def to_cache
-        self.class.new(:cache, @directory, hasher: @hasher)
+        ::File.join(@directory, id)
       end
     end
   end
