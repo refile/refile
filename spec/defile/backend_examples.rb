@@ -1,10 +1,6 @@
 RSpec.shared_examples_for :backend do
   def uploadable(data = "hello")
-    double(size: data.length, to_io: StringIO.new(data))
-  end
-
-  def uploadable_stream(data = ["hello", "world"])
-    double(size: data.map(&:length).reduce(&:+), to_io: StringIO.new("wrong"), stream: data.each)
+    Defile::FileDouble.new(data)
   end
 
   let(:cache) { backend.to_cache }
@@ -22,15 +18,6 @@ RSpec.shared_examples_for :backend do
 
       expect(retrieved.read).to eq("hello")
       expect(retrieved.size).to eq(5)
-      expect(retrieved.exists?).to be_truthy
-    end
-
-    it "stores stream for later retrieval" do
-      file = backend.upload(uploadable_stream)
-      retrieved = backend.get(file.id)
-
-      expect(retrieved.read).to eq("helloworld")
-      expect(retrieved.size).to eq(10)
       expect(retrieved.exists?).to be_truthy
     end
   end

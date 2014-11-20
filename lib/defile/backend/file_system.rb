@@ -20,9 +20,12 @@ module Defile
           FileUtils.cp(uploadable.path, path(id))
         else
           ::File.open(path(id), "wb") do |file|
-            Defile.stream(uploadable).each do |chunk|
-              file.write(chunk)
+            buffer = "" # reuse the same buffer
+            until uploadable.eof?
+              uploadable.read(Defile.read_chunk_size, buffer)
+              file.write(buffer)
             end
+            uploadable.close
           end
         end
 

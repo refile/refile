@@ -14,3 +14,24 @@ else
   end
 end
 
+class Defile::FileDouble
+  def initialize(data)
+    @io = StringIO.new(data)
+  end
+
+  def read(*args)
+    @io.read(*args)
+  end
+
+  def size
+    @io.size
+  end
+
+  def eof?
+    @io.eof?
+  end
+
+  def close
+    @io.close
+  end
+end

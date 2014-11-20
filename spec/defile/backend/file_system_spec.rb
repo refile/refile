@@ -1,8 +1,4 @@
 RSpec.describe Defile::Backend::FileSystem do
-  def uploadable(data = "hello")
-    double(size: data.length, to_io: StringIO.new(data))
-  end
-
   let(:backend) { Defile::Backend::FileSystem.new(File.expand_path("tmp/store1", Dir.pwd)) }
 
   it_behaves_like :backend
@@ -12,7 +8,10 @@ RSpec.describe Defile::Backend::FileSystem do
       path = File.expand_path("tmp/test.txt", Dir.pwd)
       File.write(path, "hello")
 
-      file = backend.upload(double(size: 1234, to_io: StringIO.new("wrong"), path: path))
+      uploadable = Defile::FileDouble.new("wrong")
+      allow(uploadable).to receive(:path).and_return(path)
+
+      file = backend.upload(uploadable)
 
       expect(backend.get(file.id).read).to eq("hello")
     end
@@ -20,7 +19,10 @@ RSpec.describe Defile::Backend::FileSystem do
     it "ignores path if it doesn't exist" do
       path = File.expand_path("tmp/doesnotexist.txt", Dir.pwd)
 
-      file = backend.upload(double(size: 1234, to_io: StringIO.new("yes"), path: path))
+      uploadable = Defile::FileDouble.new("yes")
+      allow(uploadable).to receive(:path).and_return(path)
+
+      file = backend.upload(uploadable)
 
       expect(backend.get(file.id).read).to eq("yes")
     end
@@ -29,7 +31,7 @@ RSpec.describe Defile::Backend::FileSystem do
   describe "#stream" do
     if defined?(ObjectSpace) # usually doesn't exist on JRuby
       it "doesn't leak file descriptors" do
-        file = backend.upload(uploadable)
+        file = backend.upload(Defile::FileDouble.new("hello"))
 
         before = ObjectSpace.each_object(File).reject { |f| f.closed? }
 
