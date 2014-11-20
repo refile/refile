@@ -68,7 +68,11 @@ module Defile
 
         id = @hasher.hash(uploadable)
 
-        object(id).write(uploadable, content_length: uploadable.size)
+        if uploadable.is_a?(Defile::File) and uploadable.store.is_a?(S3) and uploadable.store.access_key_id == access_key_id
+          uploadable.store.object(uploadable.id).copy_to(object(id))
+        else
+          object(id).write(uploadable, content_length: uploadable.size)
+        end
 
         Defile::File.new(self, id)
       end
