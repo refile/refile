@@ -24,12 +24,14 @@ module Defile
 
       define_method "store_#{name}" do
         cache_id = send("#{name}_cache_id")
+        id = send("#{name}_id")
 
         if cache_id
           file = store.upload(cache.get(cache_id))
           send("#{name}_id=", file.id)
           cache.delete(cache_id)
           send("#{name}_cache_id=", nil)
+          store.delete(id) if id
         end
       end
     end

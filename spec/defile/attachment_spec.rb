@@ -43,6 +43,16 @@ describe Defile::Attachment do
       expect(Defile.cache.get(cache.id).exists?).to be_falsy
     end
 
+    it "does nothing when not cached" do
+      file = Defile.store.upload(Defile::FileDouble.new("hello"))
+      instance.image_id = file.id
+
+      instance.store_image
+
+      expect(Defile.store.get(instance.image_id).read).to eq("hello")
+      expect(Defile.store.get(instance.image.id).read).to eq("hello")
+    end
+
     it "overwrites previously stored file" do
       file = Defile.store.upload(Defile::FileDouble.new("hello"))
       instance.image_id = file.id
@@ -57,6 +67,7 @@ describe Defile::Attachment do
 
       expect(instance.image_cache_id).to be_nil
       expect(Defile.cache.get(cache.id).exists?).to be_falsy
+      expect(Defile.store.get(file.id).exists?).to be_falsy
     end
   end
 end
