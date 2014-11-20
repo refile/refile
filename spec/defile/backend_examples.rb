@@ -3,6 +3,10 @@ RSpec.shared_examples_for :backend do
     Defile::FileDouble.new(data)
   end
 
+  def open_files
+    ObjectSpace.each_object(File).reject { |f| f.closed? } if defined?(ObjectSpace)
+  end
+
   let(:cache) { backend.to_cache }
   let(:store) { backend.to_store }
 
@@ -123,19 +127,35 @@ RSpec.shared_examples_for :backend do
     end
   end
 
-  describe "#stream" do
-    it "returns an enumerator" do
+  describe "File" do
+    it "is an io-like object" do
+      before = open_files
+
       file = backend.upload(uploadable)
 
-      expect(backend.stream(file.id)).to be_an_instance_of(Enumerator)
-      expect(backend.stream(file.id).to_a.join).to eq("hello")
-    end
+      buffer = ""
 
-    it "can be called through the file" do
-      file = backend.upload(uploadable)
+      expect(file.read(3, buffer)).to eq("hel")
+      expect(file.eof?).to be_falsy
+      expect(buffer).to eq("hel")
 
-      expect(file.stream).to be_an_instance_of(Enumerator)
-      expect(file.stream.to_a.join).to eq("hello")
+      expect(file.read(1, buffer)).to eq("l")
+      expect(file.eof?).to be_falsy
+      expect(buffer).to eq("l")
+
+      expect(file.read(1, buffer)).to eq("o")
+      expect(file.eof?).to be_truthy
+      expect(buffer).to eq("o")
+
+      expect(file.read(1, buffer)).to be_nil
+      expect(file.eof?).to be_truthy
+      expect(buffer).to eq("")
+
+      file.close
+
+      expect { file.read(1, buffer) }.to raise_error
+
+      expect(open_files).to eq(before)
     end
   end
 end

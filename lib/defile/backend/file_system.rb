@@ -40,8 +40,8 @@ module Defile
         FileUtils.rm(path(id)) if exists?(id)
       end
 
-      def stream(id)
-        Defile::Stream.new(::File.open(path(id), "r")).each
+      def open(id)
+        ::File.open(path(id), "r")
       end
 
       def read(id)

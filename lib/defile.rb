@@ -20,7 +20,6 @@ module Defile
 
   require "defile/version"
   require "defile/random_hasher"
-  require "defile/stream"
   require "defile/file"
   require "defile/backend/file_system"
 end

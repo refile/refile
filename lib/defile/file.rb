@@ -7,12 +7,16 @@ module Defile
       @id = id
     end
 
-    def read
-      store.read(id)
+    def read(*args)
+      fd.read(*args)
     end
 
-    def to_io
-      store.open(id)
+    def eof?
+      fd.eof?
+    end
+
+    def close
+      fd.close
     end
 
     def size
@@ -23,12 +27,18 @@ module Defile
       store.delete(id)
     end
 
-    def stream
-      store.stream(id)
-    end
-
     def exists?
       store.exists?(id)
+    end
+
+    def to_io
+      fd
+    end
+
+  private
+
+    def fd
+      @fd ||= store.open(id)
     end
   end
 end
