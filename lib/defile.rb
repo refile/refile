@@ -19,8 +19,7 @@ module Defile
   require "defile/version"
   require "defile/random_hasher"
   require "defile/file"
-  require "defile/store"
-  require "defile/store/file_store"
+  require "defile/backend/file_system"
 end
 
 Defile.configure do |config|

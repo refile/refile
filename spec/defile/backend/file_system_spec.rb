@@ -1,5 +1,5 @@
-RSpec.describe Defile::Store::FileStore do
-  let(:store) { Defile::Store::FileStore.new(File.expand_path("tmp/store1", Dir.pwd)) }
+RSpec.describe Defile::Backend::FileSystem do
+  let(:store) { Defile::Backend::FileSystem.new(File.expand_path("tmp/store1", Dir.pwd)) }
 
   it_behaves_like :store
 
