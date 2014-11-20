@@ -19,9 +19,9 @@ module Defile
         if uploadable.respond_to?(:path)
           FileUtils.cp(uploadable.path, path(id))
         else
-          ::File.open(path(id), "wb") do |write|
+          ::File.open(path(id), "wb") do |file|
             Defile.stream(uploadable).each do |chunk|
-              write.write(chunk)
+              file.write(chunk)
             end
           end
         end
