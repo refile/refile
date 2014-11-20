@@ -29,6 +29,15 @@ describe Defile::Attachment do
     end
   end
 
+  describe ":name_cache_id" do
+    it "doesn't overwrite a cached file" do
+      instance.image = Defile::FileDouble.new("hello")
+      instance.image_cache_id = "xyz"
+
+      expect(instance.image.read).to eq("hello")
+    end
+  end
+
   describe "store_:name" do
     it "puts a cached file into the store" do
       instance.image = Defile::FileDouble.new("hello")
