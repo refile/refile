@@ -20,7 +20,7 @@ module Defile
         Defile::File.new(self, id)
       end
 
-      def store(uploadable)
+      def upload(uploadable)
         Defile.verify_uploadable(uploadable)
 
         id = @hasher.hash(uploadable)
@@ -30,7 +30,7 @@ module Defile
         Defile::File.new(self, id)
       end
 
-      def retrieve(id)
+      def get(id)
         Defile::File.new(self, id)
       end
 
