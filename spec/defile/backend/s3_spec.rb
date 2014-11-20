@@ -1,5 +1,5 @@
 if ENV["S3"]
-  require "defile/backend/s3_store"
+  require "defile/backend/s3"
 
   config = YAML.load_file("s3.yml").map { |k, v| [k.to_sym, v] }.to_h
 
