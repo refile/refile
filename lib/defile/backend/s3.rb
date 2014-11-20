@@ -68,8 +68,8 @@ module Defile
 
         id = @hasher.hash(uploadable)
 
-        if uploadable.is_a?(Defile::File) and uploadable.store.is_a?(S3) and uploadable.store.access_key_id == access_key_id
-          uploadable.store.object(uploadable.id).copy_to(object(id))
+        if uploadable.is_a?(Defile::File) and uploadable.backend.is_a?(S3) and uploadable.backend.access_key_id == access_key_id
+          uploadable.backend.object(uploadable.id).copy_to(object(id))
         else
           object(id).write(uploadable, content_length: uploadable.size)
         end
@@ -108,14 +108,6 @@ module Defile
       def clear!(confirm = nil)
         raise ArgumentError, "are you sure? this will remove all files in the backend, call as `clear!(:confirm)` if you're sure you want to do this" unless confirm == :confirm
         @bucket.objects.delete_all
-      end
-
-      def to_store
-        self.class.new(:store, access_key_id: @access_key_id, secret_access_key: @secret_access_key, hasher: @hasher, bucket: @bucket_name)
-      end
-
-      def to_cache
-        self.class.new(:cache, access_key_id: @access_key_id, secret_access_key: @secret_access_key, hasher: @hasher, bucket: @bucket_name)
       end
 
       def object(id)

@@ -1,9 +1,9 @@
 module Defile
   class File
-    attr_reader :store, :id
+    attr_reader :backend, :id
 
-    def initialize(store, id)
-      @store = store
+    def initialize(backend, id)
+      @backend = backend
       @id = id
     end
 
@@ -20,15 +20,15 @@ module Defile
     end
 
     def size
-      store.size(id)
+      backend.size(id)
     end
 
     def delete
-      store.delete(id)
+      backend.delete(id)
     end
 
     def exists?
-      store.exists?(id)
+      backend.exists?(id)
     end
 
     def to_io
@@ -38,7 +38,7 @@ module Defile
   private
 
     def io
-      @io ||= store.open(id)
+      @io ||= backend.open(id)
     end
   end
 end
