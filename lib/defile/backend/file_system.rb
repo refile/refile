@@ -38,7 +38,7 @@ module Defile
       end
 
       def open(id)
-        ::File.open(path(id), "r")
+        ::File.open(path(id), "rb")
       end
 
       def read(id)
