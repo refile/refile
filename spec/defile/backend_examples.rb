@@ -159,21 +159,6 @@ RSpec.shared_examples_for :backend do
       expect(open_files).to eq(before)
     end
 
-    describe "#peek" do
-      it "can peek at the next value" do
-        file = backend.upload(uploadable)
-
-        expect("hello").to include(file.peek(2))
-
-        result = ""
-        until file.eof?
-          result << file.read(2)
-        end
-
-        expect(result).to eq("hello")
-      end
-    end
-
     describe "#read" do
       it "can read file contents" do
         file = backend.upload(uploadable)
@@ -204,6 +189,12 @@ RSpec.shared_examples_for :backend do
         end
 
         expect(buffer).to eq("hello")
+      end
+
+      it "returns an enumerator when no block given" do
+        file = backend.upload(uploadable)
+
+        expect(file.each.to_a.join).to eq("hello")
       end
     end
   end

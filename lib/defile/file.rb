@@ -8,13 +8,7 @@ module Defile
     end
 
     def read(*args)
-      @peek || io.read(*args)
-    ensure
-      @peek = nil
-    end
-
-    def peek(limit = nil)
-      @peek ||= read(limit)
+      io.read(*args)
     end
 
     def eof?
@@ -42,8 +36,12 @@ module Defile
     end
 
     def each
-      while @peek or not eof?
-        yield(read(Defile.read_chunk_size))
+      if block_given?
+        until eof?
+          yield(read(Defile.read_chunk_size))
+        end
+      else
+        to_enum
       end
     end
 
