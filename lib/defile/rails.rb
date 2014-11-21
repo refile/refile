@@ -13,16 +13,12 @@ module Defile
   end
 
   class Engine < Rails::Engine
-    initializer "defile.setup_backend" do
+    initializer "defile", before: :load_environment_config do
       Defile.store = Defile::Backend::FileSystem.new(Rails.root.join("tmp/uploads/store").to_s)
       Defile.cache = Defile::Backend::FileSystem.new(Rails.root.join("tmp/uploads/cache").to_s)
-    end
 
-    initializer "defile.setup_app" do
       Defile.app = Defile::App.new(logger: Rails.logger)
-    end
 
-    initializer "defile.active_record" do
       ActiveSupport.on_load :active_record do
         require "defile/attachment/active_record"
       end

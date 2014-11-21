@@ -100,13 +100,15 @@ example you can switch to the S3 backend like this:
 
 ``` ruby
 # config/initializers/defile.rb
+require "defile/backend/s3"
+
 aws = {
   access_key_id: "xyz",
   secret_access_key: "abc",
   bucket: "my-bucket",
 }
-Defile.cache = Defile::Store::S3Store.new(prefix: "cache", **aws)
-Defile.store = Defile::Store::S3Store.new(prefix: "store", **aws)
+Defile.cache = Defile::Backend::S3.new(prefix: "cache", **aws)
+Defile.store = Defile::Backend::S3.new(prefix: "store", **aws)
 ```
 
 Try this in the quick start example above and your files are now uploaded to

@@ -54,13 +54,14 @@ module Defile
 
       attr_reader :access_key_id
 
-      def initialize(access_key_id:, secret_access_key:, bucket:, hasher: Defile::RandomHasher.new)
+      def initialize(access_key_id:, secret_access_key:, bucket:, prefix: nil, hasher: Defile::RandomHasher.new)
         @access_key_id = access_key_id
         @secret_access_key = secret_access_key
         @s3 = AWS::S3.new(access_key_id: access_key_id, secret_access_key: secret_access_key)
         @bucket_name = bucket
         @bucket = @s3.buckets[@bucket_name]
         @hasher = hasher
+        @prefix = prefix
       end
 
       def upload(uploadable)
@@ -107,11 +108,11 @@ module Defile
 
       def clear!(confirm = nil)
         raise ArgumentError, "are you sure? this will remove all files in the backend, call as `clear!(:confirm)` if you're sure you want to do this" unless confirm == :confirm
-        @bucket.objects.delete_all
+        @bucket.objects.with_prefix(@prefix).delete_all
       end
 
       def object(id)
-        @bucket.objects[id]
+        @bucket.objects[[*@prefix, id].join("/")]
       end
     end
   end
