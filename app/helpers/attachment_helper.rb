@@ -17,4 +17,9 @@ module AttachmentHelper
       image_tag(fallback, options)
     end
   end
+
+  def attachment_field(object_name, method, options = {})
+    hidden_field(object_name, "#{method}_cache_id") +
+    file_field(object_name, method, options = {})
+  end
 end

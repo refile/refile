@@ -12,6 +12,13 @@ module Defile
     end
   end
 
+  module AttachmentFieldHelper
+    def attachment_field(method, options = {})
+      self.multipart = true
+      @template.attachment_field(@object_name, method, objectify_options(options))
+    end
+  end
+
   class Engine < Rails::Engine
     initializer "defile", before: :load_environment_config do
       Defile.store = Defile::Backend::FileSystem.new(Rails.root.join("tmp/uploads/store").to_s)
@@ -22,6 +29,8 @@ module Defile
       ActiveSupport.on_load :active_record do
         require "defile/attachment/active_record"
       end
+
+      ActionView::Helpers::FormBuilder.send(:include, AttachmentFieldHelper)
     end
   end
 end
