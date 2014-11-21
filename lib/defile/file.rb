@@ -37,6 +37,7 @@ module Defile
 
     def download
       tempfile = Tempfile.new(id)
+      tempfile.binmode
       each do |chunk|
         tempfile.write(chunk)
       end

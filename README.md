@@ -18,7 +18,8 @@ Features:
 Add the gem:
 
 ``` ruby
-gem "defile", require: "defile/rails"
+gem "mini_magick"
+gem "defile", require: ["defile/rails", "defile/image_processing"]
 ```
 
 Use the `attachment` method to use Defile in a model:
