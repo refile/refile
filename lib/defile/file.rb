@@ -35,6 +35,16 @@ module Defile
       io
     end
 
+    def download
+      tempfile = Tempfile.new(id)
+      each do |chunk|
+        tempfile.write(chunk)
+      end
+      close
+      tempfile.close
+      tempfile
+    end
+
     def each
       if block_given?
         until eof?

@@ -197,5 +197,15 @@ RSpec.shared_examples_for :backend do
         expect(file.each.to_a.join).to eq("hello")
       end
     end
+
+    describe "#download" do
+      it "returns a downloaded tempfile" do
+        file = backend.upload(uploadable)
+        download = file.download
+
+        expect(download).to be_an_instance_of(Tempfile)
+        expect(File.read(download.path)).to eq("hello")
+      end
+    end
   end
 end

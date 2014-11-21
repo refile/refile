@@ -1,4 +1,5 @@
 require "fileutils"
+require "tempfile"
 
 module Defile
   class << self
