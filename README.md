@@ -33,7 +33,7 @@ end
 Generate a migration:
 
 ``` sh
-rails generate defile:migration user profile_image
+rails generate migration add_profile_image_to_users profile_image_id:string
 rake db:migrate
 ```
 
