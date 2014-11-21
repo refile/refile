@@ -7,4 +7,14 @@ module AttachmentHelper
 
     File.join(host, defile_app_path, backend_name, *args.map(&:to_s), file.id)
   end
+
+  def attachment_image_tag(record, name, *args, fallback: nil, format: nil, **options)
+    file = record.send(name)
+
+    if file
+      image_tag(attachment_url(record, name, *args, format: format), options)
+    elsif fallback
+      image_tag(fallback, options)
+    end
+  end
 end
