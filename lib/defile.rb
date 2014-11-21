@@ -10,6 +10,15 @@ module Defile
       @backends ||= {}
     end
 
+    def processors
+      @processors ||= {}
+    end
+
+    def processor(name, processor = nil, &block)
+      processor ||= block
+      processors[name.to_s] = processor
+    end
+
     def store
       backends["store"]
     end

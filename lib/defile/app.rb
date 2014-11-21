@@ -29,13 +29,22 @@ module Defile
     def call(env)
       @logger.info { "Defile: #{env["REQUEST_METHOD"]} #{env["PATH_INFO"]}" }
       if env["REQUEST_METHOD"] == "GET"
-        backend_name, id = env["PATH_INFO"].sub(/^\//, "").split("/")
+        backend_name, *process_args, id = env["PATH_INFO"].sub(/^\//, "").split("/")
         backend = Defile.backends[backend_name]
 
         if backend and id
           @logger.debug { "Defile: serving #{id.inspect} from #{backend_name} backend which is of type #{backend.class}" }
 
           file = backend.get(id)
+
+          unless process_args.empty?
+            name = process_args.shift
+            unless Defile.processors[name]
+              @logger.debug { "Defile: no such processor #{name.inspect}" }
+              return NOT_FOUND
+            end
+            file = Defile.processors[name].call(file, *process_args)
+          end
 
           peek = begin
             file.read(Defile.read_chunk_size)
