@@ -1,3 +1,3 @@
 Rails.application.routes.draw do
-  get "/attachment/:backend_name(/:width/:height(/:crop))/:id(.:format)", as: :attachment_route, to: "attachments#show"
+  mount Defile.app, at: "attachments", as: :defile_app
 end

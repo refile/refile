@@ -3,7 +3,7 @@ require "tempfile"
 
 module Defile
   class << self
-    attr_accessor :read_chunk_size
+    attr_accessor :read_chunk_size, :app
     attr_writer :store, :cache
 
     def backends

@@ -4,10 +4,6 @@ module AttachmentHelper
 
     backend_name = Defile.backends.key(file.backend)
 
-    options = options.merge(
-      backend_name: backend_name,
-      id: file.id
-    )
-    attachment_route_url(options)
+    defile_app_url + "/#{backend_name}/#{file.id}"
   end
 end
