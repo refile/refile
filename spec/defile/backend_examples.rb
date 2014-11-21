@@ -159,6 +159,21 @@ RSpec.shared_examples_for :backend do
       expect(open_files).to eq(before)
     end
 
+    describe "#peek" do
+      it "can peek at the next value" do
+        file = backend.upload(uploadable)
+
+        expect("hello").to include(file.peek(2))
+
+        result = ""
+        until file.eof?
+          result << file.read(2)
+        end
+
+        expect(result).to eq("hello")
+      end
+    end
+
     describe "#read" do
       it "can read file contents" do
         file = backend.upload(uploadable)
@@ -174,6 +189,19 @@ RSpec.shared_examples_for :backend do
         buffer = ""
 
         file.read(nil, buffer)
+
+        expect(buffer).to eq("hello")
+      end
+    end
+
+    describe "#each" do
+      it "can read file contents" do
+        file = backend.upload(uploadable)
+
+        buffer = ""
+        file.each do |chunk|
+          buffer << chunk
+        end
 
         expect(buffer).to eq("hello")
       end

@@ -43,6 +43,7 @@ module Defile
   require "defile/attachment"
   require "defile/random_hasher"
   require "defile/file"
+  require "defile/app"
   require "defile/backend/file_system"
 end
 
