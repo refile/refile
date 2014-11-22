@@ -40,7 +40,7 @@ rake db:migrate
 Add an attachment field to your form:
 
 ``` erb
-<%= form_for User.new do |form| %>
+<%= form_for @user do |form| %>
   <%= form.attachment_field :profile_image %>
 <% end %>
 ```
@@ -48,7 +48,7 @@ Add an attachment field to your form:
 And start uploading! Finally show the file in your view:
 
 ``` erb
-<%= image_tag attachment_url(@user, :profile_image, width: 300, height: 300, crop: :fill) %>
+<%= image_tag attachment_url(@user, :profile_image, :fill, 300, 300) %>
 ```
 
 ## How it works
@@ -61,7 +61,7 @@ Defile consists of three parts:
 
 Let's look at each of these in more detail!
 
-### 1. Backend
+## 1. Backend
 
 Files are uploaded to a backend. The backend assigns an ID to this file, which
 will be unique for this file within the backend.
@@ -114,7 +114,7 @@ Defile.store = Defile::Backend::S3.new(prefix: "store", **aws)
 Try this in the quick start example above and your files are now uploaded to
 S3.
 
-### 2. Attachments
+## 2. Attachments
 
 You've already seen the `attachment` method:
 
@@ -136,7 +136,7 @@ class User < ActiveRecord::Base
 end
 ```
 
-#### Restrictions
+### Restrictions
 
 You may have noticed the `type` parameter. This parameter restricts which files
 can be attached. For security reasons, this parameter is mandatory. Allowed
