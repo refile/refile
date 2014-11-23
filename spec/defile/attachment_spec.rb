@@ -38,12 +38,12 @@ describe Defile::Attachment do
     end
   end
 
-  describe "store_:name" do
+  describe ":name_attachment.store!" do
     it "puts a cached file into the store" do
       instance.image = Defile::FileDouble.new("hello")
       cache = instance.image
 
-      instance.store_image
+      instance.image_attachment.store!
 
       expect(Defile.store.get(instance.image_id).read).to eq("hello")
       expect(Defile.store.get(instance.image.id).read).to eq("hello")
@@ -56,7 +56,7 @@ describe Defile::Attachment do
       file = Defile.store.upload(Defile::FileDouble.new("hello"))
       instance.image_id = file.id
 
-      instance.store_image
+      instance.image_attachment.store!
 
       expect(Defile.store.get(instance.image_id).read).to eq("hello")
       expect(Defile.store.get(instance.image.id).read).to eq("hello")
@@ -69,7 +69,7 @@ describe Defile::Attachment do
       instance.image = Defile::FileDouble.new("world")
       cache = instance.image
 
-      instance.store_image
+      instance.image_attachment.store!
 
       expect(Defile.store.get(instance.image_id).read).to eq("world")
       expect(Defile.store.get(instance.image.id).read).to eq("world")

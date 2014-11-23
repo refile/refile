@@ -75,10 +75,6 @@ module Defile
       define_method "#{name}_cache_id" do
         send(attachment).cache_id
       end
-
-      define_method "store_#{name}" do
-        send(attachment).store!
-      end
     end
   end
 end

@@ -6,8 +6,9 @@ module Defile
       def attachment(name, type:, max_size: Float::INFINITY, cache: :cache, store: :store)
         super
 
-        before_save :"store_#{name}"
-
+        before_save do
+          send("#{name}_attachment").store!
+        end
       end
     end
   end
