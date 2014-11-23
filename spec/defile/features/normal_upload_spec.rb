@@ -1,4 +1,4 @@
-require "defile/rails_helper"
+require "defile/test_app"
 
 feature "Normal HTTP Post file uploads" do
   scenario "Successfully upload a file" do

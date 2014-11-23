@@ -1,5 +1,7 @@
-require 'action_controller/railtie'
-require 'defile'
+require "rails/all"
+
+require "defile"
+require "defile/rails"
 
 module Defile
   class TestApp < Rails::Application
@@ -7,12 +9,35 @@ module Defile
     config.session_store :cookie_store, :key => '_defile_session'
     config.active_support.deprecation = :log
     config.eager_load = false
-    config.show_exceptions = true
+    config.action_dispatch.show_exceptions = true
+    config.consider_all_requests_local = true
     config.root = ::File.expand_path("test_app", ::File.dirname(__FILE__))
-    config.database_configuration = {
-    }
   end
 
   Rails.backtrace_cleaner.remove_silencers!
   TestApp.initialize!
 end
+
+class TestMigration < ActiveRecord::Migration
+  def self.up
+    create_table :posts, :force => true do |t|
+      t.column :title, :string
+      t.column :image, :string
+    end
+  end
+end
+
+quietly do
+  TestMigration.up
+end
+
+require "rspec"
+require "rspec/rails"
+require "capybara/rails"
+require "capybara/rspec"
+require "defile/spec_helper"
+
+Capybara.configure do |config|
+  config.server_port = 56120
+end
+

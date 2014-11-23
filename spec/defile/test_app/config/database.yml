@@ -1,6 +1,6 @@
 development: &default
   adapter: "sqlite3"
-  database: ":memory:"
+  database: "db/db.sqlite"
   verbosity: "quiet"
 
 test:

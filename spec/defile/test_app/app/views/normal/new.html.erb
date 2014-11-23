@@ -1,0 +1,13 @@
+<%= form_for @post, url: :normal do |form| %>
+  <p>
+    <%= form.label :title %>
+    <%= form.text_field :title %>
+  </p>
+  <p>
+    <%= form.label :image %>
+    <%= form.attachment_field :image %>
+  </p>
+  <p>
+    <%= form.submit "Create" %>
+  </p>
+<% end %>
