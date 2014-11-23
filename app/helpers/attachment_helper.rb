@@ -1,11 +1,13 @@
 module AttachmentHelper
-  def attachment_url(record, name, *args, format: nil)
+  def attachment_url(record, name, *args, filename: nil, format: nil)
     file = record.send(name)
+
+    filename ||= name.to_s
 
     backend_name = Defile.backends.key(file.backend)
     host = Defile.host || root_url
 
-    File.join(host, defile_app_path, backend_name, *args.map(&:to_s), file.id)
+    File.join(host, defile_app_path, backend_name, *args.map(&:to_s), file.id, filename)
   end
 
   def attachment_image_tag(record, name, *args, fallback: nil, format: nil, **options)

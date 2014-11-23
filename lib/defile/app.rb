@@ -29,7 +29,7 @@ module Defile
     def call(env)
       @logger.info { "Defile: #{env["REQUEST_METHOD"]} #{env["PATH_INFO"]}" }
       if env["REQUEST_METHOD"] == "GET"
-        backend_name, *process_args, id = env["PATH_INFO"].sub(/^\//, "").split("/")
+        backend_name, *process_args, id, filename = env["PATH_INFO"].sub(/^\//, "").split("/")
         backend = Defile.backends[backend_name]
 
         if backend and id
