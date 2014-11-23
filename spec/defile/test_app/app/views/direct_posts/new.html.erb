@@ -1,0 +1,23 @@
+<%= form_for [:normal, @post], html: { id: "direct" } do |form| %>
+  <p>
+    <%= @post.errors.full_messages.to_sentence %>
+  </p>
+  <p>
+    <%= form.label :title %>
+    <%= form.text_field :title %>
+  </p>
+  <p>
+    <%= form.label :document %>
+    <%= form.attachment_field :document, direct: true %>
+  </p>
+  <p>
+    <%= form.submit "Create" %>
+  </p>
+<% end %>
+
+<script>
+  "use strict";
+  var input = document.getElementById("post_document");
+  input.addEventListener("upload:start", function() {
+  });
+</script>

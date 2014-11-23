@@ -21,12 +21,22 @@ module AttachmentHelper
   end
 
   def attachment_field(object_name, method, options = {})
-    if options[:object] and options[:presigned]
+    if options[:object]
       cache = options[:object].send(:"#{method}_attachment").cache
-      if cache.respond_to?(:presign)
+
+      if options[:direct]
+        host = Defile.host || root_url
+        backend_name = Defile.backends.key(cache)
+
+        options[:data] ||= {}
+        options[:data][:direct] = true
+        options[:data][:url] = File.join(host, defile_app_path, backend_name)
+      end
+
+      if options[:presigned] and cache.respond_to?(:presign)
         signature = cache.presign
         options[:data] ||= {}
-        options[:data][:presigned] = true
+        options[:data][:direct] = true
         options[:data][:id] = signature.id
         options[:data][:url] = signature.url
         options[:data][:fields] = signature.fields
