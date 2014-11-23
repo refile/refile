@@ -23,6 +23,7 @@ class TestMigration < ActiveRecord::Migration
     create_table :posts, :force => true do |t|
       t.column :title, :string
       t.column :image_id, :string
+      t.column :document_id, :string
     end
   end
 end

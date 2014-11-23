@@ -1,5 +1,9 @@
 <h1><%= @post.title %></h1<>
 
 <% if @post.image %>
-  <%= link_to "Image", attachment_url(@post, :image) %>
+  <%= attachment_image_tag(@post, :image) %>
+<% end %>
+
+<% if @post.document %>
+  <%= link_to "Document", attachment_url(@post, :document) %>
 <% end %>
