@@ -114,6 +114,13 @@ Defile.store = Defile::Backend::S3.new(prefix: "store", **aws)
 Try this in the quick start example above and your files are now uploaded to
 S3.
 
+Backends also provide the option of restricting the size of files they accept.
+For example:
+
+``` ruby
+Defile.cache = Defile::Backend::S3.new(max_size: 10.megabytes, ...)
+```
+
 ## 2. Attachments
 
 You've already seen the `attachment` method:
@@ -136,12 +143,3 @@ class User
 end
 ```
 
-### Size restriction
-
-You can restrict the allowable size of an uploaded file like this:
-
-``` ruby
-class User < ActiveRecord::Base
-  attachment :profile_image, max_size: 10.megabytes
-end
-```
