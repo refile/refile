@@ -22,3 +22,5 @@ tmp
 mkmf.log
 
 s3.yml
+spec/defile/test_app/log
+spec/defile/test_app/tmp
