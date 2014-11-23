@@ -1,6 +1,7 @@
 Defile::TestApp.routes.draw do
   root to: "home#index"
 
-  get "/normal/new", to: "normal#new", as: :new_normal
-  post "/normal", to: "normal#create", as: :normal
+  scope path: "normal", as: "normal" do
+    resources :posts, only: [:new, :create, :show], controller: "normal_posts"
+  end
 end

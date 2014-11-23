@@ -9,7 +9,7 @@ module Defile
     config.session_store :cookie_store, :key => '_defile_session'
     config.active_support.deprecation = :log
     config.eager_load = false
-    config.action_dispatch.show_exceptions = true
+    config.action_dispatch.show_exceptions = false
     config.consider_all_requests_local = true
     config.root = ::File.expand_path("test_app", ::File.dirname(__FILE__))
   end
@@ -22,7 +22,7 @@ class TestMigration < ActiveRecord::Migration
   def self.up
     create_table :posts, :force => true do |t|
       t.column :title, :string
-      t.column :image, :string
+      t.column :image_id, :string
     end
   end
 end
@@ -39,5 +39,17 @@ require "defile/spec_helper"
 
 Capybara.configure do |config|
   config.server_port = 56120
+end
+
+Defile.host = "//localhost:56120"
+
+module PathHelper
+  def path(filename)
+    File.expand_path(File.join("fixtures", filename), File.dirname(__FILE__))
+  end
+end
+
+RSpec.configure do |config|
+  config.include PathHelper
 end
 
