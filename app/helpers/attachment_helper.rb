@@ -7,7 +7,7 @@ module AttachmentHelper
     backend_name = Defile.backends.key(file.backend)
     host = Defile.host || root_url
 
-    File.join(host, defile_app_path, backend_name, *args.map(&:to_s), file.id, filename)
+    File.join(host, defile_app_path, backend_name, *args.map(&:to_s), file.id, filename.parameterize("_"))
   end
 
   def attachment_image_tag(record, name, *args, fallback: nil, format: nil, **options)
