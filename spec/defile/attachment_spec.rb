@@ -4,77 +4,77 @@ describe Defile::Attachment do
     Class.new do
       extend Defile::Attachment
 
-      attr_accessor :image_id, :image_name, :image_size
+      attr_accessor :document_id, :document_name, :document_size
 
-      attachment :image, type: :image
+      attachment :document, type: :document
     end
   end
   let(:instance) { klass.new }
 
   describe ":name=" do
     it "receives a file, caches it and sets the _id parameter" do
-      instance.image = Defile::FileDouble.new("hello")
+      instance.document = Defile::FileDouble.new("hello")
 
-      expect(Defile.cache.get(instance.image.id).read).to eq("hello")
-      expect(Defile.cache.get(instance.image_cache_id).read).to eq("hello")
+      expect(Defile.cache.get(instance.document.id).read).to eq("hello")
+      expect(Defile.cache.get(instance.document_cache_id).read).to eq("hello")
     end
   end
 
   describe ":name" do
     it "gets a file from the store" do
       file = Defile.store.upload(Defile::FileDouble.new("hello"))
-      instance.image_id = file.id
+      instance.document_id = file.id
 
-      expect(instance.image.id).to eq(file.id)
+      expect(instance.document.id).to eq(file.id)
     end
   end
 
   describe ":name_cache_id" do
     it "doesn't overwrite a cached file" do
-      instance.image = Defile::FileDouble.new("hello")
-      instance.image_cache_id = "xyz"
+      instance.document = Defile::FileDouble.new("hello")
+      instance.document_cache_id = "xyz"
 
-      expect(instance.image.read).to eq("hello")
+      expect(instance.document.read).to eq("hello")
     end
   end
 
   describe ":name_attachment.store!" do
     it "puts a cached file into the store" do
-      instance.image = Defile::FileDouble.new("hello")
-      cache = instance.image
+      instance.document = Defile::FileDouble.new("hello")
+      cache = instance.document
 
-      instance.image_attachment.store!
+      instance.document_attachment.store!
 
-      expect(Defile.store.get(instance.image_id).read).to eq("hello")
-      expect(Defile.store.get(instance.image.id).read).to eq("hello")
+      expect(Defile.store.get(instance.document_id).read).to eq("hello")
+      expect(Defile.store.get(instance.document.id).read).to eq("hello")
 
-      expect(instance.image_cache_id).to be_nil
+      expect(instance.document_cache_id).to be_nil
       expect(Defile.cache.get(cache.id).exists?).to be_falsy
     end
 
     it "does nothing when not cached" do
       file = Defile.store.upload(Defile::FileDouble.new("hello"))
-      instance.image_id = file.id
+      instance.document_id = file.id
 
-      instance.image_attachment.store!
+      instance.document_attachment.store!
 
-      expect(Defile.store.get(instance.image_id).read).to eq("hello")
-      expect(Defile.store.get(instance.image.id).read).to eq("hello")
+      expect(Defile.store.get(instance.document_id).read).to eq("hello")
+      expect(Defile.store.get(instance.document.id).read).to eq("hello")
     end
 
     it "overwrites previously stored file" do
       file = Defile.store.upload(Defile::FileDouble.new("hello"))
-      instance.image_id = file.id
+      instance.document_id = file.id
 
-      instance.image = Defile::FileDouble.new("world")
-      cache = instance.image
+      instance.document = Defile::FileDouble.new("world")
+      cache = instance.document
 
-      instance.image_attachment.store!
+      instance.document_attachment.store!
 
-      expect(Defile.store.get(instance.image_id).read).to eq("world")
-      expect(Defile.store.get(instance.image.id).read).to eq("world")
+      expect(Defile.store.get(instance.document_id).read).to eq("world")
+      expect(Defile.store.get(instance.document.id).read).to eq("world")
 
-      expect(instance.image_cache_id).to be_nil
+      expect(instance.document_cache_id).to be_nil
       expect(Defile.cache.get(cache.id).exists?).to be_falsy
       expect(Defile.store.get(file.id).exists?).to be_falsy
     end
