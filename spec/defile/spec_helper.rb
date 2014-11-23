@@ -12,13 +12,8 @@ Defile.store = Defile::Backend::FileSystem.new(File.expand_path("default_store",
 Defile.cache = Defile::Backend::FileSystem.new(File.expand_path("default_cache", tmp_path))
 
 class Defile::FileDouble
-  def initialize(data, name=nil)
+  def initialize(data)
     @io = StringIO.new(data)
-    if name
-      singleton_class.send(:define_method, :original_filename) do
-        name
-      end
-    end
   end
 
   def read(*args)

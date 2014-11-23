@@ -1,5 +1,5 @@
 describe Defile::Attachment do
-  let(:options) { { type: :any } }
+  let(:options) { { } }
   let(:post) { Post.new }
   let(:klass) do
     opts = options
@@ -83,10 +83,10 @@ describe Defile::Attachment do
   end
 
   describe ":name_attachment.error" do
-    let(:options) { { type: %w[txt], raise_errors: false } }
+    let(:options) { { max_size: 8, raise_errors: false } }
 
     it "is blank when valid file uploaded" do
-      file = Defile::FileDouble.new("hello", "hello.txt")
+      file = Defile::FileDouble.new("hello")
       instance.document = file
 
       expect(instance.document_attachment.errors).to be_empty
@@ -94,18 +94,18 @@ describe Defile::Attachment do
     end
 
     it "contains a list of errors when invalid file uploaded" do
-      file = Defile::FileDouble.new("hello", "evil.php")
+      file = Defile::FileDouble.new("hello world")
       instance.document = file
 
-      expect(instance.document_attachment.errors).to eq([:invalid_type])
+      expect(instance.document_attachment.errors).to eq([:too_large])
       expect(instance.document).to be_nil
     end
 
     it "is reset when valid file uploaded" do
-      file = Defile::FileDouble.new("hello", "evil.php")
+      file = Defile::FileDouble.new("hello world")
       instance.document = file
 
-      file = Defile::FileDouble.new("hello", "hello.txt")
+      file = Defile::FileDouble.new("hello")
       instance.document = file
 
       expect(instance.document_attachment.errors).to be_empty
@@ -114,54 +114,28 @@ describe Defile::Attachment do
   end
 
   describe "with option `raise_errors: true" do
-    let(:options) { { type: %w[txt], raise_errors: true } }
+    let(:options) { { max_size: 8, raise_errors: true } }
 
     it "raises an error when invalid file assigned" do
-      file = Defile::FileDouble.new("hello", "evil.php")
+      file = Defile::FileDouble.new("hello world")
       expect do
         instance.document = file
       end.to raise_error(Defile::Invalid)
 
-      expect(instance.document_attachment.errors).to eq([:invalid_type])
+      expect(instance.document_attachment.errors).to eq([:too_large])
       expect(instance.document).to be_nil
     end
   end
 
   describe "with option `raise_errors: false" do
-    let(:options) { { type: %w[txt], raise_errors: false } }
+    let(:options) { { max_size: 8, raise_errors: false } }
 
     it "does not raise an error when invalid file assigned" do
-      file = Defile::FileDouble.new("hello", "evil.php")
+      file = Defile::FileDouble.new("hello world")
       instance.document = file
 
-      expect(instance.document_attachment.errors).to eq([:invalid_type])
+      expect(instance.document_attachment.errors).to eq([:too_large])
       expect(instance.document).to be_nil
-    end
-  end
-
-  describe "with option `type: :any" do
-    let(:options) { { type: :any, raise_errors: true } }
-
-    it "allows any file to be uploaded" do
-      file = Defile::FileDouble.new("hello", "evil.php")
-      instance.document = file
-
-      expect(instance.document_attachment.errors).to be_empty
-      expect(Defile.cache.get(instance.document.id).read).to eq("hello")
-    end
-  end
-
-  describe "with option `type: :image" do
-    let(:options) { { type: :image, raise_errors: true } }
-
-    it "allows images to be uploaded" do
-      instance.document = Defile::FileDouble.new("hello", "test.jpg")
-      instance.document = Defile::FileDouble.new("hello", "test.jpeg")
-      instance.document = Defile::FileDouble.new("hello", "test.gif")
-      instance.document = Defile::FileDouble.new("hello", "test.png")
-      expect do
-        instance.document = Defile::FileDouble.new("hello", "test.txt")
-      end.to raise_error(Defile::Invalid)
     end
   end
 end

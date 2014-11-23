@@ -26,7 +26,7 @@ Use the `attachment` method to use Defile in a model:
 
 ``` ruby
 class User < ActiveRecord::Base
-  attachment :profile_image, type: :image
+  attachment :profile_image
 end
 ```
 
@@ -120,38 +120,28 @@ You've already seen the `attachment` method:
 
 ``` ruby
 class User < ActiveRecord::Base
-  attachment :profile_image, type: :image
+  attachment :profile_image
 end
 ```
 
 You can also use this in pure Ruby classes like this:
 
 ``` ruby
-class User < ActiveRecord::Base
+class User
   extend Defile::Attachment
 
   attr_accessor :profile_image_id
 
-  attachment :profile_image, type: :image
+  attachment :profile_image
 end
 ```
 
-### Restrictions
+### Size restriction
 
-You may have noticed the `type` parameter. This parameter restricts which files
-can be attached. For security reasons, this parameter is mandatory. Allowed
-values are:
-
-1. The symbol `:any` allowing files with any extension
-2. The symbol `:image` which maps to allowing, `jpg`, `jpeg`, `gif` and `png`
-   These are the commonly supported image formats on the web.
-3. The name of an extension as a String, for example `"pdf"`.
-4. An array of extensions. For example `%w[pdf txt doc]`
-
-Attachment can also limit the size of uploaded files:
+You can restrict the allowable size of an uploaded file like this:
 
 ``` ruby
 class User < ActiveRecord::Base
-  attachment :profile_image, type: :image, max_size: 10.megabytes
+  attachment :profile_image, max_size: 10.megabytes
 end
 ```

@@ -113,9 +113,10 @@ module Defile
         @bucket.objects.with_prefix(@prefix).delete_all
       end
 
-      def presign
+      def presign(max_size = nil)
         id = RandomHasher.new.hash
         signature = @bucket.presigned_post(key: [*@prefix, id].join("/"))
+        signature.where(content_length: max_size) if max_size
         Signature.new(id, signature.url.to_s, signature.fields)
       end
 

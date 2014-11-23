@@ -9,7 +9,6 @@ module Defile
         @record = record
         @name = name
         @options = options
-        @options[:type] = IMAGE_TYPES if @options[:type] == :image
         @cache = Defile.backends.fetch(@options[:cache].to_s)
         @store = Defile.backends.fetch(@options[:store].to_s)
         @errors = []
@@ -32,14 +31,14 @@ module Defile
       end
 
       def file=(uploadable)
-        if valid_type?(uploadable)
+        if valid_size?(uploadable)
           @cache_file = cache.upload(uploadable)
           @cache_id = @cache_file.id
           @errors = []
         else
-          @errors = [:invalid_type]
+          @errors = [:too_large]
           if @options[:raise_errors]
-            raise Defile::Invalid, "not a valid file type, must be one of #{@options[:type]}"
+            raise Defile::Invalid, "uploaded file is too large"
           end
         end
       end
@@ -65,23 +64,22 @@ module Defile
 
     private
 
-      def valid_type?(uploadable)
-        filename = Defile.extract_filename(uploadable)
-        if filename
-          @options[:type] == :any || @options[:type].include?(::File.extname(filename)[1..-1])
+      def valid_size?(uploadable)
+        if @options[:max_size]
+          uploadable.size <= @options[:max_size]
         else
-          @options[:type] == :any
+          true
         end
       end
     end
 
-    def attachment(name, type:, max_size: Float::INFINITY, cache: :cache, store: :store, raise_errors: true)
+    def attachment(name, max_size: Float::INFINITY, cache: :cache, store: :store, raise_errors: true)
       attachment = :"#{name}_attachment"
 
       define_method attachment do
         ivar = :"@#{attachment}"
         instance_variable_get(ivar) or begin
-          instance_variable_set(ivar, Attachment.new(self, name, type: type, max_size: max_size, cache: cache, store: store, raise_errors: raise_errors))
+          instance_variable_set(ivar, Attachment.new(self, name, max_size: max_size, cache: cache, store: store, raise_errors: raise_errors))
         end
       end
 

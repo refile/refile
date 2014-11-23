@@ -1,5 +1,5 @@
 class Post < ActiveRecord::Base
-  attachment :image, type: :image
-  attachment :document, type: :any
+  attachment :image
+  attachment :document
   validates_presence_of :title
 end
