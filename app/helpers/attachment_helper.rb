@@ -20,7 +20,7 @@ module AttachmentHelper
 
   def attachment_field(object_name, method, options = {})
     if options[:object] and options[:presigned]
-      cache = options[:object].send(:"#{method}_cache_backend")
+      cache = options[:object].send(:"#{method}_attachment").cache
       if cache.respond_to?(:presign)
         signature = cache.presign
         options[:data] ||= {}
