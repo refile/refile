@@ -1,7 +1,7 @@
 module Defile
   module Attachment
     class Attachment
-      attr_reader :record, :name, :cache, :store
+      attr_reader :record, :name, :cache, :store, :cache_id
 
       def initialize(record, name, type:, max_size:, cache:, store:)
         @record = record
@@ -31,15 +31,12 @@ module Defile
         @cache_id = @cache_file.id
       end
 
-      attr_reader :cache_id
-
       def cache_id=(id)
         @cache_id = id unless @cache_file
       end
 
       def store!
         if cache_id and not cache_id == ""
-
           file = store.upload(cache.get(cache_id))
           cache.delete(cache_id)
           store.delete(id) if id
