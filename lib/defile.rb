@@ -3,6 +3,8 @@ require "fileutils"
 require "tempfile"
 
 module Defile
+  class Invalid < StandardError; end
+
   class << self
     attr_accessor :read_chunk_size, :app, :host
     attr_writer :store, :cache
@@ -47,6 +49,15 @@ module Defile
         end
       end
       true
+    end
+
+    def extract_filename(uploadable)
+      path = if uploadable.respond_to?(:original_filename)
+        uploadable.original_filename
+      elsif uploadable.respond_to?(:path)
+        uploadable.path
+      end
+      ::File.basename(path) if path
     end
   end
 

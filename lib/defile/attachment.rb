@@ -1,13 +1,18 @@
 module Defile
   module Attachment
-    class Attachment
-      attr_reader :record, :name, :cache, :store, :cache_id
+    IMAGE_TYPES = %w[jpg jpeg gif png]
 
-      def initialize(record, name, type:, max_size:, cache:, store:)
+    class Attachment
+      attr_reader :record, :name, :cache, :store, :cache_id, :options
+
+      def initialize(record, name, **options)
         @record = record
         @name = name
-        @cache = Defile.backends.fetch(cache.to_s)
-        @store = Defile.backends.fetch(store.to_s)
+        @options = options
+        @options[:type] = IMAGE_TYPES if @options[:type] == :image
+        @cache = Defile.backends.fetch(@options[:cache].to_s)
+        @store = Defile.backends.fetch(@options[:store].to_s)
+        @errors = []
       end
 
       def id
@@ -27,8 +32,16 @@ module Defile
       end
 
       def file=(uploadable)
-        @cache_file = cache.upload(uploadable)
-        @cache_id = @cache_file.id
+        if valid_type?(uploadable)
+          @cache_file = cache.upload(uploadable)
+          @cache_id = @cache_file.id
+          @errors = []
+        else
+          @errors = [:invalid_type]
+          if @options[:raise_errors]
+            raise Defile::Invalid, "not a valid file type, must be one of #{@options[:type]}"
+          end
+        end
       end
 
       def cache_id=(id)
@@ -45,15 +58,30 @@ module Defile
           @cache_file = nil
         end
       end
+
+      def errors
+        @errors
+      end
+
+    private
+
+      def valid_type?(uploadable)
+        filename = Defile.extract_filename(uploadable)
+        if filename
+          @options[:type] == :any || @options[:type].include?(::File.extname(filename)[1..-1])
+        else
+          @options[:type] == :any
+        end
+      end
     end
 
-    def attachment(name, type:, max_size: Float::INFINITY, cache: :cache, store: :store)
+    def attachment(name, type:, max_size: Float::INFINITY, cache: :cache, store: :store, raise_errors: true)
       attachment = :"#{name}_attachment"
 
       define_method attachment do
         ivar = :"@#{attachment}"
         instance_variable_get(ivar) or begin
-          instance_variable_set(ivar, Attachment.new(self, name, type: type, max_size: max_size, cache: cache, store: store))
+          instance_variable_set(ivar, Attachment.new(self, name, type: type, max_size: max_size, cache: cache, store: store, raise_errors: raise_errors))
         end
       end
 
