@@ -52,6 +52,8 @@ module Defile
         end
       end
 
+      Signature = Struct.new(:id, :url, :fields)
+
       attr_reader :access_key_id
 
       def initialize(access_key_id:, secret_access_key:, bucket:, prefix: nil, hasher: Defile::RandomHasher.new)
@@ -109,6 +111,12 @@ module Defile
       def clear!(confirm = nil)
         raise ArgumentError, "are you sure? this will remove all files in the backend, call as `clear!(:confirm)` if you're sure you want to do this" unless confirm == :confirm
         @bucket.objects.with_prefix(@prefix).delete_all
+      end
+
+      def presign
+        id = RandomHasher.new.hash
+        signature = @bucket.presigned_post(key: [*@prefix, id].join("/"))
+        Signature.new(id, signature.url.to_s, signature.fields)
       end
 
       def object(id)

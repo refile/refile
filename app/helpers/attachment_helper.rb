@@ -19,6 +19,17 @@ module AttachmentHelper
   end
 
   def attachment_field(object_name, method, options = {})
+    if options[:object] and options[:presigned]
+      cache = options[:object].send(:"#{method}_cache_backend")
+      if cache.respond_to?(:presign)
+        signature = cache.presign
+        options[:data] ||= {}
+        options[:data][:presigned] = true
+        options[:data][:id] = signature.id
+        options[:data][:url] = signature.url
+        options[:data][:fields] = signature.fields
+      end
+    end
     hidden_field(object_name, :"#{method}_cache_id", options) +
     file_field(object_name, method, options)
   end

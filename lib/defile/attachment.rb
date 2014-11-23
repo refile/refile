@@ -7,12 +7,12 @@ module Defile
       attr_writer :"#{name}_cache_id"
       attr_accessor :"#{name}_cache_file"
 
-      define_method "#{name}_store_name" do
-        store_name
+      define_method "#{name}_store_backend" do
+        store
       end
 
-      define_method "#{name}_cache_name" do
-        cache_name
+      define_method "#{name}_cache_backend" do
+        cache
       end
 
       define_method "#{name}=" do |uploadable|
