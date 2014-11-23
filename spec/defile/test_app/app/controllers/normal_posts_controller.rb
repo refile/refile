@@ -8,7 +8,7 @@ class NormalPostsController < ApplicationController
   end
 
   def create
-    @post = Post.new(params.require(:post).permit(:title, :image))
+    @post = Post.new(params.require(:post).permit(:title, :image, :image_cache_id))
 
     if @post.save
       redirect_to [:normal, @post]

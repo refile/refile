@@ -1,3 +1,5 @@
 <h1><%= @post.title %></h1<>
 
-<%= link_to "Image", attachment_url(@post, :image) %>
+<% if @post.image %>
+  <%= link_to "Image", attachment_url(@post, :image) %>
+<% end %>
