@@ -50,15 +50,6 @@ module Defile
       end
       true
     end
-
-    def extract_filename(uploadable)
-      path = if uploadable.respond_to?(:original_filename)
-        uploadable.original_filename
-      elsif uploadable.respond_to?(:path)
-        uploadable.path
-      end
-      ::File.basename(path) if path
-    end
   end
 
   require "defile/version"

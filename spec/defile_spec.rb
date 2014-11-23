@@ -24,21 +24,4 @@ RSpec.describe Defile do
       expect { Defile.verify_uploadable(double(size: 444, read: true, eof?: true)) }.to raise_error(ArgumentError)
     end
   end
-
-  describe ".extract_filename" do
-    it "extracts filename from original_filename" do
-      name = Defile.extract_filename(double(original_filename: "/foo/bar/baz.png"))
-      expect(name).to eq("baz.png")
-    end
-
-    it "extracts filename from path" do
-      name = Defile.extract_filename(double(path: "/foo/bar/baz.png"))
-      expect(name).to eq("baz.png")
-    end
-
-    it "returns nil if it can't determine filename" do
-      name = Defile.extract_filename(double)
-      expect(name).to be_nil
-    end
-  end
 end
