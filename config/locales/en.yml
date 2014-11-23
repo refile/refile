@@ -1,0 +1,5 @@
+en:
+  activerecord:
+    errors:
+      messages:
+        too_large: "is too large"

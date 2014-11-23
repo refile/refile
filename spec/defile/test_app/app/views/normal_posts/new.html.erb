@@ -1,5 +1,8 @@
 <%= form_for [:normal, @post] do |form| %>
   <p>
+    <%= @post.errors.full_messages.to_sentence %>
+  </p>
+  <p>
     <%= form.label :title %>
     <%= form.text_field :title %>
   </p>

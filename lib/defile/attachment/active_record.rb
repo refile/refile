@@ -6,8 +6,15 @@ module Defile
       def attachment(name, max_size: Float::INFINITY, cache: :cache, store: :store, raise_errors: false)
         super
 
+        attachment = "#{name}_attachment"
+
+        validate do
+          errors = send(attachment).errors
+          self.errors.add(name, *errors) unless errors.empty?
+        end
+
         before_save do
-          send("#{name}_attachment").store!
+          send(attachment).store!
         end
       end
     end
