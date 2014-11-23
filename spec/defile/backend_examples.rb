@@ -13,6 +13,10 @@ RSpec.shared_examples_for :backend do
       expect { backend.upload("hello") }.to raise_error(ArgumentError)
     end
 
+    it "raises Defile::Invalid when object is too large" do
+      expect { backend.upload(uploadable("a" * 200)) }.to raise_error(Defile::Invalid)
+    end
+
     it "stores file for later retrieval" do
       file = backend.upload(uploadable)
       retrieved = backend.get(file.id)

@@ -83,7 +83,7 @@ describe Defile::Attachment do
   end
 
   describe ":name_attachment.error" do
-    let(:options) { { max_size: 8, raise_errors: false } }
+    let(:options) { { cache: :limited_cache, raise_errors: false } }
 
     it "is blank when valid file uploaded" do
       file = Defile::FileDouble.new("hello")
@@ -94,7 +94,7 @@ describe Defile::Attachment do
     end
 
     it "contains a list of errors when invalid file uploaded" do
-      file = Defile::FileDouble.new("hello world")
+      file = Defile::FileDouble.new("a"*120)
       instance.document = file
 
       expect(instance.document_attachment.errors).to eq([:too_large])
@@ -102,7 +102,7 @@ describe Defile::Attachment do
     end
 
     it "is reset when valid file uploaded" do
-      file = Defile::FileDouble.new("hello world")
+      file = Defile::FileDouble.new("a"*120)
       instance.document = file
 
       file = Defile::FileDouble.new("hello")
@@ -114,10 +114,10 @@ describe Defile::Attachment do
   end
 
   describe "with option `raise_errors: true" do
-    let(:options) { { max_size: 8, raise_errors: true } }
+    let(:options) { { cache: :limited_cache, raise_errors: true } }
 
     it "raises an error when invalid file assigned" do
-      file = Defile::FileDouble.new("hello world")
+      file = Defile::FileDouble.new("a"*120)
       expect do
         instance.document = file
       end.to raise_error(Defile::Invalid)
@@ -128,10 +128,10 @@ describe Defile::Attachment do
   end
 
   describe "with option `raise_errors: false" do
-    let(:options) { { max_size: 8, raise_errors: false } }
+    let(:options) { { cache: :limited_cache, raise_errors: false } }
 
     it "does not raise an error when invalid file assigned" do
-      file = Defile::FileDouble.new("hello world")
+      file = Defile::FileDouble.new("a"*120)
       instance.document = file
 
       expect(instance.document_attachment.errors).to eq([:too_large])

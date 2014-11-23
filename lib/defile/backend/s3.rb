@@ -56,7 +56,7 @@ module Defile
 
       attr_reader :access_key_id
 
-      def initialize(access_key_id:, secret_access_key:, bucket:, prefix: nil, hasher: Defile::RandomHasher.new)
+      def initialize(access_key_id:, secret_access_key:, bucket:, max_size: nil, prefix: nil, hasher: Defile::RandomHasher.new)
         @access_key_id = access_key_id
         @secret_access_key = secret_access_key
         @s3 = AWS::S3.new(access_key_id: access_key_id, secret_access_key: secret_access_key)
@@ -64,10 +64,11 @@ module Defile
         @bucket = @s3.buckets[@bucket_name]
         @hasher = hasher
         @prefix = prefix
+        @max_size = max_size
       end
 
       def upload(uploadable)
-        Defile.verify_uploadable(uploadable)
+        Defile.verify_uploadable(uploadable, @max_size)
 
         id = @hasher.hash(uploadable)
 

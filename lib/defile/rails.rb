@@ -21,8 +21,8 @@ module Defile
 
   class Engine < Rails::Engine
     initializer "defile", before: :load_environment_config do
-      Defile.store = Defile::Backend::FileSystem.new(Rails.root.join("tmp/uploads/store").to_s)
-      Defile.cache = Defile::Backend::FileSystem.new(Rails.root.join("tmp/uploads/cache").to_s)
+      Defile.store ||= Defile::Backend::FileSystem.new(Rails.root.join("tmp/uploads/store").to_s)
+      Defile.cache ||= Defile::Backend::FileSystem.new(Rails.root.join("tmp/uploads/cache").to_s)
 
       Defile.app = Defile::App.new(logger: Rails.logger)
 

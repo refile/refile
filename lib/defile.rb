@@ -42,11 +42,14 @@ module Defile
       yield self
     end
 
-    def verify_uploadable(uploadable)
+    def verify_uploadable(uploadable, max_size)
       [:size, :read, :eof?, :close].each do |m|
         unless uploadable.respond_to?(m)
           raise ArgumentError, "does not respond to `#{m}`."
         end
+      end
+      if max_size and uploadable.size > max_size
+        raise Defile::Invalid, "#{uploadable.inspect} is too large"
       end
       true
     end

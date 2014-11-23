@@ -31,16 +31,12 @@ module Defile
       end
 
       def file=(uploadable)
-        if valid_size?(uploadable)
-          @cache_file = cache.upload(uploadable)
-          @cache_id = @cache_file.id
-          @errors = []
-        else
-          @errors = [:too_large]
-          if @options[:raise_errors]
-            raise Defile::Invalid, "uploaded file is too large"
-          end
-        end
+        @cache_file = cache.upload(uploadable)
+        @cache_id = @cache_file.id
+        @errors = []
+      rescue Defile::Invalid
+        @errors = [:too_large]
+        raise if @options[:raise_errors]
       end
 
       def cache_id=(id)
@@ -61,25 +57,15 @@ module Defile
       def errors
         @errors
       end
-
-    private
-
-      def valid_size?(uploadable)
-        if @options[:max_size]
-          uploadable.size <= @options[:max_size]
-        else
-          true
-        end
-      end
     end
 
-    def attachment(name, max_size: Float::INFINITY, cache: :cache, store: :store, raise_errors: true)
+    def attachment(name, cache: :cache, store: :store, raise_errors: true)
       attachment = :"#{name}_attachment"
 
       define_method attachment do
         ivar = :"@#{attachment}"
         instance_variable_get(ivar) or begin
-          instance_variable_set(ivar, Attachment.new(self, name, max_size: max_size, cache: cache, store: store, raise_errors: raise_errors))
+          instance_variable_set(ivar, Attachment.new(self, name, cache: cache, store: store, raise_errors: raise_errors))
         end
       end
 

@@ -1,15 +1,16 @@
 module Defile
   module Backend
     class FileSystem
-      def initialize(directory, hasher: Defile::RandomHasher.new)
+      def initialize(directory, max_size: nil, hasher: Defile::RandomHasher.new)
         @hasher = hasher
         @directory = directory
+        @max_size = max_size
 
         FileUtils.mkdir_p(@directory)
       end
 
       def upload(uploadable)
-        Defile.verify_uploadable(uploadable)
+        Defile.verify_uploadable(uploadable, @max_size)
 
         id = @hasher.hash(uploadable)
 

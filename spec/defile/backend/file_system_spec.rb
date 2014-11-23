@@ -1,5 +1,5 @@
 RSpec.describe Defile::Backend::FileSystem do
-  let(:backend) { Defile::Backend::FileSystem.new(File.expand_path("tmp/store1", Dir.pwd)) }
+  let(:backend) { Defile::Backend::FileSystem.new(File.expand_path("tmp/store1", Dir.pwd), max_size: 100) }
 
   it_behaves_like :backend
 

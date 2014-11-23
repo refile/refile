@@ -3,7 +3,7 @@ module Defile
     module Attachment
       include Defile::Attachment
 
-      def attachment(name, max_size: Float::INFINITY, cache: :cache, store: :store, raise_errors: false)
+      def attachment(name, cache: :cache, store: :store, raise_errors: false)
         super
 
         attachment = "#{name}_attachment"
