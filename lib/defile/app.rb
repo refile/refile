@@ -1,4 +1,5 @@
 require "logger"
+require "json"
 
 module Defile
   class App
@@ -61,8 +62,17 @@ module Defile
           @logger.debug { "Defile: must specify backend and id" }
           NOT_FOUND
         end
+      elsif env["REQUEST_METHOD"] == "POST"
+        backend_name, *rest = env["PATH_INFO"].sub(/^\//, "").split("/")
+        backend = Defile.backends[backend_name]
+
+        return NOT_FOUND unless rest.empty?
+        return NOT_FOUND unless backend and Defile.direct_upload.include?(backend_name)
+
+        file = backend.upload(Rack::Request.new(env).params.fetch("file").fetch(:tempfile))
+        [200, { "Content-Type" => "application/json" }, [{ id: file.id }.to_json]]
       else
-        @logger.debug { "Defile: request methods other than GET are not allowed" }
+        @logger.debug { "Defile: request methods other than GET and POST are not allowed" }
         NOT_FOUND
       end
     end

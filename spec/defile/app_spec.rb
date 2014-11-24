@@ -124,6 +124,14 @@ describe Defile::App do
       expect(last_response.status).to eq(404)
       expect(last_response.body).to eq("not found")
     end
+
+    it "uploads a file for direct upload backends" do
+      file = Rack::Test::UploadedFile.new(path("hello.txt"))
+      post "/cache", file: file
+
+      expect(last_response.status).to eq(200)
+      expect(JSON.parse(last_response.body)["id"]).not_to be_empty
+    end
   end
 
   it "returns a 404 if id not given" do
