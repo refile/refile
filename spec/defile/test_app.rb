@@ -43,14 +43,3 @@ Capybara.configure do |config|
 end
 
 Defile.host = "//localhost:56120"
-
-module PathHelper
-  def path(filename)
-    File.expand_path(File.join("fixtures", filename), File.dirname(__FILE__))
-  end
-end
-
-RSpec.configure do |config|
-  config.include PathHelper
-end
-

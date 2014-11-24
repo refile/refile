@@ -6,7 +6,7 @@ module Defile
   class Invalid < StandardError; end
 
   class << self
-    attr_accessor :read_chunk_size, :app, :host
+    attr_accessor :read_chunk_size, :app, :host, :direct_upload
     attr_writer :store, :cache
 
     def backends
@@ -68,4 +68,5 @@ Defile.configure do |config|
   # memory page, which seemed like a good default, is there a better
   # one?
   config.read_chunk_size = 3000
+  config.direct_upload = []
 end

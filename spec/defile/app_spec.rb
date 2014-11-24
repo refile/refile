@@ -24,7 +24,7 @@ describe Defile::App do
     Defile::App.new
   end
 
-  describe "/:backend/:id/:filename" do
+  describe "GET /:backend/:id/:filename" do
     it "returns a stored file" do
       file = Defile.store.upload(StringIO.new("hello"))
 
@@ -67,9 +67,18 @@ describe Defile::App do
         expect(last_response.headers["Access-Control-Allow-Origin"]).to eq("example.com")
       end
     end
+
+    it "returns a 404 for non get requests" do
+      file = Defile.store.upload(StringIO.new("hello"))
+
+      post "/store/#{file.id}/hello"
+
+      expect(last_response.status).to eq(404)
+      expect(last_response.body).to eq("not found")
+    end
   end
 
-  describe "/:backend/:id/:processor" do
+  describe "GET /:backend/:processor/:id/:filename" do
     it "returns 404 if processor does not exist" do
       file = Defile.store.upload(StringIO.new("hello"))
 
@@ -107,6 +116,16 @@ describe Defile::App do
     end
   end
 
+  describe "POST /:backend" do
+    it "returns 404 if backend is not marked as direct upload" do
+      file = Rack::Test::UploadedFile.new(path("hello.txt"))
+      post "/store", file: file
+
+      expect(last_response.status).to eq(404)
+      expect(last_response.body).to eq("not found")
+    end
+  end
+
   it "returns a 404 if id not given" do
     get "/store"
 
@@ -116,15 +135,6 @@ describe Defile::App do
 
   it "returns a 404 for root" do
     get "/"
-
-    expect(last_response.status).to eq(404)
-    expect(last_response.body).to eq("not found")
-  end
-
-  it "returns a 404 for non get requests" do
-    file = Defile.store.upload(StringIO.new("hello"))
-
-    post "/store/#{file.id}/hello"
 
     expect(last_response.status).to eq(404)
     expect(last_response.body).to eq("not found")

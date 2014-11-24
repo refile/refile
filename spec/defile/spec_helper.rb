@@ -12,6 +12,8 @@ Defile.store = Defile::Backend::FileSystem.new(File.expand_path("default_store",
 Defile.cache = Defile::Backend::FileSystem.new(File.expand_path("default_cache", tmp_path))
 Defile.backends["limited_cache"] = Defile::Backend::FileSystem.new(File.expand_path("default_cache", tmp_path), max_size: 100)
 
+Defile.direct_upload = ["cache"]
+
 class Defile::FileDouble
   def initialize(data)
     @io = StringIO.new(data)
@@ -33,3 +35,14 @@ class Defile::FileDouble
     @io.close
   end
 end
+
+module PathHelper
+  def path(filename)
+    File.expand_path(File.join("fixtures", filename), File.dirname(__FILE__))
+  end
+end
+
+RSpec.configure do |config|
+  config.include PathHelper
+end
+

@@ -1,6 +1,6 @@
 require "defile/test_app"
 
-feature "Direct HTTP post file uploads" do
+feature "Direct HTTP post file uploads", :js do
   scenario "Successfully upload a file" do
     visit "/direct/posts/new"
     fill_in "Title", with: "A cool post"
