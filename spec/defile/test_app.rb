@@ -42,4 +42,4 @@ Capybara.configure do |config|
   config.server_port = 56120
 end
 
-Defile.host = "//localhost:56120"
+Defile.host = "//127.0.0.1:56120"

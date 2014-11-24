@@ -12,7 +12,7 @@ Defile.store = Defile::Backend::FileSystem.new(File.expand_path("default_store",
 Defile.cache = Defile::Backend::FileSystem.new(File.expand_path("default_cache", tmp_path))
 Defile.backends["limited_cache"] = Defile::Backend::FileSystem.new(File.expand_path("default_cache", tmp_path), max_size: 100)
 
-Defile.direct_upload = ["cache"]
+Defile.direct_upload = ["cache", "limited_cache"]
 
 class Defile::FileDouble
   def initialize(data)
