@@ -68,5 +68,5 @@ Defile.configure do |config|
   # memory page, which seemed like a good default, is there a better
   # one?
   config.read_chunk_size = 3000
-  config.direct_upload = []
+  config.direct_upload = ["cache"]
 end
