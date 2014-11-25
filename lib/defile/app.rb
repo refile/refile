@@ -75,6 +75,9 @@ module Defile
         @logger.debug { "Defile: request methods other than GET and POST are not allowed" }
         NOT_FOUND
       end
+    rescue => e
+      log_error(e)
+      [500, {}, "error"]
     end
 
   private
