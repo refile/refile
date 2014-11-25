@@ -10,7 +10,17 @@ end
 
 Defile.store = Defile::Backend::FileSystem.new(File.expand_path("default_store", tmp_path))
 Defile.cache = Defile::Backend::FileSystem.new(File.expand_path("default_cache", tmp_path))
-Defile.backends["limited_cache"] = Defile::Backend::FileSystem.new(File.expand_path("default_cache", tmp_path), max_size: 100)
+
+class FakePresignBackend < Defile::Backend::FileSystem
+  Signature = Struct.new(:as, :id, :url, :fields)
+
+  def presign
+    id = Defile::RandomHasher.new.hash
+    Signature.new("file", id, "/presigned/posts/upload", { token: "xyz123", id: id })
+  end
+end
+
+Defile.backends["limited_cache"] = FakePresignBackend.new(File.expand_path("default_cache", tmp_path), max_size: 100)
 
 Defile.direct_upload = ["cache", "limited_cache"]
 

@@ -30,6 +30,7 @@ module AttachmentHelper
 
         options[:data] ||= {}
         options[:data][:direct] = true
+        options[:data][:as] = "file"
         options[:data][:url] = File.join(host, defile_app_path, backend_name)
       end
 
@@ -40,6 +41,7 @@ module AttachmentHelper
         options[:data][:id] = signature.id
         options[:data][:url] = signature.url
         options[:data][:fields] = signature.fields
+        options[:data][:as] = signature.as
       end
     end
     hidden_field(object_name, :"#{method}_cache_id", options) +

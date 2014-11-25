@@ -1,4 +1,4 @@
-<%= form_for [:direct, @post], html: { id: "direct" } do |form| %>
+<%= form_for [:presigned, @post], html: { id: "direct" } do |form| %>
   <p>
     <%= @post.errors.full_messages.to_sentence %>
   </p>
@@ -8,7 +8,7 @@
   </p>
   <p>
     <%= form.label :document %>
-    <%= form.attachment_field :document, direct: true %>
+    <%= form.attachment_field :document, presigned: true %>
   </p>
   <p>
     <%= form.submit "Create" %>

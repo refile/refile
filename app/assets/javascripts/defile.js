@@ -17,15 +17,17 @@ document.addEventListener("change", function(e) {
           data.append(key, fields[key]);
         });
       }
-      data.append("file", file);
+      data.append(input.dataset.as, file);
 
       var xhr = new XMLHttpRequest();
       xhr.addEventListener("load", function(e) {
-        if(xhr.readyState === 4) {
-          var id = JSON.parse(xhr.responseText).id;
-          input.dispatchEvent(new CustomEvent("upload:end", { detail: { id: id }, bubbles: true }));
+        if((xhr.status >= 200 && xhr.status < 300) || xhr.status === 304) {
+          var id = input.dataset.id || JSON.parse(xhr.responseText).id;
+          input.dispatchEvent(new CustomEvent("upload:end", { detail: xhr.responseText, bubbles: true }));
           input.previousSibling.value = id;
           input.removeAttribute("name");
+        } else {
+          input.dispatchEvent(new CustomEvent("upload:failure", { detail: xhr.responseText, bubbles: true }));
         }
       });
 
@@ -37,6 +39,7 @@ document.addEventListener("change", function(e) {
 
       xhr.open("POST", url, true);
       xhr.send(data);
+      window.moo = xhr;
 
       input.dispatchEvent(new CustomEvent("upload:start", { bubbles: true }));
     }

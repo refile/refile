@@ -1,0 +1,26 @@
+class PresignedPostsController < ApplicationController
+  def new
+    @post = Post.new
+  end
+
+  def create
+    @post = Post.new(params.require(:post).permit(:title, :document_cache_id))
+
+    if @post.save
+      redirect_to [:normal, @post]
+    else
+      render :new
+    end
+  end
+
+  def upload
+    if params[:token] == "xyz123"
+      File.open(File.join(Defile.backends["limited_cache"].directory, params[:id]), "wb") do |file|
+        file.write(params[:file].read)
+      end
+      render text: "token accepted"
+    else
+      render text: "token rejected", status: 403
+    end
+  end
+end

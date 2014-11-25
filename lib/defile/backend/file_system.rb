@@ -1,6 +1,8 @@
 module Defile
   module Backend
     class FileSystem
+      attr_reader :directory
+
       def initialize(directory, max_size: nil, hasher: Defile::RandomHasher.new)
         @hasher = hasher
         @directory = directory

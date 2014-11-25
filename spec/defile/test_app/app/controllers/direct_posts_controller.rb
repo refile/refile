@@ -3,10 +3,6 @@ class DirectPostsController < ApplicationController
     @post = Post.new
   end
 
-  def show
-    @post = Post.find(params[:id])
-  end
-
   def create
     @post = Post.new(params.require(:post).permit(:title, :document_cache_id))
 

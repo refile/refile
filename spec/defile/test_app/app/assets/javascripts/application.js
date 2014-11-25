@@ -16,13 +16,19 @@ document.addEventListener("DOMContentLoaded", function() {
 
     form.addEventListener("upload:end", function(e) {
       var p = document.createElement("p");
-      p.textContent = "Upload finished " + e.detail.id;
+      p.textContent = "Upload finished " + e.detail;
       form.appendChild(p);
     });
 
     form.addEventListener("upload:progress", function(e) {
       var p = document.createElement("p");
       p.textContent = "Upload progress " + e.detail.loaded + " " + e.detail.total;
+      form.appendChild(p);
+    });
+
+    form.addEventListener("upload:failure", function(e) {
+      var p = document.createElement("p");
+      p.textContent = "Upload failure " + e.detail
       form.appendChild(p);
     });
   }

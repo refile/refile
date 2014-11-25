@@ -52,7 +52,7 @@ module Defile
         end
       end
 
-      Signature = Struct.new(:id, :url, :fields)
+      Signature = Struct.new(:as, :id, :url, :fields)
 
       attr_reader :access_key_id
 
@@ -118,7 +118,7 @@ module Defile
         id = RandomHasher.new.hash
         signature = @bucket.presigned_post(key: [*@prefix, id].join("/"))
         signature.where(content_length: @max_size) if @max_size
-        Signature.new(id, signature.url.to_s, signature.fields)
+        Signature.new("file", id, signature.url.to_s, signature.fields)
       end
 
       def object(id)
