@@ -3,8 +3,6 @@ require "json"
 
 module Defile
   class App
-    NOT_FOUND = [404, {}.freeze, ["not found"].freeze]
-
     def initialize(logger: nil, allow_origin: nil)
       @logger = logger
       @logger ||= ::Logger.new(nil)
@@ -42,7 +40,7 @@ module Defile
             name = process_args.shift
             unless Defile.processors[name]
               @logger.debug { "Defile: no such processor #{name.inspect}" }
-              return NOT_FOUND
+              return not_found
             end
             file = Defile.processors[name].call(file, *process_args)
           end
@@ -51,7 +49,7 @@ module Defile
             file.read(Defile.read_chunk_size)
           rescue => e
             log_error(e)
-            return NOT_FOUND
+            return not_found
           end
 
           headers = {}
@@ -60,20 +58,20 @@ module Defile
           [200, headers, Proxy.new(peek, file)]
         else
           @logger.debug { "Defile: must specify backend and id" }
-          NOT_FOUND
+          not_found
         end
       elsif env["REQUEST_METHOD"] == "POST"
         backend_name, *rest = env["PATH_INFO"].sub(/^\//, "").split("/")
         backend = Defile.backends[backend_name]
 
-        return NOT_FOUND unless rest.empty?
-        return NOT_FOUND unless backend and Defile.direct_upload.include?(backend_name)
+        return not_found unless rest.empty?
+        return not_found unless backend and Defile.direct_upload.include?(backend_name)
 
         file = backend.upload(Rack::Request.new(env).params.fetch("file").fetch(:tempfile))
         [200, { "Content-Type" => "application/json" }, [{ id: file.id }.to_json]]
       else
         @logger.debug { "Defile: request methods other than GET and POST are not allowed" }
-        NOT_FOUND
+        not_found
       end
     rescue => e
       log_error(e)
@@ -81,6 +79,10 @@ module Defile
     end
 
   private
+
+    def not_found
+      [404, {}.freeze, ["not found"].freeze]
+    end
 
     def log_error(e)
       if @logger.debug?
