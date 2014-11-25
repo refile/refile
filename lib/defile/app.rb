@@ -81,7 +81,7 @@ module Defile
   private
 
     def not_found
-      [404, {}.freeze, ["not found"].freeze]
+      [404, {}, ["not found"]]
     end
 
     def log_error(e)
