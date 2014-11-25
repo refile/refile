@@ -21,6 +21,7 @@ document.addEventListener("change", function(e) {
 
       var xhr = new XMLHttpRequest();
       xhr.addEventListener("load", function(e) {
+        input.classList.remove("uploading")
         if((xhr.status >= 200 && xhr.status < 300) || xhr.status === 304) {
           var id = input.dataset.id || JSON.parse(xhr.responseText).id;
           input.dispatchEvent(new CustomEvent("upload:end", { detail: xhr.responseText, bubbles: true }));
@@ -39,8 +40,8 @@ document.addEventListener("change", function(e) {
 
       xhr.open("POST", url, true);
       xhr.send(data);
-      window.moo = xhr;
 
+      input.classList.add("uploading")
       input.dispatchEvent(new CustomEvent("upload:start", { bubbles: true }));
     }
   }
