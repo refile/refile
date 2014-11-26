@@ -210,8 +210,16 @@ application. It cannot generate URLs to your files. This means that you should
 **always** put a CDN or other HTTP cache in front of your application. Serving
 files through your app takes a lot of resources and you want it to happen rarely.
 
-This restriction, while onerous, is at the same time what makes Defile so easy
-and pleasant to use.
+Setting this up is actually quite simple, you can use the same CDN you would use
+for your application's static assets. [This blog post](http://www.happybearsoftware.com/use-cloudfront-and-the-rails-asset-pipeline-to-speed-up-your-app.html)
+explains how to set this up (bonus: faster static assets!). Once you've set this
+up, simply configure Defile to use your CDN:
+
+``` ruby
+Defile.host = "//your-dist-url.cloudfront.net"
+```
+
+Using a [procol-relative URL](http://www.paulirish.com/2010/the-protocol-relative-url/) for `Defile.host` is recommended.
 
 ### Mounting
 
