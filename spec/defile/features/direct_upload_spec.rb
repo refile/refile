@@ -17,14 +17,13 @@ feature "Direct HTTP post file uploads", :js do
     expect(result).to eq("hello")
   end
 
-  pending "Fail to upload a file that is too large" do
+  scenario "Fail to upload a file that is too large" do
     visit "/direct/posts/new"
     fill_in "Title", with: "A cool post"
     attach_file "Document", path("large.txt")
-    click_button "Create"
 
     expect(page).to have_content("Upload started")
-    expect(page).to have_content("Upload failed too large")
+    expect(page).to have_content("Upload failure error")
   end
 end
 

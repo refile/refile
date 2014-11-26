@@ -15,10 +15,14 @@ class PresignedPostsController < ApplicationController
 
   def upload
     if params[:token] == "xyz123"
-      File.open(File.join(Defile.backends["limited_cache"].directory, params[:id]), "wb") do |file|
-        file.write(params[:file].read)
+      if params[:file].size < 100
+        File.open(File.join(Defile.backends["limited_cache"].directory, params[:id]), "wb") do |file|
+          file.write(params[:file].read)
+        end
+        render text: "token accepted"
+      else
+        render text: "too large", status: 413
       end
-      render text: "token accepted"
     else
       render text: "token rejected", status: 403
     end
