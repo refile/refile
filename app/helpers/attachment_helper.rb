@@ -44,7 +44,7 @@ module AttachmentHelper
         options[:data][:as] = signature.as
       end
     end
-    hidden_field(object_name, :"#{method}_cache_id", options) +
+    hidden_field(object_name, :"#{method}_cache_id", options.slice(:object)) +
     file_field(object_name, method, options)
   end
 end
