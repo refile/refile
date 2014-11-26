@@ -430,6 +430,12 @@ production mode.
 <%= form.attachment_field :profile_image, direct: true, presigned: true %>
 ```
 
+### Browser compatibility
+
+Defile's JavaScript library requires HTML5 features which are unavailable on
+IE9 and earlier versions. All other major browsers are supported. Note though
+that it has not yet been extensively tested.
+
 ## Cache expiry
 
 Files will accumulate in your cache, and you'll probably want to remove them
