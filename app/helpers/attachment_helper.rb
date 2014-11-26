@@ -12,11 +12,13 @@ module AttachmentHelper
 
   def attachment_image_tag(record, name, *args, fallback: nil, format: nil, **options)
     file = record.send(name)
+    classes = ["attachment", record.class.model_name.singular, name, *options[:class]]
 
     if file
-      image_tag(attachment_url(record, name, *args, format: format), options)
+      image_tag(attachment_url(record, name, *args, format: format), options.merge(class: classes))
     elsif fallback
-      image_tag(fallback, options)
+      classes << "fallback"
+      image_tag(fallback, options.merge(class: classes))
     end
   end
 
