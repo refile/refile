@@ -10,8 +10,8 @@ Features:
 - Convenient integration with ORMs
 - On the fly manipulation of images and other files
 - Streaming IO for fast and memory friendly uploads
-- Smooth Rails integration
 - Works across form redisplays, i.e. when validations fail, even on S3
+- Effortless direct uploads, even to S3
 
 ## Quick start, Rails
 
@@ -45,6 +45,14 @@ Add an attachment field to your form:
 <% end %>
 ```
 
+Set up strong parameters:
+
+``` ruby
+def user_params
+  params.require(:user).permit(:profile_image, :profile_image_cache_id)
+end
+```
+
 And start uploading! Finally show the file in your view:
 
 ``` erb
@@ -53,11 +61,13 @@ And start uploading! Finally show the file in your view:
 
 ## How it works
 
-Defile consists of three parts:
+Defile consists of several parts:
 
-1. Backends, cache and persist files
-2. Model attachments, map files to model columns
-3. Rack middleware, streams files and optionally manipulates them
+1. Backends: cache and persist files
+2. Model attachments: map files to model columns
+3. A Rack application: streams files and accepts uploads
+4. Rails helpers: conveniently generate markup in your views
+4. A JavaScript library: facilitates direct uploads
 
 Let's look at each of these in more detail!
 
@@ -79,14 +89,15 @@ backend.get(file.id).read # => "hello"
 ```
 
 As you may notice, backends are "flat". Files do not have directories, nor do
-they have names, they are only identified by their ID.
+they have names or permissions, they are only identified by their ID.
 
 Defile has a global registry of backends, accessed through `Defile.backends`.
 
 There are two "special" backends, which are only really special in that they
-are the default backends for attachments. They are `cache` and `store`. The
-cache is intended to be transient. Files are added here before they are meant
-to be permanently stored. Usually files are then moved to the store for
+are the default backends for attachments. They are `cache` and `store`.
+
+The cache is intended to be transient. Files are added here before they are
+meant to be permanently stored. Usually files are then moved to the store for
 permanent storage, but this isn't always the case.
 
 Suppose for example that a user uploads a file in a form and receives a
@@ -95,7 +106,7 @@ cache. The user might decide to fix the error and resubmit, at which point the
 file will be promoted to the store. On the other hand, the user might simply
 give up and leave, now the file is left in the cache for later cleanup.
 
-Defile has convenient accessor for setting the `cache` and `store`, so for
+Defile has convenient accessors for setting the `cache` and `store`, so for
 example you can switch to the S3 backend like this:
 
 ``` ruby
@@ -121,6 +132,16 @@ For example:
 Defile.cache = Defile::Backend::S3.new(max_size: 10.megabytes, ...)
 ```
 
+### Uploadable
+
+The `upload` method on backends can be called with a variety of objects. It
+requires that the object passed to it behaves similarly to Ruby IO objects, in
+particular it must implement the methods `size`, `read(length = nil, buffer =
+nil)`, `eof?` and `close`. All of `File`, `Tempfile`,
+`ActionDispath::UploadedFile` and `StringIO` implement this interface, however
+`String` does not. If you want to upload a file from a `String` you must wrap
+it in a `StringIO` first.
+
 ## 2. Attachments
 
 You've already seen the `attachment` method:
@@ -131,7 +152,42 @@ class User < ActiveRecord::Base
 end
 ```
 
-You can also use this in pure Ruby classes like this:
+Calling `attachment` generates a getter and setter with the given name. When
+you assign a file to the setter, it is uploaded to the cache:
+
+``` ruby
+User.new
+
+# with a ActionDispatch::UploadedFile
+user.profile_image = params[:file]
+
+# with a regular File object
+File.open("/some/path", "rb") do |file|
+  user.profile_image = file
+end
+
+# or a StringIO
+user.profile_image = StringIO.new("hello world")
+
+user.profile_image.id # => "fec421..."
+user.profile_image.read # => "hello world"
+```
+
+When you call `save` on the record, the uploaded file is transferred from the
+cache to the store. Where possible, Defile does this move efficiently. For example
+if both `cache` and `store` are on the same S3 account, instead of downloading
+the file and uploading it again, Defile will simply issue a copy command to S3.
+
+### Other ORMs
+
+Defile is built to integrate with ORMs other than ActiveRecord, but this being
+a very young gem, such integrations do not yet exist. Take a look at the [ActiveRecord
+integration](lib/defile/attachment/active_record.rb), building your own should
+not be too difficult.
+
+### Pure Ruby classes
+
+You can also use attachments in pure Ruby classes like this:
 
 ``` ruby
 class User
@@ -143,3 +199,262 @@ class User
 end
 ```
 
+## 3. Rack Application
+
+Defile includes a Rack application (an endpoint, not a middleware). This application
+streams files from backends and can even accept file uploads and upload them to
+backends.
+
+**Important:** Unlike other file upload solutions, Defile always streams your files thorugh your
+application. It cannot generate URLs to your files. This means that you should
+**always** put a CDN or other HTTP cache in front of your application. Serving
+files through your app takes a lot of resources and you want it to happen rarely.
+
+This restriction, while onerous, is at the same time what makes Defile so easy
+and pleasant to use.
+
+### Mounting
+
+If you are using Rails and have required [defile/rails.rb](lib/defile/rails.rb),
+then the Rack application is mounted for you at `/attachments`. You should be able
+to see this when you run `rake routes`.
+
+You could also run the application on its own, it doesn't need to be mounted to
+work.
+
+### Retrieving files
+
+Files can be retrieved from the application by calling:
+
+```
+GET /attachments/:backend_name/:id/:filename
+```
+
+The `:filename` serves no other purpose than generating a nice name when the user
+downloads the file, it does not in any way affect the downloaded file. For caching
+purposes you should always use the same filename for the same file. The Rails helpers
+default this to the name of the column.
+
+### Processing
+
+Defile provides on the fly processing of files. You can trigger it by calling
+a URL like this:
+
+```
+GET /attachments/:backend_name/:processor_name/*args/:id/:filename
+```
+
+Suppose we have uploaded a file:
+
+``` ruby
+Defile.cache.upload(StringIO.new("hello")).id # => "a4e8ce"
+```
+
+And we've defined a processor like this:
+
+``` ruby
+Defile.processor :reverse do |file|
+  StringIO.new(file.read.reverse)
+end
+```
+
+Then you could do the following.
+
+``` sh
+curl http://127.0.0.1:3000/attachments/cache/reverse/a4e8ce/some_file.txt
+elloh
+```
+
+Defile calls `call` on the processor and passes in the retrieved file, as well
+as all additional arguments sent through the URL. See the
+[built in image processors](lib/defile/image_processing.rb) for a more advanced
+example.
+
+## 4. Rails helpers
+
+Defile provides the `attachment_field` form helper which generates a file field
+as well as a hidden field, suffixed with `cache_id`. This field keeps track of
+the file in case it is not yet permanently stored, for example if validations
+fail. It is also used for direct and presigned uploads. For this reason it is
+highly recommended to use `attachment_field` instead of `file_field`.
+
+``` erb
+<%= form_for @user do |form| %>
+  <%= form.attachment_field :profile_image %>
+<% end %>
+```
+
+Will generate something like:
+
+``` html
+<form action="/users" enctype="multipart/form-data" method="post">
+  <input name="user[profile_image_cache_id]" type="hidden">
+  <input name="user[profile_image]" type="file">
+</form>
+```
+
+The `attachment_url` helper can then be used for generating URLs for the uploaded
+files:
+
+``` erb
+<%= image_tag attachment_url(@user, :profile_image) %>
+```
+
+Any additional arguments to it are included in the URL as processor arguments:
+
+``` erb
+<%= image_tag attachment_url(@user, :profile_image, :fill, 300, 300) %>
+```
+
+## 5. JavaScript library
+
+Defile's JavaScript library is small but powerful.
+
+Uploading files is slow, so anything we can do to speed up the process is going
+to lead to happier users. One way to cheat is to start uploading files directly
+after the user has chosen a file, instead of waiting until they hit the submit
+button. This provides a significantly better user experience. Implementing this
+is usually tricky, but thankfully Defile makes it very easy.
+
+First, load the JavaScript file. If you're using the asset pipeline, you can
+simply include it like this:
+
+``` javascript
+//= require defile
+```
+
+Otherwise you can grab a copy [here](https://raw.githubusercontent.com/jnicklas/defile/master/app/assets/javascripts/defile.js).
+
+Now mark the field for direct upload:
+
+``` erb
+<%= form.attachment_field :profile_image, direct: true %>
+```
+
+There is no step 3 ;)
+
+The file is now uploaded to the `cache` immediately after the user chooses a file.
+If you try this in the browser, you'll notice that an AJAX request is fired as
+soon as you choose a file. Then when you submit to the server, the file is no
+longer submitted, only its id.
+
+If you want to improve the experience of this, the JavaScript library fires
+a couple of custom DOM events. These events bubble, so you can also listen for
+them on the form for example:
+
+``` javascript
+form.addEventListener("upload:start", function() {
+  // ...
+});
+
+form.addEventListener("upload:success", function() {
+  // ...
+});
+
+input.addEventListener("upload:progress", function() {
+  // ...
+});
+```
+
+You can also listen for them with jQuery, even with event delegation:
+
+``` javascript
+$(document).on("upload:start", "form", function(e) {
+  // ...
+});
+```
+
+This way you could for example disable the submit button until all files have
+uploaded:
+
+``` javascript
+$(document).on("upload:start", "form", function(e) {
+  $(this).find("input[type=submit]").attr("disabled", true)
+});
+
+$(document).on("upload:complete", "form", function(e) {
+  if(!$(this).find("input.uploading").length) {
+    $(this).find("input[type=submit]").removeAttr("disabled")
+  }
+});
+```
+
+### Presigned uploads
+
+Amazon S3 supports uploads directly from the browser to S3 buckets. With this
+feature you can bypass your application entirely; uploads never hit your application
+at all. Unfortunately the default configuration of S3 buckets does not allow
+cross site AJAX requests from posting to buckets. Fixing this is easy though.
+
+- Open the AWS S3 console and locate your bucket
+- Right click on it and choose "Properties"
+- Open the "Permission" section
+- Click "Add CORS Configuration"
+
+The default configuration only allows "GET", you'll want to allow "POST" as well.
+It could look something like this:
+
+``` xml
+<CORSConfiguration>
+    <CORSRule>
+        <AllowedOrigin>*</AllowedOrigin>
+        <AllowedMethod>GET</AllowedMethod>
+        <AllowedMethod>POST</AllowedMethod>
+        <MaxAgeSeconds>3000</MaxAgeSeconds>
+        <AllowedHeader>Authorization</AllowedHeader>
+    </CORSRule>
+</CORSConfiguration>
+```
+
+If you're paranoid you can restrict the allowed origin to only your domain, but
+since your bucket is only writable with authentication anyway, this shouldn't
+be necessary.
+
+Note that you do not need to, and in fact you shouldn't, make your bucket world
+writable.
+
+Once you've put in the new configuration, click "Save".
+
+Now you can enable presigned uploads:
+
+``` erb
+<%= form.attachment_field :profile_image, presigned: true %>
+```
+
+You can also enable both direct and presigned uploads, and it'll fall back to
+direct uploads if presigned uploads aren't available. This is useful if you're
+using the FileSystem backend in development or test mode and the S3 backend in
+production mode.
+
+``` erb
+<%= form.attachment_field :profile_image, direct: true, presigned: true %>
+```
+
+## Cache expiry
+
+Files will accumulate in your cache, and you'll probably want to remove them
+after some time.
+
+The FileSystem backend does not currently provide any method of doing this. PRs
+welcome ;)
+
+On S3 this can be conveniently handled through lifecycle rules. Exactly how
+depends a bit on your setup. If you are using the suggested setup of having
+one bucket with `cache` and `store` being directories in that bucket (or prefixes
+in S3 parlance), then follow the following steps, otherwise adapt them to your
+needs:
+
+- Open the AWS S3 console and locate your bucket
+- Right click on it and choose "Properties"
+- Open the "Lifecycle" section
+- Click "Add rule"
+- Choose "Apply the rule to: A prefix"
+- Enter "cache/" as the prefix (trailing slash!)
+- Click "Configure rule"
+- For "Action on Objects" you'll probably want to choose "Permanently Delete Only"
+- Choose whatever number of days you're comfortable with, I chose "1"
+- Click "Review" and finally "Create and activate Rule"
+
+## License
+
+[MIT](LICENSE.txt)
