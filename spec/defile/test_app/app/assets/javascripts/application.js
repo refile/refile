@@ -1,3 +1,4 @@
+//= require jquery
 //= require defile
 
 "use strict";
@@ -14,9 +15,9 @@ document.addEventListener("DOMContentLoaded", function() {
       form.appendChild(p);
     });
 
-    form.addEventListener("upload:end", function(e) {
+    form.addEventListener("upload:complete", function(e) {
       var p = document.createElement("p");
-      p.textContent = "Upload finished " + e.detail;
+      p.textContent = "Upload complete " + e.detail;
       form.appendChild(p);
     });
 
@@ -32,4 +33,8 @@ document.addEventListener("DOMContentLoaded", function() {
       form.appendChild(p);
     });
   }
+});
+
+$(document).on("upload:success", "form#direct", function(e) {
+  $("<p></p>").text("Upload success " + e.originalEvent.detail).appendTo(this);
 });

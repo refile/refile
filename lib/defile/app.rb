@@ -75,7 +75,7 @@ module Defile
       end
     rescue => e
       log_error(e)
-      [500, {}, "error"]
+      [500, {}, ["error"]]
     end
 
   private

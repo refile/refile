@@ -2,6 +2,7 @@ require "rails/all"
 
 require "defile"
 require "defile/rails"
+require "jquery/rails"
 
 module Defile
   class TestApp < Rails::Application

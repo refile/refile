@@ -22,9 +22,10 @@ document.addEventListener("change", function(e) {
       var xhr = new XMLHttpRequest();
       xhr.addEventListener("load", function(e) {
         input.classList.remove("uploading")
+        input.dispatchEvent(new CustomEvent("upload:complete", { detail: xhr.responseText, bubbles: true }));
         if((xhr.status >= 200 && xhr.status < 300) || xhr.status === 304) {
           var id = input.dataset.id || JSON.parse(xhr.responseText).id;
-          input.dispatchEvent(new CustomEvent("upload:end", { detail: xhr.responseText, bubbles: true }));
+          input.dispatchEvent(new CustomEvent("upload:success", { detail: xhr.responseText, bubbles: true }));
           input.previousSibling.value = id;
           input.removeAttribute("name");
         } else {

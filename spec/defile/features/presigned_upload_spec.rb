@@ -7,7 +7,8 @@ feature "Direct HTTP post file uploads", :js do
     attach_file "Document", path("hello.txt")
 
     expect(page).to have_content("Upload started")
-    expect(page).to have_content("Upload finished token accepted")
+    expect(page).to have_content("Upload complete token accepted")
+    expect(page).to have_content("Upload success token accepted")
 
     click_button "Create"
 
