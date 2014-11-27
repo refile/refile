@@ -1,5 +1,7 @@
 # Defile
 
+[![Build Status](https://travis-ci.org/elabs/defile.svg?branch=master)](https://travis-ci.org/elabs/defile)
+
 Defile is a modern file upload library for Ruby applications. It is simple, yet
 powerful. Defile is an attempt by CarrierWave's original author to fix the
 design mistakes and overengineering in CarrierWave.
