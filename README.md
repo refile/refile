@@ -331,7 +331,7 @@ simply include it like this:
 //= require defile
 ```
 
-Otherwise you can grab a copy [here](https://raw.githubusercontent.com/jnicklas/defile/master/app/assets/javascripts/defile.js).
+Otherwise you can grab a copy [here](https://raw.githubusercontent.com/elabs/defile/master/app/assets/javascripts/defile.js).
 
 Now mark the field for direct upload:
 
