@@ -5,7 +5,7 @@ require 'refile/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "refile"
-  spec.version       = Defile::VERSION
+  spec.version       = Refile::VERSION
   spec.authors       = ["Jonas Nicklas"]
   spec.email         = ["jonas.nicklas@gmail.com"]
   spec.summary       = %q{Simple and powerful file upload library}

@@ -2,7 +2,7 @@ require "uri"
 require "fileutils"
 require "tempfile"
 
-module Defile
+module Refile
   class Invalid < StandardError; end
 
   class << self
@@ -49,7 +49,7 @@ module Defile
         end
       end
       if max_size and uploadable.size > max_size
-        raise Defile::Invalid, "#{uploadable.inspect} is too large"
+        raise Refile::Invalid, "#{uploadable.inspect} is too large"
       end
       true
     end
@@ -63,7 +63,7 @@ module Defile
   require "refile/backend/file_system"
 end
 
-Defile.configure do |config|
+Refile.configure do |config|
   # FIXME: what is a sane default here? This is a little less than a
   # memory page, which seemed like a good default, is there a better
   # one?

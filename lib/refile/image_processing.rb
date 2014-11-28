@@ -1,7 +1,7 @@
 require "refile"
 require "mini_magick"
 
-module Defile
+module Refile
   class ImageProcessor
     def initialize(method)
       @method = method
@@ -69,5 +69,5 @@ module Defile
 end
 
 [:fill, :fit, :limit, :pad, :convert].each do |name|
-  Defile.processor(name, Defile::ImageProcessor.new(name))
+  Refile.processor(name, Refile::ImageProcessor.new(name))
 end

@@ -1,4 +1,4 @@
-module Defile
+module Refile
   class File
     attr_reader :backend, :id
 
@@ -49,7 +49,7 @@ module Defile
     def each
       if block_given?
         until eof?
-          yield(read(Defile.read_chunk_size))
+          yield(read(Refile.read_chunk_size))
         end
       else
         to_enum

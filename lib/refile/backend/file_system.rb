@@ -1,9 +1,9 @@
-module Defile
+module Refile
   module Backend
     class FileSystem
       attr_reader :directory
 
-      def initialize(directory, max_size: nil, hasher: Defile::RandomHasher.new)
+      def initialize(directory, max_size: nil, hasher: Refile::RandomHasher.new)
         @hasher = hasher
         @directory = directory
         @max_size = max_size
@@ -12,7 +12,7 @@ module Defile
       end
 
       def upload(uploadable)
-        Defile.verify_uploadable(uploadable, @max_size)
+        Refile.verify_uploadable(uploadable, @max_size)
 
         id = @hasher.hash(uploadable)
 
@@ -22,18 +22,18 @@ module Defile
           ::File.open(path(id), "wb") do |file|
             buffer = "" # reuse the same buffer
             until uploadable.eof?
-              uploadable.read(Defile.read_chunk_size, buffer)
+              uploadable.read(Refile.read_chunk_size, buffer)
               file.write(buffer)
             end
             uploadable.close
           end
         end
 
-        Defile::File.new(self, id)
+        Refile::File.new(self, id)
       end
 
       def get(id)
-        Defile::File.new(self, id)
+        Refile::File.new(self, id)
       end
 
       def delete(id)

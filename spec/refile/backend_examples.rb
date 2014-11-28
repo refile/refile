@@ -1,6 +1,6 @@
 RSpec.shared_examples_for :backend do
   def uploadable(data = "hello")
-    Defile::FileDouble.new(data)
+    Refile::FileDouble.new(data)
   end
 
   def open_files
@@ -13,8 +13,8 @@ RSpec.shared_examples_for :backend do
       expect { backend.upload("hello") }.to raise_error(ArgumentError)
     end
 
-    it "raises Defile::Invalid when object is too large" do
-      expect { backend.upload(uploadable("a" * 200)) }.to raise_error(Defile::Invalid)
+    it "raises Refile::Invalid when object is too large" do
+      expect { backend.upload(uploadable("a" * 200)) }.to raise_error(Refile::Invalid)
     end
 
     it "stores file for later retrieval" do

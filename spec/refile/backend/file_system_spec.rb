@@ -1,5 +1,5 @@
-RSpec.describe Defile::Backend::FileSystem do
-  let(:backend) { Defile::Backend::FileSystem.new(File.expand_path("tmp/store1", Dir.pwd), max_size: 100) }
+RSpec.describe Refile::Backend::FileSystem do
+  let(:backend) { Refile::Backend::FileSystem.new(File.expand_path("tmp/store1", Dir.pwd), max_size: 100) }
 
   it_behaves_like :backend
 
@@ -8,7 +8,7 @@ RSpec.describe Defile::Backend::FileSystem do
       path = File.expand_path("tmp/test.txt", Dir.pwd)
       File.write(path, "hello")
 
-      uploadable = Defile::FileDouble.new("wrong")
+      uploadable = Refile::FileDouble.new("wrong")
       allow(uploadable).to receive(:path).and_return(path)
 
       file = backend.upload(uploadable)
@@ -19,7 +19,7 @@ RSpec.describe Defile::Backend::FileSystem do
     it "ignores path if it doesn't exist" do
       path = File.expand_path("tmp/doesnotexist.txt", Dir.pwd)
 
-      uploadable = Defile::FileDouble.new("yes")
+      uploadable = Refile::FileDouble.new("yes")
       allow(uploadable).to receive(:path).and_return(path)
 
       file = backend.upload(uploadable)

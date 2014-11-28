@@ -4,10 +4,10 @@ require "refile"
 require "refile/rails"
 require "jquery/rails"
 
-module Defile
+module Refile
   class TestApp < Rails::Application
     config.secret_token = '6805012ab1750f461ef3c531bdce84c0'
-    config.session_store :cookie_store, :key => '_defile_session'
+    config.session_store :cookie_store, :key => '_refile_session'
     config.active_support.deprecation = :log
     config.eager_load = false
     config.action_dispatch.show_exceptions = false
@@ -43,4 +43,4 @@ Capybara.configure do |config|
   config.server_port = 56120
 end
 
-Defile.host = "//127.0.0.1:56120"
+Refile.host = "//127.0.0.1:56120"

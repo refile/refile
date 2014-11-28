@@ -1,4 +1,4 @@
-Defile::TestApp.routes.draw do
+Refile::TestApp.routes.draw do
   root to: "home#index"
 
   scope path: "normal", as: "normal" do

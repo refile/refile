@@ -1,7 +1,7 @@
-module Defile
+module Refile
   module ActiveRecord
     module Attachment
-      include Defile::Attachment
+      include Refile::Attachment
 
       def attachment(name, cache: :cache, store: :store, raise_errors: false)
         super
@@ -21,4 +21,4 @@ module Defile
   end
 end
 
-::ActiveRecord::Base.extend(Defile::ActiveRecord::Attachment)
+::ActiveRecord::Base.extend(Refile::ActiveRecord::Attachment)

@@ -1,12 +1,12 @@
 require "rack/test"
 
-Defile.processor(:reverse) do |file|
+Refile.processor(:reverse) do |file|
   StringIO.new(file.read.reverse)
 end
 
-Defile.processor(:upcase, proc { |file| StringIO.new(file.read.upcase) })
+Refile.processor(:upcase, proc { |file| StringIO.new(file.read.upcase) })
 
-Defile.processor(:concat) do |file, *words|
+Refile.processor(:concat) do |file, *words|
   content = File.read(file.download.path)
   tempfile = Tempfile.new("concat")
   tempfile.write(content)
@@ -17,16 +17,16 @@ Defile.processor(:concat) do |file, *words|
   File.open(tempfile.path, "r")
 end
 
-describe Defile::App do
+describe Refile::App do
   include Rack::Test::Methods
 
   def app
-    Defile::App.new
+    Refile::App.new
   end
 
   describe "GET /:backend/:id/:filename" do
     it "returns a stored file" do
-      file = Defile.store.upload(StringIO.new("hello"))
+      file = Refile.store.upload(StringIO.new("hello"))
 
       get "/store/#{file.id}/hello"
 
@@ -35,7 +35,7 @@ describe Defile::App do
     end
 
     it "returns a 404 if the file doesn't exist" do
-      file = Defile.store.upload(StringIO.new("hello"))
+      file = Refile.store.upload(StringIO.new("hello"))
 
       get "/store/doesnotexist/hello"
 
@@ -44,7 +44,7 @@ describe Defile::App do
     end
 
     it "returns a 404 if the backend doesn't exist" do
-      file = Defile.store.upload(StringIO.new("hello"))
+      file = Refile.store.upload(StringIO.new("hello"))
 
       get "/doesnotexist/#{file.id}/hello"
 
@@ -54,11 +54,11 @@ describe Defile::App do
 
     context "with allow origin" do
       def app
-        Defile::App.new(allow_origin: "example.com")
+        Refile::App.new(allow_origin: "example.com")
       end
 
       it "sets CORS header" do
-        file = Defile.store.upload(StringIO.new("hello"))
+        file = Refile.store.upload(StringIO.new("hello"))
 
         get "/store/#{file.id}/hello"
 
@@ -69,7 +69,7 @@ describe Defile::App do
     end
 
     it "returns a 404 for non get requests" do
-      file = Defile.store.upload(StringIO.new("hello"))
+      file = Refile.store.upload(StringIO.new("hello"))
 
       post "/store/#{file.id}/hello"
 
@@ -80,7 +80,7 @@ describe Defile::App do
 
   describe "GET /:backend/:processor/:id/:filename" do
     it "returns 404 if processor does not exist" do
-      file = Defile.store.upload(StringIO.new("hello"))
+      file = Refile.store.upload(StringIO.new("hello"))
 
       get "/store/doesnotexist/#{file.id}/hello"
 
@@ -89,7 +89,7 @@ describe Defile::App do
     end
 
     it "applies block processor to file" do
-      file = Defile.store.upload(StringIO.new("hello"))
+      file = Refile.store.upload(StringIO.new("hello"))
 
       get "/store/reverse/#{file.id}/hello"
 
@@ -98,7 +98,7 @@ describe Defile::App do
     end
 
     it "applies object processor to file" do
-      file = Defile.store.upload(StringIO.new("hello"))
+      file = Refile.store.upload(StringIO.new("hello"))
 
       get "/store/upcase/#{file.id}/hello"
 
@@ -107,7 +107,7 @@ describe Defile::App do
     end
 
     it "applies processor with arguments" do
-      file = Defile.store.upload(StringIO.new("hello"))
+      file = Refile.store.upload(StringIO.new("hello"))
 
       get "/store/concat/foo/bar/baz/#{file.id}/hello"
 

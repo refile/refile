@@ -1,9 +1,9 @@
 require "refile"
 
-module Defile
+module Refile
   module Controller
     def show
-      file = Defile.backends.fetch(params[:backend_name]).get(params[:id])
+      file = Refile.backends.fetch(params[:backend_name]).get(params[:id])
 
       options = { disposition: "inline" }
       options[:type] = Mime::Type.lookup_by_extension(params[:format]).to_s if params[:format]
@@ -21,10 +21,10 @@ module Defile
 
   class Engine < Rails::Engine
     initializer "refile", before: :load_environment_config do
-      Defile.store ||= Defile::Backend::FileSystem.new(Rails.root.join("tmp/uploads/store").to_s)
-      Defile.cache ||= Defile::Backend::FileSystem.new(Rails.root.join("tmp/uploads/cache").to_s)
+      Refile.store ||= Refile::Backend::FileSystem.new(Rails.root.join("tmp/uploads/store").to_s)
+      Refile.cache ||= Refile::Backend::FileSystem.new(Rails.root.join("tmp/uploads/cache").to_s)
 
-      Defile.app = Defile::App.new(logger: Rails.logger)
+      Refile.app = Refile::App.new(logger: Rails.logger)
 
       ActiveSupport.on_load :active_record do
         require "refile/attachment/active_record"

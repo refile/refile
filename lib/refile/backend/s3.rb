@@ -1,6 +1,6 @@
 require "aws-sdk"
 
-module Defile
+module Refile
   module Backend
     class S3
       # Emulates an IO-object like interface on top of S3Object#read. To avoid
@@ -56,7 +56,7 @@ module Defile
 
       attr_reader :access_key_id
 
-      def initialize(access_key_id:, secret_access_key:, bucket:, max_size: nil, prefix: nil, hasher: Defile::RandomHasher.new)
+      def initialize(access_key_id:, secret_access_key:, bucket:, max_size: nil, prefix: nil, hasher: Refile::RandomHasher.new)
         @access_key_id = access_key_id
         @secret_access_key = secret_access_key
         @s3 = AWS::S3.new(access_key_id: access_key_id, secret_access_key: secret_access_key)
@@ -68,21 +68,21 @@ module Defile
       end
 
       def upload(uploadable)
-        Defile.verify_uploadable(uploadable, @max_size)
+        Refile.verify_uploadable(uploadable, @max_size)
 
         id = @hasher.hash(uploadable)
 
-        if uploadable.is_a?(Defile::File) and uploadable.backend.is_a?(S3) and uploadable.backend.access_key_id == access_key_id
+        if uploadable.is_a?(Refile::File) and uploadable.backend.is_a?(S3) and uploadable.backend.access_key_id == access_key_id
           uploadable.backend.object(uploadable.id).copy_to(object(id))
         else
           object(id).write(uploadable, content_length: uploadable.size)
         end
 
-        Defile::File.new(self, id)
+        Refile::File.new(self, id)
       end
 
       def get(id)
-        Defile::File.new(self, id)
+        Refile::File.new(self, id)
       end
 
       def delete(id)

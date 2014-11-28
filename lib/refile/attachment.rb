@@ -1,4 +1,4 @@
-module Defile
+module Refile
   module Attachment
     IMAGE_TYPES = %w[jpg jpeg gif png]
 
@@ -9,8 +9,8 @@ module Defile
         @record = record
         @name = name
         @options = options
-        @cache = Defile.backends.fetch(@options[:cache].to_s)
-        @store = Defile.backends.fetch(@options[:store].to_s)
+        @cache = Refile.backends.fetch(@options[:cache].to_s)
+        @store = Refile.backends.fetch(@options[:store].to_s)
         @errors = []
       end
 
@@ -34,7 +34,7 @@ module Defile
         @cache_file = cache.upload(uploadable)
         @cache_id = @cache_file.id
         @errors = []
-      rescue Defile::Invalid
+      rescue Refile::Invalid
         @errors = [:too_large]
         raise if @options[:raise_errors]
       end
