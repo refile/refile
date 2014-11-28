@@ -1,4 +1,4 @@
-require "defile/test_app"
+require "refile/test_app"
 
 feature "Normal HTTP Post file uploads" do
   scenario "Successfully upload a file" do

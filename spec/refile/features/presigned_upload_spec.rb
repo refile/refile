@@ -1,14 +1,14 @@
-require "defile/test_app"
+require "refile/test_app"
 
 feature "Direct HTTP post file uploads", :js do
   scenario "Successfully upload a file" do
-    visit "/direct/posts/new"
+    visit "/presigned/posts/new"
     fill_in "Title", with: "A cool post"
     attach_file "Document", path("hello.txt")
 
     expect(page).to have_content("Upload started")
-    expect(page).to have_content("Upload success")
-    expect(page).to have_content("Upload complete")
+    expect(page).to have_content("Upload complete token accepted")
+    expect(page).to have_content("Upload success token accepted")
 
     click_button "Create"
 
@@ -18,12 +18,12 @@ feature "Direct HTTP post file uploads", :js do
   end
 
   scenario "Fail to upload a file that is too large" do
-    visit "/direct/posts/new"
+    visit "/presigned/posts/new"
     fill_in "Title", with: "A cool post"
     attach_file "Document", path("large.txt")
 
     expect(page).to have_content("Upload started")
-    expect(page).to have_content("Upload failure error")
+    expect(page).to have_content("Upload failure too large")
   end
 end
 

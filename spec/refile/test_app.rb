@@ -1,7 +1,7 @@
 require "rails/all"
 
-require "defile"
-require "defile/rails"
+require "refile"
+require "refile/rails"
 require "jquery/rails"
 
 module Defile
@@ -37,7 +37,7 @@ require "rspec"
 require "rspec/rails"
 require "capybara/rails"
 require "capybara/rspec"
-require "defile/spec_helper"
+require "refile/spec_helper"
 
 Capybara.configure do |config|
   config.server_port = 56120

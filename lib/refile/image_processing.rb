@@ -1,4 +1,4 @@
-require "defile"
+require "refile"
 require "mini_magick"
 
 module Defile

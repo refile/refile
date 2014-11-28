@@ -1,6 +1,6 @@
 require "pry"
-require "defile"
-require "defile/backend_examples"
+require "refile"
+require "refile/backend_examples"
 
 tmp_path = Dir.mktmpdir
 

@@ -22,6 +22,6 @@ tmp
 mkmf.log
 
 s3.yml
-spec/defile/test_app/log
-spec/defile/test_app/tmp
-spec/defile/test_app/db/*.sqlite
+spec/refile/test_app/log
+spec/refile/test_app/tmp
+spec/refile/test_app/db/*.sqlite

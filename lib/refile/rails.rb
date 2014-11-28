@@ -1,4 +1,4 @@
-require "defile"
+require "refile"
 
 module Defile
   module Controller
@@ -20,14 +20,14 @@ module Defile
   end
 
   class Engine < Rails::Engine
-    initializer "defile", before: :load_environment_config do
+    initializer "refile", before: :load_environment_config do
       Defile.store ||= Defile::Backend::FileSystem.new(Rails.root.join("tmp/uploads/store").to_s)
       Defile.cache ||= Defile::Backend::FileSystem.new(Rails.root.join("tmp/uploads/cache").to_s)
 
       Defile.app = Defile::App.new(logger: Rails.logger)
 
       ActiveSupport.on_load :active_record do
-        require "defile/attachment/active_record"
+        require "refile/attachment/active_record"
       end
 
       ActionView::Helpers::FormBuilder.send(:include, AttachmentFieldHelper)

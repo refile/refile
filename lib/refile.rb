@@ -55,12 +55,12 @@ module Defile
     end
   end
 
-  require "defile/version"
-  require "defile/attachment"
-  require "defile/random_hasher"
-  require "defile/file"
-  require "defile/app"
-  require "defile/backend/file_system"
+  require "refile/version"
+  require "refile/attachment"
+  require "refile/random_hasher"
+  require "refile/file"
+  require "refile/app"
+  require "refile/backend/file_system"
 end
 
 Defile.configure do |config|

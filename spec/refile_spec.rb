@@ -1,4 +1,4 @@
-require "defile"
+require "refile"
 
 RSpec.describe Defile do
   let(:io) { StringIO.new("hello") }
