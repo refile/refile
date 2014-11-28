@@ -1,9 +1,9 @@
-# Defile
+# Refile
 
-[![Build Status](https://travis-ci.org/elabs/defile.svg?branch=master)](https://travis-ci.org/elabs/defile)
+[![Build Status](https://travis-ci.org/elabs/refile.svg?branch=master)](https://travis-ci.org/elabs/refile)
 
-Defile is a modern file upload library for Ruby applications. It is simple, yet
-powerful. Defile is an attempt by CarrierWave's original author to fix the
+Refile is a modern file upload library for Ruby applications. It is simple, yet
+powerful. Refile is an attempt by CarrierWave's original author to fix the
 design mistakes and overengineering in CarrierWave.
 
 Features:
@@ -21,10 +21,10 @@ Add the gem:
 
 ``` ruby
 gem "mini_magick"
-gem "defile", require: ["defile/rails", "defile/image_processing"]
+gem "refile", require: ["refile/rails", "refile/image_processing"]
 ```
 
-Use the `attachment` method to use Defile in a model:
+Use the `attachment` method to use Refile in a model:
 
 ``` ruby
 class User < ActiveRecord::Base
@@ -63,7 +63,7 @@ And start uploading! Finally show the file in your view:
 
 ## How it works
 
-Defile consists of several parts:
+Refile consists of several parts:
 
 1. Backends: cache and persist files
 2. Model attachments: map files to model columns
@@ -81,7 +81,7 @@ will be unique for this file within the backend.
 Let's look at a simple example of using the backend:
 
 ``` ruby
-backend = Defile::Backend::FileSystem.new("tmp")
+backend = Refile::Backend::FileSystem.new("tmp")
 
 file = backend.upload(StringIO.new("hello"))
 file.id # => "b205bc..."
@@ -93,7 +93,7 @@ backend.get(file.id).read # => "hello"
 As you may notice, backends are "flat". Files do not have directories, nor do
 they have names or permissions, they are only identified by their ID.
 
-Defile has a global registry of backends, accessed through `Defile.backends`.
+Refile has a global registry of backends, accessed through `Refile.backends`.
 
 There are two "special" backends, which are only really special in that they
 are the default backends for attachments. They are `cache` and `store`.
@@ -108,20 +108,20 @@ cache. The user might decide to fix the error and resubmit, at which point the
 file will be promoted to the store. On the other hand, the user might simply
 give up and leave, now the file is left in the cache for later cleanup.
 
-Defile has convenient accessors for setting the `cache` and `store`, so for
+Refile has convenient accessors for setting the `cache` and `store`, so for
 example you can switch to the S3 backend like this:
 
 ``` ruby
-# config/initializers/defile.rb
-require "defile/backend/s3"
+# config/initializers/refile.rb
+require "refile/backend/s3"
 
 aws = {
   access_key_id: "xyz",
   secret_access_key: "abc",
   bucket: "my-bucket",
 }
-Defile.cache = Defile::Backend::S3.new(prefix: "cache", **aws)
-Defile.store = Defile::Backend::S3.new(prefix: "store", **aws)
+Refile.cache = Refile::Backend::S3.new(prefix: "cache", **aws)
+Refile.store = Refile::Backend::S3.new(prefix: "store", **aws)
 ```
 
 Try this in the quick start example above and your files are now uploaded to
@@ -131,7 +131,7 @@ Backends also provide the option of restricting the size of files they accept.
 For example:
 
 ``` ruby
-Defile.cache = Defile::Backend::S3.new(max_size: 10.megabytes, ...)
+Refile.cache = Refile::Backend::S3.new(max_size: 10.megabytes, ...)
 ```
 
 ### Uploadable
@@ -176,15 +176,15 @@ user.profile_image.read # => "hello world"
 ```
 
 When you call `save` on the record, the uploaded file is transferred from the
-cache to the store. Where possible, Defile does this move efficiently. For example
+cache to the store. Where possible, Refile does this move efficiently. For example
 if both `cache` and `store` are on the same S3 account, instead of downloading
-the file and uploading it again, Defile will simply issue a copy command to S3.
+the file and uploading it again, Refile will simply issue a copy command to S3.
 
 ### Other ORMs
 
-Defile is built to integrate with ORMs other than ActiveRecord, but this being
+Refile is built to integrate with ORMs other than ActiveRecord, but this being
 a very young gem, such integrations do not yet exist. Take a look at the [ActiveRecord
-integration](lib/defile/attachment/active_record.rb), building your own should
+integration](lib/refile/attachment/active_record.rb), building your own should
 not be too difficult.
 
 ### Pure Ruby classes
@@ -193,7 +193,7 @@ You can also use attachments in pure Ruby classes like this:
 
 ``` ruby
 class User
-  extend Defile::Attachment
+  extend Refile::Attachment
 
   attr_accessor :profile_image_id
 
@@ -203,11 +203,11 @@ end
 
 ## 3. Rack Application
 
-Defile includes a Rack application (an endpoint, not a middleware). This application
+Refile includes a Rack application (an endpoint, not a middleware). This application
 streams files from backends and can even accept file uploads and upload them to
 backends.
 
-**Important:** Unlike other file upload solutions, Defile always streams your files thorugh your
+**Important:** Unlike other file upload solutions, Refile always streams your files thorugh your
 application. It cannot generate URLs to your files. This means that you should
 **always** put a CDN or other HTTP cache in front of your application. Serving
 files through your app takes a lot of resources and you want it to happen rarely.
@@ -215,17 +215,17 @@ files through your app takes a lot of resources and you want it to happen rarely
 Setting this up is actually quite simple, you can use the same CDN you would use
 for your application's static assets. [This blog post](http://www.happybearsoftware.com/use-cloudfront-and-the-rails-asset-pipeline-to-speed-up-your-app.html)
 explains how to set this up (bonus: faster static assets!). Once you've set this
-up, simply configure Defile to use your CDN:
+up, simply configure Refile to use your CDN:
 
 ``` ruby
-Defile.host = "//your-dist-url.cloudfront.net"
+Refile.host = "//your-dist-url.cloudfront.net"
 ```
 
-Using a [procol-relative URL](http://www.paulirish.com/2010/the-protocol-relative-url/) for `Defile.host` is recommended.
+Using a [procol-relative URL](http://www.paulirish.com/2010/the-protocol-relative-url/) for `Refile.host` is recommended.
 
 ### Mounting
 
-If you are using Rails and have required [defile/rails.rb](lib/defile/rails.rb),
+If you are using Rails and have required [refile/rails.rb](lib/refile/rails.rb),
 then the Rack application is mounted for you at `/attachments`. You should be able
 to see this when you run `rake routes`.
 
@@ -247,7 +247,7 @@ default this to the name of the column.
 
 ### Processing
 
-Defile provides on the fly processing of files. You can trigger it by calling
+Refile provides on the fly processing of files. You can trigger it by calling
 a URL like this:
 
 ```
@@ -257,13 +257,13 @@ GET /attachments/:backend_name/:processor_name/*args/:id/:filename
 Suppose we have uploaded a file:
 
 ``` ruby
-Defile.cache.upload(StringIO.new("hello")).id # => "a4e8ce"
+Refile.cache.upload(StringIO.new("hello")).id # => "a4e8ce"
 ```
 
 And we've defined a processor like this:
 
 ``` ruby
-Defile.processor :reverse do |file|
+Refile.processor :reverse do |file|
   StringIO.new(file.read.reverse)
 end
 ```
@@ -275,14 +275,14 @@ curl http://127.0.0.1:3000/attachments/cache/reverse/a4e8ce/some_file.txt
 elloh
 ```
 
-Defile calls `call` on the processor and passes in the retrieved file, as well
+Refile calls `call` on the processor and passes in the retrieved file, as well
 as all additional arguments sent through the URL. See the
-[built in image processors](lib/defile/image_processing.rb) for a more advanced
+[built in image processors](lib/refile/image_processing.rb) for a more advanced
 example.
 
 ## 4. Rails helpers
 
-Defile provides the `attachment_field` form helper which generates a file field
+Refile provides the `attachment_field` form helper which generates a file field
 as well as a hidden field, suffixed with `cache_id`. This field keeps track of
 the file in case it is not yet permanently stored, for example if validations
 fail. It is also used for direct and presigned uploads. For this reason it is
@@ -318,22 +318,22 @@ Any additional arguments to it are included in the URL as processor arguments:
 
 ## 5. JavaScript library
 
-Defile's JavaScript library is small but powerful.
+Refile's JavaScript library is small but powerful.
 
 Uploading files is slow, so anything we can do to speed up the process is going
 to lead to happier users. One way to cheat is to start uploading files directly
 after the user has chosen a file, instead of waiting until they hit the submit
 button. This provides a significantly better user experience. Implementing this
-is usually tricky, but thankfully Defile makes it very easy.
+is usually tricky, but thankfully Refile makes it very easy.
 
 First, load the JavaScript file. If you're using the asset pipeline, you can
 simply include it like this:
 
 ``` javascript
-//= require defile
+//= require refile
 ```
 
-Otherwise you can grab a copy [here](https://raw.githubusercontent.com/elabs/defile/master/app/assets/javascripts/defile.js).
+Otherwise you can grab a copy [here](https://raw.githubusercontent.com/elabs/refile/master/app/assets/javascripts/refile.js).
 
 Now mark the field for direct upload:
 
@@ -442,7 +442,7 @@ production mode.
 
 ### Browser compatibility
 
-Defile's JavaScript library requires HTML5 features which are unavailable on
+Refile's JavaScript library requires HTML5 features which are unavailable on
 IE9 and earlier versions. All other major browsers are supported. Note though
 that it has not yet been extensively tested.
 

@@ -1,3 +1,3 @@
 Rails.application.routes.draw do
-  mount Defile.app, at: "attachments", as: :defile_app
+  mount Refile.app, at: "attachments", as: :refile_app
 end
