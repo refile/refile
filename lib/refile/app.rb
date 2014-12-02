@@ -59,6 +59,7 @@ module Refile
 
         [200, headers, Proxy.new(peek, file)]
       elsif env["REQUEST_METHOD"] == "POST" and backend and args.empty? and Refile.direct_upload.include?(backend_name)
+        @logger.debug { "Refile: uploading to #{backend_name} backend which is of type #{backend.class}" }
 
         tempfile = Rack::Request.new(env).params.fetch("file").fetch(:tempfile)
         file = backend.upload(tempfile)
