@@ -33,6 +33,7 @@ module Refile
 
       if env["REQUEST_METHOD"] == "GET" and backend and args.length >= 2
         *process_args, id, filename = args
+        format = ::File.extname(filename)[1..-1]
 
         @logger.debug { "Refile: serving #{id.inspect} from #{backend_name} backend which is of type #{backend.class}" }
 
@@ -40,11 +41,13 @@ module Refile
 
         unless process_args.empty?
           name = process_args.shift
+          options = {}
+          options[:format] = format if format
           unless Refile.processors[name]
             @logger.debug { "Refile: no such processor #{name.inspect}" }
             return not_found
           end
-          file = Refile.processors[name].call(file, *process_args)
+          file = Refile.processors[name].call(file, *process_args, **options)
         end
 
         peek = begin

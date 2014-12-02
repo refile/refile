@@ -6,7 +6,7 @@ end
 
 Refile.processor(:upcase, proc { |file| StringIO.new(file.read.upcase) })
 
-Refile.processor(:concat) do |file, *words|
+Refile.processor(:concat) do |file, *words, format: nil|
   content = File.read(file.download.path)
   tempfile = Tempfile.new("concat")
   tempfile.write(content)
@@ -15,6 +15,14 @@ Refile.processor(:concat) do |file, *words|
   end
   tempfile.close
   File.open(tempfile.path, "r")
+end
+
+Refile.processor(:convert_html) do |file, format:|
+  if format == "html"
+    StringIO.new("<html>#{file.read}</html>")
+  else
+    file
+  end
 end
 
 describe Refile::App do
@@ -113,6 +121,15 @@ describe Refile::App do
 
       expect(last_response.status).to eq(200)
       expect(last_response.body).to eq("hellofoobarbaz")
+    end
+
+    it "applies processor with format" do
+      file = Refile.store.upload(StringIO.new("hello"))
+
+      get "/store/convert_html/#{file.id}/hello.html"
+
+      expect(last_response.status).to eq(200)
+      expect(last_response.body).to eq("<html>hello</html>")
     end
   end
 
