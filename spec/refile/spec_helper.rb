@@ -24,6 +24,32 @@ Refile.backends["limited_cache"] = FakePresignBackend.new(File.expand_path("defa
 
 Refile.direct_upload = ["cache", "limited_cache"]
 
+Refile.processor(:reverse) do |file|
+  StringIO.new(file.read.reverse)
+end
+
+Refile.processor(:upcase, proc { |file| StringIO.new(file.read.upcase) })
+
+Refile.processor(:concat) do |file, *words, format: nil|
+  content = File.read(file.download.path)
+  tempfile = Tempfile.new("concat")
+  tempfile.write(content)
+  words.each do |word|
+    tempfile.write(word)
+  end
+  tempfile.close
+  File.open(tempfile.path, "r")
+end
+
+Refile.processor(:convert_html) do |file, format:|
+  if format == "html"
+    StringIO.new("<html>#{file.read}</html>")
+  else
+    file
+  end
+end
+
+
 class Refile::FileDouble
   def initialize(data)
     @io = StringIO.new(data)
