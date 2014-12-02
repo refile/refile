@@ -27,47 +27,42 @@ module Refile
 
     def call(env)
       @logger.info { "Refile: #{env["REQUEST_METHOD"]} #{env["PATH_INFO"]}" }
-      if env["REQUEST_METHOD"] == "GET"
-        backend_name, *process_args, id, filename = env["PATH_INFO"].sub(/^\//, "").split("/")
-        backend = Refile.backends[backend_name]
 
-        if backend and id
-          @logger.debug { "Refile: serving #{id.inspect} from #{backend_name} backend which is of type #{backend.class}" }
+      backend_name, *args = env["PATH_INFO"].sub(/^\//, "").split("/")
+      backend = Refile.backends[backend_name]
 
-          file = backend.get(id)
+      if env["REQUEST_METHOD"] == "GET" and backend and args.length >= 2
+        *process_args, id, filename = args
 
-          unless process_args.empty?
-            name = process_args.shift
-            unless Refile.processors[name]
-              @logger.debug { "Refile: no such processor #{name.inspect}" }
-              return not_found
-            end
-            file = Refile.processors[name].call(file, *process_args)
-          end
+        @logger.debug { "Refile: serving #{id.inspect} from #{backend_name} backend which is of type #{backend.class}" }
 
-          peek = begin
-            file.read(Refile.read_chunk_size)
-          rescue => e
-            log_error(e)
+        file = backend.get(id)
+
+        unless process_args.empty?
+          name = process_args.shift
+          unless Refile.processors[name]
+            @logger.debug { "Refile: no such processor #{name.inspect}" }
             return not_found
           end
-
-          headers = {}
-          headers["Access-Control-Allow-Origin"] = @allow_origin if @allow_origin
-
-          [200, headers, Proxy.new(peek, file)]
-        else
-          @logger.debug { "Refile: must specify backend and id" }
-          not_found
+          file = Refile.processors[name].call(file, *process_args)
         end
-      elsif env["REQUEST_METHOD"] == "POST"
-        backend_name, *rest = env["PATH_INFO"].sub(/^\//, "").split("/")
-        backend = Refile.backends[backend_name]
 
-        return not_found unless rest.empty?
-        return not_found unless backend and Refile.direct_upload.include?(backend_name)
+        peek = begin
+          file.read(Refile.read_chunk_size)
+        rescue => e
+          log_error(e)
+          return not_found
+        end
 
-        file = backend.upload(Rack::Request.new(env).params.fetch("file").fetch(:tempfile))
+        headers = {}
+        headers["Access-Control-Allow-Origin"] = @allow_origin if @allow_origin
+
+        [200, headers, Proxy.new(peek, file)]
+      elsif env["REQUEST_METHOD"] == "POST" and backend and args.empty? and Refile.direct_upload.include?(backend_name)
+
+        tempfile = Rack::Request.new(env).params.fetch("file").fetch(:tempfile)
+        file = backend.upload(tempfile)
+
         [200, { "Content-Type" => "application/json" }, [{ id: file.id }.to_json]]
       else
         @logger.debug { "Refile: request methods other than GET and POST are not allowed" }
