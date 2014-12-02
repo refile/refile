@@ -401,7 +401,9 @@ cross site AJAX requests from posting to buckets. Fixing this is easy though.
 - Open the "Permission" section
 - Click "Add CORS Configuration"
 
-The default configuration only allows "GET", you'll want to allow "POST" as well.
+The default configuration only allows "GET", you'll want to allow "POST" as
+well. You'll also want to permit the "Content-Type" header.
+
 It could look something like this:
 
 ``` xml
@@ -412,6 +414,7 @@ It could look something like this:
         <AllowedMethod>POST</AllowedMethod>
         <MaxAgeSeconds>3000</MaxAgeSeconds>
         <AllowedHeader>Authorization</AllowedHeader>
+        <AllowedHeader>Content-Type</AllowedHeader>
     </CORSRule>
 </CORSConfiguration>
 ```

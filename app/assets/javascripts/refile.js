@@ -34,7 +34,7 @@
           }
         });
 
-        xhr.addEventListener("progress", function(e) {
+        xhr.upload.addEventListener("progress", function(e) {
           if (e.lengthComputable) {
             input.dispatchEvent(new CustomEvent("upload:progress", { detail: e, bubbles: true }));
           }
