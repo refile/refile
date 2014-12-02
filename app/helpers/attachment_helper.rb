@@ -7,7 +7,10 @@ module AttachmentHelper
     backend_name = Refile.backends.key(file.backend)
     host = Refile.host || root_url
 
-    File.join(host, refile_app_path, backend_name, *args.map(&:to_s), file.id, filename.parameterize("_"))
+    filename = filename.parameterize("_")
+    filename << "." << format.to_s if format
+
+    File.join(host, refile_app_path, backend_name, *args.map(&:to_s), file.id, filename)
   end
 
   def attachment_image_tag(record, name, *args, fallback: nil, format: nil, **options)

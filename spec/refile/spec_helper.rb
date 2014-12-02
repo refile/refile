@@ -41,11 +41,11 @@ Refile.processor(:concat) do |file, *words, format: nil|
   File.open(tempfile.path, "r")
 end
 
-Refile.processor(:convert_html) do |file, format:|
-  if format == "html"
-    StringIO.new("<html>#{file.read}</html>")
-  else
-    file
+Refile.processor(:convert_case) do |file, format:|
+  case format
+    when "up" then StringIO.new(file.read.upcase)
+    when "down" then StringIO.new(file.read.downcase)
+    else file
   end
 end
 

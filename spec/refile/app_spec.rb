@@ -101,10 +101,10 @@ describe Refile::App do
     it "applies processor with format" do
       file = Refile.store.upload(StringIO.new("hello"))
 
-      get "/store/convert_html/#{file.id}/hello.html"
+      get "/store/convert_case/#{file.id}/hello.up"
 
       expect(last_response.status).to eq(200)
-      expect(last_response.body).to eq("<html>hello</html>")
+      expect(last_response.body).to eq("HELLO")
     end
   end
 

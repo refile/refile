@@ -33,4 +33,15 @@ feature "Normal HTTP Post file uploads" do
     click_link("Document")
     expect(page.source.chomp).to eq("hello")
   end
+
+  scenario "Format conversion" do
+    visit "/normal/posts/new"
+    fill_in "Title", with: "A cool post"
+    attach_file "Document", path("hello.txt")
+    click_button "Create"
+
+    expect(page).to have_selector("h1", text: "A cool post")
+    click_link("Convert to Upper")
+    expect(page.source.chomp).to eq("HELLO")
+  end
 end
