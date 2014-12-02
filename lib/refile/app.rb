@@ -41,13 +41,16 @@ module Refile
 
         unless process_args.empty?
           name = process_args.shift
-          options = {}
-          options[:format] = format if format
-          unless Refile.processors[name]
+          processor = Refile.processors[name]
+          unless processor
             @logger.debug { "Refile: no such processor #{name.inspect}" }
             return not_found
           end
-          file = Refile.processors[name].call(file, *process_args, **options)
+          file = if format
+            processor.call(file, *process_args, format: format)
+          else
+            processor.call(file, *process_args)
+          end
         end
 
         peek = begin
@@ -69,7 +72,6 @@ module Refile
 
         [200, { "Content-Type" => "application/json" }, [{ id: file.id }.to_json]]
       else
-        @logger.debug { "Refile: request methods other than GET and POST are not allowed" }
         not_found
       end
     rescue => e
