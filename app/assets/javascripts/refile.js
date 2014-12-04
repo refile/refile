@@ -26,9 +26,9 @@
           input.dispatchEvent(new CustomEvent("upload:complete", { detail: xhr.responseText, bubbles: true }));
           if((xhr.status >= 200 && xhr.status < 300) || xhr.status === 304) {
             var id = input.dataset.id || JSON.parse(xhr.responseText).id;
-            input.dispatchEvent(new CustomEvent("upload:success", { detail: xhr.responseText, bubbles: true }));
             input.previousSibling.value = id;
             input.removeAttribute("name");
+            input.dispatchEvent(new CustomEvent("upload:success", { detail: xhr.responseText, bubbles: true }));
           } else {
             input.dispatchEvent(new CustomEvent("upload:failure", { detail: xhr.responseText, bubbles: true }));
           }
