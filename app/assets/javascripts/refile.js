@@ -33,9 +33,9 @@
           dispatchEvent("upload:complete", xhr.responseText);
           if((xhr.status >= 200 && xhr.status < 300) || xhr.status === 304) {
             var id = input.getAttribute("data-id") || JSON.parse(xhr.responseText).id;
-            dispatchEvent("upload:success", xhr.responseText);
             input.previousSibling.value = id;
             input.removeAttribute("name");
+            dispatchEvent("upload:success", xhr.responseText);
           } else {
             dispatchEvent("upload:failure", xhr.responseText);
           }
