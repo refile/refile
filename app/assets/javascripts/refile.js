@@ -2,13 +2,20 @@
   "use strict";
 
   document.addEventListener("change", function(e) {
-    if(e.target.tagName === "INPUT" && e.target.type === "file" && e.target.dataset.direct) {
+    if(e.target.tagName === "INPUT" && e.target.type === "file" && e.target.getAttribute("data-direct")) {
       var input = e.target;
       var file = input.files[0];
+
+      var dispatchEvent = function(name, detail) {
+        var ev = document.createEvent('CustomEvent');
+        ev.initCustomEvent(name, true, false, detail);
+        input.dispatchEvent(ev);
+      }
+
       if(file) {
-        var url = e.target.dataset.url;
-        if(e.target.dataset.fields) {
-          var fields = JSON.parse(e.target.dataset.fields);
+        var url = e.target.getAttribute("data-url");
+        if(e.target.getAttribute("data-fields")) {
+          var fields = JSON.parse(e.target.getAttribute("data-fields"));
         }
 
         var data = new FormData();
@@ -18,25 +25,25 @@
             data.append(key, fields[key]);
           });
         }
-        data.append(input.dataset.as, file);
+        data.append(input.getAttribute("data-as"), file);
 
         var xhr = new XMLHttpRequest();
         xhr.addEventListener("load", function(e) {
           input.classList.remove("uploading")
-          input.dispatchEvent(new CustomEvent("upload:complete", { detail: xhr.responseText, bubbles: true }));
+          dispatchEvent("upload:complete", xhr.responseText);
           if((xhr.status >= 200 && xhr.status < 300) || xhr.status === 304) {
-            var id = input.dataset.id || JSON.parse(xhr.responseText).id;
-            input.dispatchEvent(new CustomEvent("upload:success", { detail: xhr.responseText, bubbles: true }));
+            var id = input.getAttribute("data-id") || JSON.parse(xhr.responseText).id;
+            dispatchEvent("upload:success", xhr.responseText);
             input.previousSibling.value = id;
             input.removeAttribute("name");
           } else {
-            input.dispatchEvent(new CustomEvent("upload:failure", { detail: xhr.responseText, bubbles: true }));
+            dispatchEvent("upload:failure", xhr.responseText);
           }
         });
 
         xhr.upload.addEventListener("progress", function(e) {
           if (e.lengthComputable) {
-            input.dispatchEvent(new CustomEvent("upload:progress", { detail: e, bubbles: true }));
+            dispatchEvent("upload:progress", e);
           }
         });
 
@@ -44,7 +51,7 @@
         xhr.send(data);
 
         input.classList.add("uploading")
-        input.dispatchEvent(new CustomEvent("upload:start", { bubbles: true }));
+        dispatchEvent("upload:start");
       }
     }
   });
