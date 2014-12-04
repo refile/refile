@@ -39,6 +39,16 @@ require "capybara/rails"
 require "capybara/rspec"
 require "refile/spec_helper"
 
+if ENV["SAUCE_BROWSER"]
+  Capybara.register_driver :selenium do |app|
+    url = "http://#{ENV["SAUCE_USERNAME"]}:#{ENV["SAUCE_ACCESS_KEY"]}@localhost:4445/wd/hub"
+    capabilities = { browserName: ENV["SAUCE_BROWSER"], version: ENV["SAUCE_VERSION"] }
+    driver = Capybara::Selenium::Driver.new(app, browser: :remote, url: url, desired_capabilities: capabilities)
+    driver.browser.file_detector = lambda { |args| args.first if File.exist?(args.first) }
+    driver
+  end
+end
+
 Capybara.configure do |config|
   config.server_port = 56120
 end
