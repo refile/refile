@@ -1,9 +1,12 @@
 (function() {
   "use strict";
 
+  if(!document.addEventListener) { return }; // IE8
+
   document.addEventListener("change", function(e) {
     if(e.target.tagName === "INPUT" && e.target.type === "file" && e.target.getAttribute("data-direct")) {
       var input = e.target;
+      if(!input.files) { return; } // IE9, bail out if file API is not supported.
       var file = input.files[0];
 
       var dispatchEvent = function(name, detail) {
