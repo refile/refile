@@ -5,7 +5,7 @@ module AttachmentHelper
     filename ||= name.to_s
 
     backend_name = Refile.backends.key(file.backend)
-    host = Refile.host || root_url
+    host = Refile.host || request.base_url
 
     filename = filename.parameterize("_")
     filename << "." << format.to_s if format
@@ -30,7 +30,7 @@ module AttachmentHelper
       cache = options[:object].send(:"#{method}_attachment").cache
 
       if options[:direct]
-        host = Refile.host || root_url
+        host = Refile.host || request.base_url
         backend_name = Refile.backends.key(cache)
 
         options[:data] ||= {}
