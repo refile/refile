@@ -56,9 +56,10 @@ module Refile
       end
     end
 
-    def call(file, *args)
+    def call(file, *args, format: nil)
       path = file.download.path
       img = ::MiniMagick::Image.open(path)
+      img.format(format.to_s.downcase) if format
       send(@method, img, *args)
 
       img.write(path)

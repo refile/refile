@@ -1,3 +1,9 @@
+# 0.2.4
+
+Release date: 2014-12-08
+
+- [ADDED] Supports format option with image processing
+
 # 0.2.3
 
 Release date: 2014-12-08
