@@ -44,18 +44,30 @@ module Refile
       end
 
       def store!
-        if cache_id and not cache_id == ""
+        if cached?
           file = store.upload(cache.get(cache_id))
-          cache.delete(cache_id)
-          store.delete(id) if id
+          delete!
           self.id = file.id
+        end
+      end
+
+      def delete!
+        if cached?
+          cache.delete(cache_id)
           @cache_id = nil
           @cache_file = nil
         end
+        store.delete(id) if id
       end
 
       def errors
         @errors
+      end
+
+      private
+
+      def cached?
+        cache_id and not cache_id == ""
       end
     end
 
