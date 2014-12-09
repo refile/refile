@@ -312,13 +312,26 @@ The `attachment_url` helper can then be used for generating URLs for the uploade
 files:
 
 ``` erb
-<%= image_tag attachment_url(@user, :profile_image) %>
+<%= link_to "Image", attachment_url(@user, :profile_image) %>
 ```
 
 Any additional arguments to it are included in the URL as processor arguments:
 
 ``` erb
-<%= image_tag attachment_url(@user, :profile_image, :fill, 300, 300) %>
+<%= link_to "Image", attachment_url(@user, :profile_image, :fill, 300, 300) %>
+```
+
+There's also a helper for generating image tags:
+
+``` erb
+<%= attachment_image_tag(@user, :profile_image, :fill, 300, 300) %>
+```
+
+With this helper you can specify an image which is used as a fallback in case
+no file has been uploaded:
+
+``` erb
+<%= attachment_image_tag(@user, :profile_image, :fill, 300, 300, fallback: "defaul.png") %>
 ```
 
 ## 5. JavaScript library
