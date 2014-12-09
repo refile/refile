@@ -26,9 +26,12 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "jquery-rails"
   spec.add_development_dependency "capybara"
   spec.add_development_dependency "pry"
+  spec.add_development_dependency "pry-byebug"
+  spec.add_development_dependency "pry-stack_explorer"
   spec.add_development_dependency "aws-sdk"
   spec.add_development_dependency "rack-test", "~> 0.6.2"
   spec.add_development_dependency "rails", "~> 4.1.8"
   spec.add_development_dependency "sqlite3"
+  spec.add_development_dependency "pg"
   spec.add_development_dependency "selenium-webdriver"
 end
