@@ -139,6 +139,11 @@ For example:
 Refile.cache = Refile::Backend::S3.new(max_size: 10.megabytes, ...)
 ```
 
+Additional backends are provided by other gems:
+
+- [Postgresql](https://github.com/krists/refile-postgres)
+- [In Memory](https://github.com/jnicklas/refile-memory)
+
 ### Uploadable
 
 The `upload` method on backends can be called with a variety of objects. It
