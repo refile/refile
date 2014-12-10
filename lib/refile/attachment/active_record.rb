@@ -16,6 +16,10 @@ module Refile
         before_save do
           send(attachment).store!
         end
+
+        after_destroy do
+          send(attachment).delete!
+        end
       end
     end
   end

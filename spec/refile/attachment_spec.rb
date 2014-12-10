@@ -82,6 +82,27 @@ describe Refile::Attachment do
     end
   end
 
+  describe ":name_attachment.delete!" do
+    it "deletes a stored file" do
+      instance.document = Refile::FileDouble.new("hello")
+
+      instance.document_attachment.store!
+      instance.document_attachment.delete!
+
+      expect(Refile.store.exists?(instance.document.id)).to be_falsy
+    end
+
+    it "deletes a cached file" do
+      file = Refile.cache.upload(Refile::FileDouble.new("hello"))
+      instance.document_cache_id = file.id
+
+      instance.document_attachment.delete!
+
+      expect(instance.document_cache_id).to be_nil
+      expect(Refile.cache.exists?(file.id)).to be_falsy
+    end
+  end
+
   describe ":name_attachment.error" do
     let(:options) { { cache: :limited_cache, raise_errors: false } }
 
