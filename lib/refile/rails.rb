@@ -1,4 +1,5 @@
 require "refile"
+require "refile/attachment_helper"
 
 module Refile
   module Controller
