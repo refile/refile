@@ -4,6 +4,7 @@ module Refile
 
     class Attachment
       attr_reader :record, :name, :cache, :store, :cache_id, :options
+      attr_accessor :remove
 
       def initialize(record, name, **options)
         @record = record
@@ -44,7 +45,9 @@ module Refile
       end
 
       def store!
-        if cached?
+        if remove?
+          delete!
+        elsif cached?
           file = store.upload(cache.get(cache_id))
           delete!
           self.id = file.id
@@ -58,6 +61,7 @@ module Refile
           @cache_file = nil
         end
         store.delete(id) if id
+        self.id = nil
       end
 
       def errors
@@ -68,6 +72,10 @@ module Refile
 
       def cached?
         cache_id and not cache_id == ""
+      end
+
+      def remove?
+        remove.present? and remove !~ /\A0|false$\z/
       end
     end
 
@@ -95,6 +103,14 @@ module Refile
 
       define_method "#{name}_cache_id" do
         send(attachment).cache_id
+      end
+
+      define_method "remove_#{name}=" do |remove|
+        send(attachment).remove = remove
+      end
+
+      define_method "remove_#{name}" do
+        send(attachment).remove or false
       end
     end
   end
