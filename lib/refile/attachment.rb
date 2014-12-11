@@ -64,6 +64,10 @@ module Refile
         self.id = nil
       end
 
+      def remove?
+        remove.present? and remove !~ /\A0|false$\z/
+      end
+
       def errors
         @errors
       end
@@ -72,10 +76,6 @@ module Refile
 
       def cached?
         cache_id and not cache_id == ""
-      end
-
-      def remove?
-        remove.present? and remove !~ /\A0|false$\z/
       end
     end
 
@@ -110,7 +110,7 @@ module Refile
       end
 
       define_method "remove_#{name}" do
-        send(attachment).remove or false
+        send(attachment).remove
       end
     end
   end
