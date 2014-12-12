@@ -1,5 +1,5 @@
 require "refile"
-require "refile/attachment_helper"
+require "refile/rails/attachment_helper"
 
 module Refile
   module Controller
@@ -29,6 +29,7 @@ module Refile
         require "refile/attachment/active_record"
       end
 
+      ActionView::Base.send(:include, Refile::AttachmentHelper)
       ActionView::Helpers::FormBuilder.send(:include, AttachmentFieldHelper)
     end
 

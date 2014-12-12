@@ -55,5 +55,3 @@ module Refile
     end
   end
 end
-
-ActionView::Base.send(:include, Refile::AttachmentHelper)
