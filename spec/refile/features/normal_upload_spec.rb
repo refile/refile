@@ -44,4 +44,20 @@ feature "Normal HTTP Post file uploads" do
     click_link("Convert to Upper")
     expect(page.source.chomp).to eq("HELLO")
   end
+
+  scenario "Successfully remove an uploaded file" do
+    visit "/normal/posts/new"
+    fill_in "Title", with: "A cool post"
+    attach_file "Document", path("hello.txt")
+    click_button "Create"
+
+    expect(page).to have_selector("h1", text: "A cool post")
+    expect(page).to have_selector(:link, "Document")
+    click_link("Edit")
+
+    check "Remove document"
+    click_button "Update"
+    expect(page).to have_selector("h1", text: "A cool post")
+    expect(page).to_not have_selector(:link, "Document")
+  end
 end

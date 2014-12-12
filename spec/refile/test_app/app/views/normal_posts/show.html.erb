@@ -11,3 +11,5 @@
 <% if @post.document %>
   <%= link_to "Convert to Upper", attachment_url(@post, :document, :convert_case, format: "up") %>
 <% end %>
+
+<%= link_to "Edit", edit_normal_post_url(@post) %>

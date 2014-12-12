@@ -80,16 +80,28 @@ describe Refile::Attachment do
       expect(Refile.cache.get(cache.id).exists?).to be_falsy
       expect(Refile.store.get(file.id).exists?).to be_falsy
     end
+
+    it "removes an uploaded file when remove? returns true" do
+      file = Refile.store.upload(Refile::FileDouble.new("hello"))
+      instance.document_id = file.id
+
+      instance.document_attachment.remove = true
+      instance.document_attachment.store!
+
+      expect(instance.document_id).to be_nil
+      expect(Refile.store.exists?(file.id)).to be_falsy
+    end
   end
 
   describe ":name_attachment.delete!" do
     it "deletes a stored file" do
-      instance.document = Refile::FileDouble.new("hello")
+      file = Refile.store.upload(Refile::FileDouble.new("hello"))
+      instance.document_id = file.id
 
-      instance.document_attachment.store!
       instance.document_attachment.delete!
 
-      expect(Refile.store.exists?(instance.document.id)).to be_falsy
+      expect(instance.document_id).to be_nil
+      expect(Refile.store.exists?(file.id)).to be_falsy
     end
 
     it "deletes a cached file" do
@@ -98,8 +110,36 @@ describe Refile::Attachment do
 
       instance.document_attachment.delete!
 
+      expect(instance.document_id).to be_nil
       expect(instance.document_cache_id).to be_nil
       expect(Refile.cache.exists?(file.id)).to be_falsy
+    end
+  end
+
+  describe ":name_attachment.remove?" do
+    it "should be true when the value is truthy" do
+      instance.document_attachment.remove = true
+      expect(instance.document_attachment.remove?).to be_truthy
+    end
+
+    it "should be false when the value is falsey" do
+      instance.document_attachment.remove = false
+      expect(instance.document_attachment.remove?).to be_falsy
+    end
+
+    it "should be false when the value is ''" do
+      instance.document_attachment.remove = ''
+      expect(instance.document_attachment.remove?).to be_falsy
+    end
+
+    it "should be false when the value is '0'" do
+      instance.document_attachment.remove = '0'
+      expect(instance.document_attachment.remove?).to be_falsy
+    end
+
+    it "should be false when the value is 'false'" do
+      instance.document_attachment.remove = 'false'
+      expect(instance.document_attachment.remove?).to be_falsy
     end
   end
 
