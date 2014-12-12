@@ -139,8 +139,13 @@ For example:
 Refile.cache = Refile::Backend::S3.new(max_size: 10.megabytes, ...)
 ```
 
-Additional backends are provided by other gems:
+The Refile gem ships with [S3](lib/refile/backends/s3.rb) and
+[FileSystem](lib/refile/backends/file_system.rb) backends. Additional backends
+are provided by other gems.
 
+- [Fog](https://github.com/elabs/refile-fog) provides support for a ton of
+  different cloud storage providers, including Google Storage and Rackspace
+  CloudFiles.
 - [Postgresql](https://github.com/krists/refile-postgres)
 - [In Memory](https://github.com/jnicklas/refile-memory)
 
