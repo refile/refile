@@ -1,3 +1,12 @@
+# 0.2.5
+
+Release date: 2014-12-12
+
+- [ADDED] CarrierWave style `remove_` attribute
+- [ADDED] Files are deleted after model is destroyed
+- [FIXED] Spec files can be required by external gems
+- [FIXED] Refile should work inside other Rails engines
+
 # 0.2.4
 
 Release date: 2014-12-08
