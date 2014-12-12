@@ -1,0 +1,24 @@
+<%= form_for [:normal, @post] do |form| %>
+  <p>
+    <%= @post.errors.full_messages.to_sentence %>
+  </p>
+  <p>
+    <%= form.label :title %>
+    <%= form.text_field :title %>
+  </p>
+  <p>
+    <%= form.label :image %>
+    <%= form.attachment_field :image %>
+  </p>
+  <p>
+    <%= form.label :document %>
+    <%= form.attachment_field :document %>
+  </p>
+  <p>
+    <%= form.label :remove_document %>
+    <%= form.check_box :remove_document %>
+  </p>
+  <p>
+    <%= form.submit %>
+  </p>
+<% end %>
