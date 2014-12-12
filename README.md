@@ -217,7 +217,7 @@ Refile includes a Rack application (an endpoint, not a middleware). This applica
 streams files from backends and can even accept file uploads and upload them to
 backends.
 
-**Important:** Unlike other file upload solutions, Refile always streams your files thorugh your
+**Important:** Unlike other file upload solutions, Refile always streams your files through your
 application. It cannot generate URLs to your files. This means that you should
 **always** put a CDN or other HTTP cache in front of your application. Serving
 files through your app takes a lot of resources and you want it to happen rarely.
