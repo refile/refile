@@ -477,6 +477,35 @@ Refile's JavaScript library requires HTML5 features which are unavailable on
 IE9 and earlier versions. All other major browsers are supported. Note though
 that it has not yet been extensively tested.
 
+## Removing attached files
+
+File input fields unfortunately do not have the option of removing an already
+uploaded file. This is problematic when editing a model which has a file attached
+and the user wants to remove this file. To work around this, Refile automatically
+adds an attribute to your model when you use the `attachment` method, which is
+designed to be used with a checkbox in a form.
+
+``` erb
+<%= form_for @user do |form| %>
+  <%= form.label :profile_image %>
+  <%= form.attachment_field :profile_image %>
+
+  <%= form.check_box :remove_profile_image %>
+  <%= form.label :remove_profile_image %>
+<% end %>
+```
+
+Don't forget to permit this attribute in your controller:
+
+``` ruby
+def user_params
+  params.require(:user).permit(:profile_image, :profile_image_cache_id, :remove_profile_image)
+end
+```
+
+Now when you check this checkbox and submit the form, the previously attached
+file will be removed.
+
 ## Cache expiry
 
 Files will accumulate in your cache, and you'll probably want to remove them
