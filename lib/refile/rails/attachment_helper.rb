@@ -2,6 +2,7 @@ module Refile
   module AttachmentHelper
     def attachment_url(record, name, *args, filename: nil, format: nil)
       file = record.send(name)
+      return unless file
 
       filename ||= name.to_s
 
