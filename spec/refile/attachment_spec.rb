@@ -31,6 +31,54 @@ describe Refile::Attachment do
     end
   end
 
+  describe ":name_url=" do
+    context "without redirects" do
+      before(:each) do
+        stub_request(:get, "http://www.example.com/some_file").to_return(:status => 200, :body => "abc", :headers => { "Content-Length" => 3 })
+      end
+
+      it "downloads file, caches it and sets the _id parameter" do
+        instance.document_url = "http://www.example.com/some_file"
+        expect(Refile.cache.get(instance.document.id).read).to eq("abc")
+        expect(Refile.cache.get(instance.document_cache_id).read).to eq("abc")
+      end
+    end
+
+    context "with redirects" do
+      before(:each) do
+        stub_request(:get, "http://www.example.com/1").to_return(:status => 302, :headers => { "Location" => "http://www.example.com/2" })
+        stub_request(:get, "http://www.example.com/2").to_return(:status => 200, :body => "woop", :headers => { "Content-Length" => 4 })
+        stub_request(:get, "http://www.example.com/loop").to_return(:status => 302, :headers => { "Location" => "http://www.example.com/loop" })
+      end
+
+      it "follows redirects and fetches the file, caches it and sets the _id parameter" do
+        instance.document_url = "http://www.example.com/1"
+        expect(Refile.cache.get(instance.document.id).read).to eq("woop")
+        expect(Refile.cache.get(instance.document_cache_id).read).to eq("woop")
+      end
+
+      context "when errors enabled" do
+        let(:options) { { raise_errors: true } }
+        it "handles redirect loops by trowing errors" do
+          expect do
+            instance.document_url = "http://www.example.com/loop"
+          end.to raise_error(RestClient::MaxRedirectsReached)
+        end
+      end
+
+      context "when errors disabled" do
+        let(:options) { { raise_errors: false } }
+        it "handles redirect loops by setting error message" do
+          expect do
+            instance.document_url = "http://www.example.com/loop"
+          end.not_to raise_error
+          expect(instance.document_attachment.errors).to eq([:max_redirects_reached])
+          expect(instance.document).to be_nil
+        end
+      end
+    end
+  end
+
   describe ":name_cache_id" do
     it "doesn't overwrite a cached file" do
       instance.document = Refile::FileDouble.new("hello")
