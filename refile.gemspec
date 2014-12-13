@@ -31,4 +31,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rails", "~> 4.1.8"
   spec.add_development_dependency "sqlite3"
   spec.add_development_dependency "selenium-webdriver"
+  spec.add_development_dependency "yard"
 end
