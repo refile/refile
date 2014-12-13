@@ -40,7 +40,6 @@ module Refile
       end
 
       def file_from_remote=(url)
-        redirect_count = 0
         request = RestClient::Request.new(:method => :get, :url => url, :raw_response => true)
         raw_response = request.execute
         self.file = raw_response.file
