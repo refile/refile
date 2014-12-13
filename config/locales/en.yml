@@ -3,4 +3,4 @@ en:
     errors:
       messages:
         too_large: "is too large"
-        max_redirects_reached: "could not download (max redirects reached)"
+        download_failed: "could not be downloaded"

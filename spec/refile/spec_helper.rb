@@ -17,13 +17,13 @@ class FakePresignBackend < Refile::Backend::FileSystem
 
   def presign
     id = Refile::RandomHasher.new.hash
-    Signature.new("file", id, "/presigned/posts/upload", { token: "xyz123", id: id })
+    Signature.new("file", id, "/presigned/posts/upload",  token: "xyz123", id: id)
   end
 end
 
 Refile.backends["limited_cache"] = FakePresignBackend.new(File.expand_path("default_cache", tmp_path), max_size: 100)
 
-Refile.direct_upload = ["cache", "limited_cache"]
+Refile.direct_upload = %w(cache limited_cache)
 
 Refile.processor(:reverse) do |file|
   StringIO.new(file.read.reverse)
@@ -49,7 +49,6 @@ Refile.processor(:convert_case) do |file, format:|
     else file
   end
 end
-
 
 class Refile::FileDouble
   def initialize(data)
@@ -82,7 +81,6 @@ end
 RSpec.configure do |config|
   config.include PathHelper
   config.before(:all) do
-    WebMock.disable_net_connect!(:allow_localhost => true)
+    WebMock.disable_net_connect!(allow_localhost: true)
   end
 end
-

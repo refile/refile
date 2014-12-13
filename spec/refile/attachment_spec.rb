@@ -68,11 +68,11 @@ describe Refile::Attachment do
 
       context "when errors disabled" do
         let(:options) { { raise_errors: false } }
-        it "handles redirect loops by setting error message" do
+        it "handles redirect loops by setting generic download error" do
           expect do
             instance.document_url = "http://www.example.com/loop"
           end.not_to raise_error
-          expect(instance.document_attachment.errors).to eq([:max_redirects_reached])
+          expect(instance.document_attachment.errors).to eq([:download_failed])
           expect(instance.document).to be_nil
         end
       end
