@@ -2,7 +2,7 @@ module Refile
   module Attachment
     # @api private
     class Attachment
-      attr_reader :record, :name, :cache, :store, :cache_id, :options
+      attr_reader :record, :name, :cache, :store, :cache_id, :options, :errors
       attr_accessor :remove
 
       def initialize(record, name, **options)
@@ -39,12 +39,11 @@ module Refile
         raise if @options[:raise_errors]
       end
 
-      def file_from_remote=(url)
-        request = RestClient::Request.new(:method => :get, :url => url, :raw_response => true)
-        raw_response = request.execute
+      def download=(url)
+        raw_response = RestClient::Request.new(method: :get, url: url, raw_response: true).execute
         self.file = raw_response.file
-      rescue RestClient::MaxRedirectsReached
-        @errors = [:max_redirects_reached]
+      rescue RestClient::Exception
+        @errors = [:download_failed]
         raise if @options[:raise_errors]
       end
 
@@ -76,11 +75,7 @@ module Refile
         remove.present? and remove !~ /\A0|false$\z/
       end
 
-      def errors
-        @errors
-      end
-
-      private
+    private
 
       def cached?
         cache_id and not cache_id == ""
@@ -114,7 +109,7 @@ module Refile
       end
 
       define_method "#{name}_url=" do |uploadable|
-        send(attachment).file_from_remote = uploadable
+        send(attachment).download = uploadable
       end
 
       define_method name do
