@@ -3,6 +3,9 @@ module Refile
     module Attachment
       include Refile::Attachment
 
+      # Attachment method which hooks into ActiveRecord models
+      #
+      # @see Refile::Attachment#attachment
       def attachment(name, cache: :cache, store: :store, raise_errors: false)
         super
 

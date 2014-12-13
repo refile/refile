@@ -9,6 +9,7 @@ module Refile
       @allow_origin = allow_origin
     end
 
+    # @api private
     class Proxy
       def initialize(peek, file)
         @peek = peek
