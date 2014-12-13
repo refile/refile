@@ -1,7 +1,7 @@
 require "uri"
 require "fileutils"
 require "tempfile"
-require 'rest_client'
+require "rest_client"
 
 module Refile
   class Invalid < StandardError; end
