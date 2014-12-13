@@ -39,6 +39,16 @@ module Refile
         raise if @options[:raise_errors]
       end
 
+      def file_from_remote=(url)
+        redirect_count = 0
+        request = RestClient::Request.new(:method => :get, :url => url, :raw_response => true)
+        raw_response = request.execute
+        self.file = raw_response.file
+      rescue RestClient::MaxRedirectsReached
+        @errors = [:max_redirects_reached]
+        raise if @options[:raise_errors]
+      end
+
       def cache_id=(id)
         @cache_id = id unless @cache_file
       end
@@ -71,6 +81,10 @@ module Refile
 
       define_method "#{name}=" do |uploadable|
         send(attachment).file = uploadable
+      end
+
+      define_method "#{name}_url=" do |uploadable|
+        send(attachment).file_from_remote = uploadable
       end
 
       define_method name do
