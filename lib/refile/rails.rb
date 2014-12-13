@@ -2,17 +2,6 @@ require "refile"
 require "refile/rails/attachment_helper"
 
 module Refile
-  module Controller
-    def show
-      file = Refile.backends.fetch(params[:backend_name]).get(params[:id])
-
-      options = { disposition: "inline" }
-      options[:type] = Mime::Type.lookup_by_extension(params[:format]).to_s if params[:format]
-
-      send_data file.read, options
-    end
-  end
-
   module AttachmentFieldHelper
     def attachment_field(method, options = {})
       self.multipart = true
