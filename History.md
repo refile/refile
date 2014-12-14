@@ -1,3 +1,9 @@
+# 0.3.0
+
+Release date: 2014-12-14
+
+- [ADDED] Can upload files via URL
+
 # 0.2.5
 
 Release date: 2014-12-12
