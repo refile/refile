@@ -149,6 +149,7 @@ module Refile
   end
 
   require "refile/version"
+  require "refile/single_attacher"
   require "refile/attachment"
   require "refile/random_hasher"
   require "refile/file"

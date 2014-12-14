@@ -81,7 +81,7 @@ describe Refile::Attachment do
           expect do
             instance.remote_document_url = "http://www.example.com/loop"
           end.not_to raise_error
-          expect(instance.document_attachment.errors).to eq([:download_failed])
+          expect(instance.document_attacher.errors).to eq([:download_failed])
           expect(instance.document).to be_nil
         end
       end
@@ -97,12 +97,12 @@ describe Refile::Attachment do
     end
   end
 
-  describe ":name_attachment.store!" do
+  describe ":name_attacher.store!" do
     it "puts a cached file into the store" do
       instance.document = Refile::FileDouble.new("hello")
       cache = instance.document
 
-      instance.document_attachment.store!
+      instance.document_attacher.store!
 
       expect(Refile.store.get(instance.document_id).read).to eq("hello")
       expect(Refile.store.get(instance.document.id).read).to eq("hello")
@@ -115,7 +115,7 @@ describe Refile::Attachment do
       file = Refile.store.upload(Refile::FileDouble.new("hello"))
       instance.document_id = file.id
 
-      instance.document_attachment.store!
+      instance.document_attacher.store!
 
       expect(Refile.store.get(instance.document_id).read).to eq("hello")
       expect(Refile.store.get(instance.document.id).read).to eq("hello")
@@ -128,7 +128,7 @@ describe Refile::Attachment do
       instance.document = Refile::FileDouble.new("world")
       cache = instance.document
 
-      instance.document_attachment.store!
+      instance.document_attacher.store!
 
       expect(Refile.store.get(instance.document_id).read).to eq("world")
       expect(Refile.store.get(instance.document.id).read).to eq("world")
@@ -142,20 +142,20 @@ describe Refile::Attachment do
       file = Refile.store.upload(Refile::FileDouble.new("hello"))
       instance.document_id = file.id
 
-      instance.document_attachment.remove = true
-      instance.document_attachment.store!
+      instance.document_attacher.remove = true
+      instance.document_attacher.store!
 
       expect(instance.document_id).to be_nil
       expect(Refile.store.exists?(file.id)).to be_falsy
     end
   end
 
-  describe ":name_attachment.delete!" do
+  describe ":name_attacher.delete!" do
     it "deletes a stored file" do
       file = Refile.store.upload(Refile::FileDouble.new("hello"))
       instance.document_id = file.id
 
-      instance.document_attachment.delete!
+      instance.document_attacher.delete!
 
       expect(instance.document_id).to be_nil
       expect(Refile.store.exists?(file.id)).to be_falsy
@@ -165,7 +165,7 @@ describe Refile::Attachment do
       file = Refile.cache.upload(Refile::FileDouble.new("hello"))
       instance.document_cache_id = file.id
 
-      instance.document_attachment.delete!
+      instance.document_attacher.delete!
 
       expect(instance.document_id).to be_nil
       expect(instance.document_cache_id).to be_nil
@@ -173,41 +173,41 @@ describe Refile::Attachment do
     end
   end
 
-  describe ":name_attachment.remove?" do
+  describe ":name_attacher.remove?" do
     it "should be true when the value is truthy" do
-      instance.document_attachment.remove = true
-      expect(instance.document_attachment.remove?).to be_truthy
+      instance.document_attacher.remove = true
+      expect(instance.document_attacher.remove?).to be_truthy
     end
 
     it "should be false when the value is falsey" do
-      instance.document_attachment.remove = false
-      expect(instance.document_attachment.remove?).to be_falsy
+      instance.document_attacher.remove = false
+      expect(instance.document_attacher.remove?).to be_falsy
     end
 
     it "should be false when the value is ''" do
-      instance.document_attachment.remove = ''
-      expect(instance.document_attachment.remove?).to be_falsy
+      instance.document_attacher.remove = ''
+      expect(instance.document_attacher.remove?).to be_falsy
     end
 
     it "should be false when the value is '0'" do
-      instance.document_attachment.remove = '0'
-      expect(instance.document_attachment.remove?).to be_falsy
+      instance.document_attacher.remove = '0'
+      expect(instance.document_attacher.remove?).to be_falsy
     end
 
     it "should be false when the value is 'false'" do
-      instance.document_attachment.remove = 'false'
-      expect(instance.document_attachment.remove?).to be_falsy
+      instance.document_attacher.remove = 'false'
+      expect(instance.document_attacher.remove?).to be_falsy
     end
   end
 
-  describe ":name_attachment.error" do
+  describe ":name_attacher.error" do
     let(:options) { { cache: :limited_cache, raise_errors: false } }
 
     it "is blank when valid file uploaded" do
       file = Refile::FileDouble.new("hello")
       instance.document = file
 
-      expect(instance.document_attachment.errors).to be_empty
+      expect(instance.document_attacher.errors).to be_empty
       expect(Refile.cache.get(instance.document.id).exists?).to be_truthy
     end
 
@@ -215,7 +215,7 @@ describe Refile::Attachment do
       file = Refile::FileDouble.new("a"*120)
       instance.document = file
 
-      expect(instance.document_attachment.errors).to eq([:too_large])
+      expect(instance.document_attacher.errors).to eq([:too_large])
       expect(instance.document).to be_nil
     end
 
@@ -226,7 +226,7 @@ describe Refile::Attachment do
       file = Refile::FileDouble.new("hello")
       instance.document = file
 
-      expect(instance.document_attachment.errors).to be_empty
+      expect(instance.document_attacher.errors).to be_empty
       expect(Refile.cache.get(instance.document.id).exists?).to be_truthy
     end
   end
@@ -240,7 +240,7 @@ describe Refile::Attachment do
         instance.document = file
       end.to raise_error(Refile::Invalid)
 
-      expect(instance.document_attachment.errors).to eq([:too_large])
+      expect(instance.document_attacher.errors).to eq([:too_large])
       expect(instance.document).to be_nil
     end
   end
@@ -252,7 +252,7 @@ describe Refile::Attachment do
       file = Refile::FileDouble.new("a"*120)
       instance.document = file
 
-      expect(instance.document_attachment.errors).to eq([:too_large])
+      expect(instance.document_attacher.errors).to eq([:too_large])
       expect(instance.document).to be_nil
     end
   end

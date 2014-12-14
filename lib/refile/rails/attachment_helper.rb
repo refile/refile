@@ -29,7 +29,7 @@ module Refile
 
     def attachment_field(object_name, method, options = {})
       if options[:object]
-        cache = options[:object].send(:"#{method}_attachment").cache
+        cache = options[:object].send(:"#{method}_attacher").cache
 
         if options[:direct]
           host = Refile.host || request.base_url

@@ -9,19 +9,19 @@ module Refile
       def attachment(name, cache: :cache, store: :store, raise_errors: false)
         super
 
-        attachment = "#{name}_attachment"
+        attacher = "#{name}_attacher"
 
         validate do
-          errors = send(attachment).errors
+          errors = send(attacher).errors
           self.errors.add(name, *errors) unless errors.empty?
         end
 
         before_save do
-          send(attachment).store!
+          send(attacher).store!
         end
 
         after_destroy do
-          send(attachment).delete!
+          send(attacher).delete!
         end
       end
     end
