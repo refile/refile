@@ -506,6 +506,34 @@ end
 Now when you check this checkbox and submit the form, the previously attached
 file will be removed.
 
+## Fetching remote files by URL
+
+You might want to give you users the option of uploading a file by its URL.
+This could be either just via a textfield or through some other interface.
+Refile makes it easy to fetch this file and upload it. Just add a field like
+this:
+
+``` erb
+<%= form_for @user do |form| %>
+  <%= form.label :profile_image, "Attach image" %>
+  <%= form.attachment_field :profile_image %>
+
+  <%= form.label :remote_profile_image_url, "Or specify URL" %>
+  <%= form.text_field :remote_profile_image_url %>
+<% end %>
+```
+
+Then permit this field in your controller:
+
+``` ruby
+def user_params
+  params.require(:user).permit(:profile_image, :profile_image_cache_id, :remote_profile_image_url)
+end
+```
+
+Refile will now fetch the file from the given URL, following redirects if
+needed.
+
 ## Cache expiry
 
 Files will accumulate in your cache, and you'll probably want to remove them
