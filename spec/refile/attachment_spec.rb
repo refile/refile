@@ -1,6 +1,5 @@
 describe Refile::Attachment do
   let(:options) { { } }
-  let(:post) { Post.new }
   let(:klass) do
     opts = options
     Class.new do
