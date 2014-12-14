@@ -32,6 +32,16 @@ describe Refile::Attachment do
   end
 
   describe "remote_:name_url=" do
+    it "does nothign when nil is assigned" do
+      instance.remote_document_url = nil
+      expect(instance.document).to be_nil
+    end
+
+    it "does nothign when empty string is assigned" do
+      instance.remote_document_url = nil
+      expect(instance.document).to be_nil
+    end
+
     context "without redirects" do
       before(:each) do
         stub_request(:get, "http://www.example.com/some_file").to_return(status: 200, body: "abc", headers: { "Content-Length" => 3 })

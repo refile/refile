@@ -40,8 +40,10 @@ module Refile
       end
 
       def download(url)
-        raw_response = RestClient::Request.new(method: :get, url: url, raw_response: true).execute
-        self.file = raw_response.file
+        if url and not url == ""
+          raw_response = RestClient::Request.new(method: :get, url: url, raw_response: true).execute
+          self.file = raw_response.file
+        end
       rescue RestClient::Exception
         @errors = [:download_failed]
         raise if @options[:raise_errors]
@@ -72,7 +74,7 @@ module Refile
       end
 
       def remove?
-        remove.present? and remove !~ /\A0|false$\z/
+        remove and remove != "" and remove !~ /\A0|false$\z/
       end
 
     private
@@ -128,8 +130,8 @@ module Refile
         send(attachment).remove
       end
 
-      define_method "remote_#{name}_url=" do |uploadable|
-        send(attachment).download(uploadable)
+      define_method "remote_#{name}_url=" do |url|
+        send(attachment).download(url)
       end
 
       define_method "remote_#{name}_url" do
