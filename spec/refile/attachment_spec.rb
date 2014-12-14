@@ -34,7 +34,7 @@ describe Refile::Attachment do
   describe ":name_url=" do
     context "without redirects" do
       before(:each) do
-        stub_request(:get, "http://www.example.com/some_file").to_return(:status => 200, :body => "abc", :headers => { "Content-Length" => 3 })
+        stub_request(:get, "http://www.example.com/some_file").to_return(status: 200, body: "abc", headers: { "Content-Length" => 3 })
       end
 
       it "downloads file, caches it and sets the _id parameter" do
@@ -46,9 +46,9 @@ describe Refile::Attachment do
 
     context "with redirects" do
       before(:each) do
-        stub_request(:get, "http://www.example.com/1").to_return(:status => 302, :headers => { "Location" => "http://www.example.com/2" })
-        stub_request(:get, "http://www.example.com/2").to_return(:status => 200, :body => "woop", :headers => { "Content-Length" => 4 })
-        stub_request(:get, "http://www.example.com/loop").to_return(:status => 302, :headers => { "Location" => "http://www.example.com/loop" })
+        stub_request(:get, "http://www.example.com/1").to_return(status: 302, headers: { "Location" => "http://www.example.com/2" })
+        stub_request(:get, "http://www.example.com/2").to_return(status: 200, body: "woop", headers: { "Content-Length" => 4 })
+        stub_request(:get, "http://www.example.com/loop").to_return(status: 302, headers: { "Location" => "http://www.example.com/loop" })
       end
 
       it "follows redirects and fetches the file, caches it and sets the _id parameter" do

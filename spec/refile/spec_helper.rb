@@ -1,6 +1,6 @@
 require "refile"
 require "refile/backend_examples"
-require 'webmock/rspec'
+require "webmock/rspec"
 
 tmp_path = Dir.mktmpdir
 
@@ -16,7 +16,7 @@ class FakePresignBackend < Refile::Backend::FileSystem
 
   def presign
     id = Refile::RandomHasher.new.hash
-    Signature.new("file", id, "/presigned/posts/upload",  token: "xyz123", id: id)
+    Signature.new("file", id, "/presigned/posts/upload", token: "xyz123", id: id)
   end
 end
 
