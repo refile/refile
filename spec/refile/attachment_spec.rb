@@ -31,14 +31,14 @@ describe Refile::Attachment do
     end
   end
 
-  describe ":name_url=" do
+  describe "remote_:name_url=" do
     context "without redirects" do
       before(:each) do
         stub_request(:get, "http://www.example.com/some_file").to_return(status: 200, body: "abc", headers: { "Content-Length" => 3 })
       end
 
       it "downloads file, caches it and sets the _id parameter" do
-        instance.document_url = "http://www.example.com/some_file"
+        instance.remote_document_url = "http://www.example.com/some_file"
         expect(Refile.cache.get(instance.document.id).read).to eq("abc")
         expect(Refile.cache.get(instance.document_cache_id).read).to eq("abc")
       end
@@ -52,7 +52,7 @@ describe Refile::Attachment do
       end
 
       it "follows redirects and fetches the file, caches it and sets the _id parameter" do
-        instance.document_url = "http://www.example.com/1"
+        instance.remote_document_url = "http://www.example.com/1"
         expect(Refile.cache.get(instance.document.id).read).to eq("woop")
         expect(Refile.cache.get(instance.document_cache_id).read).to eq("woop")
       end
@@ -61,7 +61,7 @@ describe Refile::Attachment do
         let(:options) { { raise_errors: true } }
         it "handles redirect loops by trowing errors" do
           expect do
-            instance.document_url = "http://www.example.com/loop"
+            instance.remote_document_url = "http://www.example.com/loop"
           end.to raise_error(RestClient::MaxRedirectsReached)
         end
       end
@@ -70,7 +70,7 @@ describe Refile::Attachment do
         let(:options) { { raise_errors: false } }
         it "handles redirect loops by setting generic download error" do
           expect do
-            instance.document_url = "http://www.example.com/loop"
+            instance.remote_document_url = "http://www.example.com/loop"
           end.not_to raise_error
           expect(instance.document_attachment.errors).to eq([:download_failed])
           expect(instance.document).to be_nil

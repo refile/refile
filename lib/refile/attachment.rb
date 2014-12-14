@@ -108,7 +108,7 @@ module Refile
         send(attachment).file = uploadable
       end
 
-      define_method "#{name}_url=" do |uploadable|
+      define_method "remote_#{name}_url=" do |uploadable|
         send(attachment).download(uploadable)
       end
 
