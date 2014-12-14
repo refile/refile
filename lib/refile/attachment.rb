@@ -23,7 +23,7 @@ module Refile
       end
 
       def file
-        if cache_id and not cache_id == ""
+        if cached?
           cache.get(cache_id)
         elsif id and not id == ""
           store.get(id)
