@@ -34,6 +34,6 @@ class NormalPostsController < ApplicationController
   private
 
   def post_params
-    params.require(:post).permit(:title, :image, :image_cache_id, :document, :document_cache_id, :remove_document)
+    params.require(:post).permit(:title, :image, :image_cache_id, :document, :document_cache_id, :remove_document, :remote_document_url)
   end
 end

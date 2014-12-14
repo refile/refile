@@ -60,4 +60,17 @@ feature "Normal HTTP Post file uploads" do
     expect(page).to have_selector("h1", text: "A cool post")
     expect(page).to_not have_selector(:link, "Document")
   end
+
+  scenario "Upload a file from a remote URL" do
+    stub_request(:get, "http://www.example.com/some_file").to_return(status: 200, body: "abc", headers: { "Content-Length" => 3 })
+
+    visit "/normal/posts/new"
+    fill_in "Title", with: "A cool post"
+    fill_in "Remote document url", with: "http://www.example.com/some_file"
+    click_button "Create"
+
+    expect(page).to have_selector("h1", text: "A cool post")
+    click_link("Document")
+    expect(page.source.chomp).to eq("abc")
+  end
 end
