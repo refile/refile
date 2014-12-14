@@ -39,7 +39,7 @@ module Refile
         raise if @options[:raise_errors]
       end
 
-      def download=(url)
+      def download(url)
         raw_response = RestClient::Request.new(method: :get, url: url, raw_response: true).execute
         self.file = raw_response.file
       rescue RestClient::Exception
@@ -109,7 +109,7 @@ module Refile
       end
 
       define_method "#{name}_url=" do |uploadable|
-        send(attachment).download = uploadable
+        send(attachment).download(uploadable)
       end
 
       define_method name do
