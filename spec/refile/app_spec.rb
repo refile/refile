@@ -36,8 +36,8 @@ describe Refile::App do
     end
 
     context "with allow origin" do
-      def app
-        Refile::App.new(allow_origin: "example.com")
+      before(:each) do
+        Refile.app_allowed_origin = "example.com"
       end
 
       it "sets CORS header" do
