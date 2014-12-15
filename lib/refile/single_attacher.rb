@@ -18,7 +18,7 @@ module Refile
     end
 
     def id=(id)
-      record.send(:"#{name}_id=", id)
+      record.send(:"#{name}_id=", id) unless record.frozen?
     end
 
     def get
