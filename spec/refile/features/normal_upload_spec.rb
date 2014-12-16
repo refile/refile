@@ -69,7 +69,7 @@ feature "Normal HTTP Post file uploads" do
 
     expect(page).to have_selector("h1", text: "A cool post about to be deleted")
     click_link("Delete")
-    expect(page).to_not have_selector("h2", text: "A cool post about to be deleted")
+    expect(page).to_not have_content("A cool post about to be deleted")
   end
 
   scenario "Upload a file from a remote URL" do
