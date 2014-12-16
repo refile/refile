@@ -61,6 +61,17 @@ feature "Normal HTTP Post file uploads" do
     expect(page).to_not have_selector(:link, "Document")
   end
 
+  scenario "Successfully remove a record with an uploaded file" do
+    visit "/normal/posts/new"
+    fill_in "Title", with: "A cool post about to be deleted"
+    attach_file "Document", path("hello.txt")
+    click_button "Create"
+
+    expect(page).to have_selector("h1", text: "A cool post about to be deleted")
+    click_link("Delete")
+    expect(page).to_not have_selector("h2", text: "A cool post about to be deleted")
+  end
+
   scenario "Upload a file from a remote URL" do
     stub_request(:get, "http://www.example.com/some_file").to_return(status: 200, body: "abc", headers: { "Content-Length" => 3 })
 

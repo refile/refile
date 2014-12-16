@@ -1,4 +1,8 @@
 class NormalPostsController < ApplicationController
+  def index
+    @posts = Post.all
+  end
+
   def show
     @post = Post.find(params[:id])
   end
@@ -29,6 +33,11 @@ class NormalPostsController < ApplicationController
     else
       render :edit
     end
+  end
+
+  def destroy
+    Post.find(params[:id]).destroy
+    redirect_to :normal_posts
   end
 
   private
