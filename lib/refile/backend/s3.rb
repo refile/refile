@@ -59,10 +59,11 @@ module Refile
 
       attr_reader :access_key_id
 
-      def initialize(access_key_id:, secret_access_key:, bucket:, max_size: nil, prefix: nil, hasher: Refile::RandomHasher.new)
+      def initialize(access_key_id:, secret_access_key:, bucket:, max_size: nil, prefix: nil, hasher: Refile::RandomHasher.new, **s3_options)
         @access_key_id = access_key_id
         @secret_access_key = secret_access_key
-        @s3 = AWS::S3.new(access_key_id: access_key_id, secret_access_key: secret_access_key)
+        @s3_options = { access_key_id: access_key_id, secret_access_key: secret_access_key }.merge s3_options
+        @s3 = AWS::S3.new @s3_options
         @bucket_name = bucket
         @bucket = @s3.buckets[@bucket_name]
         @hasher = hasher
