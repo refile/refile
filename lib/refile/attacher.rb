@@ -1,6 +1,6 @@
 module Refile
   # @api private
-  class SingleAttacher
+  class Attacher
     attr_reader :record, :name, :cache, :store, :cache_id, :options, :errors
     attr_accessor :remove
 

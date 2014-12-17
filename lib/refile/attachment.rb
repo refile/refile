@@ -19,7 +19,7 @@ module Refile
       define_method attacher do
         ivar = :"@#{attacher}"
         instance_variable_get(ivar) or begin
-          instance_variable_set(ivar, SingleAttacher.new(self, name, cache: cache, store: store, raise_errors: raise_errors))
+          instance_variable_set(ivar, Attacher.new(self, name, cache: cache, store: store, raise_errors: raise_errors))
         end
       end
 
