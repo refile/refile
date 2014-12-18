@@ -1,99 +1,119 @@
-require "logger"
 require "json"
-
+require "sinatra/base"
 module Refile
-  class App
-    def initialize(logger: nil, allow_origin: nil)
-      @logger = logger
-      @logger ||= ::Logger.new(nil)
-      @allow_origin = allow_origin
+  class App < Sinatra::Base
+
+    configure do
+      set :show_exceptions, false
+      set :raise_errors, false
+      set :sessions, false
+      set :logging, false
+      set :dump_errors, false
     end
 
-    # @api private
-    class Proxy
-      def initialize(peek, file)
-        @peek = peek
-        @file = file
-      end
+    before do
+      content_type ::File.extname(request.path), default: 'application/octet-stream'
+      response["Access-Control-Allow-Origin"] = Refile.app_allowed_origin if Refile.app_allowed_origin
+    end
 
-      def close
-        @file.close
-      end
-
-      def each(&block)
-        block.call(@peek)
-        @file.each(&block)
+    get "/:backend/:id/:filename" do
+      ensure_file do |file|
+        stream_file(file)
       end
     end
 
-    def call(env)
-      @logger.info { "Refile: #{env["REQUEST_METHOD"]} #{env["PATH_INFO"]}" }
-
-      backend_name, *args = env["PATH_INFO"].sub(/^\//, "").split("/")
-      backend = Refile.backends[backend_name]
-
-      if env["REQUEST_METHOD"] == "GET" and backend and args.length >= 2
-        *process_args, id, filename = args
-        format = ::File.extname(filename)[1..-1]
-
-        @logger.debug { "Refile: serving #{id.inspect} from #{backend_name} backend which is of type #{backend.class}" }
-
-        file = backend.get(id)
-
-        unless process_args.empty?
-          name = process_args.shift
-          processor = Refile.processors[name]
-          unless processor
-            @logger.debug { "Refile: no such processor #{name.inspect}" }
-            return not_found
-          end
-          file = if format
-            processor.call(file, *process_args, format: format)
-          else
-            processor.call(file, *process_args)
-          end
-        end
-
-        peek = begin
-          file.read(Refile.read_chunk_size)
-        rescue => e
-          log_error(e)
-          return not_found
-        end
-
-        headers = {}
-        headers["Access-Control-Allow-Origin"] = @allow_origin if @allow_origin
-
-        [200, headers, Proxy.new(peek, file)]
-      elsif env["REQUEST_METHOD"] == "POST" and backend and args.empty? and Refile.direct_upload.include?(backend_name)
-        @logger.debug { "Refile: uploading to #{backend_name} backend which is of type #{backend.class}" }
-
-        tempfile = Rack::Request.new(env).params.fetch("file").fetch(:tempfile)
-        file = backend.upload(tempfile)
-
-        [200, { "Content-Type" => "application/json" }, [{ id: file.id }.to_json]]
-      else
-        not_found
+    get "/:backend/:processor/:id/:file_basename.:extension" do
+      ensure_file_and_processor do |file, processor|
+        stream_file processor.call(file, format: params[:extension])
       end
-    rescue => e
-      log_error(e)
-      [500, {}, ["error"]]
     end
 
-  private
-
-    def not_found
-      [404, {}, ["not found"]]
+    get "/:backend/:processor/:id/:filename" do
+      ensure_file_and_processor do |file, processor|
+        stream_file processor.call(file)
+      end
     end
 
-    def log_error(e)
-      if @logger.debug?
-        @logger.debug "Refile: unable to read file"
-        @logger.debug "#{e.class}: #{e.message}"
-        e.backtrace.each do |line|
-          @logger.debug "  #{line}"
+    get "/:backend/:processor/*/:id/:file_basename.:extension" do
+      ensure_file_and_processor do |file, processor|
+        stream_file processor.call(file, *params[:splat].first.split("/"), format: params[:extension])
+      end
+    end
+
+    get "/:backend/:processor/*/:id/:filename" do
+      ensure_file_and_processor do |file, processor|
+        stream_file processor.call(file, *params[:splat].first.split("/"))
+      end
+    end
+
+    post "/:backend" do
+      backend = Refile.backends[params[:backend]]
+      halt 404 unless backend && Refile.direct_upload.include?(params[:backend])
+      tempfile = request.params.fetch("file").fetch(:tempfile)
+      file = backend.upload(tempfile)
+      content_type :json
+      { id: file.id }.to_json
+    end
+
+    not_found do
+      "not found"
+    end
+
+    error do |error_thrown|
+      log_error("Error -> #{error_thrown}")
+      error_thrown.backtrace.each do |line|
+        log_error(line)
+      end
+      "error"
+    end
+
+    private
+
+    def logger
+      Refile.app_logger
+    end
+
+    def stream_file(file)
+      stream do |out|
+        file.each do |chunk|
+          out << chunk
         end
       end
+    end
+
+    def ensure_file_and_processor
+      ensure_processor do |processor|
+        ensure_file do |file|
+          yield file, processor
+        end
+      end
+    end
+
+    def ensure_file
+      backend = Refile.backends[params[:backend]]
+      unless backend
+        log_error("Could not find backend: #{params[:backend]}")
+        halt 404
+      end
+      file = backend.get(params[:id])
+      unless file.exists?
+        log_error("Could not find attachment by id: #{params[:id]}")
+        halt 404
+      end
+      yield file
+    end
+
+    def ensure_processor
+      processor = Refile.processors[params[:processor]]
+      unless processor
+        log_error("Could not find processor: #{params[:processor]}")
+        halt 404
+      end
+      yield processor
+    end
+
+    def log_error(message)
+      logger.error "#{self.class.name}: #{message}"
     end
   end
 end

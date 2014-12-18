@@ -23,7 +23,8 @@ module Refile
     end
 
     initializer "refile.app" do
-      Refile.app = Refile::App.new(logger: Rails.logger)
+      Refile.app_logger = Rails.logger
+      Refile.app = Refile::App.new
     end
   end
 end
