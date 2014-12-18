@@ -56,6 +56,7 @@ module Refile
     end
 
     not_found do
+      content_type :text
       "not found"
     end
 
@@ -64,6 +65,7 @@ module Refile
       error_thrown.backtrace.each do |line|
         log_error(line)
       end
+      content_type :text
       "error"
     end
 

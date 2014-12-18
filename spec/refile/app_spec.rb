@@ -23,6 +23,7 @@ describe Refile::App do
       get "/store/doesnotexist/hello"
 
       expect(last_response.status).to eq(404)
+      expect(last_response.content_type).to eq("text/plain;charset=utf-8")
       expect(last_response.body).to eq("not found")
     end
 
@@ -32,6 +33,7 @@ describe Refile::App do
       get "/doesnotexist/#{file.id}/hello"
 
       expect(last_response.status).to eq(404)
+      expect(last_response.content_type).to eq("text/plain;charset=utf-8")
       expect(last_response.body).to eq("not found")
     end
 
@@ -57,6 +59,7 @@ describe Refile::App do
       post "/store/#{file.id}/hello"
 
       expect(last_response.status).to eq(404)
+      expect(last_response.content_type).to eq("text/plain;charset=utf-8")
       expect(last_response.body).to eq("not found")
     end
   end
@@ -68,6 +71,7 @@ describe Refile::App do
       get "/store/doesnotexist/#{file.id}/hello"
 
       expect(last_response.status).to eq(404)
+      expect(last_response.content_type).to eq("text/plain;charset=utf-8")
       expect(last_response.body).to eq("not found")
     end
 
@@ -114,6 +118,7 @@ describe Refile::App do
       post "/store", file: file
 
       expect(last_response.status).to eq(404)
+      expect(last_response.content_type).to eq("text/plain;charset=utf-8")
       expect(last_response.body).to eq("not found")
     end
 
@@ -130,6 +135,7 @@ describe Refile::App do
     get "/store"
 
     expect(last_response.status).to eq(404)
+    expect(last_response.content_type).to eq("text/plain;charset=utf-8")
     expect(last_response.body).to eq("not found")
   end
 
@@ -137,6 +143,7 @@ describe Refile::App do
     get "/"
 
     expect(last_response.status).to eq(404)
+    expect(last_response.content_type).to eq("text/plain;charset=utf-8")
     expect(last_response.body).to eq("not found")
   end
 end
