@@ -68,7 +68,7 @@ Refile consists of several parts:
 
 1. Backends: cache and persist files
 2. Model attachments: map files to model columns
-3. A Rack application: streams files and accepts uploads
+3. A Sinatra application: streams files and accepts uploads
 4. Rails helpers: conveniently generate markup in your views
 4. A JavaScript library: facilitates direct uploads
 
@@ -217,9 +217,9 @@ class User
 end
 ```
 
-## 3. Rack Application
+## 3. Sinatra Application
 
-Refile includes a Rack application (an endpoint, not a middleware). This application
+Refile includes a Sinatra application (an endpoint, not a middleware). This application
 streams files from backends and can even accept file uploads and upload them to
 backends.
 
@@ -242,7 +242,7 @@ Using a [protocol-relative URL](http://www.paulirish.com/2010/the-protocol-relat
 ### Mounting
 
 If you are using Rails and have required [refile/rails.rb](lib/refile/rails.rb),
-then the Rack application is mounted for you at `/attachments`. You should be able
+then the Sinatra application is mounted for you at `/attachments`. You should be able
 to see this when you run `rake routes`.
 
 You could also run the application on its own, it doesn't need to be mounted to
