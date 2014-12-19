@@ -219,9 +219,9 @@ end
 
 ## 3. Rack Application
 
-Refile includes a Rack application (an endpoint, not a middleware). This application
-streams files from backends and can even accept file uploads and upload them to
-backends.
+Refile includes a Rack application (an endpoint, not a middleware), written in
+Sinatra. This application streams files from backends and can even accept file
+uploads and upload them to backends.
 
 **Important:** Unlike other file upload solutions, Refile always streams your files through your
 application. It cannot generate URLs to your files. This means that you should
