@@ -53,6 +53,24 @@ describe Refile::App do
       end
     end
 
+    it "returns a 200 for head requests" do
+      file = Refile.store.upload(StringIO.new("hello"))
+
+      head "/store/#{file.id}/hello"
+
+      expect(last_response.status).to eq(200)
+      expect(last_response.body).to be_empty
+    end
+
+    it "returns a 404 for head requests if the file doesn't exist" do
+      file = Refile.store.upload(StringIO.new("hello"))
+
+      head "/store/doesnotexist/hello"
+
+      expect(last_response.status).to eq(404)
+      expect(last_response.body).to be_empty
+    end
+
     it "returns a 404 for non get requests" do
       file = Refile.store.upload(StringIO.new("hello"))
 
@@ -147,4 +165,3 @@ describe Refile::App do
     expect(last_response.body).to eq("not found")
   end
 end
-
