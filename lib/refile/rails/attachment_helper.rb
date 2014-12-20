@@ -12,7 +12,7 @@ module Refile
       filename = filename.parameterize("_")
       filename << "." << format.to_s if format
 
-      ::File.join(host, main_app.refile_app_path, backend_name, *args.map(&:to_s), file.id, filename)
+      ::File.join(host, main_app.refile_app_path, backend_name, *args.map(&:to_s), file.id.to_s, filename)
     end
 
     def attachment_image_tag(record, name, *args, fallback: nil, format: nil, **options)
