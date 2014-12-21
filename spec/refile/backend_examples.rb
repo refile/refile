@@ -135,6 +135,12 @@ RSpec.shared_examples_for :backend do
     end
   end
 
+  describe "#max_size" do
+    it "returns the given max size" do
+      expect(backend.max_size).to eq(100)
+    end
+  end
+
   describe "File" do
     it "is an io-like object" do
       file = backend.upload(uploadable)

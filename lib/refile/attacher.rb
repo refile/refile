@@ -1,15 +1,19 @@
 module Refile
   # @api private
   class Attacher
-    attr_reader :record, :name, :cache, :store, :cache_id, :options, :errors
+    attr_reader :record, :name, :cache, :store, :cache_id, :options, :errors, :type, :extensions, :content_types
     attr_accessor :remove
 
-    def initialize(record, name, **options)
+    def initialize(record, name, cache:, store:, raise_errors: true, type: nil, extension: nil, content_type: nil)
       @record = record
       @name = name
-      @options = options
-      @cache = Refile.backends.fetch(@options[:cache].to_s)
-      @store = Refile.backends.fetch(@options[:store].to_s)
+      @raise_errors = raise_errors
+      @cache = Refile.backends.fetch(cache.to_s)
+      @store = Refile.backends.fetch(store.to_s)
+      @type = type
+      @extensions = [extension].flatten if extension
+      @content_types = [content_type].flatten if content_type
+      @content_types ||= %w[image/jpeg image/gif image/png] if type == :image
       @errors = []
     end
 
@@ -29,13 +33,21 @@ module Refile
       end
     end
 
-    def cache!(uploadable)
-      @cache_file = cache.upload(uploadable)
-      @cache_id = @cache_file.id
+    def valid?(uploadable)
       @errors = []
-    rescue Refile::Invalid
-      @errors = [:too_large]
-      raise if @options[:raise_errors]
+      @errors << :invalid_extension if @extensions and not valid_extension?(uploadable)
+      @errors << :invalid_content_type if @content_types and not valid_content_type?(uploadable)
+      @errors << :too_large if cache.max_size and uploadable.size >= cache.max_size
+      @errors.empty?
+    end
+
+    def cache!(uploadable)
+      if valid?(uploadable)
+        @cache_file = cache.upload(uploadable)
+        @cache_id = @cache_file.id
+      elsif @raise_errors
+        raise Refile::Invalid, @errors.join(", ")
+      end
     end
 
     def download(url)
@@ -44,7 +56,7 @@ module Refile
       end
     rescue RestClient::Exception
       @errors = [:download_failed]
-      raise if @options[:raise_errors]
+      raise if @raise_errors
     end
 
     def cache_id=(id)
@@ -76,6 +88,17 @@ module Refile
     end
 
   private
+
+    def valid_content_type?(uploadable)
+      content_type = Refile.extract_content_type(uploadable) or return false
+      @content_types.include?(content_type)
+    end
+
+    def valid_extension?(uploadable)
+      filename = Refile.extract_filename(uploadable) or return false
+      extension = ::File.extname(filename).sub(/^\./, "")
+      @extensions.include?(extension)
+    end
 
     def cached?
       cache_id and not cache_id == ""

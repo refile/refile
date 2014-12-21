@@ -16,6 +16,9 @@ Metrics/AbcSize:
 Metrics/CyclomaticComplexity:
   Max: 7 # TODO: reduce
 
+Style/AlignParameters:
+  EnforcedStyle: with_fixed_indentation
+
 Style/StringLiterals:
   EnforcedStyle: double_quotes
 

@@ -51,7 +51,7 @@ module Refile
         end
       end
 
-      attr_reader :access_key_id
+      attr_reader :access_key_id, :max_size
 
       def initialize(access_key_id:, secret_access_key:, bucket:, max_size: nil, prefix: nil, hasher: Refile::RandomHasher.new, **s3_options)
         @access_key_id = access_key_id

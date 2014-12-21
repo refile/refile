@@ -51,8 +51,11 @@ end
 
 module Refile
   class FileDouble
-    def initialize(data)
+    attr_reader :original_filename, :content_type
+    def initialize(data, name = nil, content_type: nil)
       @io = StringIO.new(data)
+      @original_filename = name
+      @content_type = content_type
     end
 
     def read(*args)

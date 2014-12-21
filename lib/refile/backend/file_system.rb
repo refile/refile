@@ -1,7 +1,7 @@
 module Refile
   module Backend
     class FileSystem
-      attr_reader :directory
+      attr_reader :directory, :max_size
 
       def initialize(directory, max_size: nil, hasher: Refile::RandomHasher.new)
         @hasher = hasher

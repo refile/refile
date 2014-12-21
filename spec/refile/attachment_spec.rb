@@ -256,4 +256,88 @@ describe Refile::Attachment do
       expect(instance.document).to be_nil
     end
   end
+
+  describe "with option `extension`: %w[txt]`" do
+    let(:options) { { extension: "txt", raise_errors: false } }
+
+    it "allows file with correct extension to be uploaded" do
+      file = Refile::FileDouble.new("hello", "hello.txt")
+      instance.document = file
+
+      expect(instance.document_attacher.errors).to be_empty
+      expect(Refile.cache.get(instance.document.id).exists?).to be_truthy
+    end
+
+    it "sets error when file with other extension is uploaded" do
+      file = Refile::FileDouble.new("hello", "hello.php")
+      instance.document = file
+
+      expect(instance.document_attacher.errors).to eq([:invalid_extension])
+      expect(instance.document).to be_nil
+    end
+
+    it "sets error when file with no extension is uploaded" do
+      file = Refile::FileDouble.new("hello")
+      instance.document = file
+
+      expect(instance.document_attacher.errors).to eq([:invalid_extension])
+      expect(instance.document).to be_nil
+    end
+  end
+
+  describe "with option `content_type: %w[txt]`" do
+    let(:options) { { content_type: "text/plain", raise_errors: false } }
+
+    it "allows file with correct content type to be uploaded" do
+      file = Refile::FileDouble.new("hello", content_type: "text/plain")
+      instance.document = file
+
+      expect(instance.document_attacher.errors).to be_empty
+      expect(Refile.cache.get(instance.document.id).exists?).to be_truthy
+    end
+
+    it "sets error when file with other content type is uploaded" do
+      file = Refile::FileDouble.new("hello", content_type: "application/php")
+      instance.document = file
+
+      expect(instance.document_attacher.errors).to eq([:invalid_content_type])
+      expect(instance.document).to be_nil
+    end
+
+    it "sets error when file with no content type is uploaded" do
+      file = Refile::FileDouble.new("hello")
+      instance.document = file
+
+      expect(instance.document_attacher.errors).to eq([:invalid_content_type])
+      expect(instance.document).to be_nil
+    end
+  end
+
+  describe "with option `type: :image`" do
+    let(:options) { { type: :image, raise_errors: false } }
+
+    it "allows image to be uploaded" do
+      file = Refile::FileDouble.new("hello", content_type: "image/jpeg")
+      instance.document = file
+
+      expect(instance.document_attacher.errors).to be_empty
+      expect(Refile.cache.get(instance.document.id).exists?).to be_truthy
+    end
+
+    it "sets error when file with other content type is uploaded" do
+      file = Refile::FileDouble.new("hello", content_type: "application/php")
+      instance.document = file
+
+      expect(instance.document_attacher.errors).to eq([:invalid_content_type])
+      expect(instance.document).to be_nil
+    end
+
+    it "sets error when file with no content type is uploaded" do
+      file = Refile::FileDouble.new("hello")
+      instance.document = file
+
+      expect(instance.document_attacher.errors).to eq([:invalid_content_type])
+      expect(instance.document).to be_nil
+    end
+  end
 end

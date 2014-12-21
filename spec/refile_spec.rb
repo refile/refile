@@ -32,4 +32,43 @@ RSpec.describe Refile do
       expect { Refile.verify_uploadable(Refile::FileDouble.new("hello world"), 8) }.to raise_error(Refile::Invalid)
     end
   end
+
+  describe ".extract_filename" do
+    it "extracts filename from original_filename" do
+      name = Refile.extract_filename(double(original_filename: "/foo/bar/baz.png"))
+      expect(name).to eq("baz.png")
+    end
+
+    it "extracts filename from path" do
+      name = Refile.extract_filename(double(path: "/foo/bar/baz.png"))
+      expect(name).to eq("baz.png")
+    end
+
+    it "returns nil if it can't determine filename" do
+      name = Refile.extract_filename(double)
+      expect(name).to be_nil
+    end
+  end
+
+  describe ".extract_content_type" do
+    it "extracts content type" do
+      name = Refile.extract_content_type(double(content_type: "image/jpeg"))
+      expect(name).to eq("image/jpeg")
+    end
+
+    it "extracts content type from extension" do
+      name = Refile.extract_content_type(double(original_filename: "test.png"))
+      expect(name).to eq("image/png")
+    end
+
+    it "returns nil if it can't determine content type" do
+      name = Refile.extract_filename(double)
+      expect(name).to be_nil
+    end
+
+    it "returns nil if it has an unknown content type" do
+      name = Refile.extract_content_type(double(original_filename: "foo.blah"))
+      expect(name).to be_nil
+    end
+  end
 end
