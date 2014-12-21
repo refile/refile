@@ -13,8 +13,8 @@ module Refile
 
     before do
       content_type ::File.extname(request.path), default: 'application/octet-stream'
-      if Refile.app_allowed_origin
-        response["Access-Control-Allow-Origin"] = Refile.app_allowed_origin
+      if Refile.allow_origin
+        response["Access-Control-Allow-Origin"] = Refile.allow_origin
         response["Access-Control-Allow-Headers"] = request.env["HTTP_ACCESS_CONTROL_REQUEST_HEADERS"].to_s
         response["Access-Control-Allow-Method"] = request.env["HTTP_ACCESS_CONTROL_REQUEST_METHOD"].to_s
       end
@@ -80,7 +80,7 @@ module Refile
     private
 
     def logger
-      Refile.app_logger
+      Refile.logger
     end
 
     def stream_file(file)

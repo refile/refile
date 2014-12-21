@@ -53,11 +53,11 @@ Capybara.configure do |config|
   config.server_port = 56120
 end
 
-Refile.app_allowed_origin = "*"
+Refile.allow_origin = "*"
 Refile.host = "//localhost:56120"
 
 RSpec.configure do |config|
   config.before(:all) do
-    Refile.app_logger = Rails.logger
+    Refile.logger = Rails.logger
   end
 end

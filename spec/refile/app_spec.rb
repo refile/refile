@@ -39,7 +39,7 @@ describe Refile::App do
 
     context "with allow origin" do
       before(:each) do
-        allow(Refile).to receive(:app_allowed_origin).and_return("example.com")
+        allow(Refile).to receive(:allow_origin).and_return("example.com")
       end
 
       it "sets CORS header" do

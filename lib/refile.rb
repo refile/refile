@@ -42,10 +42,14 @@ module Refile
     attr_accessor :direct_upload
 
     # Logger that should be used by rack application
-    attr_accessor :app_logger
+    #
+    # @return [Logger]
+    attr_accessor :logger
 
     # Value for Access-Control-Allow-Origin header
-    attr_accessor :app_allowed_origin
+    #
+    # @return [String]
+    attr_accessor :allow_origin
 
     # A global registry of backends.
     #
@@ -170,6 +174,6 @@ Refile.configure do |config|
   # one?
   config.read_chunk_size = 3000
   config.direct_upload = ["cache"]
-  config.app_allowed_origin = "*"
-  config.app_logger = Logger.new(STDOUT)
+  config.allow_origin = "*"
+  config.logger = Logger.new(STDOUT)
 end
