@@ -22,9 +22,8 @@ describe Refile::AttachmentHelper do
       let(:host) { '//cdn.example.com' }
 
       it 'creates the expected url' do
-        expect(view.
-          attachment_url(record, name, 'fill', 300, 300, filename: 'test', format: 'jpg', host: host)
-        ).to eq '//cdn.example.com/attachments/test_backend/fill/300/300/123abc/test.jpg'
+        url = view.attachment_url(record, name, 'fill', 300, 300, filename: 'test', format: 'jpg', host: host)
+        expect(url).to eq '//cdn.example.com/attachments/test_backend/fill/300/300/123abc/test.jpg'
       end
     end
 
@@ -38,9 +37,8 @@ describe Refile::AttachmentHelper do
       end
 
       it 'creates the expected url' do
-        expect(view.
-          attachment_url(record, name, 'fill', 300, 300, filename: 'test', format: 'jpg')
-        ).to eq '//cdn.example.com/attachments/test_backend/fill/300/300/123abc/test.jpg'
+        url = view.attachment_url(record, name, 'fill', 300, 300, filename: 'test', format: 'jpg')
+        expect(url).to eq '//cdn.example.com/attachments/test_backend/fill/300/300/123abc/test.jpg'
       end
     end
 
@@ -54,9 +52,8 @@ describe Refile::AttachmentHelper do
       end
 
       it 'creates the expected url' do
-        expect(view.
-          attachment_url(record, name, 'fill', 300, 300, filename: 'test', format: 'jpg')
-        ).to eq 'http://www.example.com/attachments/test_backend/fill/300/300/123abc/test.jpg'
+        url = view.attachment_url(record, name, 'fill', 300, 300, filename: 'test', format: 'jpg')
+        expect(url).to eq 'http://www.example.com/attachments/test_backend/fill/300/300/123abc/test.jpg'
       end
     end
   end
