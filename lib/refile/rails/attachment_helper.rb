@@ -1,13 +1,13 @@
 module Refile
   module AttachmentHelper
-    def attachment_url(record, name, *args, filename: nil, format: nil)
+    def attachment_url(record, name, *args, filename: nil, format: nil, host: nil)
       file = record.send(name)
       return unless file
 
       filename ||= name.to_s
 
       backend_name = Refile.backends.key(file.backend)
-      host = Refile.host || request.base_url
+      host = host || Refile.host || request.base_url
 
       filename = filename.parameterize("_")
       filename << "." << format.to_s if format
@@ -15,12 +15,12 @@ module Refile
       ::File.join(host, main_app.refile_app_path, backend_name, *args.map(&:to_s), file.id.to_s, filename)
     end
 
-    def attachment_image_tag(record, name, *args, fallback: nil, format: nil, **options)
+    def attachment_image_tag(record, name, *args, fallback: nil, format: nil, host: nil, **options)
       file = record.send(name)
       classes = ["attachment", record.class.model_name.singular, name, *options[:class]]
 
       if file
-        image_tag(attachment_url(record, name, *args, format: format), options.merge(class: classes))
+        image_tag(attachment_url(record, name, *args, format: format, host: host), options.merge(class: classes))
       elsif fallback
         classes << "fallback"
         image_tag(fallback, options.merge(class: classes))
@@ -32,7 +32,7 @@ module Refile
         cache = options[:object].send(:"#{method}_attacher").cache
 
         if options[:direct]
-          host = Refile.host || request.base_url
+          host = options[:host] || Refile.host || request.base_url
           backend_name = Refile.backends.key(cache)
 
           options[:data] ||= {}
