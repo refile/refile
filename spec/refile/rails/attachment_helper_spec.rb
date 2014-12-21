@@ -1,12 +1,12 @@
-require 'refile'
-require 'active_support/inflector'
-require 'refile/rails/attachment_helper'
+require "refile"
+require "active_support/inflector"
+require "refile/rails/attachment_helper"
 describe Refile::AttachmentHelper do
   describe '#attachment_url' do
     let(:view) { Struct.new(:main_app, :request).new(main_app, request) }
     let(:main_app) { double :main_app, refile_app_path: 'attachments' }
     let(:request) { double :request, base_url: 'http://www.example.com' }
-    let(:record) { double name, image: file }
+    let(:record) { double :record, name: name, image: file }
     let(:name) { :image }
     let(:file) { double :file, backend: backend, id: '123abc' }
     let(:backend) { double :backend }
