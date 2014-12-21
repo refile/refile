@@ -13,7 +13,11 @@ module Refile
 
     before do
       content_type ::File.extname(request.path), default: 'application/octet-stream'
-      response["Access-Control-Allow-Origin"] = Refile.app_allowed_origin if Refile.app_allowed_origin
+      if Refile.app_allowed_origin
+        response["Access-Control-Allow-Origin"] = Refile.app_allowed_origin
+        response["Access-Control-Allow-Headers"] = request.env["HTTP_ACCESS_CONTROL_REQUEST_HEADERS"].to_s
+        response["Access-Control-Allow-Method"] = request.env["HTTP_ACCESS_CONTROL_REQUEST_METHOD"].to_s
+      end
     end
 
     get "/:backend/:id/:filename" do
@@ -44,6 +48,10 @@ module Refile
       ensure_file_and_processor do |file, processor|
         stream_file processor.call(file, *params[:splat].first.split("/"))
       end
+    end
+
+    options "/:backend" do
+      ""
     end
 
     post "/:backend" do
