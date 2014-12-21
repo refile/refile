@@ -51,6 +51,16 @@ module Refile
     # @return [String]
     attr_accessor :allow_origin
 
+    # Where should the rack application be mounted?
+    # The default is 'attachments'
+    attr_accessor :mount_point
+
+    # Should the rack application be automounted in a Rails app?
+    # The default is true.
+    # If set to false then Refile.app should be mounted in the Rails application
+    # routes.rb with the options `at: Refile.mount_point, as: :refile_app`
+    attr_accessor :automount
+
     # A global registry of backends.
     #
     # @return [Hash{String => Backend}]
@@ -176,4 +186,6 @@ Refile.configure do |config|
   config.direct_upload = ["cache"]
   config.allow_origin = "*"
   config.logger = Logger.new(STDOUT)
+  config.mount_point = 'attachments'
+  config.automount = true
 end
