@@ -12,6 +12,7 @@ module Refile
       `clear!(:confirm)` if you're sure you want to do this"
     end
   end
+  ONE_YEAR_IN_SECONDS = 31_557_600
 
   class << self
     # The number of bytes to read when files are streamed. Refile
@@ -55,6 +56,9 @@ module Refile
     #
     # @return [String]
     attr_accessor :allow_origin
+
+    # Value for Cache-Control: max-age=<value in seconds> header
+    attr_accessor :content_max_age
 
     # Where should the rack application be mounted?
     # The default is 'attachments'
@@ -193,4 +197,5 @@ Refile.configure do |config|
   config.logger = Logger.new(STDOUT)
   config.mount_point = "attachments"
   config.automount = true
+  config.content_max_age = Refile::ONE_YEAR_IN_SECONDS
 end
