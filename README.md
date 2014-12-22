@@ -342,7 +342,7 @@ With this helper you can specify an image which is used as a fallback in case
 no file has been uploaded:
 
 ``` erb
-<%= attachment_image_tag(@user, :profile_image, :fill, 300, 300, fallback: "defaul.png") %>
+<%= attachment_image_tag(@user, :profile_image, :fill, 300, 300, fallback: "default.png") %>
 ```
 
 ## 5. JavaScript library
