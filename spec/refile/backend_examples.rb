@@ -3,10 +3,6 @@ RSpec.shared_examples_for :backend do
     Refile::FileDouble.new(data)
   end
 
-  def open_files
-    ObjectSpace.each_object(File).reject { |f| f.closed? } if defined?(ObjectSpace)
-  end
-
   describe "#upload" do
     it "raises ArgumentError when invalid object is uploaded" do
       expect { backend.upload(double(size: 123)) }.to raise_error(ArgumentError)
@@ -141,8 +137,6 @@ RSpec.shared_examples_for :backend do
 
   describe "File" do
     it "is an io-like object" do
-      before = open_files
-
       file = backend.upload(uploadable)
 
       buffer = ""
@@ -159,8 +153,6 @@ RSpec.shared_examples_for :backend do
       file.close
 
       expect { file.read(1, buffer) }.to raise_error
-
-      expect(open_files).to eq(before)
     end
 
     describe "#read" do
