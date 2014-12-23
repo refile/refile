@@ -13,7 +13,7 @@ module Refile
     # @param [#to_s] store                 Name of a backend in +Refile.backends+ to use as permanent store
     # @param [true, false] raise_errors    Whether to raise errors in case an invalid file is assigned
     # @ignore
-    #   rubocop:disable Metrics/MethodLength
+    #   rubocop:disable Metrics/MethodLength, Metrics/AbcSize
     def attachment(name, cache: :cache, store: :store, raise_errors: true)
       attacher = :"#{name}_attacher"
 

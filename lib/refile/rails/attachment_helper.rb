@@ -27,7 +27,11 @@ module Refile
       end
     end
 
+    # @ignore
+    #   rubocop:disable Metrics/AbcSize
     def attachment_field(object_name, method, options = {})
+      options[:data] ||= {}
+
       if options[:object]
         cache = options[:object].send(:"#{method}_attacher").cache
 
@@ -35,20 +39,12 @@ module Refile
           host = options[:host] || Refile.host || request.base_url
           backend_name = Refile.backends.key(cache)
 
-          options[:data] ||= {}
-          options[:data][:direct] = true
-          options[:data][:as] = "file"
-          options[:data][:url] = ::File.join(host, main_app.refile_app_path, backend_name)
+          url = ::File.join(host, main_app.refile_app_path, backend_name)
+          options[:data].merge!(direct: true, as: "file", url: url)
         end
 
         if options[:presigned] and cache.respond_to?(:presign)
-          signature = cache.presign
-          options[:data] ||= {}
-          options[:data][:direct] = true
-          options[:data][:id] = signature.id
-          options[:data][:url] = signature.url
-          options[:data][:fields] = signature.fields
-          options[:data][:as] = signature.as
+          options[:data].merge!(direct: true).merge!(cache.presign.as_json)
         end
       end
       hidden_field(object_name, :"#{method}_cache_id", options.slice(:object)) +

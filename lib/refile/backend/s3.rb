@@ -51,8 +51,6 @@ module Refile
         end
       end
 
-      Signature = Struct.new(:as, :id, :url, :fields)
-
       attr_reader :access_key_id
 
       def initialize(access_key_id:, secret_access_key:, bucket:, max_size: nil, prefix: nil, hasher: Refile::RandomHasher.new, **s3_options)
@@ -118,7 +116,7 @@ module Refile
         id = RandomHasher.new.hash
         signature = @bucket.presigned_post(key: [*@prefix, id].join("/"))
         signature.where(content_length: @max_size) if @max_size
-        Signature.new("file", id, signature.url.to_s, signature.fields)
+        Signature.new(as: "file", id: id, url: signature.url.to_s, fields: signature.fields)
       end
 
       def object(id)

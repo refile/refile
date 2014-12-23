@@ -11,7 +11,7 @@ Metrics/ParameterLists:
   Max: 8
 
 Metrics/AbcSize:
-  Max: 50 # TODO: decrease to 15, the default.
+  Max: 20
 
 Metrics/CyclomaticComplexity:
   Max: 7 # TODO: reduce
