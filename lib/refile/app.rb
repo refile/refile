@@ -21,33 +21,23 @@ module Refile
     end
 
     get "/:backend/:id/:filename" do
-      ensure_file do |file|
-        stream_file(file)
-      end
+      stream_file(file)
     end
 
     get "/:backend/:processor/:id/:file_basename.:extension" do
-      ensure_file_and_processor do |file, processor|
-        stream_file processor.call(file, format: params[:extension])
-      end
+      stream_file processor.call(file, format: params[:extension])
     end
 
     get "/:backend/:processor/:id/:filename" do
-      ensure_file_and_processor do |file, processor|
-        stream_file processor.call(file)
-      end
+      stream_file processor.call(file)
     end
 
     get "/:backend/:processor/*/:id/:file_basename.:extension" do
-      ensure_file_and_processor do |file, processor|
-        stream_file processor.call(file, *params[:splat].first.split("/"), format: params[:extension])
-      end
+      stream_file processor.call(file, *params[:splat].first.split("/"), format: params[:extension])
     end
 
     get "/:backend/:processor/*/:id/:filename" do
-      ensure_file_and_processor do |file, processor|
-        stream_file processor.call(file, *params[:splat].first.split("/"))
-      end
+      stream_file processor.call(file, *params[:splat].first.split("/"))
     end
 
     options "/:backend" do
@@ -91,35 +81,31 @@ module Refile
       end
     end
 
-    def ensure_file_and_processor
-      ensure_processor do |processor|
-        ensure_file do |file|
-          yield file, processor
-        end
-      end
-    end
-
-    def ensure_file
+    def backend
       backend = Refile.backends[params[:backend]]
       unless backend
         log_error("Could not find backend: #{params[:backend]}")
         halt 404
       end
+      backend
+    end
+
+    def file
       file = backend.get(params[:id])
       unless file.exists?
         log_error("Could not find attachment by id: #{params[:id]}")
         halt 404
       end
-      yield file
+      file
     end
 
-    def ensure_processor
+    def processor
       processor = Refile.processors[params[:processor]]
       unless processor
         log_error("Could not find processor: #{params[:processor]}")
         halt 404
       end
-      yield processor
+      processor
     end
 
     def log_error(message)
