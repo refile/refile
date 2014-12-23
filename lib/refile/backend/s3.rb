@@ -2,10 +2,8 @@ require "aws-sdk"
 
 module Refile
   module Backend
-
     # A refile backend which stores files in Amazon S3
     class S3
-
       # Emulates an IO-object like interface on top of S3Object#read. To avoid
       # memory allocations and unnecessary complexity, this treats the `length`
       # parameter to read as a boolean flag instead. If given, it will read the
@@ -21,9 +19,7 @@ module Refile
           result = if length
             raise "closed" if @closed
 
-            unless eof? # sets @peek
-              @peek
-            end
+            @peek unless eof? # sets @peek
           else
             @object.read
           end

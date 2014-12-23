@@ -6,8 +6,8 @@ require "jquery/rails"
 
 module Refile
   class TestApp < Rails::Application
-    config.secret_token = '6805012ab1750f461ef3c531bdce84c0'
-    config.session_store :cookie_store, key: '_refile_session'
+    config.secret_token = "6805012ab1750f461ef3c531bdce84c0"
+    config.session_store :cookie_store, key: "_refile_session"
     config.active_support.deprecation = :log
     config.eager_load = false
     config.action_dispatch.show_exceptions = false
@@ -44,13 +44,13 @@ if ENV["SAUCE_BROWSER"]
     url = "http://#{ENV["SAUCE_USERNAME"]}:#{ENV["SAUCE_ACCESS_KEY"]}@localhost:4445/wd/hub"
     capabilities = { browserName: ENV["SAUCE_BROWSER"], version: ENV["SAUCE_VERSION"] }
     driver = Capybara::Selenium::Driver.new(app, browser: :remote, url: url, desired_capabilities: capabilities)
-    driver.browser.file_detector = lambda { |args| args.first if File.exist?(args.first) }
+    driver.browser.file_detector = ->(args) { args.first if File.exist?(args.first) }
     driver
   end
 end
 
 Capybara.configure do |config|
-  config.server_port = 56120
+  config.server_port = 56_120
 end
 
 Refile.allow_origin = "*"

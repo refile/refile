@@ -22,7 +22,7 @@ end
 
 Refile.backends["limited_cache"] = FakePresignBackend.new(File.expand_path("default_cache", tmp_path), max_size: 100)
 
-Refile.direct_upload = %w(cache limited_cache)
+Refile.direct_upload = %w[cache limited_cache]
 
 Refile.processor(:reverse) do |file|
   StringIO.new(file.read.reverse)
@@ -49,25 +49,27 @@ Refile.processor(:convert_case) do |file, format:|
   end
 end
 
-class Refile::FileDouble
-  def initialize(data)
-    @io = StringIO.new(data)
-  end
+module Refile
+  class FileDouble
+    def initialize(data)
+      @io = StringIO.new(data)
+    end
 
-  def read(*args)
-    @io.read(*args)
-  end
+    def read(*args)
+      @io.read(*args)
+    end
 
-  def size
-    @io.size
-  end
+    def size
+      @io.size
+    end
 
-  def eof?
-    @io.eof?
-  end
+    def eof?
+      @io.eof?
+    end
 
-  def close
-    @io.close
+    def close
+      @io.close
+    end
   end
 end
 

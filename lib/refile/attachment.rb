@@ -1,6 +1,5 @@
 module Refile
   module Attachment
-
     # Macro which generates accessors for the given column which make it
     # possible to upload and retrieve previously uploaded files through the
     # generated accessors.
@@ -13,6 +12,8 @@ module Refile
     # @param [#to_s] cache                 Name of a backend in +Refile.backends+ to use as transient cache
     # @param [#to_s] store                 Name of a backend in +Refile.backends+ to use as permanent store
     # @param [true, false] raise_errors    Whether to raise errors in case an invalid file is assigned
+    # @ignore
+    #   rubocop:disable Metrics/MethodLength
     def attachment(name, cache: :cache, store: :store, raise_errors: true)
       attacher = :"#{name}_attacher"
 

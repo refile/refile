@@ -129,7 +129,7 @@ RSpec.shared_examples_for :backend do
     it "complains when called without confirm" do
       file = backend.upload(uploadable)
 
-      expect { backend.clear! }.to raise_error(ArgumentError)
+      expect { backend.clear! }.to raise_error(Refile::Confirm)
 
       expect(backend.get(file.id).exists?).to be_truthy
     end
@@ -158,8 +158,6 @@ RSpec.shared_examples_for :backend do
     describe "#read" do
       it "can read file contents" do
         file = backend.upload(uploadable)
-
-        buffer = ""
 
         expect(file.read).to eq("hello")
       end

@@ -19,14 +19,14 @@ module Refile
       img.resize "#{width}x#{height}"
     end
 
-    def fill(img, width, height, gravity = 'Center')
+    def fill(img, width, height, gravity = "Center")
       width = width.to_i
       height = height.to_i
       cols, rows = img[:dimensions]
       img.combine_options do |cmd|
         if width != cols || height != rows
-          scale_x = width/cols.to_f
-          scale_y = height/rows.to_f
+          scale_x = width / cols.to_f
+          scale_y = height / rows.to_f
           if scale_x >= scale_y
             cols = (scale_x * (cols + 0.5)).round
             rows = (scale_x * (rows + 0.5)).round

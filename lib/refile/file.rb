@@ -48,9 +48,7 @@ module Refile
 
     def each
       if block_given?
-        until eof?
-          yield(read(Refile.read_chunk_size))
-        end
+        yield(read(Refile.read_chunk_size)) until eof?
       else
         to_enum
       end

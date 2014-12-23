@@ -1,0 +1,53 @@
+Metrics/LineLength:
+  Max: 150 # TODO: we should decrease this to 120
+
+Metrics/ClassLength:
+  Max: 300
+
+Metrics/MethodLength:
+  Max: 25
+
+Metrics/ParameterLists:
+  Max: 8
+
+Metrics/AbcSize:
+  Max: 50 # TODO: decrease to 15, the default.
+
+Metrics/CyclomaticComplexity:
+  Max: 7 # TODO: reduce
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
+Style/StringLiteralsInInterpolation:
+  EnforcedStyle: double_quotes
+
+Style/AndOr:
+  Enabled: false
+
+Style/Not:
+  Enabled: false
+
+Documentation:
+  Enabled: false # TODO: Enable again once we have more docs
+
+Style/CaseIndentation:
+  IndentWhenRelativeTo: case
+  SupportedStyles:
+    - case
+    - end
+  IndentOneStep: true
+
+Style/PercentLiteralDelimiters:
+  PreferredDelimiters:
+    '%w': "[]"
+    '%W': "[]"
+
+Style/AccessModifierIndentation:
+  EnforcedStyle: outdent
+
+Style/SignalException:
+  Enabled: false
+
+Lint/EndAlignment:
+  AlignWith: variable

@@ -18,7 +18,7 @@ describe Refile::App do
     end
 
     it "returns a 404 if the file doesn't exist" do
-      file = Refile.store.upload(StringIO.new("hello"))
+      Refile.store.upload(StringIO.new("hello"))
 
       get "/store/doesnotexist/hello"
 
@@ -63,7 +63,7 @@ describe Refile::App do
     end
 
     it "returns a 404 for head requests if the file doesn't exist" do
-      file = Refile.store.upload(StringIO.new("hello"))
+      Refile.store.upload(StringIO.new("hello"))
 
       head "/store/doesnotexist/hello"
 

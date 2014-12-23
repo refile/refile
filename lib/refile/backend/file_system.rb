@@ -53,7 +53,7 @@ module Refile
       end
 
       def exists?(id)
-        ::File.exists?(path(id))
+        ::File.exist?(path(id))
       end
 
       def clear!(confirm = nil)

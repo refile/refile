@@ -26,4 +26,3 @@ feature "Direct HTTP post file uploads", :js do
     expect(page).to have_content("Upload failure error")
   end
 end
-

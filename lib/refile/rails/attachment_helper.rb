@@ -52,7 +52,7 @@ module Refile
         end
       end
       hidden_field(object_name, :"#{method}_cache_id", options.slice(:object)) +
-      file_field(object_name, method, options)
+        file_field(object_name, method, options)
     end
   end
 end

@@ -1,5 +1,5 @@
 describe Refile::Attachment do
-  let(:options) { { } }
+  let(:options) { {} }
   let(:klass) do
     opts = options
     Class.new do
@@ -185,17 +185,17 @@ describe Refile::Attachment do
     end
 
     it "should be false when the value is ''" do
-      instance.document_attacher.remove = ''
+      instance.document_attacher.remove = ""
       expect(instance.document_attacher.remove?).to be_falsy
     end
 
     it "should be false when the value is '0'" do
-      instance.document_attacher.remove = '0'
+      instance.document_attacher.remove = "0"
       expect(instance.document_attacher.remove?).to be_falsy
     end
 
     it "should be false when the value is 'false'" do
-      instance.document_attacher.remove = 'false'
+      instance.document_attacher.remove = "false"
       expect(instance.document_attacher.remove?).to be_falsy
     end
   end
@@ -212,7 +212,7 @@ describe Refile::Attachment do
     end
 
     it "contains a list of errors when invalid file uploaded" do
-      file = Refile::FileDouble.new("a"*120)
+      file = Refile::FileDouble.new("a" * 120)
       instance.document = file
 
       expect(instance.document_attacher.errors).to eq([:too_large])
@@ -220,7 +220,7 @@ describe Refile::Attachment do
     end
 
     it "is reset when valid file uploaded" do
-      file = Refile::FileDouble.new("a"*120)
+      file = Refile::FileDouble.new("a" * 120)
       instance.document = file
 
       file = Refile::FileDouble.new("hello")
@@ -235,7 +235,7 @@ describe Refile::Attachment do
     let(:options) { { cache: :limited_cache, raise_errors: true } }
 
     it "raises an error when invalid file assigned" do
-      file = Refile::FileDouble.new("a"*120)
+      file = Refile::FileDouble.new("a" * 120)
       expect do
         instance.document = file
       end.to raise_error(Refile::Invalid)
@@ -249,7 +249,7 @@ describe Refile::Attachment do
     let(:options) { { cache: :limited_cache, raise_errors: false } }
 
     it "does not raise an error when invalid file assigned" do
-      file = Refile::FileDouble.new("a"*120)
+      file = Refile::FileDouble.new("a" * 120)
       instance.document = file
 
       expect(instance.document_attacher.errors).to eq([:too_large])

@@ -1,8 +1,8 @@
 require "json"
 require "sinatra/base"
+
 module Refile
   class App < Sinatra::Base
-
     configure do
       set :show_exceptions, false
       set :raise_errors, false
@@ -12,7 +12,7 @@ module Refile
     end
 
     before do
-      content_type ::File.extname(request.path), default: 'application/octet-stream'
+      content_type ::File.extname(request.path), default: "application/octet-stream"
       if Refile.allow_origin
         response["Access-Control-Allow-Origin"] = Refile.allow_origin
         response["Access-Control-Allow-Headers"] = request.env["HTTP_ACCESS_CONTROL_REQUEST_HEADERS"].to_s
@@ -77,7 +77,7 @@ module Refile
       "error"
     end
 
-    private
+  private
 
     def logger
       Refile.logger

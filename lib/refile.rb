@@ -191,6 +191,6 @@ Refile.configure do |config|
   config.direct_upload = ["cache"]
   config.allow_origin = "*"
   config.logger = Logger.new(STDOUT)
-  config.mount_point = 'attachments'
+  config.mount_point = "attachments"
   config.automount = true
 end
