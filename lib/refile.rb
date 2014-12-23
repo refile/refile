@@ -6,9 +6,14 @@ require "logger"
 
 module Refile
   class Invalid < StandardError; end
+  class Confirm < StandardError
+    def message
+      "are you sure? this will remove all files in the backend, call as \
+      `clear!(:confirm)` if you're sure you want to do this"
+    end
+  end
 
   class << self
-
     # The number of bytes to read when files are streamed. Refile
     # uses this in a couple of places where files should be streamed
     # in a memory efficient way instead of reading the entire file into

@@ -57,7 +57,7 @@ module Refile
       end
 
       def clear!(confirm = nil)
-        raise ArgumentError, "are you sure? this will remove all files in the backend, call as `clear!(:confirm)` if you're sure you want to do this" unless confirm == :confirm
+        raise Refile::Confirm unless confirm == :confirm
         FileUtils.rm_rf(@directory)
         FileUtils.mkdir_p(@directory)
       end
