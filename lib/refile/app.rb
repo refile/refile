@@ -21,22 +21,27 @@ module Refile
     end
 
     get "/:backend/:id/:filename" do
+      set_expires_header
       stream_file(file)
     end
 
     get "/:backend/:processor/:id/:file_basename.:extension" do
+      set_expires_header
       stream_file processor.call(file, format: params[:extension])
     end
 
     get "/:backend/:processor/:id/:filename" do
+      set_expires_header
       stream_file processor.call(file)
     end
 
     get "/:backend/:processor/*/:id/:file_basename.:extension" do
+      set_expires_header
       stream_file processor.call(file, *params[:splat].first.split("/"), format: params[:extension])
     end
 
     get "/:backend/:processor/*/:id/:filename" do
+      set_expires_header
       stream_file processor.call(file, *params[:splat].first.split("/"))
     end
 
@@ -68,6 +73,10 @@ module Refile
     end
 
   private
+
+    def set_expires_header
+      expires Refile.content_max_age, :public, :must_revalidate
+    end
 
     def logger
       Refile.logger
