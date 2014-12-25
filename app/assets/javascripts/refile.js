@@ -7,7 +7,9 @@
     if(e.target.tagName === "INPUT" && e.target.type === "file" && e.target.getAttribute("data-direct")) {
       var input = e.target;
       if(!input.files) { return; } // IE9, bail out if file API is not supported.
+
       var file = input.files[0];
+      var metadataField = document.querySelector("input[type=hidden][name='" + input.name + "']");
 
       var dispatchEvent = function(name, detail) {
         var ev = document.createEvent('CustomEvent');
@@ -36,7 +38,9 @@
           dispatchEvent("upload:complete", xhr.responseText);
           if((xhr.status >= 200 && xhr.status < 300) || xhr.status === 304) {
             var id = input.getAttribute("data-id") || JSON.parse(xhr.responseText).id;
-            input.previousSibling.value = id;
+            if(metadataField) {
+              metadataField.value = JSON.stringify({ id: id, filename: file.name, content_type: file.type, size: file.size });
+            }
             input.removeAttribute("name");
             dispatchEvent("upload:success", xhr.responseText);
           } else {

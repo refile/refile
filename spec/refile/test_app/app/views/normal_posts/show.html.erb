@@ -1,4 +1,4 @@
-<h1><%= @post.title %></h1<>
+<h1><%= @post.title %></h1>
 
 <% if @post.image %>
   <%= attachment_image_tag(@post, :image) %>
@@ -6,9 +6,11 @@
 
 <% if @post.document %>
   <%= link_to "Document", attachment_url(@post, :document) %>
-<% end %>
 
-<% if @post.document %>
+  <p class="content-type"><%= @post.document_content_type %></p>
+  <p class="size"><%= @post.document_size %></p>
+  <p class="filename"><%= @post.document_filename %></p>
+
   <%= link_to "Convert to Upper", attachment_url(@post, :document, :convert_case, format: "up") %>
 <% end %>
 

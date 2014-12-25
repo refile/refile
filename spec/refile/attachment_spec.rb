@@ -5,7 +5,7 @@ describe Refile::Attachment do
     Class.new do
       extend Refile::Attachment
 
-      attr_accessor :document_id, :document_name, :document_size
+      attr_accessor :document_id, :document_filename, :document_size, :document_content_type
 
       attachment :document, **opts
     end
@@ -14,10 +14,32 @@ describe Refile::Attachment do
 
   describe ":name=" do
     it "receives a file, caches it and sets the _id parameter" do
-      instance.document = Refile::FileDouble.new("hello")
+      instance.document = Refile::FileDouble.new("hello", "foo.txt", content_type: "text/plain")
 
-      expect(Refile.cache.get(instance.document.id).read).to eq("hello")
-      expect(Refile.cache.get(instance.document_cache_id).read).to eq("hello")
+      expect(instance.document.read).to eq("hello")
+
+      expect(instance.document_attacher.data[:filename]).to eq("foo.txt")
+      expect(instance.document_attacher.data[:size]).to eq(5)
+      expect(instance.document_attacher.data[:content_type]).to eq("text/plain")
+
+      expect(instance.document_filename).to eq("foo.txt")
+      expect(instance.document_size).to eq(5)
+      expect(instance.document_content_type).to eq("text/plain")
+    end
+
+    it "receives serialized data and retrieves file from it" do
+      file = Refile.cache.upload(Refile::FileDouble.new("hello"))
+      instance.document = { id: file.id, filename: "foo.txt", content_type: "text/plain", size: 5 }.to_json
+
+      expect(instance.document.read).to eq("hello")
+
+      expect(instance.document_attacher.data[:filename]).to eq("foo.txt")
+      expect(instance.document_attacher.data[:size]).to eq(5)
+      expect(instance.document_attacher.data[:content_type]).to eq("text/plain")
+
+      expect(instance.document_filename).to eq("foo.txt")
+      expect(instance.document_size).to eq(5)
+      expect(instance.document_content_type).to eq("text/plain")
     end
   end
 
@@ -43,13 +65,26 @@ describe Refile::Attachment do
 
     context "without redirects" do
       before(:each) do
-        stub_request(:get, "http://www.example.com/some_file").to_return(status: 200, body: "abc", headers: { "Content-Length" => 3 })
+        stub_request(:get, "http://www.example.com/some_file.txt").to_return(
+          status: 200,
+          body: "abc",
+          headers: { "Content-Length" => 3, "Content-Type" => "text/plain" }
+        )
       end
 
-      it "downloads file, caches it and sets the _id parameter" do
-        instance.remote_document_url = "http://www.example.com/some_file"
+      it "downloads file, caches it and sets the _id parameter and metadata" do
+        instance.remote_document_url = "http://www.example.com/some_file.txt"
+        expect(instance.document.read).to eq("abc")
+
+        expect(instance.document_attacher.data[:filename]).to eq("some_file.txt")
+        expect(instance.document_attacher.data[:size]).to eq(3)
+        expect(instance.document_attacher.data[:content_type]).to eq("text/plain")
+
+        expect(instance.document_filename).to eq("some_file.txt")
+        expect(instance.document_size).to eq(3)
+        expect(instance.document_content_type).to eq("text/plain")
+
         expect(Refile.cache.get(instance.document.id).read).to eq("abc")
-        expect(Refile.cache.get(instance.document_cache_id).read).to eq("abc")
       end
     end
 
@@ -62,8 +97,8 @@ describe Refile::Attachment do
 
       it "follows redirects and fetches the file, caches it and sets the _id parameter" do
         instance.remote_document_url = "http://www.example.com/1"
+        expect(instance.document.read).to eq("woop")
         expect(Refile.cache.get(instance.document.id).read).to eq("woop")
-        expect(Refile.cache.get(instance.document_cache_id).read).to eq("woop")
       end
 
       context "when errors enabled" do
@@ -88,15 +123,6 @@ describe Refile::Attachment do
     end
   end
 
-  describe ":name_cache_id" do
-    it "doesn't overwrite a cached file" do
-      instance.document = Refile::FileDouble.new("hello")
-      instance.document_cache_id = "xyz"
-
-      expect(instance.document.read).to eq("hello")
-    end
-  end
-
   describe ":name_attacher.store!" do
     it "puts a cached file into the store" do
       instance.document = Refile::FileDouble.new("hello")
@@ -107,7 +133,8 @@ describe Refile::Attachment do
       expect(Refile.store.get(instance.document_id).read).to eq("hello")
       expect(Refile.store.get(instance.document.id).read).to eq("hello")
 
-      expect(instance.document_cache_id).to be_nil
+      expect(instance.document.read).to eq("hello")
+      expect(instance.document_size).to eq(5)
       expect(Refile.cache.get(cache.id).exists?).to be_falsy
     end
 
@@ -133,7 +160,7 @@ describe Refile::Attachment do
       expect(Refile.store.get(instance.document_id).read).to eq("world")
       expect(Refile.store.get(instance.document.id).read).to eq("world")
 
-      expect(instance.document_cache_id).to be_nil
+      expect(instance.document.read).to eq("world")
       expect(Refile.cache.get(cache.id).exists?).to be_falsy
       expect(Refile.store.get(file.id).exists?).to be_falsy
     end
@@ -146,29 +173,34 @@ describe Refile::Attachment do
       instance.document_attacher.store!
 
       expect(instance.document_id).to be_nil
+      expect(instance.document_size).to be_nil
       expect(Refile.store.exists?(file.id)).to be_falsy
     end
   end
 
   describe ":name_attacher.delete!" do
     it "deletes a stored file" do
-      file = Refile.store.upload(Refile::FileDouble.new("hello"))
-      instance.document_id = file.id
+      instance.document = Refile::FileDouble.new("hello")
+      instance.document_attacher.store!
+      file = instance.document
 
       instance.document_attacher.delete!
 
+      expect(instance.document).to be_nil
       expect(instance.document_id).to be_nil
+      expect(instance.document_size).to be_nil
       expect(Refile.store.exists?(file.id)).to be_falsy
     end
 
     it "deletes a cached file" do
-      file = Refile.cache.upload(Refile::FileDouble.new("hello"))
-      instance.document_cache_id = file.id
+      instance.document = Refile::FileDouble.new("hello")
+      file = instance.document
 
       instance.document_attacher.delete!
 
+      expect(instance.document).to be_nil
       expect(instance.document_id).to be_nil
-      expect(instance.document_cache_id).to be_nil
+      expect(instance.document_size).to be_nil
       expect(Refile.cache.exists?(file.id)).to be_falsy
     end
   end
