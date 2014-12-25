@@ -20,6 +20,12 @@ module Refile
       end
     end
 
+    head "/:backend/:id" do
+      unless backend.exists?(params[:id])
+        status 404
+      end
+    end
+
     get "/:backend/:id/:filename" do
       set_expires_header
       stream_file(file)
