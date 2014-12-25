@@ -33,18 +33,19 @@ module Refile
       options[:data] ||= {}
 
       if options[:object]
-        cache = options[:object].send(:"#{method}_attacher").cache
+        attacher = options[:object].send(:"#{method}_attacher")
+        options[:accept] = attacher.accept
 
         if options[:direct]
           host = options[:host] || Refile.host || request.base_url
-          backend_name = Refile.backends.key(cache)
+          backend_name = Refile.backends.key(attacher.cache)
 
           url = ::File.join(host, main_app.refile_app_path, backend_name)
           options[:data].merge!(direct: true, as: "file", url: url)
         end
 
-        if options[:presigned] and cache.respond_to?(:presign)
-          options[:data].merge!(direct: true).merge!(cache.presign.as_json)
+        if options[:presigned] and attacher.cache.respond_to?(:presign)
+          options[:data].merge!(direct: true).merge!(attacher.cache.presign.as_json)
         end
       end
       hidden_field(object_name, :"#{method}_cache_id", options.slice(:object)) +

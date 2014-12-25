@@ -87,6 +87,14 @@ module Refile
       remove and remove != "" and remove !~ /\A0|false$\z/
     end
 
+    def accept
+      if content_types
+        content_types.join(",")
+      elsif extensions
+        extensions.map { |e| ".#{e}" }.join(",")
+      end
+    end
+
   private
 
     def valid_content_type?(uploadable)

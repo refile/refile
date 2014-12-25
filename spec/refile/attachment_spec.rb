@@ -231,6 +231,24 @@ describe Refile::Attachment do
     end
   end
 
+  describe ":name_attacher.accept" do
+    context "with `extension`" do
+      let(:options) { { extension: %w[jpg png] } }
+
+      it "returns an accept string" do
+        expect(instance.document_attacher.accept).to eq(".jpg,.png")
+      end
+    end
+
+    context "with `content_type`" do
+      let(:options) { { content_type: %w[image/jpeg image/png], extension: "zip" } }
+
+      it "returns an accept string" do
+        expect(instance.document_attacher.accept).to eq("image/jpeg,image/png")
+      end
+    end
+  end
+
   describe "with option `raise_errors: true" do
     let(:options) { { cache: :limited_cache, raise_errors: true } }
 
