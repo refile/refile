@@ -7,6 +7,22 @@ describe Refile::App do
     Refile::App.new
   end
 
+  describe "GET /:backend/:id" do
+    it "returns a 200 if the file exists" do
+      file = Refile.store.upload(StringIO.new("hello"))
+
+      head "/store/#{file.id}"
+
+      expect(last_response.status).to eq(200)
+    end
+
+    it "returns a 404 if the file doesn't exist" do
+      head "/store/nonexistent"
+
+      expect(last_response.status).to eq(404)
+    end
+  end
+
   describe "GET /:backend/:id/:filename" do
     it "returns a stored file" do
       file = Refile.store.upload(StringIO.new("hello"))
