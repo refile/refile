@@ -1,3 +1,18 @@
+# 0.4.0
+
+Release date: 2014-12-26
+
+- [ADDED] Pass through additional args to S3
+- [ADDED] Rack app sets far future expiry headers
+- [ADDED] Sinatra app supports CORS preflight requests
+- [ADDED] Helpers can take `host` option
+- [ADDED] File type validations
+- [ADDED] attachment_field accept attribute is set from file type restrictions
+- [CHANGED] Dynamically generated methods in attachments are included via Module
+- [CHANGED] Rack app replaced with Sinatra app
+- [FIXED] Various content type fixes in Sinatra app
+- [FIXED] Don't set id of record if it is frozen
+
 # 0.3.0
 
 Release date: 2014-12-14
