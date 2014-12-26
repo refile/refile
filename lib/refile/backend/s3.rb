@@ -1,56 +1,10 @@
 require "aws-sdk"
+require "open-uri"
 
 module Refile
   module Backend
     # A refile backend which stores files in Amazon S3
     class S3
-      # Emulates an IO-object like interface on top of S3Object#read. To avoid
-      # memory allocations and unnecessary complexity, this treats the `length`
-      # parameter to read as a boolean flag instead. If given, it will read the
-      # file in chunks of undetermined size, if not given it will read the
-      # entire file.
-      class Reader
-        def initialize(object)
-          @object = object
-          @closed = false
-        end
-
-        def read(length = nil, buffer = nil)
-          result = if length
-            raise "closed" if @closed
-
-            @peek unless eof? # sets @peek
-          else
-            @object.read
-          end
-          buffer.replace(result) if buffer and result
-          result
-        ensure
-          @peek = nil
-        end
-
-        def eof?
-          @peek ||= enumerator.next
-          false
-        rescue StopIteration
-          true
-        end
-
-        def size
-          @object.content_length
-        end
-
-        def close
-          @closed = true
-        end
-
-      private
-
-        def enumerator
-          @enumerator ||= @object.to_enum(:read)
-        end
-      end
-
       attr_reader :access_key_id, :max_size
 
       def initialize(access_key_id:, secret_access_key:, bucket:, max_size: nil, prefix: nil, hasher: Refile::RandomHasher.new, **s3_options)
@@ -88,7 +42,7 @@ module Refile
       end
 
       def open(id)
-        Reader.new(object(id))
+        Kernel.open(object(id).url_for(:read))
       end
 
       def read(id)

@@ -60,14 +60,11 @@ module Refile
     end
 
     def call(file, *args, format: nil)
-      path = file.download.path
-      img = ::MiniMagick::Image.open(path)
+      img = ::MiniMagick::Image.new(file.path)
       img.format(format.to_s.downcase) if format
       send(@method, img, *args)
 
-      img.write(path)
-
-      ::File.open(path, "rb")
+      ::File.open(img.path, "rb")
     end
   end
 end

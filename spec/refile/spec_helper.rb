@@ -31,9 +31,8 @@ end
 Refile.processor(:upcase, proc { |file| StringIO.new(file.read.upcase) })
 
 Refile.processor(:concat) do |file, *words|
-  content = File.read(file.download.path)
   tempfile = Tempfile.new("concat")
-  tempfile.write(content)
+  tempfile.write(file.read)
   words.each do |word|
     tempfile.write(word)
   end

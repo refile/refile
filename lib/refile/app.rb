@@ -1,5 +1,6 @@
 require "json"
 require "sinatra/base"
+require "tempfile"
 
 module Refile
   class App < Sinatra::Base
@@ -22,7 +23,7 @@ module Refile
 
     get "/:backend/:id/:filename" do
       set_expires_header
-      stream_file(file)
+      stream_file file
     end
 
     get "/:backend/:processor/:id/:file_basename.:extension" do
@@ -83,11 +84,16 @@ module Refile
     end
 
     def stream_file(file)
-      stream do |out|
-        file.each do |chunk|
-          out << chunk
-        end
+      if file.respond_to?(:path)
+        path = file.path
+      else
+        path = Dir::Tmpname.create(params[:id]) {}
+        IO.copy_stream file, path
       end
+
+      filename = request.path.split("/").last
+
+      send_file path, filename: filename, disposition: "inline"
     end
 
     def backend
@@ -105,7 +111,7 @@ module Refile
         log_error("Could not find attachment by id: #{params[:id]}")
         halt 404
       end
-      file
+      file.download
     end
 
     def processor

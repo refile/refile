@@ -16,14 +16,6 @@ module Refile
   ONE_YEAR_IN_SECONDS = 31_557_600
 
   class << self
-    # The number of bytes to read when files are streamed. Refile
-    # uses this in a couple of places where files should be streamed
-    # in a memory efficient way instead of reading the entire file into
-    # memory at once. The default value of this is `3000`.
-    #
-    # @return [Fixnum]
-    attr_accessor :read_chunk_size
-
     # A shortcut to the instance of the Rack application. This should be
     # set when the application is initialized. `refile/rails` sets this
     # value.
@@ -210,10 +202,6 @@ module Refile
 end
 
 Refile.configure do |config|
-  # FIXME: what is a sane default here? This is a little less than a
-  # memory page, which seemed like a good default, is there a better
-  # one?
-  config.read_chunk_size = 3000
   config.direct_upload = ["cache"]
   config.allow_origin = "*"
   config.logger = Logger.new(STDOUT)
