@@ -36,21 +36,10 @@ module Refile
     end
 
     def download
-      tempfile = Tempfile.new(id)
-      tempfile.binmode
-      each do |chunk|
-        tempfile.write(chunk)
-      end
-      close
-      tempfile.close
-      tempfile
-    end
+      return io if io.is_a?(Tempfile)
 
-    def each
-      if block_given?
-        yield(read(Refile.read_chunk_size)) until eof?
-      else
-        to_enum
+      Tempfile.new(id, binmode: true).tap do |tempfile|
+        IO.copy_stream(io, tempfile)
       end
     end
 

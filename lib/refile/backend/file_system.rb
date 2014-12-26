@@ -15,19 +15,7 @@ module Refile
         Refile.verify_uploadable(uploadable, @max_size)
 
         id = @hasher.hash(uploadable)
-
-        if uploadable.respond_to?(:path) and ::File.exist?(uploadable.path)
-          FileUtils.cp(uploadable.path, path(id))
-        else
-          ::File.open(path(id), "wb") do |file|
-            buffer = "" # reuse the same buffer
-            until uploadable.eof?
-              uploadable.read(Refile.read_chunk_size, buffer)
-              file.write(buffer)
-            end
-            uploadable.close
-          end
-        end
+        IO.copy_stream(uploadable, path(id))
 
         Refile::File.new(self, id)
       end

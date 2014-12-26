@@ -179,25 +179,6 @@ RSpec.shared_examples_for :backend do
       end
     end
 
-    describe "#each" do
-      it "can read file contents" do
-        file = backend.upload(uploadable)
-
-        buffer = ""
-        file.each do |chunk|
-          buffer << chunk
-        end
-
-        expect(buffer).to eq("hello")
-      end
-
-      it "returns an enumerator when no block given" do
-        file = backend.upload(uploadable)
-
-        expect(file.each.to_a.join).to eq("hello")
-      end
-    end
-
     describe "#download" do
       it "returns a downloaded tempfile" do
         file = backend.upload(uploadable)

@@ -31,9 +31,8 @@ end
 Refile.processor(:upcase, proc { |file| StringIO.new(file.read.upcase) })
 
 Refile.processor(:concat) do |file, *words|
-  content = File.read(file.download.path)
   tempfile = Tempfile.new("concat")
-  tempfile.write(content)
+  tempfile.write(file.read)
   words.each do |word|
     tempfile.write(word)
   end
@@ -86,6 +85,10 @@ RSpec.configure do |config|
   config.include PathHelper
   config.before(:all) do
     Refile.logger = Logger.new(nil)
-    WebMock.disable_net_connect!(allow_localhost: true)
+    if ENV["S3"]
+      WebMock.allow_net_connect!
+    else
+      WebMock.disable_net_connect!(allow_localhost: true)
+    end
   end
 end
