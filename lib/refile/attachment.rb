@@ -19,52 +19,56 @@ module Refile
     # @ignore
     #   rubocop:disable Metrics/MethodLength, Metrics/AbcSize
     def attachment(name, cache: :cache, store: :store, raise_errors: true, type: nil, extension: nil, content_type: nil)
-      attacher = :"#{name}_attacher"
+      mod = Module.new do
+        attacher = :"#{name}_attacher"
 
-      define_method attacher do
-        ivar = :"@#{attacher}"
-        instance_variable_get(ivar) or begin
-          instance_variable_set(ivar, Attacher.new(self, name,
-            cache: cache,
-            store: store,
-            raise_errors: raise_errors,
-            type: type,
-            extension: extension,
-            content_type: content_type
-          ))
+        define_method attacher do
+          ivar = :"@#{attacher}"
+          instance_variable_get(ivar) or begin
+            instance_variable_set(ivar, Attacher.new(self, name,
+              cache: cache,
+              store: store,
+              raise_errors: raise_errors,
+              type: type,
+              extension: extension,
+              content_type: content_type
+            ))
+          end
+        end
+
+        define_method "#{name}=" do |uploadable|
+          send(attacher).cache!(uploadable)
+        end
+
+        define_method name do
+          send(attacher).get
+        end
+
+        define_method "#{name}_cache_id=" do |cache_id|
+          send(attacher).cache_id = cache_id
+        end
+
+        define_method "#{name}_cache_id" do
+          send(attacher).cache_id
+        end
+
+        define_method "remove_#{name}=" do |remove|
+          send(attacher).remove = remove
+        end
+
+        define_method "remove_#{name}" do
+          send(attacher).remove
+        end
+
+        define_method "remote_#{name}_url=" do |url|
+          send(attacher).download(url)
+        end
+
+        define_method "remote_#{name}_url" do
         end
       end
 
-      define_method "#{name}=" do |uploadable|
-        send(attacher).cache!(uploadable)
-      end
-
-      define_method name do
-        send(attacher).get
-      end
-
-      define_method "#{name}_cache_id=" do |cache_id|
-        send(attacher).cache_id = cache_id
-      end
-
-      define_method "#{name}_cache_id" do
-        send(attacher).cache_id
-      end
-
-      define_method "remove_#{name}=" do |remove|
-        send(attacher).remove = remove
-      end
-
-      define_method "remove_#{name}" do
-        send(attacher).remove
-      end
-
-      define_method "remote_#{name}_url=" do |url|
-        send(attacher).download(url)
-      end
-
-      define_method "remote_#{name}_url" do
-      end
+      include mod
     end
   end
 end
