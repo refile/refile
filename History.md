@@ -1,3 +1,10 @@
+# 0.4.1
+
+Release date: 2014-12-26
+
+- [CHANGED] Improved IO performance
+- [FIXED] Work around a bug in Ruby 2.2
+
 # 0.4.0
 
 Release date: 2014-12-26
