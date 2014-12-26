@@ -479,6 +479,40 @@ Refile's JavaScript library requires HTML5 features which are unavailable on
 IE9 and earlier versions. All other major browsers are supported. Note though
 that it has not yet been extensively tested.
 
+## File type validations
+
+Refile can check that attached files have a given content type or extension.
+This allows you to warn users if they try to upload an invalid file.
+
+**Important:** You should regard this as a convenience feature for your users,
+not a security feature. Both file extension and content type can easily be
+spoofed.
+
+In order to limit attachments to an extension or content type, you can provide
+them like this:
+
+``` ruby
+attachment :cv, extension: "pdf"
+attachment :profile_image, content_type: "image/jpeg"
+```
+
+You can also provide a list of content type or extensions:
+
+``` ruby
+attachment :cv, extension: ["pdf", "doc"]
+attachment :profile_image, content_type: ["image/jpeg", "image/png", "image/gif"]
+```
+
+Since the combination of JPEG, PNG and GIF is so common, you can also specify
+this more succinctly like this:
+
+``` ruby
+attachment :profile_image, type: :image
+```
+
+When a user uploads a file with an invalid extension or content type and
+submits the form, they'll be presented with a validation error.
+
 ## Removing attached files
 
 File input fields unfortunately do not have the option of removing an already
