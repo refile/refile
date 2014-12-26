@@ -6,7 +6,7 @@ module Refile
       # Attachment method which hooks into ActiveRecord models
       #
       # @see Refile::Attachment#attachment
-      def attachment(name, raise_errors: false, **)
+      def attachment(name, raise_errors: false, **options)
         super
 
         attacher = "#{name}_attacher"
