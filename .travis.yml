@@ -2,7 +2,7 @@ language: ruby
 
 rvm:
   - 2.1
-  - 2.1.5
+  - 2.2
   - ruby-head
 
 gemfile:
