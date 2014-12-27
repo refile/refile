@@ -5,8 +5,7 @@
 [![Inline docs](http://inch-ci.org/github/elabs/refile.svg?branch=master)](http://inch-ci.org/github/elabs/refile)
 
 Refile is a modern file upload library for Ruby applications. It is simple, yet
-powerful. Refile is an attempt by CarrierWave's original author to fix the
-design mistakes and overengineering in CarrierWave.
+powerful.
 
 Features:
 
