@@ -13,7 +13,7 @@ module Refile
       @type = type
       @extensions = [extension].flatten if extension
       @content_types = [content_type].flatten if content_type
-      @content_types ||= %w[image/jpeg image/gif image/png] if type == :image
+      @content_types ||= Refile.types.fetch(type).content_type if type
       @errors = []
     end
 

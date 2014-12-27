@@ -80,6 +80,14 @@ module Refile
       @processors ||= {}
     end
 
+    # A global registry of types. Currently, types are simply aliases for a set
+    # of content types, but their functionality may expand in the future.
+    #
+    # @return [Hash{Symbol => Refile::Type}]
+    def types
+      @types ||= {}
+    end
+
     # Adds a processor. The processor must respond to `call`, both receiving
     # and returning an IO-like object. Alternatively a block can be given to
     # this method which also receives and returns an IO-like object.
@@ -194,6 +202,7 @@ module Refile
 
   require "refile/version"
   require "refile/signature"
+  require "refile/type"
   require "refile/attacher"
   require "refile/attachment"
   require "refile/random_hasher"
@@ -209,4 +218,5 @@ Refile.configure do |config|
   config.mount_point = "attachments"
   config.automount = true
   config.content_max_age = Refile::ONE_YEAR_IN_SECONDS
+  config.types[:image] = Refile::Type.new(:image, content_type: %w[image/jpeg image/gif image/png])
 end
