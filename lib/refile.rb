@@ -178,6 +178,11 @@ module Refile
       true
     end
 
+    # Extract the filename from an uploadable object. If the filename cannot be
+    # determined, this method will return +nil+.
+    #
+    # @param [IO] uploadable    The uploadable object to extract the filename from
+    # @return [String, nil]     The extracted filename
     def extract_filename(uploadable)
       path = if uploadable.respond_to?(:original_filename)
         uploadable.original_filename
@@ -187,6 +192,11 @@ module Refile
       ::File.basename(path) if path
     end
 
+    # Extract the content type from an uploadable object. If the content type
+    # cannot be determined, this method will return +nil+.
+    #
+    # @param [IO] uploadable    The uploadable object to extract the content type from
+    # @return [String, nil]     The extracted content type
     def extract_content_type(uploadable)
       if uploadable.respond_to?(:content_type)
         uploadable.content_type
