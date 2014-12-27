@@ -11,7 +11,6 @@ Links:
 
 - [API documentation](http://www.rubydoc.info/gems/refile)
 - [Source Code](https://github.com/elabs/refile)
-- [Contributing](CONTRIBUTING.md)
 
 Features:
 
