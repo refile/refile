@@ -358,4 +358,11 @@ describe Refile::Attachment do
       expect(instance.document).to be_nil
     end
   end
+
+  it "includes the module with methods in an instrospectable way" do
+    expect { puts klass.ancestors }
+      .to output(/Refile::Attachment\(document\)/).to_stdout
+    expect { p klass.ancestors }
+      .to output(/Refile::Attachment\(document\)/).to_stdout
+  end
 end

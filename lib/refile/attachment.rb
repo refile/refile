@@ -86,6 +86,9 @@ module Refile
 
         define_method "remote_#{name}_url" do
         end
+
+        define_singleton_method("to_s")    { "Refile::Attachment(#{name})" }
+        define_singleton_method("inspect") { "Refile::Attachment(#{name})" }
       end
 
       include mod
