@@ -46,8 +46,7 @@ module Refile
     end
 
     post "/:backend" do
-      backend = Refile.backends[params[:backend]]
-      halt 404 unless backend && Refile.direct_upload.include?(params[:backend])
+      halt 404 unless Refile.direct_upload.include?(params[:backend])
       tempfile = request.params.fetch("file").fetch(:tempfile)
       file = backend.upload(tempfile)
       content_type :json
