@@ -1,6 +1,8 @@
 require "aws-sdk"
 require "open-uri"
 
+require "refile/signature"
+
 module Refile
   module Backend
     # A refile backend which stores files in Amazon S3
