@@ -140,8 +140,8 @@ For example:
 Refile.cache = Refile::Backend::S3.new(max_size: 10.megabytes, ...)
 ```
 
-The Refile gem ships with [S3](lib/refile/backends/s3.rb) and
-[FileSystem](lib/refile/backends/file_system.rb) backends. Additional backends
+The Refile gem ships with [S3](lib%2Frefile%2Fbackend%2Fs3.rb) and
+[FileSystem](lib%2Frefile%2Fbackend%2Ffile_system.rb) backends. Additional backends
 are provided by other gems.
 
 - [Fog](https://github.com/elabs/refile-fog) provides support for a ton of
@@ -200,7 +200,7 @@ the file and uploading it again, Refile will simply issue a copy command to S3.
 
 Refile is built to integrate with ORMs other than ActiveRecord, but this being
 a very young gem, such integrations do not yet exist. Take a look at the [ActiveRecord
-integration](lib/refile/attachment/active_record.rb), building your own should
+integration](lib%2Frefile%2Fattachment%2Factive_record.rb), building your own should
 not be too difficult.
 
 ### Pure Ruby classes
@@ -241,7 +241,7 @@ Using a [protocol-relative URL](http://www.paulirish.com/2010/the-protocol-relat
 
 ### Mounting
 
-If you are using Rails and have required [refile/rails.rb](lib/refile/rails.rb),
+If you are using Rails and have required [refile/rails.rb](lib%2Frefile%2Frails.rb),
 then the Rack application is mounted for you at `/attachments`. You should be able
 to see this when you run `rake routes`.
 
@@ -293,7 +293,7 @@ elloh
 
 Refile calls `call` on the processor and passes in the retrieved file, as well
 as all additional arguments sent through the URL. See the
-[built in image processors](lib/refile/image_processing.rb) for a more advanced
+[built in image processors](lib%2Frefile%2Fimage_processing.rb) for a more advanced
 example.
 
 ## 4. Rails helpers
