@@ -1,3 +1,9 @@
+# 0.4.2
+
+Release date: 2014-12-27
+
+- [FIXED] Regression in S3 backend
+
 # 0.4.1
 
 Release date: 2014-12-26
