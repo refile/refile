@@ -7,6 +7,12 @@
 Refile is a modern file upload library for Ruby applications. It is simple, yet
 powerful.
 
+Links:
+
+- [API documentation](http://www.rubydoc.info/gems/refile)
+- [Source Code](https://github.com/elabs/refile)
+- [Contributing](CONTRIBUTING.md)
+
 Features:
 
 - Configurable backends, file system, S3, etc...
