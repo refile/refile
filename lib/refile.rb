@@ -193,6 +193,7 @@ module Refile
   end
 
   require "refile/version"
+  require "refile/signature"
   require "refile/attacher"
   require "refile/attachment"
   require "refile/random_hasher"

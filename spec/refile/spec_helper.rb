@@ -12,11 +12,9 @@ Refile.store = Refile::Backend::FileSystem.new(File.expand_path("default_store",
 Refile.cache = Refile::Backend::FileSystem.new(File.expand_path("default_cache", tmp_path))
 
 class FakePresignBackend < Refile::Backend::FileSystem
-  Signature = Struct.new(:as, :id, :url, :fields)
-
   def presign
     id = Refile::RandomHasher.new.hash
-    Signature.new("file", id, "/presigned/posts/upload", token: "xyz123", id: id)
+    Refile::Signature.new(as: "file", id: id, url: "/presigned/posts/upload", fields: { id: id, token: "xyz123" })
   end
 end
 
