@@ -6,7 +6,10 @@ require "logger"
 require "mime/types"
 
 module Refile
+  # @api private
   class Invalid < StandardError; end
+
+  # @api private
   class Confirm < StandardError
     def message
       "are you sure? this will remove all files in the backend, call as \
@@ -114,6 +117,7 @@ module Refile
     # @param [Proc, nil] processor  The processor, must respond to `call` and.
     # @yield [Refile::File]         The file to modify
     # @yieldreturn [IO]             An IO-like object representing the processed file
+    # @return [void]
     def processor(name, processor = nil, &block)
       processor ||= block
       processors[name.to_s] = processor
@@ -179,7 +183,7 @@ module Refile
     end
 
     # Extract the filename from an uploadable object. If the filename cannot be
-    # determined, this method will return +nil+.
+    # determined, this method will return `nil`.
     #
     # @param [IO] uploadable    The uploadable object to extract the filename from
     # @return [String, nil]     The extracted filename
@@ -193,7 +197,7 @@ module Refile
     end
 
     # Extract the content type from an uploadable object. If the content type
-    # cannot be determined, this method will return +nil+.
+    # cannot be determined, this method will return `nil`.
     #
     # @param [IO] uploadable    The uploadable object to extract the content type from
     # @return [String, nil]     The extracted content type

@@ -17,13 +17,13 @@ module Refile
     # Optionally the name of a processor and a arguments to it can be appended.
     #
     # If the filename option is not given, the filename falls back to the
-    # +name+.
+    # `name`.
     #
     # The host defaults to {Refile.host}, which is useful for serving all
-    # attachments from a CDN. You can also override the host via the +host+
+    # attachments from a CDN. You can also override the host via the `host`
     # option.
     #
-    # Returns +nil+ if there is no file attached.
+    # Returns `nil` if there is no file attached.
     #
     # @example
     #   attachment_url(@post, :document)
@@ -56,7 +56,7 @@ module Refile
     # classes and optionally falling back to the given fallback image if there
     # is no file attached.
     #
-    # Returns +nil+ if there is no file attached and no fallback specified.
+    # Returns `nil` if there is no file attached and no fallback specified.
     #
     # @param [String] fallback                   The path to an image asset to be used as a fallback
     # @param [Hash] options                      Additional options for the image tag

@@ -3,6 +3,17 @@ require "sinatra/base"
 require "tempfile"
 
 module Refile
+  # A Rack application which can be mounted or run on its own.
+  #
+  # @example mounted in Rails
+  #   Rails.application.routes.draw do
+  #     mount Refile::App.new, at: "attachments", as: :refile_app
+  #   end
+  #
+  # @example as standalone app
+  #   require "refile"
+  #
+  #   run Refile::App.new
   class App < Sinatra::Base
     configure do
       set :show_exceptions, false

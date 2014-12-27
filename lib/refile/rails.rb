@@ -2,6 +2,7 @@ require "refile"
 require "refile/rails/attachment_helper"
 
 module Refile
+  # @api private
   class Engine < Rails::Engine
     initializer "refile.setup", before: :load_environment_config do
       Refile.store ||= Refile::Backend::FileSystem.new(Rails.root.join("tmp/uploads/store").to_s)

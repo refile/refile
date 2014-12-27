@@ -73,6 +73,7 @@ module Refile
       # Delete a file from this backend
       #
       # @param [Sring] id           The id of the file
+      # @return [void]
       def delete(id)
         object(id).delete
       end
@@ -115,12 +116,13 @@ module Refile
       end
 
       # Remove all files in this backend. You must confirm the deletion by
-      # passing the symbol +:confirm+ as an argument to this method.
+      # passing the symbol `:confirm` as an argument to this method.
       #
       # @example
       #   backend.clear!(:confirm)
-      # @raise [Refile::Confirm]     Unless the +:confirm+ symbol has been passed.
-      # @param [:confirm] confirm    Pass the symbol +:confirm+ to confirm deletion.
+      # @raise [Refile::Confirm]     Unless the `:confirm` symbol has been passed.
+      # @param [:confirm] confirm    Pass the symbol `:confirm` to confirm deletion.
+      # @return [void]
       def clear!(confirm = nil)
         raise Refile::Confirm unless confirm == :confirm
         @bucket.objects.with_prefix(@prefix).delete_all
