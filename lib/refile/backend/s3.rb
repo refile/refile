@@ -17,6 +17,8 @@ module Refile
     class S3
       attr_reader :access_key_id, :max_size
 
+      # Sets up an S3 backend with the given credentials.
+      #
       # @param [String] access_key_id
       # @param [String] secret_access_key
       # @param [String] bucket            The name of the bucket where files will be stored
