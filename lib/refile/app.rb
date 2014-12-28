@@ -21,6 +21,7 @@ module Refile
       set :sessions, false
       set :logging, false
       set :dump_errors, false
+      use CustomLogger, "Refile::App", Refile.logger
     end
 
     before do
