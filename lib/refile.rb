@@ -220,6 +220,7 @@ module Refile
   require "refile/attachment"
   require "refile/random_hasher"
   require "refile/file"
+  require "refile/custom_logger"
   require "refile/app"
   require "refile/backend/file_system"
 end
