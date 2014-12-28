@@ -494,6 +494,25 @@ Refile's JavaScript library requires HTML5 features which are unavailable on
 IE9 and earlier versions. All other major browsers are supported. Note though
 that it has not yet been extensively tested.
 
+## Additional metadata
+
+In the quick start example above, we chose to only store the file id, but often
+it is useful to store the file's filename, size and content type as well.
+Refile makes it easy to extract this data and store it alongside the id. All you
+need to do is add columns for these:
+
+``` ruby
+class StoreMetadata < ActiveRecord::Migration
+  def change
+    add_column :profile_image_filename
+    add_column :profile_image_size
+    add_column :profile_image_content_type
+  end
+end
+```
+
+These columns will now be filled automatically.
+
 ## File type validations
 
 Refile can check that attached files have a given content type or extension.
