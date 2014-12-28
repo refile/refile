@@ -54,3 +54,6 @@ Style/SignalException:
 
 Lint/EndAlignment:
   AlignWith: variable
+
+Lint/HandleExceptions:
+  Enabled: false

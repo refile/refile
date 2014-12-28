@@ -13,8 +13,6 @@ module Refile
     #
     # - `image`
     # - `image=`
-    # - `image_cache_id`
-    # - `image_cache_id=`
     # - `remove_image`
     # - `remove_image=`
     # - `remote_image_url`
@@ -56,20 +54,12 @@ module Refile
           end
         end
 
-        define_method "#{name}=" do |uploadable|
-          send(attacher).cache!(uploadable)
+        define_method "#{name}=" do |value|
+          send(attacher).set(value)
         end
 
         define_method name do
           send(attacher).get
-        end
-
-        define_method "#{name}_cache_id=" do |cache_id|
-          send(attacher).cache_id = cache_id
-        end
-
-        define_method "#{name}_cache_id" do
-          send(attacher).cache_id
         end
 
         define_method "remove_#{name}=" do |remove|

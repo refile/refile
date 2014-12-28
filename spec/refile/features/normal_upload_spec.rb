@@ -8,6 +8,9 @@ feature "Normal HTTP Post file uploads" do
     click_button "Create"
 
     expect(page).to have_selector("h1", text: "A cool post")
+    expect(page).to have_selector(".content-type", text: "text/plain")
+    expect(page).to have_selector(".size", text: "6")
+    expect(page).to have_selector(".filename", text: "hello.txt")
     expect(download_link("Document")).to eq("hello")
   end
 
@@ -31,7 +34,9 @@ feature "Normal HTTP Post file uploads" do
     expect(page).to have_content("Image has an invalid file format")
   end
 
-  scenario "Upload a file via form redisplay" do
+  # FIXME: the only reason this is js:true is because the rack_test driver
+  # doesn't submit file+metadata correctly.
+  scenario "Upload a file via form redisplay", js: true do
     visit "/normal/posts/new"
     attach_file "Document", path("hello.txt")
     click_button "Create"
@@ -39,6 +44,9 @@ feature "Normal HTTP Post file uploads" do
     click_button "Create"
 
     expect(page).to have_selector("h1", text: "A cool post")
+    expect(page).to have_selector(".content-type", text: "text/plain")
+    expect(page).to have_selector(".size", text: "6")
+    expect(page).to have_selector(".filename", text: "hello.txt")
     expect(download_link("Document")).to eq("hello")
   end
 

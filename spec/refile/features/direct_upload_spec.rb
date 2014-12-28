@@ -13,6 +13,9 @@ feature "Direct HTTP post file uploads", :js do
     click_button "Create"
 
     expect(page).to have_selector("h1", text: "A cool post")
+    expect(page).to have_selector(".content-type", text: "text/plain")
+    expect(page).to have_selector(".size", text: "6")
+    expect(page).to have_selector(".filename", text: "hello.txt")
     expect(download_link("Document")).to eq("hello")
   end
 
