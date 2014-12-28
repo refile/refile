@@ -56,7 +56,22 @@ end
 Refile.allow_origin = "*"
 Refile.host = "//localhost:56120"
 
+module TestAppHelpers
+  def download_link(text)
+    url = find_link(text)[:href]
+    if Capybara.current_driver == :rack_test
+      using_session :other do
+        visit(url)
+        page.source.chomp
+      end
+    else
+      Net::HTTP.get_response(URI(url)).body.chomp
+    end
+  end
+end
+
 RSpec.configure do |config|
+  config.include TestAppHelpers, type: :feature
   config.before(:all) do
     Refile.logger = Rails.logger
   end

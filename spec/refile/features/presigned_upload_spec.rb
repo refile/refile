@@ -13,8 +13,7 @@ feature "Direct HTTP post file uploads", :js do
     click_button "Create"
 
     expect(page).to have_selector("h1", text: "A cool post")
-    result = Net::HTTP.get_response(URI(find_link("Document")[:href])).body.chomp
-    expect(result).to eq("hello")
+    expect(download_link("Document")).to eq("hello")
   end
 
   scenario "Fail to upload a file that is too large" do

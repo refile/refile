@@ -8,8 +8,7 @@ feature "Normal HTTP Post file uploads" do
     click_button "Create"
 
     expect(page).to have_selector("h1", text: "A cool post")
-    click_link("Document")
-    expect(page.source.chomp).to eq("hello")
+    expect(download_link("Document")).to eq("hello")
   end
 
   scenario "Fail to upload a file that is too large" do
@@ -40,8 +39,7 @@ feature "Normal HTTP Post file uploads" do
     click_button "Create"
 
     expect(page).to have_selector("h1", text: "A cool post")
-    click_link("Document")
-    expect(page.source.chomp).to eq("hello")
+    expect(download_link("Document")).to eq("hello")
   end
 
   scenario "Format conversion" do
@@ -51,8 +49,7 @@ feature "Normal HTTP Post file uploads" do
     click_button "Create"
 
     expect(page).to have_selector("h1", text: "A cool post")
-    click_link("Convert to Upper")
-    expect(page.source.chomp).to eq("HELLO")
+    expect(download_link("Convert to Upper")).to eq("HELLO")
   end
 
   scenario "Successfully remove an uploaded file" do
@@ -91,7 +88,6 @@ feature "Normal HTTP Post file uploads" do
     click_button "Create"
 
     expect(page).to have_selector("h1", text: "A cool post")
-    click_link("Document")
-    expect(page.source.chomp).to eq("abc")
+    expect(download_link("Document")).to eq("abc")
   end
 end
