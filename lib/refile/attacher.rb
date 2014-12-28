@@ -56,7 +56,7 @@ module Refile
     def retrieve!(value)
       data = JSON.parse(value, symbolize_names: true)
       @cache_id = data.delete(:id)
-      write_metadata(**data)
+      write_metadata(**data) if @cache_id
     rescue JSON::ParserError
     end
 

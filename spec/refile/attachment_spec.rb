@@ -41,6 +41,20 @@ describe Refile::Attachment do
       expect(instance.document_size).to eq(5)
       expect(instance.document_content_type).to eq("text/plain")
     end
+
+    it "does nothing when assigned string lacks an id" do
+      instance.document = { size: 5 }.to_json
+
+      expect(instance.document).to be_nil
+      expect(instance.document_size).to be_nil
+    end
+
+    it "does nothing when assigned string is not valid JSON" do
+      instance.document = "size:f{oo}"
+
+      expect(instance.document).to be_nil
+      expect(instance.document_size).to be_nil
+    end
   end
 
   describe ":name" do
