@@ -54,7 +54,7 @@
         xhr.send(data);
 
         input.classList.add("uploading")
-        dispatchEvent("upload:start");
+        dispatchEvent("upload:start", xhr);
       }
     }
   });
