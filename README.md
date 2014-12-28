@@ -57,7 +57,7 @@ Set up strong parameters:
 
 ``` ruby
 def user_params
-  params.require(:user).permit(:profile_image, :profile_image_cache_id)
+  params.require(:user).permit(:profile_image)
 end
 ```
 
@@ -304,10 +304,10 @@ example.
 ## 4. Rails helpers
 
 Refile provides the `attachment_field` form helper which generates a file field
-as well as a hidden field, suffixed with `cache_id`. This field keeps track of
-the file in case it is not yet permanently stored, for example if validations
-fail. It is also used for direct and presigned uploads. For this reason it is
-highly recommended to use `attachment_field` instead of `file_field`.
+as well as a hidden field. This field keeps track of the file in case it is not
+yet permanently stored, for example if validations fail. It is also used for
+direct and presigned uploads. For this reason it is highly recommended to use
+`attachment_field` instead of `file_field`.
 
 ``` erb
 <%= form_for @user do |form| %>
@@ -319,7 +319,7 @@ Will generate something like:
 
 ``` html
 <form action="/users" enctype="multipart/form-data" method="post">
-  <input name="user[profile_image_cache_id]" type="hidden">
+  <input name="user[profile_image]" type="hidden">
   <input name="user[profile_image]" type="file">
 </form>
 ```
@@ -540,7 +540,7 @@ Don't forget to permit this attribute in your controller:
 
 ``` ruby
 def user_params
-  params.require(:user).permit(:profile_image, :profile_image_cache_id, :remove_profile_image)
+  params.require(:user).permit(:profile_image, :remove_profile_image)
 end
 ```
 
@@ -568,7 +568,7 @@ Then permit this field in your controller:
 
 ``` ruby
 def user_params
-  params.require(:user).permit(:profile_image, :profile_image_cache_id, :remote_profile_image_url)
+  params.require(:user).permit(:profile_image, :remote_profile_image_url)
 end
 ```
 
