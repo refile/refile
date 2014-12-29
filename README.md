@@ -378,6 +378,8 @@ simply include it like this:
 ```
 
 Otherwise you can grab a copy [here](https://raw.githubusercontent.com/elabs/refile/master/app/assets/javascripts/refile.js).
+Be sure to always update your copy of this file when you upgrade to the latest
+Refile version.
 
 Now mark the field for direct upload:
 
