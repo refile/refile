@@ -493,8 +493,7 @@ production mode.
 ### Browser compatibility
 
 Refile's JavaScript library requires HTML5 features which are unavailable on
-IE9 and earlier versions. All other major browsers are supported. Note though
-that it has not yet been extensively tested.
+IE9 and earlier versions. All other major browsers are supported.
 
 ## Additional metadata
 
