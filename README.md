@@ -85,7 +85,7 @@ Refile consists of several parts:
 2. Model attachments: map files to model columns
 3. A Rack application: streams files and accepts uploads
 4. Rails helpers: conveniently generate markup in your views
-4. A JavaScript library: facilitates direct uploads
+5. A JavaScript library: facilitates direct uploads
 
 Let's look at each of these in more detail!
 
