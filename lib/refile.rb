@@ -52,16 +52,23 @@ module Refile
     attr_accessor :allow_origin
 
     # Value for Cache-Control: max-age=<value in seconds> header
+    #
+    # @return [Integer]
     attr_accessor :content_max_age
 
-    # Where should the rack application be mounted?
-    # The default is 'attachments'
+    # Where should the rack application be mounted? The default is 'attachments'.
+    #
+    # @return [String]
     attr_accessor :mount_point
 
     # Should the rack application be automounted in a Rails app?
-    # The default is true.
+    #
     # If set to false then Refile.app should be mounted in the Rails application
     # routes.rb with the options `at: Refile.mount_point, as: :refile_app`
+    #
+    # The default is true.
+    #
+    # @return [Boolean]
     attr_accessor :automount
 
     # A global registry of backends.
