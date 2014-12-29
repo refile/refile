@@ -531,7 +531,7 @@ attachment :cv, extension: "pdf"
 attachment :profile_image, content_type: "image/jpeg"
 ```
 
-You can also provide a list of content type or extensions:
+You can also provide a list of content types or extensions:
 
 ``` ruby
 attachment :cv, extension: ["pdf", "doc"]
@@ -547,6 +547,21 @@ attachment :profile_image, type: :image
 
 When a user uploads a file with an invalid extension or content type and
 submits the form, they'll be presented with a validation error.
+
+If you use a particular content type or set of content types frequently
+you can define your own types like this:
+
+``` ruby
+Refile.types[:document] = Refile::Type.new(:document,
+  content_type: %w[text/plain application/pdf]
+)
+```
+
+Now you can use them like this:
+
+``` ruby
+attachment :profile_image, type: :document
+```
 
 ## Removing attached files
 
