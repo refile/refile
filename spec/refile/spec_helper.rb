@@ -79,8 +79,16 @@ module PathHelper
   end
 end
 
+module ManipulationHelpers
+  def color_of_pixel(path, x, y)
+    image = MiniMagick::Image.open(path)
+    image.run_command("convert", "#{image.path}[1x1+#{x}+#{y}]", "-depth", "8", "txt:").split("\n")[1]
+  end
+end
+
 RSpec.configure do |config|
   config.include PathHelper
+  config.include ManipulationHelpers
   config.before(:all) do
     Refile.logger = Logger.new(nil)
     if ENV["S3"]
