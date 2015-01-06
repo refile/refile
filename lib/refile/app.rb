@@ -115,7 +115,7 @@ module Refile
         log_error("Could not find attachment by id: #{params[:id]}")
         halt 404
       end
-      file.download
+      file.download.tap(&:rewind)
     end
 
     def processor

@@ -34,8 +34,12 @@ module Refile
         Refile.verify_uploadable(uploadable, @max_size)
 
         id = @hasher.hash(uploadable)
-        IO.copy_stream(uploadable, path(id))
-
+        begin
+          IO.copy_stream(uploadable, path(id))
+        rescue IOError
+          uploadable.open
+          retry
+        end
         Refile::File.new(self, id)
       end
 
