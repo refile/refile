@@ -8,6 +8,8 @@ rvm:
 gemfile:
   - Gemfile
 
+cache: bundler
+
 sudo: false
 
 before_script:
