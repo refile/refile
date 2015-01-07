@@ -61,10 +61,8 @@ module Refile
     # @param [String] gravity             which part of the image to focus on
     # @return [void]
     # @see http://www.imagemagick.org/script/command-line-options.php#gravity
-    # @ignore
-    #   rubocop:disable Metrics/AbcSize
-    #   FIXME: test and rewrite to simpler implementation!
     def fill(img, width, height, gravity = "Center")
+      # FIXME: test and rewrite to simpler implementation!
       width = width.to_i
       height = height.to_i
       cols, rows = img[:dimensions]

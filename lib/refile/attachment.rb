@@ -35,7 +35,7 @@ module Refile
     # @param [String, Array<String>, nil] content_type  Limit the uploaded file to the given content type or list of content types
     # @return [void]
     # @ignore
-    #   rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+    #   rubocop:disable Metrics/MethodLength
     def attachment(name, cache: :cache, store: :store, raise_errors: true, type: nil, extension: nil, content_type: nil)
       mod = Module.new do
         attacher = :"#{name}_attacher"

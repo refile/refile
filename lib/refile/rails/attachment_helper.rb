@@ -86,8 +86,6 @@ module Refile
     # @option options [Boolean] direct      If set to true, adds the appropriate data attributes for direct uploads with refile.js.
     # @option options [Boolean] presign     If set to true, adds the appropriate data attributes for presigned uploads with refile.js.
     # @return [ActiveSupport::SafeBuffer]   The generated form field
-    # @ignore
-    #   rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
     def attachment_field(object_name, method, object:, **options)
       options[:data] ||= {}
 

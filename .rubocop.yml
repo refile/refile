@@ -11,10 +11,13 @@ Metrics/ParameterLists:
   Max: 8
 
 Metrics/AbcSize:
-  Max: 20
+  Enabled: false
 
 Metrics/CyclomaticComplexity:
-  Max: 7 # TODO: reduce
+  Enabled: false
+
+Metrics/PerceivedComplexity:
+  Enabled: false
 
 Style/AlignParameters:
   EnforcedStyle: with_fixed_indentation
