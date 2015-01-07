@@ -18,16 +18,18 @@ module Refile
 
     def log(env, status, began_at)
       now = Time.now
-      logger.info format(
-        LOG_FORMAT,
-        @prefix,
-        now.strftime("%F %T %z"),
-        env["REQUEST_METHOD"],
-        env["PATH_INFO"],
-        env["QUERY_STRING"].empty? ? "" : "?" + env["QUERY_STRING"],
-        status.to_s[0..3],
-        (now - began_at) * 1000
-      )
+      logger.info do
+        format(
+          LOG_FORMAT,
+          @prefix,
+          now.strftime("%F %T %z"),
+          env["REQUEST_METHOD"],
+          env["PATH_INFO"],
+          env["QUERY_STRING"].empty? ? "" : "?" + env["QUERY_STRING"],
+          status.to_s[0..3],
+          (now - began_at) * 1000
+        )
+      end
     end
 
     def logger
