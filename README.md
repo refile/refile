@@ -30,6 +30,16 @@ gem "mini_magick"
 gem "refile", require: ["refile/rails", "refile/image_processing"]
 ```
 
+We're requiring both Refile's Rails integration and image processing via the
+[MiniMagick](https://github.com/minimagick/minimagick) gem, which requires
+[ImageMagick](http://imagemagick.org/) to be installed. To install it simply
+run:
+
+``` sh
+brew install imagemagick # OS X
+sudo apt-get install imagemagick # Ubuntu
+```
+
 Use the `attachment` method to use Refile in a model:
 
 ``` ruby
