@@ -375,7 +375,13 @@ Now mark the field for direct upload:
 <%= form.attachment_field :profile_image, direct: true %>
 ```
 
-There is no step 3 ;)
+Don't forget to permit this attribute in your controller:
+
+``` ruby
+def user_params
+  params.require(:user).permit(:profile_image_cache_id)
+end
+```
 
 The file is now uploaded to the `cache` immediately after the user chooses a file.
 If you try this in the browser, you'll notice that an AJAX request is fired as
