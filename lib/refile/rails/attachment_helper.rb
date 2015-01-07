@@ -106,7 +106,7 @@ module Refile
         options[:data].merge!(direct: true).merge!(attacher.cache.presign.as_json)
       end
 
-      html = hidden_field(object_name, method, value: attacher.data.to_json, object: object)
+      html = hidden_field(object_name, method, value: attacher.data.to_json, object: object, id: nil)
       html + file_field(object_name, method, options)
     end
   end
