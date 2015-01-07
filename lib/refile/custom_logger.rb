@@ -1,5 +1,7 @@
 require "rack/body_proxy"
+
 module Refile
+  # @api private
   class CustomLogger
     LOG_FORMAT = %(%s: [%s] %s "%s%s" %d %0.1fms\n)
 
