@@ -9,7 +9,7 @@
       if(!input.files) { return; } // IE9, bail out if file API is not supported.
 
       var file = input.files[0];
-      var metadataField = document.querySelector("input[type=hidden][name='" + input.name + "']");
+      var metadataField = document.querySelector("input[type=hidden][id='" + input.id + "']");
 
       var dispatchEvent = function(name, detail) {
         var ev = document.createEvent('CustomEvent');
