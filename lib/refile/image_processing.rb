@@ -63,7 +63,7 @@ module Refile
     # @see http://www.imagemagick.org/script/command-line-options.php#gravity
     # @ignore
     #   rubocop:disable Metrics/AbcSize
-    #   FIXME: test and rewrite to simpler implementation!
+    #   FIXME: refactor tests and rewrite to simpler implementation!
     def fill(img, width, height, gravity = "Center")
       width = width.to_i
       height = height.to_i
