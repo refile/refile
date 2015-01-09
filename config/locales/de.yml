@@ -1,0 +1,8 @@
+de:
+  activerecord:
+    errors:
+      messages:
+        too_large: "Datei ist zu gross"
+        download_failed: "es gibt ein Fehler während Dateiladen"
+        invalid_content_type: "man hat unrichtig Dateiformat"
+        invalid_extension: "man hat unrichtig Dateiformat"
