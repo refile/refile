@@ -1,3 +1,12 @@
+# 0.5.0
+
+Release date: 2015-01-09
+
+- [ADDED] Can add custom types for easier content type validations
+- [ADDED] Can persist filename, size and content type
+- [CHANGED] The `cache_id` field is no longer necessary and no longer need to be permitted in the controller
+- [CHANGED] Improved logging
+
 # 0.4.2
 
 Release date: 2014-12-27
