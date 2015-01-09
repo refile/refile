@@ -1,0 +1,8 @@
+ru:
+  activerecord:
+    errors:
+      messages:
+        too_large: "имеет слишком большой размер файла"
+        download_failed: "возникла ошибка при загрузке файла"
+        invalid_content_type: "имеет неправильный формат файла"
+        invalid_extension: "имеет неправильный формат файла"
