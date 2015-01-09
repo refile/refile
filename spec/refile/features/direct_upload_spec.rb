@@ -27,4 +27,19 @@ feature "Direct HTTP post file uploads", :js do
     expect(page).to have_content("Upload started")
     expect(page).to have_content("Upload failure error")
   end
+
+  scenario "Fail to upload a file that has wrong format" do
+    visit "/direct/posts/new"
+    fill_in "Title", with: "A cool post"
+    attach_file "Image", path("large.txt")
+
+    expect(page).to have_content("Upload started")
+    expect(page).to have_content("Upload success")
+    expect(page).to have_content("Upload complete")
+
+    click_button "Create"
+
+    expect(page).to have_selector(".field_with_errors")
+    expect(page).to have_content("Image has an invalid file format")
+  end
 end

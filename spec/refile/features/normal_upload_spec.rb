@@ -34,6 +34,19 @@ feature "Normal HTTP Post file uploads" do
     expect(page).to have_content("Image has an invalid file format")
   end
 
+  scenario "Fail to upload a file that has the wrong format then submit" do
+    visit "/normal/posts/new"
+    fill_in "Title", with: "A cool post"
+    attach_file "Image", path("hello.txt")
+    click_button "Create"
+
+    expect(page).to have_selector(".field_with_errors")
+    expect(page).to have_content("Image has an invalid file format")
+    click_button "Create"
+    expect(page).to have_selector("h1", text: "A cool post")
+    expect(page).not_to have_link("Document")
+  end
+
   # FIXME: the only reason this is js:true is because the rack_test driver
   # doesn't submit file+metadata correctly.
   scenario "Upload a file via form redisplay", js: true do
@@ -73,7 +86,10 @@ feature "Normal HTTP Post file uploads" do
     check "Remove document"
     click_button "Update"
     expect(page).to have_selector("h1", text: "A cool post")
-    expect(page).to_not have_selector(:link, "Document")
+    expect(page).not_to have_selector(:link, "Document")
+    expect(page).not_to have_selector(".content-type", text: "text/plain")
+    expect(page).not_to have_selector(".size", text: "6")
+    expect(page).not_to have_selector(".filename", text: "hello.txt")
   end
 
   scenario "Successfully remove a record with an uploaded file" do
@@ -88,7 +104,14 @@ feature "Normal HTTP Post file uploads" do
   end
 
   scenario "Upload a file from a remote URL" do
-    stub_request(:get, "http://www.example.com/some_file").to_return(status: 200, body: "abc", headers: { "Content-Length" => 3 })
+    stub_request(:get, "http://www.example.com/some_file").to_return(
+      status: 200,
+      body: "abc",
+      headers: {
+        "Content-Length" => 3,
+        "Content-Type" => "image/png"
+      }
+    )
 
     visit "/normal/posts/new"
     fill_in "Title", with: "A cool post"
@@ -97,5 +120,8 @@ feature "Normal HTTP Post file uploads" do
 
     expect(page).to have_selector("h1", text: "A cool post")
     expect(download_link("Document")).to eq("abc")
+    expect(page).to have_selector(".content-type", text: "image/png")
+    expect(page).to have_selector(".size", text: "3")
+    expect(page).to have_selector(".filename", text: "some_file")
   end
 end

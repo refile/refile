@@ -201,9 +201,6 @@ describe Refile::Attachment do
 
       instance.document_attacher.delete!
 
-      expect(instance.document).to be_nil
-      expect(instance.document_id).to be_nil
-      expect(instance.document_size).to be_nil
       expect(Refile.store.exists?(file.id)).to be_falsy
     end
 
@@ -213,9 +210,6 @@ describe Refile::Attachment do
 
       instance.document_attacher.delete!
 
-      expect(instance.document).to be_nil
-      expect(instance.document_id).to be_nil
-      expect(instance.document_size).to be_nil
       expect(Refile.cache.exists?(file.id)).to be_falsy
     end
   end
@@ -244,6 +238,31 @@ describe Refile::Attachment do
     it "should be false when the value is 'false'" do
       instance.document_attacher.remove = "false"
       expect(instance.document_attacher.remove?).to be_falsy
+    end
+  end
+
+  describe ":name_attacher.valid?" do
+    let(:options) { { type: :image, raise_errors: false } }
+
+    it "returns false if no file is attached" do
+      expect(instance.document_attacher.valid?).to be_falsy
+    end
+
+    it "returns false and if valid file is attached" do
+      file = Refile::FileDouble.new("hello", content_type: "image/png")
+
+      instance.document = file
+
+      expect(instance.document_attacher.valid?).to be_truthy
+    end
+
+    it "returns false and sets errors if invalid file is attached" do
+      file = Refile::FileDouble.new("hello", content_type: "text/plain")
+
+      instance.document = file
+
+      expect(instance.document_attacher.valid?).to be_falsy
+      expect(instance.document_attacher.errors).to eq([:invalid_content_type])
     end
   end
 

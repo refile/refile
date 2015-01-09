@@ -19,18 +19,52 @@ describe Refile::ActiveRecord::Attachment do
   describe "#valid?" do
     let(:options) { { type: :image } }
 
-    it "returns false when type is invalid" do
-      post = klass.new
-      post.document = Refile::FileDouble.new("hello", content_type: "text/plain")
-      expect(post.valid?).to be_falsy
-      expect(post.errors[:document].length).to eq(1)
+    context "with file" do
+      it "returns true when no file is assigned" do
+        post = klass.new
+        expect(post.valid?).to be_truthy
+        expect(post.errors[:document]).to be_empty
+      end
+
+      it "returns false when type is invalid" do
+        post = klass.new
+        post.document = Refile::FileDouble.new("hello", content_type: "text/plain")
+        expect(post.valid?).to be_falsy
+        expect(post.errors[:document].length).to eq(1)
+      end
+
+      it "returns true when type is invalid" do
+        post = klass.new
+        post.document = Refile::FileDouble.new("hello", content_type: "image/png")
+        expect(post.valid?).to be_truthy
+        expect(post.errors[:document]).to be_empty
+      end
     end
 
-    it "returns true when type is invalid" do
-      post = klass.new
-      post.document = Refile::FileDouble.new("hello", content_type: "image/png")
-      expect(post.valid?).to be_truthy
-      expect(post.errors[:document]).to be_empty
+    context "with metadata" do
+      it "returns false when metadata doesn't have an id" do
+        Refile.cache.upload(StringIO.new("hello"))
+        post = klass.new
+        post.document = { content_type: "text/png" }.to_json
+        expect(post.valid?).to be_falsy
+        expect(post.errors[:document].length).to eq(1)
+      end
+
+      it "returns false when type is invalid" do
+        file = Refile.cache.upload(StringIO.new("hello"))
+        post = klass.new
+        post.document = { id: file.id, content_type: "text/png" }.to_json
+        expect(post.valid?).to be_falsy
+        expect(post.errors[:document].length).to eq(1)
+      end
+
+      it "returns true when type is invalid" do
+        file = Refile.cache.upload(StringIO.new("hello"))
+        post = klass.new
+        post.document = { id: file.id, content_type: "image/png" }.to_json
+        expect(post.valid?).to be_truthy
+        expect(post.errors[:document]).to be_empty
+      end
     end
   end
 

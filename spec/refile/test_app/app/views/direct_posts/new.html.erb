@@ -11,6 +11,10 @@
     <%= form.attachment_field :document, direct: true %>
   </p>
   <p>
+    <%= form.label :image %>
+    <%= form.attachment_field :image, direct: true %>
+  </p>
+  <p>
     <%= form.submit "Create" %>
   </p>
 <% end %>
