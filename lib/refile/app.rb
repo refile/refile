@@ -95,8 +95,9 @@ module Refile
       end
 
       filename = request.path.split("/").last
+      content_type = file.respond_to?(:content_type) ? file.content_type : nil
 
-      send_file path, filename: filename, disposition: "inline"
+      send_file path, filename: filename, disposition: "inline", type: content_type
     end
 
     def backend

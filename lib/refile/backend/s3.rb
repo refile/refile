@@ -52,7 +52,7 @@ module Refile
         if uploadable.is_a?(Refile::File) and uploadable.backend.is_a?(S3) and uploadable.backend.access_key_id == access_key_id
           uploadable.backend.object(uploadable.id).copy_to(object(id))
         else
-          object(id).write(uploadable, content_length: uploadable.size)
+          object(id).write(uploadable, content_length: uploadable.size, content_type: uploadable.content_type)
         end
 
         Refile::File.new(self, id)
