@@ -43,11 +43,20 @@ module Refile
     end
 
     def basename
-      ::File.basename(filename, "." << extension)
+      if filename and extension
+        ::File.basename(filename, "." << extension)
+      else
+        filename
+      end
     end
 
     def extension
-      ::File.extname(filename).sub(/^\./, "") if filename
+      if filename
+        Presence[::File.extname(filename).sub(/^\./, "")]
+      elsif content_type
+        type = MIME::Types[content_type][0]
+        type.extensions[0] if type
+      end
     end
 
     def get

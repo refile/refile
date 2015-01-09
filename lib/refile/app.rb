@@ -25,7 +25,6 @@ module Refile
     end
 
     before do
-      content_type ::File.extname(request.path), default: "application/octet-stream"
       if Refile.allow_origin
         response["Access-Control-Allow-Origin"] = Refile.allow_origin
         response["Access-Control-Allow-Headers"] = request.env["HTTP_ACCESS_CONTROL_REQUEST_HEADERS"].to_s

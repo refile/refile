@@ -266,6 +266,58 @@ describe Refile::Attachment do
     end
   end
 
+  describe ":name_attacher.extension" do
+    it "is nil when not inferrable" do
+      file = Refile::FileDouble.new("hello")
+      instance.document = file
+      expect(instance.document_attacher.extension).to be_nil
+    end
+
+    it "is inferred from the filename" do
+      file = Refile::FileDouble.new("hello", "hello.txt")
+      instance.document = file
+      expect(instance.document_attacher.extension).to eq("txt")
+    end
+
+    it "is inferred from the content type" do
+      file = Refile::FileDouble.new("hello", content_type: "image/png")
+      instance.document = file
+      expect(instance.document_attacher.extension).to eq("png")
+    end
+
+    it "returns nil with unknown content type" do
+      file = Refile::FileDouble.new("hello", content_type: "foo/doesnotexist")
+      instance.document = file
+      expect(instance.document_attacher.extension).to be_nil
+    end
+
+    it "is nil when filename has no extension" do
+      file = Refile::FileDouble.new("hello", "hello")
+      instance.document = file
+      expect(instance.document_attacher.extension).to be_nil
+    end
+  end
+
+  describe ":name_attacher.basename" do
+    it "is nil when not inferrable" do
+      file = Refile::FileDouble.new("hello")
+      instance.document = file
+      expect(instance.document_attacher.basename).to be_nil
+    end
+
+    it "is inferred from the filename" do
+      file = Refile::FileDouble.new("hello", "hello.txt")
+      instance.document = file
+      expect(instance.document_attacher.basename).to eq("hello")
+    end
+
+    it "returns filename if filename has no extension" do
+      file = Refile::FileDouble.new("hello", "hello")
+      instance.document = file
+      expect(instance.document_attacher.basename).to eq("hello")
+    end
+  end
+
   describe ":name_attacher.error" do
     let(:options) { { cache: :limited_cache, raise_errors: false } }
 

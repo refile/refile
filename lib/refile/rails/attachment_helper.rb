@@ -38,10 +38,12 @@ module Refile
     # @param [String, nil] host            Override the host
     # @return [String, nil]                The generated URL
     def attachment_url(record, name, *args, filename: nil, format: nil, host: nil)
-      file = record.send(name)
+      attacher = record.send(:"#{name}_attacher")
+      file = attacher.get
       return unless file
 
-      filename ||= name.to_s
+      filename ||= attacher.basename || name.to_s
+      format ||= attacher.extension
 
       backend_name = Refile.backends.key(file.backend)
       host = host || Refile.host || request.base_url

@@ -3,7 +3,7 @@ require "active_support/inflector"
 require "refile/rails/attachment_helper"
 
 describe Refile::AttachmentHelper do
-  describe "#attachment_url" do
+  describe "#attachment_url", pending: "rewrite without mocks" do
     let(:view) { Struct.new(:main_app, :request).new(main_app, request) }
     let(:main_app) { double :main_app, refile_app_path: "attachments" }
     let(:request) { double :request, base_url: "http://www.example.com" }
