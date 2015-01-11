@@ -217,6 +217,54 @@ module Refile
         end
       end
     end
+
+    # Generate a URL to an attachment. This method receives an instance of a
+    # class which has used the {Refile::Attachment#attachment} macro to
+    # generate an attachment column, and the name of this column, and based on
+    # this generates a URL to a {Refile::App}.
+    #
+    # Optionally the name of a processor and arguments to it can be appended.
+    #
+    # If the filename option is not given, the filename is taken from the
+    # metadata stored in the attachment, or eventually falls back to the
+    # `name`.
+    #
+    # The host defaults to {Refile.host}, which is useful for serving all
+    # attachments from a CDN. You can also override the host via the `host`
+    # option.
+    #
+    # Returns `nil` if there is no file attached.
+    #
+    # @example
+    #   attachment_url(@post, :document)
+    #
+    # @example With processor
+    #   attachment_url(@post, :image, :fill, 300, 300, format: "jpg")
+    #
+    # @param [Refile::Attachment] object   Instance of a class which has an attached file
+    # @param [Symbol] name                 The name of the attachment column
+    # @param [String, nil] filename        The filename to be appended to the URL
+    # @param [String, nil] format          A file extension to be appended to the URL
+    # @param [String, nil] host            Override the host
+    # @param [String, nil] prefix          Adds a prefix to the URL if the application is not mounted at root
+    # @return [String, nil]                The generated URL
+    def attachment_url(object, name, *args, prefix: nil, filename: nil, format: nil, host: Refile.host)
+      attacher = object.send(:"#{name}_attacher")
+      file = attacher.get
+      return unless file
+
+      filename ||= attacher.basename || name.to_s
+      format ||= attacher.extension
+
+      backend_name = Refile.backends.key(file.backend)
+
+      filename = Rack::Utils.escape(filename)
+      filename << "." << format.to_s if format
+
+      uri = URI(host.to_s)
+      uri.path = "/" << ::File.join(*prefix, backend_name, *args.map(&:to_s), file.id.to_s, filename)
+      uri.to_s
+    end
   end
 
   require "refile/version"

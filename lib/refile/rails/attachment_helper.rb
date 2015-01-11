@@ -14,44 +14,16 @@ module Refile
     # to the {Refile::App} which is assumed to be mounted in the Rails
     # application.
     #
-    # Optionally the name of a processor and a arguments to it can be appended.
+    # @see Refile.attachment_url
     #
-    # If the filename option is not given, the filename falls back to the
-    # `name`.
-    #
-    # The host defaults to {Refile.host}, which is useful for serving all
-    # attachments from a CDN. You can also override the host via the `host`
-    # option.
-    #
-    # Returns `nil` if there is no file attached.
-    #
-    # @example
-    #   attachment_url(@post, :document)
-    #
-    # @example With processor
-    #   attachment_url(@post, :image, :fill, 300, 300, format: "jpg")
-    #
-    # @param [Refile::Attachment] record   Instance of a class which has an attached file
+    # @param [Refile::Attachment] object   Instance of a class which has an attached file
     # @param [Symbol] name                 The name of the attachment column
     # @param [String, nil] filename        The filename to be appended to the URL
     # @param [String, nil] format          A file extension to be appended to the URL
     # @param [String, nil] host            Override the host
     # @return [String, nil]                The generated URL
-    def attachment_url(record, name, *args, filename: nil, format: nil, host: nil)
-      attacher = record.send(:"#{name}_attacher")
-      file = attacher.get
-      return unless file
-
-      filename ||= attacher.basename || name.to_s
-      format ||= attacher.extension
-
-      backend_name = Refile.backends.key(file.backend)
-      host = host || Refile.host || request.base_url
-
-      filename = filename.parameterize("_")
-      filename << "." << format.to_s if format
-
-      ::File.join(host, main_app.refile_app_path, backend_name, *args.map(&:to_s), file.id.to_s, filename)
+    def attachment_url(record, name, *args, **opts)
+      Refile.attachment_url(record, name, *args, prefix: main_app.refile_app_path, **opts)
     end
 
     # Generates an image tag for the given attachment, adding appropriate
