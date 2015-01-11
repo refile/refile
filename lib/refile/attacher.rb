@@ -82,10 +82,12 @@ module Refile
     end
 
     def cache!(uploadable)
+      uploadable = Refile::Uploadable.new(uploadable)
+
       @metadata = {
         size: uploadable.size,
-        content_type: Refile.extract_content_type(uploadable),
-        filename: Refile.extract_filename(uploadable)
+        content_type: uploadable.content_type,
+        filename: uploadable.filename
       }
       if valid?
         @metadata[:id] = cache.upload(uploadable).id
