@@ -17,6 +17,16 @@ describe Refile::App do
       expect(last_response.body).to eq("hello")
     end
 
+    it "sets appropriate content type from extension" do
+      file = Refile.store.upload(StringIO.new("hello"))
+
+      get "/store/#{file.id}/hello.html"
+
+      expect(last_response.status).to eq(200)
+      expect(last_response.body).to eq("hello")
+      expect(last_response.headers["Content-Type"]).to include("text/html")
+    end
+
     it "returns a 404 if the file doesn't exist" do
       Refile.store.upload(StringIO.new("hello"))
 
