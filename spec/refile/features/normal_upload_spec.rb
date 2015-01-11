@@ -103,6 +103,19 @@ feature "Normal HTTP Post file uploads" do
     expect(page).to_not have_content("A cool post about to be deleted")
   end
 
+  scenario "Successfully update a record with image" do
+    visit "/normal/posts/new"
+    fill_in "Title", with: "A cool post"
+    attach_file "Image", path("image.png")
+    click_button "Create"
+
+    expect(page).to have_selector("h1", text: "A cool post")
+    click_link("Edit")
+
+    click_button "Update"
+    expect(page).to have_selector("h1", text: "A cool post")
+  end
+
   scenario "Upload a file from a remote URL" do
     stub_request(:get, "http://www.example.com/some_file").to_return(
       status: 200,
