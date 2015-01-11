@@ -12,7 +12,9 @@ end
 
 RSpec::Core::RakeTask.new(:spec)
 
-RuboCop::RakeTask.new
+RuboCop::RakeTask.new do |task|
+  task.options = ["--display-cop-names"]
+end
 
 task default: [:spec, :rubocop]
 
