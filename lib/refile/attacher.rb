@@ -148,7 +148,7 @@ module Refile
     end
 
     def present?
-      id or not @metadata.empty?
+      not @metadata.empty?
     end
 
     def valid?

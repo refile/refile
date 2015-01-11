@@ -13,7 +13,6 @@ class TestMigration < ActiveRecord::Migration
     create_table :posts, force: true do |t|
       t.column :title, :string
       t.column :image_id, :string
-      t.column :image_content_type, :string
       t.column :document_id, :string
       t.column :document_filename, :string
       t.column :document_content_type, :string

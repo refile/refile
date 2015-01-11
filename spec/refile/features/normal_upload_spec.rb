@@ -47,6 +47,21 @@ feature "Normal HTTP Post file uploads" do
     expect(page).not_to have_link("Document")
   end
 
+  scenario "Successfully update a record with an attached file" do
+    visit "/normal/posts/new"
+    fill_in "Title", with: "A cool post"
+    attach_file "Image", path("image.jpg")
+    click_button "Create"
+
+    expect(page).to have_selector("h1", text: "A cool post")
+    click_link("Edit")
+
+    fill_in "Title", with: "A very cool post"
+
+    click_button "Update"
+    expect(page).to have_selector("h1", text: "A very cool post")
+  end
+
   # FIXME: the only reason this is js:true is because the rack_test driver
   # doesn't submit file+metadata correctly.
   scenario "Upload a file via form redisplay", js: true do
