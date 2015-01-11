@@ -25,7 +25,7 @@ describe Refile::ImageProcessor do
   describe "#limit" do
     it "should resize the image to fit within the given dimensions and maintain file type" do
       limited_image = @image_processor.limit(@minimagic_image, 200, 200)
-      expect(limited_image.width).to be(144)
+      expect(limited_image.width).to be(146)
       expect(limited_image.height).to be(200)
       expect(limited_image["format"]).to match(/JPEG/)
       expect(File.extname(limited_image.path)).to match(/jpg/)
@@ -34,7 +34,7 @@ describe Refile::ImageProcessor do
     it "should resize the image to fit within the given dimensions and maintain updated file type" do
       converted_image = @image_processor.convert(@minimagic_image, "png")
       converted_and_limited_image = @image_processor.limit(converted_image, 200, 200)
-      expect(converted_and_limited_image.width).to be(144)
+      expect(converted_and_limited_image.width).to be(146)
       expect(converted_and_limited_image.height).to be(200)
       expect(converted_and_limited_image["format"]).to match(/PNG/)
       expect(File.extname(converted_and_limited_image.path)).to match(/png/)
@@ -42,15 +42,15 @@ describe Refile::ImageProcessor do
 
     it "should not scale up the image if it smaller than the given dimensions" do
       limited_image = @image_processor.limit(@minimagic_image, 1000, 1000)
-      expect(limited_image.width).to be(500)
-      expect(limited_image.height).to be(695)
+      expect(limited_image.width).to be(540)
+      expect(limited_image.height).to be(742)
     end
   end
 
   describe "#fit" do
     it "should resize the image to fit within the given dimensions and maintain file type" do
       fitted_image = @image_processor.fit(@minimagic_image, 200, 200)
-      expect(fitted_image.width).to be(144)
+      expect(fitted_image.width).to be(146)
       expect(fitted_image.height).to be(200)
       expect(fitted_image["format"]).to match(/JPEG/)
     end
@@ -58,7 +58,7 @@ describe Refile::ImageProcessor do
     it "should resize the image to fit within the given dimensions and maintain updated file type" do
       converted_image = @image_processor.convert(@minimagic_image, "png")
       converted_and_fitted_image = @image_processor.fit(converted_image, 200, 200)
-      expect(converted_and_fitted_image.width).to be(144)
+      expect(converted_and_fitted_image.width).to be(146)
       expect(converted_and_fitted_image.height).to be(200)
       expect(converted_and_fitted_image["format"]).to match(/PNG/)
       expect(File.extname(converted_and_fitted_image.path)).to match(/png/)
@@ -66,7 +66,7 @@ describe Refile::ImageProcessor do
 
     it "should scale up the image if it smaller than the given dimensions" do
       fitted_image = @image_processor.fit(@minimagic_image, 1000, 1000)
-      expect(fitted_image.width).to be(719)
+      expect(fitted_image.width).to be(728)
       expect(fitted_image.height).to be(1000)
     end
   end
@@ -151,7 +151,7 @@ describe Refile::ImageProcessor do
       @image_processor = described_class.new(:limit)
       limited_image = @image_processor.call(@minimagic_image, 200, 200)
       limited_image = MiniMagick::Image.open(limited_image.path)
-      expect(limited_image.width).to be(144)
+      expect(limited_image.width).to be(146)
       expect(limited_image.height).to be(200)
       expect(limited_image["format"]).to match(/JPEG/)
       expect(File.extname(limited_image.path)).to match(/jpg/)
@@ -161,7 +161,7 @@ describe Refile::ImageProcessor do
       @image_processor = described_class.new(:fit)
       fitted_image = @image_processor.call(@minimagic_image, 200, 200, format: :png)
       fitted_image = MiniMagick::Image.open(fitted_image.path)
-      expect(fitted_image.width).to be(144)
+      expect(fitted_image.width).to be(146)
       expect(fitted_image.height).to be(200)
       expect(fitted_image["format"]).to match(/PNG/)
       expect(File.extname(fitted_image.path)).to match(/png/)
