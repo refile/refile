@@ -1,3 +1,10 @@
+# 0.5.1
+
+Release date: 2015-01-11
+
+- [FIXED] Set content type from extension properly
+- [FIXED] Support animated GIFs when changing format
+
 # 0.5.0
 
 Release date: 2015-01-09
