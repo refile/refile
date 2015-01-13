@@ -1,3 +1,12 @@
+# 0.5.2
+
+Release date: 2015-01-13
+
+- [ADDED] Can generate URLs without using the Rails helper via `Refile.attachment_url`
+- [FIXED] Regression in `attachment_image_tag`, was not using `Refile.host`.
+- [FIXED] Record without file can be updated when content type and filename are not persisted
+- [FIXED] Remove `id` attribute from hidden field, so it doesn't get confused with the file field
+
 # 0.5.1
 
 Release date: 2015-01-11
