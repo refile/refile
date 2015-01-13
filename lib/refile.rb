@@ -248,11 +248,12 @@ module Refile
     # @param [String, nil] host            Override the host
     # @param [String, nil] prefix          Adds a prefix to the URL if the application is not mounted at root
     # @return [String, nil]                The generated URL
-    def attachment_url(object, name, *args, prefix: nil, filename: nil, format: nil, host: Refile.host)
+    def attachment_url(object, name, *args, prefix: nil, filename: nil, format: nil, host: nil)
       attacher = object.send(:"#{name}_attacher")
       file = attacher.get
       return unless file
 
+      host ||= Refile.host
       filename ||= attacher.basename || name.to_s
       format ||= attacher.extension
 
@@ -262,7 +263,7 @@ module Refile
       filename << "." << format.to_s if format
 
       uri = URI(host.to_s)
-      uri.path = "/" << ::File.join(*prefix, backend_name, *args.map(&:to_s), file.id.to_s, filename)
+      uri.path = ::File.join("", *prefix, backend_name, *args.map(&:to_s), file.id.to_s, filename)
       uri.to_s
     end
   end
