@@ -2,7 +2,6 @@ require "uri"
 require "fileutils"
 require "tempfile"
 require "logger"
-require "mime/types"
 
 module Refile
   # @api private
@@ -176,46 +175,11 @@ module Refile
     # @raise [Refile::Invalid]  If the uploadable's size is too large
     # @return [true]            Always returns true if it doesn't raise
     def verify_uploadable(uploadable, max_size)
-      [:size, :read, :eof?, :close].each do |m|
-        unless uploadable.respond_to?(m)
-          raise ArgumentError, "does not respond to `#{m}`."
-        end
-      end
+      Refile::Uploadable.validate!(uploadable)
       if max_size and uploadable.size > max_size
         raise Refile::Invalid, "#{uploadable.inspect} is too large"
       end
       true
-    end
-
-    # Extract the filename from an uploadable object. If the filename cannot be
-    # determined, this method will return `nil`.
-    #
-    # @param [IO] uploadable    The uploadable object to extract the filename from
-    # @return [String, nil]     The extracted filename
-    def extract_filename(uploadable)
-      path = if uploadable.respond_to?(:original_filename)
-        uploadable.original_filename
-      elsif uploadable.respond_to?(:path)
-        uploadable.path
-      end
-      ::File.basename(path) if path
-    end
-
-    # Extract the content type from an uploadable object. If the content type
-    # cannot be determined, this method will return `nil`.
-    #
-    # @param [IO] uploadable    The uploadable object to extract the content type from
-    # @return [String, nil]     The extracted content type
-    def extract_content_type(uploadable)
-      if uploadable.respond_to?(:content_type)
-        uploadable.content_type
-      else
-        filename = extract_filename(uploadable)
-        if filename
-          content_type = MIME::Types.of(filename).first
-          content_type.to_s if content_type
-        end
-      end
     end
 
     # Generate a URL to an attachment. This method receives an instance of a
@@ -274,6 +238,7 @@ module Refile
   require "refile/attacher"
   require "refile/attachment"
   require "refile/random_hasher"
+  require "refile/uploadable"
   require "refile/file"
   require "refile/custom_logger"
   require "refile/app"

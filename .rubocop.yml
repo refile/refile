@@ -28,6 +28,9 @@ Style/StringLiterals:
 Style/StringLiteralsInInterpolation:
   EnforcedStyle: double_quotes
 
+Style/GuardClause:
+  Enabled: false
+
 Style/AndOr:
   Enabled: false
 
