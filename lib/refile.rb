@@ -254,6 +254,7 @@ module Refile
       return unless file
 
       host ||= Refile.host
+      prefix ||= Refile.mount_point
       filename ||= attacher.basename || name.to_s
       format ||= attacher.extension
 

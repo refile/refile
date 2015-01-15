@@ -23,7 +23,7 @@ module Refile
     # @param [String, nil] host            Override the host
     # @return [String, nil]                The generated URL
     def attachment_url(record, name, *args, **opts)
-      Refile.attachment_url(record, name, *args, prefix: main_app.refile_app_path, **opts)
+      Refile.attachment_url(record, name, *args, **opts)
     end
 
     # Generates an image tag for the given attachment, adding appropriate

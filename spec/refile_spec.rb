@@ -84,6 +84,7 @@ RSpec.describe Refile do
 
     before do
       allow(Refile).to receive(:host).and_return(nil)
+      allow(Refile).to receive(:mount_point).and_return(nil)
     end
 
     context "with file" do
@@ -107,6 +108,11 @@ RSpec.describe Refile do
 
       it "adds a prefix" do
         expect(Refile.attachment_url(instance, :document, prefix: "moo")).to eq("/moo/cache/#{id}/document")
+      end
+
+      it "takes prefix from Refile.mount_point" do
+        allow(Refile).to receive(:mount_point).and_return("attachments")
+        expect(Refile.attachment_url(instance, :document)).to eq("/attachments/cache/#{id}/document")
       end
 
       it "adds an escaped filename" do
