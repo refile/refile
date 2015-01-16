@@ -63,10 +63,6 @@ module Refile
       @io.size
     end
 
-    def eof?
-      @io.eof?
-    end
-
     def close
       @io.close
     end
