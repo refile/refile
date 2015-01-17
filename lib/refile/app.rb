@@ -95,8 +95,9 @@ module Refile
       end
 
       filename = request.path.split("/").last
+      disposition = params[:disposition] || "inline"
 
-      send_file path, filename: filename, disposition: "inline", type: ::File.extname(request.path)
+      send_file path, filename: filename, disposition: disposition, type: ::File.extname(request.path)
     end
 
     def backend
