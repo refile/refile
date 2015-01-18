@@ -55,8 +55,14 @@ Style/AccessModifierIndentation:
 Style/SignalException:
   Enabled: false
 
+Style/IndentationWidth:
+  Enabled: false
+
 Lint/EndAlignment:
   AlignWith: variable
+
+Lint/DefEndAlignment:
+  Enabled: false
 
 Lint/HandleExceptions:
   Enabled: false

@@ -15,6 +15,8 @@ module Refile
     #   file = backend.upload(StringIO.new("hello"))
     #   backend.read(file.id) # => "hello"
     class S3
+      extend Refile::BackendMacros
+
       attr_reader :access_key_id, :max_size
 
       # Sets up an S3 backend with the given credentials.
@@ -44,9 +46,7 @@ module Refile
       #
       # @param [IO] uploadable      An uploadable IO-like object.
       # @return [Refile::File]      The uploaded file
-      def upload(uploadable)
-        Refile.verify_uploadable(uploadable, @max_size)
-
+      verify_uploadable def upload(uploadable)
         id = @hasher.hash(uploadable)
 
         if uploadable.is_a?(Refile::File) and uploadable.backend.is_a?(S3) and uploadable.backend.access_key_id == access_key_id
@@ -66,7 +66,7 @@ module Refile
       #
       # @param [Sring] id           The id of the file
       # @return [Refile::File]      The retrieved file
-      def get(id)
+      verify_id def get(id)
         Refile::File.new(self, id)
       end
 
@@ -74,7 +74,7 @@ module Refile
       #
       # @param [Sring] id           The id of the file
       # @return [void]
-      def delete(id)
+      verify_id def delete(id)
         object(id).delete
       end
 
@@ -83,7 +83,7 @@ module Refile
       #
       # @param [Sring] id           The id of the file
       # @return [IO]                An IO object containing the file contents
-      def open(id)
+      verify_id def open(id)
         Kernel.open(object(id).url_for(:read))
       end
 
@@ -91,7 +91,7 @@ module Refile
       #
       # @param [String] id           The id of the file
       # @return [String]             The file's contents
-      def read(id)
+      verify_id def read(id)
         object(id).read
       rescue AWS::S3::Errors::NoSuchKey
         nil
@@ -101,7 +101,7 @@ module Refile
       #
       # @param [Sring] id           The id of the file
       # @return [Integer]           The file's size
-      def size(id)
+      verify_id def size(id)
         object(id).content_length
       rescue AWS::S3::Errors::NoSuchKey
         nil
@@ -111,7 +111,7 @@ module Refile
       #
       # @param [Sring] id           The id of the file
       # @return [Boolean]
-      def exists?(id)
+      verify_id def exists?(id)
         object(id).exists?
       end
 
@@ -139,7 +139,7 @@ module Refile
         Signature.new(as: "file", id: id, url: signature.url.to_s, fields: signature.fields)
       end
 
-      def object(id)
+      verify_id def object(id)
         @bucket.objects[[*@prefix, id].join("/")]
       end
     end

@@ -7,6 +7,8 @@ module Refile
     #   file = backend.upload(StringIO.new("hello"))
     #   backend.read(file.id) # => "hello"
     class FileSystem
+      extend Refile::BackendMacros
+
       # @return [String] the directory where files are stored
       attr_reader :directory
 
@@ -30,9 +32,7 @@ module Refile
       #
       # @param [IO] uploadable      An uploadable IO-like object.
       # @return [Refile::File]      The uploaded file
-      def upload(uploadable)
-        Refile.verify_uploadable(uploadable, @max_size)
-
+      verify_uploadable def upload(uploadable)
         id = @hasher.hash(uploadable)
         IO.copy_stream(uploadable, path(id))
 
@@ -47,7 +47,7 @@ module Refile
       #
       # @param [Sring] id           The id of the file
       # @return [Refile::File]      The retrieved file
-      def get(id)
+      verify_id def get(id)
         Refile::File.new(self, id)
       end
 
@@ -55,7 +55,7 @@ module Refile
       #
       # @param [Sring] id           The id of the file
       # @return [void]
-      def delete(id)
+      verify_id def delete(id)
         FileUtils.rm(path(id)) if exists?(id)
       end
 
@@ -64,7 +64,7 @@ module Refile
       #
       # @param [Sring] id           The id of the file
       # @return [IO]                An IO object containing the file contents
-      def open(id)
+      verify_id def open(id)
         ::File.open(path(id), "rb")
       end
 
@@ -72,7 +72,7 @@ module Refile
       #
       # @param [Sring] id           The id of the file
       # @return [String]            The file's contents
-      def read(id)
+      verify_id def read(id)
         ::File.read(path(id)) if exists?(id)
       end
 
@@ -80,7 +80,7 @@ module Refile
       #
       # @param [Sring] id           The id of the file
       # @return [Integer]           The file's size
-      def size(id)
+      verify_id def size(id)
         ::File.size(path(id)) if exists?(id)
       end
 
@@ -88,7 +88,7 @@ module Refile
       #
       # @param [Sring] id           The id of the file
       # @return [Boolean]
-      def exists?(id)
+      verify_id def exists?(id)
         ::File.exist?(path(id))
       end
 
@@ -110,7 +110,7 @@ module Refile
       #
       # @param [Sring] id           The id of the file
       # @return [String]
-      def path(id)
+      verify_id def path(id)
         ::File.join(@directory, id)
       end
     end

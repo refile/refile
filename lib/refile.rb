@@ -9,6 +9,9 @@ module Refile
   class Invalid < StandardError; end
 
   # @api private
+  class InvalidID < Invalid; end
+
+  # @api private
   class Confirm < StandardError
     def message
       "are you sure? this will remove all files in the backend, call as \
@@ -166,27 +169,6 @@ module Refile
       yield self
     end
 
-    # Verify that the given uploadable is indeed a valid uploadable. This
-    # method is used by backends as a sanity check, you should not have to use
-    # this method unless you are writing a backend.
-    #
-    # @param [IO] uploadable    The uploadable object to verify
-    # @param [Fixnum] max_size  The maximum size of the uploadable object
-    # @raise [ArgumentError]    If the uploadable is not an IO-like object
-    # @raise [Refile::Invalid]  If the uploadable's size is too large
-    # @return [true]            Always returns true if it doesn't raise
-    def verify_uploadable(uploadable, max_size)
-      [:size, :read, :eof?, :close].each do |m|
-        unless uploadable.respond_to?(m)
-          raise ArgumentError, "does not respond to `#{m}`."
-        end
-      end
-      if max_size and uploadable.size > max_size
-        raise Refile::Invalid, "#{uploadable.inspect} is too large"
-      end
-      true
-    end
-
     # Extract the filename from an uploadable object. If the filename cannot be
     # determined, this method will return `nil`.
     #
@@ -272,6 +254,7 @@ module Refile
   require "refile/version"
   require "refile/signature"
   require "refile/type"
+  require "refile/backend_macros"
   require "refile/attacher"
   require "refile/attachment"
   require "refile/random_hasher"

@@ -67,6 +67,10 @@ RSpec.shared_examples_for :backend do
 
       expect(backend.get(file.id).exists?).to be_falsy
     end
+
+    it "raises error when called with invalid ID" do
+      expect { backend.delete("/evil") }.to raise_error(Refile::InvalidID)
+    end
   end
 
   describe "#read" do
@@ -82,6 +86,10 @@ RSpec.shared_examples_for :backend do
     it "can be called through file" do
       file = backend.upload(uploadable)
       expect(file.read).to eq("hello")
+    end
+
+    it "raises error when called with invalid ID" do
+      expect { backend.read("/evil") }.to raise_error(Refile::InvalidID)
     end
   end
 
@@ -99,6 +107,10 @@ RSpec.shared_examples_for :backend do
       file = backend.upload(uploadable)
       expect(file.size).to eq(5)
     end
+
+    it "raises error when called with invalid ID" do
+      expect { backend.size("/evil") }.to raise_error(Refile::InvalidID)
+    end
   end
 
   describe "#exists?" do
@@ -114,6 +126,10 @@ RSpec.shared_examples_for :backend do
     it "can be called through file" do
       expect(backend.upload(uploadable).exists?).to eq(true)
       expect(backend.get("nosuchfile").exists?).to eq(false)
+    end
+
+    it "raises error when called with invalid ID" do
+      expect { backend.exists?("/evil") }.to raise_error(Refile::InvalidID)
     end
   end
 
