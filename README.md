@@ -361,6 +361,12 @@ no file has been uploaded:
 <%= attachment_image_tag(@user, :profile_image, :fill, 300, 300, fallback: "default.png") %>
 ```
 
+You can also force downloading of a file instead of rendering inline:
+
+``` erb
+<%= attachment_image_tag(@user, :cv, disposition: :attachment) %>
+```
+
 ## 5. JavaScript library
 
 Refile's JavaScript library is small but powerful.
