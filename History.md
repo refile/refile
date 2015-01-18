@@ -1,3 +1,10 @@
+# 0.5.3
+
+Release date: 2015-01-18
+
+- [FIXED] More stringent checks for ID validity.
+- [CHANGED] `Refile.attachment_url` not uses `Refile.mount_point` as the prefix by default.
+
 # 0.5.2
 
 Release date: 2015-01-13
