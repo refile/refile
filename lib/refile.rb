@@ -102,8 +102,8 @@ module Refile
     #
     # An IO-like object is recommended to be an instance of the `IO` class or
     # one of its subclasses, like `File` or a `StringIO`, or a `Refile::File`.
-    # It can also be any other object which responds to `size`, `read` and
-    # `close` and mimics the behaviour of IO objects for these methods.
+    # It can also be any other object which responds to `size` and `read` and
+    # mimics the behaviour of IO objects for these methods.
     #
     # @example With processor class
     #   class Reverse
@@ -176,7 +176,7 @@ module Refile
     # @raise [Refile::Invalid]  If the uploadable's size is too large
     # @return [true]            Always returns true if it doesn't raise
     def verify_uploadable(uploadable, max_size)
-      [:size, :read, :close].each do |m|
+      [:size, :read].each do |m|
         unless uploadable.respond_to?(m)
           raise ArgumentError, "does not respond to `#{m}`."
         end
