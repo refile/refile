@@ -170,10 +170,11 @@ are provided by other gems.
 
 The `upload` method on backends can be called with a variety of objects. It
 requires that the object passed to it behaves similarly to Ruby IO objects, in
-particular it must implement the methods `size` and `read(length = nil, buffer =
-nil)`. All of `File`, `Tempfile`, `ActionDispath::UploadedFile` and
-`StringIO` implement this interface, however `String` does not. If you want to
-upload a file from a `String` you must wrap it in a `StringIO` first.
+particular it must implement the methods `size`, `read(length = nil, buffer =
+nil)`, `eof?` and `close`. All of `File`, `Tempfile`,
+`ActionDispath::UploadedFile` and `StringIO` implement this interface, however
+`String` does not. If you want to upload a file from a `String` you must wrap
+it in a `StringIO` first.
 
 ## 2. Attachments
 
