@@ -27,7 +27,7 @@ Features:
 Add the gem:
 
 ``` ruby
-gem "mini_magick"
+gem "mini_magick", "~> 4.0.0"
 gem "refile", require: ["refile/rails", "refile/image_processing"]
 ```
 
