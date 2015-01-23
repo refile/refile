@@ -7,7 +7,7 @@ module Refile
       mod = Module.new do
         define_method(method) do |id|
           id = id.to_s
-          if id =~ /\A[a-z0-9]+\z/i
+          if self.class.valid_id?(id)
             super(id)
           else
             raise Refile::InvalidID
@@ -32,6 +32,10 @@ module Refile
         end
       end
       prepend mod
+    end
+
+    def valid_id?(id)
+      id =~ /\A[a-z0-9]+\z/i
     end
   end
 end
