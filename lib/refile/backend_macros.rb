@@ -6,8 +6,8 @@ module Refile
     def verify_id(method)
       mod = Module.new do
         define_method(method) do |id|
-          id = id.to_s
-          if id =~ /\A[a-z0-9]+\z/i
+          id = self.class.decode_id(id)
+          if self.class.valid_id?(id)
             super(id)
           else
             raise Refile::InvalidID
@@ -32,6 +32,14 @@ module Refile
         end
       end
       prepend mod
+    end
+
+    def valid_id?(id)
+      id =~ /\A[a-z0-9]+\z/i
+    end
+
+    def decode_id(id)
+      id.to_s
     end
   end
 end

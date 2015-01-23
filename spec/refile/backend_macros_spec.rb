@@ -59,4 +59,21 @@ RSpec.describe Refile::BackendMacros do
       expect { instance.get("ev/il") }.to raise_error(Refile::InvalidID)
     end
   end
+
+  describe "#valid_id?" do
+    it "returns true for valid ID" do
+      expect(klass.valid_id?("1234aBCde123aee")).to be_truthy
+    end
+
+    it "returns false for invalid ID" do
+      expect(klass.valid_id?("ev/il")).to be_falsey
+    end
+  end
+
+  describe "#decode_id" do
+    it "returns to_s" do
+      expect(klass.decode_id("1234aBCde123aee")).to eq "1234aBCde123aee"
+      expect(klass.decode_id(1234)).to eq "1234"
+    end
+  end
 end
