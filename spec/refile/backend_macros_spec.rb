@@ -69,4 +69,11 @@ RSpec.describe Refile::BackendMacros do
       expect(klass.valid_id?("ev/il")).to be_falsey
     end
   end
+
+  describe "#decode_id" do
+    it "returns to_s" do
+      expect(klass.decode_id("1234aBCde123aee")).to eq "1234aBCde123aee"
+      expect(klass.decode_id(1234)).to eq "1234"
+    end
+  end
 end
