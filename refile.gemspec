@@ -33,9 +33,8 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "aws-sdk"
   spec.add_development_dependency "rack-test", "~> 0.6.2"
   spec.add_development_dependency "rails", "~> 4.1.8"
-  spec.add_development_dependency "sqlite3"
+  spec.add_development_dependency RUBY_PLATFORM == "java" ? "activerecord-jdbcsqlite3-adapter" : "sqlite3"
   spec.add_development_dependency "selenium-webdriver"
   spec.add_development_dependency "yard"
   spec.add_development_dependency "rubocop"
-  spec.add_development_dependency "redcarpet"
 end

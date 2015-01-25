@@ -4,6 +4,7 @@ rvm:
   - 2.1
   - 2.2
   - ruby-head
+  - jruby-head
 
 gemfile:
   - Gemfile
@@ -19,3 +20,4 @@ before_script:
 matrix:
   allow_failures:
     - rvm: ruby-head
+    - rvm: jruby-head
