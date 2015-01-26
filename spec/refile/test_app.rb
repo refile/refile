@@ -42,6 +42,7 @@ end
 
 Refile.allow_origin = "*"
 Refile.host = "//localhost:56120"
+Refile.secret_token = "abcd1234"
 
 module TestAppHelpers
   def download_link(text)

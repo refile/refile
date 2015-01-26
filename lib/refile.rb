@@ -74,6 +74,13 @@ module Refile
     # @return [Boolean]
     attr_accessor :automount
 
+    # Value for generating signed attachment urls to protect from DoS
+    #
+    # Leave unset to generate unsigned attachment urls
+    #
+    # @return [String]
+    attr_accessor :secret_token
+
     # A global registry of backends.
     #
     # @return [Hash{String => Backend}]
@@ -246,8 +253,21 @@ module Refile
       filename << "." << format.to_s if format
 
       uri = URI(host.to_s)
-      uri.path = ::File.join("", *prefix, backend_name, *args.map(&:to_s), file.id.to_s, filename)
+      base_path = ::File.join("", backend_name, *args.map(&:to_s), file.id.to_s, filename)
+      uri.path = ::File.join("", *prefix, token(base_path), base_path)
+
       uri.to_s
+    end
+
+    # Generate a signature for a given path concatenated with the configured secret token.
+    #
+    # Returns nil if no secret token is configured
+    #
+    # @example
+    #   token('/store/f5f2e4/document.pdf')
+    #
+    def token(path)
+      OpenSSL::HMAC.hexdigest(OpenSSL::Digest.new("sha1"), secret_token, path)
     end
   end
 
@@ -265,6 +285,7 @@ module Refile
 end
 
 Refile.configure do |config|
+  config.secret_token  = SecureRandom.hex(16)
   config.direct_upload = ["cache"]
   config.allow_origin = "*"
   config.logger = Logger.new(STDOUT)
