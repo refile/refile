@@ -37,8 +37,8 @@ module Refile
     # @see #attachment_url
     # @return [ActiveSupport::SafeBuffer, nil]   The generated image tag
     def attachment_image_tag(record, name, *args, fallback: nil, format: nil, host: nil, **options)
-      file = record.send(name)
-      classes = ["attachment", record.class.model_name.singular, name, *options[:class]]
+      file = record && record.public_send(name)
+      classes = ["attachment", (record.class.model_name.singular if record), name, *options[:class]]
 
       if file
         image_tag(attachment_url(record, name, *args, format: format, host: host), options.merge(class: classes))
