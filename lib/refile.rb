@@ -267,6 +267,10 @@ module Refile
     #   token('/store/f5f2e4/document.pdf')
     #
     def token(path)
+      if secret_token.nil?
+        Refile.logger.warn "Warning! You should configure Refile.secret_token to protect your application against unverified requests."
+        return "token"
+      end
       OpenSSL::HMAC.hexdigest(OpenSSL::Digest.new("sha1"), secret_token, path)
     end
   end
@@ -285,7 +289,6 @@ module Refile
 end
 
 Refile.configure do |config|
-  config.secret_token  = SecureRandom.hex(16)
   config.direct_upload = ["cache"]
   config.allow_origin = "*"
   config.logger = Logger.new(STDOUT)

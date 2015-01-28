@@ -129,5 +129,12 @@ RSpec.describe Refile do
       token = OpenSSL::HMAC.hexdigest(OpenSSL::Digest.new("sha1"), "abcd1234", path)
       expect(Refile.token(path)).to eq(token)
     end
+
+    it "returns hard-coded token when secret token is nil" do
+      allow(Refile).to receive(:secret_token).and_return(nil)
+
+      path = "/store/f5f2e4/document.pdf"
+      expect(Refile.token(path)).to eq("token")
+    end
   end
 end
