@@ -269,7 +269,7 @@ work.
 Files can be retrieved from the application by calling:
 
 ```
-GET /attachments/:backend_name/:id/:filename
+GET /attachments/:token/:backend_name/:id/:filename
 ```
 
 The `:filename` serves no other purpose than generating a nice name when the user
@@ -277,13 +277,17 @@ downloads the file, it does not in any way affect the downloaded file. For cachi
 purposes you should always use the same filename for the same file. The Rails helpers
 default this to the name of the column.
 
+The `:token` is a generated digest of the request path when the
+`Refile.secret_token` is configured; otherwise, the value is hard-coded to
+`"token"`. The digest feature provides a security measure against unverified requests.
+
 ### Processing
 
 Refile provides on the fly processing of files. You can trigger it by calling
 a URL like this:
 
 ```
-GET /attachments/:backend_name/:processor_name/*args/:id/:filename
+GET /attachments/:token/:backend_name/:processor_name/*args/:id/:filename
 ```
 
 Suppose we have uploaded a file:
@@ -303,7 +307,7 @@ end
 Then you could do the following.
 
 ``` sh
-curl http://127.0.0.1:3000/attachments/cache/reverse/a4e8ce/some_file.txt
+curl http://127.0.0.1:3000/attachments/token/cache/reverse/a4e8ce/some_file.txt
 elloh
 ```
 
