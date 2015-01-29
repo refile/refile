@@ -130,11 +130,10 @@ RSpec.describe Refile do
       expect(Refile.token(path)).to eq(token)
     end
 
-    it "returns hard-coded token when secret token is nil" do
+    it "returns raise error when secret token is nil" do
       allow(Refile).to receive(:secret_token).and_return(nil)
 
-      path = "/store/f5f2e4/document.pdf"
-      expect(Refile.token(path)).to eq("token")
+      expect { Refile.token("/store/f5f2e4/document.pdf") }.to raise_error
     end
   end
 end
