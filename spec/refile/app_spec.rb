@@ -197,7 +197,7 @@ describe Refile::App do
     end
 
     it "does not require signed request param to upload" do
-      allow(Refile).to receive(:secret_token).and_return("abcd1234")
+      allow(Refile).to receive(:secret_key).and_return("abcd1234")
 
       file = Rack::Test::UploadedFile.new(path("hello.txt"))
       post "/cache", file: file

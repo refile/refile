@@ -278,7 +278,7 @@ purposes you should always use the same filename for the same file. The Rails he
 default this to the name of the column.
 
 The `:token` is a generated digest of the request path when the
-`Refile.secret_token` is configured; otherwise, the value is hard-coded to
+`Refile.secret_key` is configured; otherwise, the value is hard-coded to
 `"token"`. The digest feature provides a security measure against unverified requests.
 
 ### Processing

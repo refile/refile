@@ -123,7 +123,7 @@ RSpec.describe Refile do
 
   describe ".token" do
     it "returns digest of given path and secret token" do
-      allow(Refile).to receive(:secret_token).and_return("abcd1234")
+      allow(Refile).to receive(:secret_key).and_return("abcd1234")
 
       path = "/store/f5f2e4/document.pdf"
       token = OpenSSL::HMAC.hexdigest(OpenSSL::Digest.new("sha1"), "abcd1234", path)
@@ -131,7 +131,7 @@ RSpec.describe Refile do
     end
 
     it "returns raise error when secret token is nil" do
-      allow(Refile).to receive(:secret_token).and_return(nil)
+      allow(Refile).to receive(:secret_key).and_return(nil)
 
       expect { Refile.token("/store/f5f2e4/document.pdf") }.to raise_error
     end

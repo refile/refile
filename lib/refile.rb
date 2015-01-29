@@ -79,7 +79,7 @@ module Refile
     # Leave unset to generate unsigned attachment urls
     #
     # @return [String]
-    attr_accessor :secret_token
+    attr_accessor :secret_key
 
     # A global registry of backends.
     #
@@ -267,16 +267,16 @@ module Refile
     #   token('/store/f5f2e4/document.pdf')
     #
     def token(path)
-      if secret_token.nil?
+      if secret_key.nil?
         raise <<-ERROR
-Refile.secret_token was not set. Please add the following to your Refile configuration and restart your application:
+Refile.secret_key was not set. Please add the following to your Refile configuration and restart your application:
 
-  config.secret_token = '#{SecureRandom.hex(64)}'
+  config.secret_key = '#{SecureRandom.hex(64)}'
 
       ERROR
       end
 
-      OpenSSL::HMAC.hexdigest(OpenSSL::Digest.new("sha1"), secret_token, path)
+      OpenSSL::HMAC.hexdigest(OpenSSL::Digest.new("sha1"), secret_key, path)
     end
   end
 
