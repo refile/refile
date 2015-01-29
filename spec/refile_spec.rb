@@ -51,6 +51,7 @@ RSpec.describe Refile do
     let(:id) { instance.document_attacher.cache_id }
 
     before do
+      allow(Refile).to receive(:token).and_return("token")
       allow(Refile).to receive(:host).and_return(nil)
       allow(Refile).to receive(:mount_point).and_return(nil)
     end
@@ -61,35 +62,35 @@ RSpec.describe Refile do
       end
 
       it "generates a url from an attachment" do
-        expect(Refile.attachment_url(instance, :document)).to eq("/cache/#{id}/document")
+        expect(Refile.attachment_url(instance, :document)).to eq("/token/cache/#{id}/document")
       end
 
       it "uses supplied host option" do
-        expect(Refile.attachment_url(instance, :document, host: "http://example.org")).to eq("http://example.org/cache/#{id}/document")
+        expect(Refile.attachment_url(instance, :document, host: "http://example.org")).to eq("http://example.org/token/cache/#{id}/document")
       end
 
       it "falls back to Refile.host" do
         allow(Refile).to receive(:host).and_return("http://elabs.se")
 
-        expect(Refile.attachment_url(instance, :document)).to eq("http://elabs.se/cache/#{id}/document")
+        expect(Refile.attachment_url(instance, :document)).to eq("http://elabs.se/token/cache/#{id}/document")
       end
 
       it "adds a prefix" do
-        expect(Refile.attachment_url(instance, :document, prefix: "moo")).to eq("/moo/cache/#{id}/document")
+        expect(Refile.attachment_url(instance, :document, prefix: "moo")).to eq("/moo/token/cache/#{id}/document")
       end
 
       it "takes prefix from Refile.mount_point" do
         allow(Refile).to receive(:mount_point).and_return("attachments")
-        expect(Refile.attachment_url(instance, :document)).to eq("/attachments/cache/#{id}/document")
+        expect(Refile.attachment_url(instance, :document)).to eq("/attachments/token/cache/#{id}/document")
       end
 
       it "adds an escaped filename" do
-        expect(Refile.attachment_url(instance, :document, filename: "test.png")).to eq("/cache/#{id}/test.png")
-        expect(Refile.attachment_url(instance, :document, filename: "tes/t.png")).to eq("/cache/#{id}/tes%2Ft.png")
+        expect(Refile.attachment_url(instance, :document, filename: "test.png")).to eq("/token/cache/#{id}/test.png")
+        expect(Refile.attachment_url(instance, :document, filename: "tes/t.png")).to eq("/token/cache/#{id}/tes%2Ft.png")
       end
 
       it "adds a format" do
-        expect(Refile.attachment_url(instance, :document, format: "png")).to eq("/cache/#{id}/document.png")
+        expect(Refile.attachment_url(instance, :document, format: "png")).to eq("/token/cache/#{id}/document.png")
       end
     end
 
@@ -99,7 +100,7 @@ RSpec.describe Refile do
       end
 
       it "adds format inferred from content type" do
-        expect(Refile.attachment_url(instance, :document)).to eq("/cache/#{id}/document.png")
+        expect(Refile.attachment_url(instance, :document)).to eq("/token/cache/#{id}/document.png")
       end
     end
 
@@ -109,7 +110,7 @@ RSpec.describe Refile do
       end
 
       it "adds filename" do
-        expect(Refile.attachment_url(instance, :document)).to eq("/cache/#{id}/hello.html")
+        expect(Refile.attachment_url(instance, :document)).to eq("/token/cache/#{id}/hello.html")
       end
     end
 
@@ -117,6 +118,22 @@ RSpec.describe Refile do
       it "returns nil" do
         expect(Refile.attachment_url(instance, :document)).to be_nil
       end
+    end
+  end
+
+  describe ".token" do
+    it "returns digest of given path and secret token" do
+      allow(Refile).to receive(:secret_key).and_return("abcd1234")
+
+      path = "/store/f5f2e4/document.pdf"
+      token = OpenSSL::HMAC.hexdigest(OpenSSL::Digest.new("sha1"), "abcd1234", path)
+      expect(Refile.token(path)).to eq(token)
+    end
+
+    it "returns raise error when secret token is nil" do
+      allow(Refile).to receive(:secret_key).and_return(nil)
+
+      expect { Refile.token("/store/f5f2e4/document.pdf") }.to raise_error
     end
   end
 end
