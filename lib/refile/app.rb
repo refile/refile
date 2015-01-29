@@ -139,10 +139,8 @@ module Refile
 
     def verified?
       base_path = request.path.gsub(::File.join(request.script_name, params[:token]), "")
-      expected = Digest::SHA1.hexdigest(Refile.token(base_path))
-      actual = Digest::SHA1.hexdigest(params[:token])
 
-      expected == actual
+      Refile.valid_token?(base_path, params[:token])
     end
   end
 end

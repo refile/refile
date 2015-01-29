@@ -76,8 +76,6 @@ module Refile
 
     # Value for generating signed attachment urls to protect from DoS
     #
-    # Leave unset to generate unsigned attachment urls
-    #
     # @return [String]
     attr_accessor :secret_key
 
@@ -261,22 +259,40 @@ module Refile
 
     # Generate a signature for a given path concatenated with the configured secret token.
     #
-    # Returns nil if no secret token is configured
+    # Raises an error if no secret token is configured.
     #
     # @example
-    #   token('/store/f5f2e4/document.pdf')
+    #   Refile.token('/store/f5f2e4/document.pdf')
     #
+    # @param [String] path          The path to generate a token for
+    # @raise [RuntimeError]         If {Refile.secret_key} is not set
+    # @return [String, nil]         The generated token
     def token(path)
       if secret_key.nil?
-        raise <<-ERROR
-Refile.secret_key was not set. Please add the following to your Refile configuration and restart your application:
+        error = "Refile.secret_key was not set.\n\n"
+        error << "Please add the following to your Refile configuration and restart your application:\n\n"
+        error << "```\nRefile.secret_key = '#{SecureRandom.hex(64)}'\n```\n\n"
 
-  config.secret_key = '#{SecureRandom.hex(64)}'
-
-      ERROR
+        raise error
       end
 
       OpenSSL::HMAC.hexdigest(OpenSSL::Digest.new("sha1"), secret_key, path)
+    end
+
+    # Check if the given token is a valid token for the given path.
+    #
+    # @example
+    #   Refile.valid_token?('/store/f5f2e4/document.pdf', 'abcd1234')
+    #
+    # @param [String] path          The path to check validity for
+    # @param [String] token         The token to check
+    # @raise [RuntimeError]         If {Refile.secret_key} is not set
+    # @return [Boolean]             Whether the token is valid
+    def valid_token?(path, token)
+      expected = Digest::SHA1.hexdigest(token(path))
+      actual = Digest::SHA1.hexdigest(token)
+
+      expected == actual
     end
   end
 
