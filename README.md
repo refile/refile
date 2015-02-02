@@ -28,7 +28,7 @@ Add the gem:
 
 ``` ruby
 gem "mini_magick"
-gem "refile", require: ["refile/rails", "refile/image_processing"]
+gem "refile", require: %w(refile/rails refile/image_processing)
 ```
 
 We're requiring both Refile's Rails integration and image processing via the
@@ -539,8 +539,8 @@ attachment :profile_image, content_type: "image/jpeg"
 You can also provide a list of content types or extensions:
 
 ``` ruby
-attachment :cv, extension: ["pdf", "doc"]
-attachment :profile_image, content_type: ["image/jpeg", "image/png", "image/gif"]
+attachment :cv, extension: %w(pdf doc)
+attachment :profile_image, content_type: %w(image/jpeg image/png image/gif)
 ```
 
 Since the combination of JPEG, PNG and GIF is so common, you can also specify
@@ -558,7 +558,7 @@ you can define your own types like this:
 
 ``` ruby
 Refile.types[:document] = Refile::Type.new(:document,
-  content_type: %w[text/plain application/pdf]
+  content_type: %w(text/plain application/pdf)
 )
 ```
 
