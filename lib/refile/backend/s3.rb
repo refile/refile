@@ -1,4 +1,4 @@
-require "aws-sdk"
+require "aws-sdk-v1"
 require "open-uri"
 
 module Refile
