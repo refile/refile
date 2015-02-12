@@ -143,7 +143,7 @@ Refile.store = Refile::Backend::S3.new(prefix: "store", **aws)
 
 And add to your Gemfile:
 ```ruby
-gem "aws-sdk"
+gem "aws-sdk-v1"
 ```
 
 Try this in the quick start example above and your files are now uploaded to
