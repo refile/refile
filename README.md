@@ -264,6 +264,11 @@ to see this when you run `rake routes`.
 You could also run the application on its own, it doesn't need to be mounted to
 work.
 
+### Direct Uploads
+
+By default you can directly upload to the refile app cache by sending a POST request to the uri
+'/attachments/cache' with a parameter {file: 'yourfile.jpg'}  
+
 ### Retrieving files
 
 Files can be retrieved from the application by calling:
