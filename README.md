@@ -266,8 +266,16 @@ work.
 
 ### Direct Uploads
 
-By default you can directly upload to the refile app cache by sending a POST request to the uri
-'/attachments/cache' with a parameter {file: 'yourfile.jpg'}  
+You can directly upload to the refile app cache by sending a request to the uri
+```
+POST /attachments/:backend
+  params {file: 'yourfile.jpg'} 
+  
+  #the parameters would look something like this manually
+  Content-Disposition: form-data; name="file"; filename="yourfile.jpg"
+  Content-Type: image/jpeg
+```
+By default the :backend is cache.
 
 ### Retrieving files
 
