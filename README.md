@@ -27,8 +27,8 @@ Features:
 Add the gem:
 
 ``` ruby
-gem "mini_magick"
-gem "refile", require: ["refile/rails", "refile/image_processing"]
+gem 'mini_magick'
+gem 'refile', require: %w(refile/rails refile/image_processing)
 ```
 
 We're requiring both Refile's Rails integration and image processing via the
@@ -98,9 +98,9 @@ will be unique for this file within the backend.
 Let's look at a simple example of using the backend:
 
 ``` ruby
-backend = Refile::Backend::FileSystem.new("tmp")
+backend = Refile::Backend::FileSystem.new('tmp')
 
-file = backend.upload(StringIO.new("hello"))
+file = backend.upload(StringIO.new('hello'))
 file.id # => "b205bc..."
 file.read # => "hello"
 
@@ -130,20 +130,20 @@ example you can switch to the S3 backend like this:
 
 ``` ruby
 # config/initializers/refile.rb
-require "refile/backend/s3"
+require 'refile/backend/s3'
 
 aws = {
-  access_key_id: "xyz",
-  secret_access_key: "abc",
-  bucket: "my-bucket",
+  access_key_id: 'xyz',
+  secret_access_key: 'abc',
+  bucket: 'my-bucket',
 }
-Refile.cache = Refile::Backend::S3.new(prefix: "cache", **aws)
-Refile.store = Refile::Backend::S3.new(prefix: "store", **aws)
+Refile.cache = Refile::Backend::S3.new(prefix: 'cache', **aws)
+Refile.store = Refile::Backend::S3.new(prefix: 'store', **aws)
 ```
 
 And add to your Gemfile:
 ```ruby
-gem "aws-sdk"
+gem 'aws-sdk'
 ```
 
 Try this in the quick start example above and your files are now uploaded to
@@ -196,12 +196,12 @@ User.new
 user.profile_image = params[:file]
 
 # with a regular File object
-File.open("/some/path", "rb") do |file|
+File.open('/some/path', 'rb') do |file|
   user.profile_image = file
 end
 
 # or a StringIO
-user.profile_image = StringIO.new("hello world")
+user.profile_image = StringIO.new('hello world')
 
 user.profile_image.id # => "fec421..."
 user.profile_image.read # => "hello world"
@@ -250,7 +250,7 @@ explains how to set this up (bonus: faster static assets!). Once you've set this
 up, simply configure Refile to use your CDN:
 
 ``` ruby
-Refile.host = "//your-dist-url.cloudfront.net"
+Refile.host = '//your-dist-url.cloudfront.net'
 ```
 
 Using a [protocol-relative URL](http://www.paulirish.com/2010/the-protocol-relative-url/) for `Refile.host` is recommended.
@@ -293,7 +293,7 @@ GET /attachments/:token/:backend_name/:processor_name/*args/:id/:filename
 Suppose we have uploaded a file:
 
 ``` ruby
-Refile.cache.upload(StringIO.new("hello")).id # => "a4e8ce"
+Refile.cache.upload(StringIO.new('hello')).id # => "a4e8ce"
 ```
 
 And we've defined a processor like this:
@@ -343,13 +343,13 @@ The `attachment_url` helper can then be used for generating URLs for the uploade
 files:
 
 ``` erb
-<%= link_to "Image", attachment_url(@user, :profile_image) %>
+<%= link_to 'Image', attachment_url(@user, :profile_image) %>
 ```
 
 Any additional arguments to it are included in the URL as processor arguments:
 
 ``` erb
-<%= link_to "Image", attachment_url(@user, :profile_image, :fill, 300, 300) %>
+<%= link_to 'Image', attachment_url(@user, :profile_image, :fill, 300, 300) %>
 ```
 
 There's also a helper for generating image tags:
@@ -362,7 +362,7 @@ With this helper you can specify an image which is used as a fallback in case
 no file has been uploaded:
 
 ``` erb
-<%= attachment_image_tag(@user, :profile_image, :fill, 300, 300, fallback: "default.png") %>
+<%= attachment_image_tag(@user, :profile_image, :fill, 300, 300, fallback: 'default.png') %>
 ```
 
 ## 5. JavaScript library
@@ -532,15 +532,15 @@ In order to limit attachments to an extension or content type, you can provide
 them like this:
 
 ``` ruby
-attachment :cv, extension: "pdf"
-attachment :profile_image, content_type: "image/jpeg"
+attachment :cv, extension: 'pdf'
+attachment :profile_image, content_type: 'image/jpeg'
 ```
 
 You can also provide a list of content types or extensions:
 
 ``` ruby
-attachment :cv, extension: ["pdf", "doc"]
-attachment :profile_image, content_type: ["image/jpeg", "image/png", "image/gif"]
+attachment :cv, extension: %w(pdf doc)
+attachment :profile_image, content_type: %w(image/jpeg image/png image/gif)
 ```
 
 Since the combination of JPEG, PNG and GIF is so common, you can also specify
@@ -558,7 +558,7 @@ you can define your own types like this:
 
 ``` ruby
 Refile.types[:document] = Refile::Type.new(:document,
-  content_type: %w[text/plain application/pdf]
+  content_type: %w(text/plain application/pdf)
 )
 ```
 
@@ -606,10 +606,10 @@ this:
 
 ``` erb
 <%= form_for @user do |form| %>
-  <%= form.label :profile_image, "Attach image" %>
+  <%= form.label :profile_image, 'Attach image' %>
   <%= form.attachment_field :profile_image %>
 
-  <%= form.label :remote_profile_image_url, "Or specify URL" %>
+  <%= form.label :remote_profile_image_url, 'Or specify URL' %>
   <%= form.text_field :remote_profile_image_url %>
 <% end %>
 ```
