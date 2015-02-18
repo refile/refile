@@ -15,7 +15,9 @@ module Refile
           if send(attacher).present?
             send(attacher).valid?
             errors = send(attacher).errors
-            self.errors.add(name, *errors) unless errors.empty?
+            errors.each do |error|
+              self.errors.add(name, error)
+            end
           end
         end
 

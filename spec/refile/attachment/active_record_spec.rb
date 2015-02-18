@@ -17,7 +17,7 @@ describe Refile::ActiveRecord::Attachment do
   end
 
   describe "#valid?" do
-    let(:options) { { type: :image } }
+    let(:options) { { type: :image, cache: :limited_cache } }
 
     context "with file" do
       it "returns true when no file is assigned" do
@@ -31,6 +31,13 @@ describe Refile::ActiveRecord::Attachment do
         post.document = Refile::FileDouble.new("hello", content_type: "text/plain")
         expect(post.valid?).to be_falsy
         expect(post.errors[:document].length).to eq(1)
+      end
+
+      it "returns false when it has multiple errors" do
+        post = klass.new
+        post.document = Refile::FileDouble.new("h"*200, content_type: "text/plain")
+        expect(post.valid?).to be_falsy
+        expect(post.errors[:document].length).to eq(2)
       end
 
       it "returns true when type is invalid" do
