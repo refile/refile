@@ -35,7 +35,7 @@ describe Refile::ActiveRecord::Attachment do
 
       it "returns false when it has multiple errors" do
         post = klass.new
-        post.document = Refile::FileDouble.new("h"*200, content_type: "text/plain")
+        post.document = Refile::FileDouble.new("h" * 200, content_type: "text/plain")
         expect(post.valid?).to be_falsy
         expect(post.errors[:document].length).to eq(2)
       end
