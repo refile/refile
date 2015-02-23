@@ -79,7 +79,7 @@ end
 And start uploading! Finally show the file in your view:
 
 ``` erb
-<%= image_tag attachment_url(@user, :profile_image, :fill, 300, 300) %>
+<%= image_tag attachment_url(@user, :profile_image, :fill, 300, 300, format: "jpg") %>
 ```
 
 ## How it works
