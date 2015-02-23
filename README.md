@@ -22,6 +22,10 @@ Features:
 - Works across form redisplays, i.e. when validations fail, even on S3
 - Effortless direct uploads, even to S3
 
+Sponsored by:
+
+[<img src="http://d3cv91luii1z1d.cloudfront.net/logo-gh.png" height="50px"/>](http://elabs.se)
+
 ## Quick start, Rails
 
 Add the gem:
