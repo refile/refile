@@ -1,9 +1,9 @@
 # Refile
 
 [![Gem Version](https://badge.fury.io/rb/refile.svg)](http://badge.fury.io/rb/refile)
-[![Build Status](https://travis-ci.org/elabs/refile.svg?branch=master)](https://travis-ci.org/elabs/refile)
-[![Code Climate](https://codeclimate.com/github/elabs/refile/badges/gpa.svg)](https://codeclimate.com/github/elabs/refile)
-[![Inline docs](http://inch-ci.org/github/elabs/refile.svg?branch=master)](http://inch-ci.org/github/elabs/refile)
+[![Build Status](https://travis-ci.org/refile/refile.svg?branch=master)](https://travis-ci.org/refile/refile)
+[![Code Climate](https://codeclimate.com/github/refile/refile/badges/gpa.svg)](https://codeclimate.com/github/refile/refile)
+[![Inline docs](http://inch-ci.org/github/refile/refile.svg?branch=master)](http://inch-ci.org/github/refile/refile)
 
 Refile is a modern file upload library for Ruby applications. It is simple, yet
 powerful.
@@ -11,7 +11,7 @@ powerful.
 Links:
 
 - [API documentation](http://www.rubydoc.info/gems/refile)
-- [Source Code](https://github.com/elabs/refile)
+- [Source Code](https://github.com/refile/refile)
 
 Features:
 
@@ -24,7 +24,7 @@ Features:
 
 Sponsored by:
 
-[<img src="http://d3cv91luii1z1d.cloudfront.net/logo-gh.png" height="50px"/>](http://elabs.se)
+[<img src="http://d3cv91luii1z1d.cloudfront.net/logo-gh.png" alt="Elabs" height="50px"/>](http://elabs.se)
 
 ## Quick start, Rails
 
@@ -164,11 +164,11 @@ The Refile gem ships with [S3](lib/refile/backend/s3.rb) and
 [FileSystem](lib/refile/backend/file_system.rb) backends. Additional backends
 are provided by other gems.
 
-- [Fog](https://github.com/elabs/refile-fog) provides support for a ton of
+- [Fog](https://github.com/refile/refile-fog) provides support for a ton of
   different cloud storage providers, including Google Storage and Rackspace
   CloudFiles.
 - [Postgresql](https://github.com/krists/refile-postgres)
-- [In Memory](https://github.com/jnicklas/refile-memory)
+- [In Memory](https://github.com/refile/refile-memory)
 
 ### Uploadable
 
@@ -386,7 +386,7 @@ simply include it like this:
 //= require refile
 ```
 
-Otherwise you can grab a copy [here](https://raw.githubusercontent.com/elabs/refile/master/app/assets/javascripts/refile.js).
+Otherwise you can grab a copy [here](https://raw.githubusercontent.com/refile/refile/master/app/assets/javascripts/refile.js).
 Be sure to always update your copy of this file when you upgrade to the latest
 Refile version.
 
