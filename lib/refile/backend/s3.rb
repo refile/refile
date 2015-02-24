@@ -52,7 +52,7 @@ module Refile
         if uploadable.is_a?(Refile::File) and uploadable.backend.is_a?(S3) and uploadable.backend.access_key_id == access_key_id
           uploadable.backend.object(uploadable.id).copy_to(object(id))
         else
-          object(id).write(uploadable, content_length: uploadable.size)
+          object(id).write(uploadable, content_length: uploadable.size, content_type: Refile.extract_content_type(uploadable))
         end
 
         Refile::File.new(self, id)
@@ -103,6 +103,16 @@ module Refile
       # @return [Integer]           The file's size
       verify_id def size(id)
         object(id).content_length
+      rescue AWS::S3::Errors::NoSuchKey
+        nil
+      end
+
+      # Return the mime type of the uploaded file.
+      #
+      # @param [Sring] id           The id of the file
+      # @return [String]            The file's mime type
+      verify_id def type(id)
+        object(id).content_type
       rescue AWS::S3::Errors::NoSuchKey
         nil
       end

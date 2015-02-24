@@ -84,6 +84,16 @@ module Refile
         ::File.size(path(id)) if exists?(id)
       end
 
+      # Return the mime type of the uploaded file.
+      #
+      # @param [Sring] id           The id of the file
+      # @return [String]            The file's mime type
+      verify_id def type(id)
+        return unless exists?(id)
+        content_type = MIME::Types.of(::File.basename(path(id))).first
+        content_type.to_s if content_type
+      end
+
       # Return whether the file with the given id exists in this backend.
       #
       # @param [Sring] id           The id of the file

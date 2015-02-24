@@ -41,6 +41,11 @@ module Refile
       backend.size(id)
     end
 
+    # @return [String] the reported content type of file
+    def type
+      backend.type(id)
+    end
+
     # Remove the file from the backend.
     #
     # @return [void]
