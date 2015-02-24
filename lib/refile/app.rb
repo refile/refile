@@ -102,7 +102,7 @@ module Refile
       end
 
       filename = request.path.split("/").last
-      send_file path, filename: filename, disposition: "inline", type: file_content_type
+      send_file path, filename: filename, disposition: "inline", type: file_content_type || ::File.extname(request.path)
     end
 
     def backend
