@@ -116,7 +116,7 @@ module Refile
       raise if @raise_errors
     end
 
-    def store!(keep_id=true)
+    def store!(keep_id = true)
       if remove?
         delete!
         write(:id, nil)

@@ -34,7 +34,7 @@ RSpec.shared_examples_for :backend do
     end
 
     it "can store file with provided id" do
-      id = '4c33deeb27'
+      id = "4c33deeb27"
       file = backend.upload(uploadable, id: id)
       retrieved = backend.get(file.id)
 
