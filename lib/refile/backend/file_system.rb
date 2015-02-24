@@ -32,8 +32,8 @@ module Refile
       #
       # @param [IO] uploadable      An uploadable IO-like object.
       # @return [Refile::File]      The uploaded file
-      verify_uploadable def upload(uploadable)
-        id = @hasher.hash(uploadable)
+      verify_uploadable def upload(uploadable, id: nil)
+        id ||= @hasher.hash(uploadable)
         IO.copy_stream(uploadable, path(id))
 
         Refile::File.new(self, id)

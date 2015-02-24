@@ -19,7 +19,8 @@ module Refile
 
     def verify_uploadable(method)
       mod = Module.new do
-        define_method(method) do |uploadable|
+        define_method(method) do |*args|
+          uploadable = args.first
           [:size, :read, :eof?, :close].each do |m|
             unless uploadable.respond_to?(m)
               raise ArgumentError, "does not respond to `#{m}`."
@@ -28,11 +29,12 @@ module Refile
           if max_size and uploadable.size > max_size
             raise Refile::Invalid, "#{uploadable.inspect} is too large"
           end
-          super(uploadable)
+          super(*args)
         end
       end
       prepend mod
     end
+
 
     def valid_id?(id)
       id =~ /\A[a-z0-9]+\z/i
