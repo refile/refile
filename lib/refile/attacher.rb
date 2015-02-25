@@ -71,7 +71,7 @@ module Refile
       if value.is_a?(String)
         retrieve!(value)
       elsif value.is_a?(Refile::File)
-        retrieve!({id: value.id}.to_json)
+        retrieve!({ id: value.id }.to_json)
       else
         cache!(value)
       end
