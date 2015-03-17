@@ -84,6 +84,20 @@ describe Refile::ActiveRecord::Attachment do
       expect(post.document.read).to eq("hello")
       expect(Refile.store.read(post.document.id)).to eq("hello")
     end
+
+    it "replaces an existing file" do
+      post = klass.new
+      post.document = Refile::FileDouble.new("hello")
+      post.save
+      old_document = post.document
+
+      post = klass.find(post.id)
+      post.document = Refile::FileDouble.new("hello")
+      post.save
+
+      expect(Refile.store.read(post.document.id)).to eq("hello")
+      expect(post.document.id).not_to be eq old_document.id
+    end
   end
 
   describe "#destroy" do
