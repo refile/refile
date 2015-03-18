@@ -218,10 +218,12 @@ the file and uploading it again, Refile will simply issue a copy command to S3.
 
 ### Other ORMs
 
-Refile is built to integrate with ORMs other than ActiveRecord, but this being
-a very young gem, such integrations do not yet exist. Take a look at the [ActiveRecord
-integration](lib/refile/attachment/active_record.rb), building your own should
-not be too difficult.
+Refile comes with [ActiveRecord
+integration](lib/refile/attachment/active_record.rb) built-in, but is built to
+integrate with any ORM, so building your own should not be too difficult. Some
+integrations are already available via gems:
+
+* [refile-sequel](https://github.com/refile/refile-sequel)
 
 ### Pure Ruby classes
 
