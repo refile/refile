@@ -479,12 +479,11 @@ It could look something like this:
 
 If you're paranoid you can restrict the allowed origin to only your domain, but
 since your bucket is only writable with authentication anyway, this shouldn't
-be necessary.
+be necessary. Note that you do not need to, and in fact you shouldn't, make
+your bucket world writable.
 
-Note that you do not need to, and in fact you shouldn't, make your bucket world
-writable.
-
-Once you've put in the new configuration, click "Save".
+Once you've put in the new configuration, click "Save". After that it may take
+some time for the CORS setup to kick in (because of DNS propagation).
 
 Now you can enable presigned uploads:
 
