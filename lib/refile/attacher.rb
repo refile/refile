@@ -70,6 +70,8 @@ module Refile
     def set(value)
       if value.is_a?(String)
         retrieve!(value)
+      elsif value.is_a?(Refile::File)
+        retrieve!({ id: value.id }.to_json)
       else
         cache!(value)
       end
@@ -116,12 +118,13 @@ module Refile
       raise if @raise_errors
     end
 
-    def store!
+    def store!(keep_id = true)
       if remove?
         delete!
         write(:id, nil)
       elsif cache_id
-        file = store.upload(get)
+        id = cache_id if keep_id
+        file = store.upload(get, id: id)
         delete!
         write(:id, file.id)
       end

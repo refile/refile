@@ -46,8 +46,8 @@ module Refile
       #
       # @param [IO] uploadable      An uploadable IO-like object.
       # @return [Refile::File]      The uploaded file
-      verify_uploadable def upload(uploadable)
-        id = @hasher.hash(uploadable)
+      verify_uploadable def upload(uploadable, id: nil)
+        id ||= @hasher.hash(uploadable)
 
         if uploadable.is_a?(Refile::File) and uploadable.backend.is_a?(S3) and uploadable.backend.access_key_id == access_key_id
           uploadable.backend.object(uploadable.id).copy_to(object(id))

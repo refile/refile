@@ -32,6 +32,17 @@ RSpec.shared_examples_for :backend do
       expect(retrieved.size).to eq(5)
       expect(retrieved.exists?).to be_truthy
     end
+
+    it "can store file with provided id" do
+      id = "4c33deeb27"
+      file = backend.upload(uploadable, id: id)
+      retrieved = backend.get(file.id)
+
+      expect(file.id).to eq(id)
+      expect(retrieved.read).to eq("hello")
+      expect(retrieved.size).to eq(5)
+      expect(retrieved.exists?).to be_truthy
+    end
   end
 
   describe "#delete" do

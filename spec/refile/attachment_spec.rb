@@ -191,6 +191,19 @@ describe Refile::Attachment do
       expect(instance.document_size).to be_nil
       expect(Refile.store.exists?(file.id)).to be_falsy
     end
+
+    it "uses same id as in cache if keep_id is true" do
+      instance.document = Refile::FileDouble.new("hello")
+      cache = instance.document
+
+      instance.document_attacher.store!(true)
+
+      expect(instance.document_id).to eq(cache.id)
+      expect(Refile.store.get(instance.document_id).read).to eq("hello")
+
+      expect(Refile.cache.get(cache.id).exists?).to be_falsy
+      expect(Refile.store.get(instance.document_id).exists?).to be_truthy
+    end
   end
 
   describe ":name_attacher.delete!" do
