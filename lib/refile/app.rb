@@ -102,8 +102,7 @@ module Refile
       end
 
       filename = request.path.split("/").last
-
-      send_file path, filename: filename, disposition: "inline", type: ::File.extname(request.path)
+      send_file path, filename: filename, disposition: "inline", type: file_content_type || ::File.extname(request.path)
     end
 
     def backend
@@ -115,8 +114,11 @@ module Refile
       backend
     end
 
+    attr_reader :file_content_type
+
     def file
       file = backend.get(params[:id])
+      @file_content_type = file.type
       unless file.exists?
         log_error("Could not find attachment by id: #{params[:id]}")
         halt 404
