@@ -6,7 +6,9 @@ require "jquery/rails"
 
 module Refile
   class TestApp < Rails::Application
-    config.session_store :cookie_store, key: "_refile_session"
+    config.middleware.delete "ActionDispatch::Cookies"
+    config.middleware.delete "ActionDispatch::Session::CookieStore"
+    config.middleware.delete "ActionDispatch::Flash"
     config.active_support.deprecation = :log
     config.eager_load = false
     config.action_dispatch.show_exceptions = false
