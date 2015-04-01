@@ -3,12 +3,12 @@ require "open-uri"
 module Refile
   # @api private
   class Attacher
-    attr_reader :record, :name, :cache, :store, :options, :errors, :type, :valid_extensions, :valid_content_types
+    attr_reader :record, :name, :cache, :store, :options, :errors, :type, :valid_extensions, :valid_content_types, :max_size
     attr_accessor :remove
 
     Presence = ->(val) { val if val != "" }
 
-    def initialize(record, name, cache:, store:, raise_errors: true, type: nil, extension: nil, content_type: nil)
+    def initialize(record, name, cache:, store:, raise_errors: true, type: nil, extension: nil, content_type: nil, max_size: nil)
       @record = record
       @name = name
       @raise_errors = raise_errors
@@ -18,6 +18,7 @@ module Refile
       @valid_extensions = [extension].flatten if extension
       @valid_content_types = [content_type].flatten if content_type
       @valid_content_types ||= Refile.types.fetch(type).content_type if type
+      @max_size = max_size
       @errors = []
       @metadata = {}
     end
@@ -155,7 +156,7 @@ module Refile
       @errors = []
       @errors << :invalid_extension if valid_extensions and not valid_extensions.include?(extension)
       @errors << :invalid_content_type if valid_content_types and not valid_content_types.include?(content_type)
-      @errors << :too_large if cache.max_size and size and size >= cache.max_size
+      @errors << :too_large if too_large?
       @errors.empty?
     end
 
@@ -181,5 +182,18 @@ module Refile
       write(:content_type, content_type)
       write(:filename, filename)
     end
+
+    def too_large?
+      size and (exceeds_max_attachment_size? or exceeds_cache_max_size?)
+    end
+
+    def exceeds_max_attachment_size?
+      max_size and size >= max_size
+    end
+
+    def exceeds_cache_max_size?
+      cache.max_size and size >= cache.max_size
+    end
+
   end
 end
