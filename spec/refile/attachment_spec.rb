@@ -449,6 +449,26 @@ describe Refile::Attachment do
     end
   end
 
+  describe "with option `max_size: 4`" do
+    let(:options) { { max_size: 4, raise_errors: false } }
+
+    it "allows file with size less than max size to be uploaded" do
+      file = Refile::FileDouble.new("hi", content_type: "text/plain")
+      instance.document = file
+
+      expect(instance.document_attacher.errors).to be_empty
+      expect(Refile.cache.get(instance.document.id).exists?).to be_truthy
+    end
+
+    it "sets error when file with size greater than max size is uploaded" do
+      file = Refile::FileDouble.new("hello", content_type: "text/plain")
+      instance.document = file
+
+      expect(instance.document_attacher.errors).to eq([:too_large])
+      expect(instance.document).to be_nil
+    end
+  end
+
   describe "with option `type: :image`" do
     let(:options) { { type: :image, raise_errors: false } }
 

@@ -36,7 +36,7 @@ module Refile
     # @return [void]
     # @ignore
     #   rubocop:disable Metrics/MethodLength
-    def attachment(name, cache: :cache, store: :store, raise_errors: true, type: nil, extension: nil, content_type: nil)
+    def attachment(name, cache: :cache, store: :store, raise_errors: true, type: nil, extension: nil, content_type: nil, max_size: nil)
       mod = Module.new do
         attacher = :"#{name}_attacher"
 
@@ -49,7 +49,8 @@ module Refile
               raise_errors: raise_errors,
               type: type,
               extension: extension,
-              content_type: content_type
+              content_type: content_type,
+              max_size: max_size
             ))
           end
         end
