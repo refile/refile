@@ -111,7 +111,6 @@ describe Refile::Attachment do
 
       it "follows redirects and fetches the file, caches it and sets the _id parameter" do
         instance.remote_document_url = "http://www.example.com/1"
-        expect(instance.document_filename).to eq("2")
         expect(instance.document.read).to eq("woop")
         expect(Refile.cache.get(instance.document.id).read).to eq("woop")
       end
@@ -121,7 +120,7 @@ describe Refile::Attachment do
         it "handles redirect loops by trowing errors" do
           expect do
             instance.remote_document_url = "http://www.example.com/loop"
-          end.to raise_error(RuntimeError, /redirection loop/)
+          end.to raise_error(RestClient::MaxRedirectsReached)
         end
       end
 
