@@ -74,6 +74,15 @@ module Refile
     # @return [Boolean]
     attr_accessor :automount
 
+    # Using your own custom routes, but still need access to the cache?
+    #
+    # If set to true then make sure automount is set to true as well. 
+    #
+    # The default is false.
+    #
+    # @return [Boolean]
+    attr_accessor :cacheonly
+
     # Value for generating signed attachment urls to protect from DoS
     #
     # @return [String]
