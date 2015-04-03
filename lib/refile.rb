@@ -81,7 +81,7 @@ module Refile
     # The default is false.
     #
     # @return [Boolean]
-    attr_accessor :cacheonly
+    attr_accessor :cache_only
 
     # Value for generating signed attachment urls to protect from DoS
     #
@@ -322,7 +322,7 @@ Refile.configure do |config|
   config.logger = Logger.new(STDOUT)
   config.mount_point = "attachments"
   config.automount = true
-  config.cacheonly = false
+  config.cache_only = false
   config.content_max_age = 60 * 60 * 24 * 365
   config.types[:image] = Refile::Type.new(:image, content_type: %w[image/jpeg image/gif image/png])
 end
