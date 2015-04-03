@@ -32,7 +32,7 @@ module Refile
       end
     end
 
-    unless Refile.cacheonly
+    unless Refile.cache_only
       get "/:token/:backend/:id/:filename" do
         stream_file file
       end
