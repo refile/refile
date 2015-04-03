@@ -32,24 +32,26 @@ module Refile
       end
     end
 
-    get "/:token/:backend/:id/:filename" do
-      stream_file file
-    end
-
-    get "/:token/:backend/:processor/:id/:file_basename.:extension" do
-      stream_file processor.call(file, format: params[:extension])
-    end
-
-    get "/:token/:backend/:processor/:id/:filename" do
-      stream_file processor.call(file)
-    end
-
-    get "/:token/:backend/:processor/*/:id/:file_basename.:extension" do
-      stream_file processor.call(file, *params[:splat].first.split("/"), format: params[:extension])
-    end
-
-    get "/:token/:backend/:processor/*/:id/:filename" do
-      stream_file processor.call(file, *params[:splat].first.split("/"))
+    unless Refile.cacheonly
+      get "/:token/:backend/:id/:filename" do
+        stream_file file
+      end
+  
+      get "/:token/:backend/:processor/:id/:file_basename.:extension" do
+        stream_file processor.call(file, format: params[:extension])
+      end
+  
+      get "/:token/:backend/:processor/:id/:filename" do
+        stream_file processor.call(file)
+      end
+  
+      get "/:token/:backend/:processor/*/:id/:file_basename.:extension" do
+        stream_file processor.call(file, *params[:splat].first.split("/"), format: params[:extension])
+      end
+  
+      get "/:token/:backend/:processor/*/:id/:filename" do
+        stream_file processor.call(file, *params[:splat].first.split("/"))
+      end
     end
 
     options "/:backend" do
