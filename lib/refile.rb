@@ -311,7 +311,7 @@ end
 Refile.configure do |config|
   config.direct_upload = ["cache"]
   config.allow_origin = "*"
-  config.logger = Logger.new(STDOUT)
+  config.logger = Logger.new(STDOUT) unless ENV["RACK_ENV"] == "test"
   config.mount_point = "attachments"
   config.automount = true
   config.content_max_age = 60 * 60 * 24 * 365

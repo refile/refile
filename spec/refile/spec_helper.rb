@@ -84,7 +84,6 @@ end
 RSpec.configure do |config|
   config.include PathHelper
   config.before(:all) do
-    Refile.logger = Logger.new(nil)
     if ENV["S3"]
       WebMock.allow_net_connect!
     else
