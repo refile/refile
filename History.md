@@ -1,3 +1,9 @@
+# 0.5.4
+
+Release date: 2015-04-14
+
+- [FIXED] [Critical security issue](https://groups.google.com/forum/#!topic/ruby-security-ann/VIfMO2LvzNs).
+
 # 0.5.3
 
 Release date: 2015-01-18

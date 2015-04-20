@@ -1,5 +1,3 @@
-require "open-uri"
-
 module Refile
   # @api private
   class Attacher
@@ -97,21 +95,20 @@ module Refile
 
     def download(url)
       unless url.to_s.empty?
-        file = open(url)
+        response = RestClient::Request.new(method: :get, url: url, raw_response: true).execute
         @metadata = {
-          size: file.meta["content-length"].to_i,
-          filename: ::File.basename(file.base_uri.path),
-          content_type: file.meta["content-type"]
+          size: response.file.size,
+          filename: ::File.basename(url),
+          content_type: response.headers[:content_type]
         }
         if valid?
-          @metadata[:id] = cache.upload(file).id
+          @metadata[:id] = cache.upload(response.file).id
           write_metadata
         elsif @raise_errors
           raise Refile::Invalid, @errors.join(", ")
         end
       end
-    rescue OpenURI::HTTPError, RuntimeError => error
-      raise if error.is_a?(RuntimeError) and error.message !~ /redirection loop/
+    rescue RestClient::Exception
       @errors = [:download_failed]
       raise if @raise_errors
     end

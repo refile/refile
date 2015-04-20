@@ -1,6 +1,7 @@
 require "uri"
 require "fileutils"
 require "tempfile"
+require "rest_client"
 require "logger"
 require "mime/types"
 
@@ -319,7 +320,7 @@ end
 Refile.configure do |config|
   config.direct_upload = ["cache"]
   config.allow_origin = "*"
-  config.logger = Logger.new(STDOUT)
+  config.logger = Logger.new(STDOUT) unless ENV["RACK_ENV"] == "test"
   config.mount_point = "attachments"
   config.automount = true
   config.cache_only = false
