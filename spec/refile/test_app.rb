@@ -1,3 +1,4 @@
+require "yaml"
 require "rails/all"
 
 require "refile"
