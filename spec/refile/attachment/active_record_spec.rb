@@ -135,7 +135,7 @@ describe Refile::ActiveRecord::Attachment do
 
       describe "#save" do
         it "stores the assigned file" do
-          user = users_class.create! post_attributes: {document: Refile::FileDouble.new("foo")}
+          user = users_class.create! post_attributes: { document: Refile::FileDouble.new("foo") }
 
           post = user.post.reload
           expect(post.document.read).to eq("foo")
@@ -143,10 +143,10 @@ describe Refile::ActiveRecord::Attachment do
         end
 
         it "replaces an existing file" do
-          user = users_class.create! post_attributes: {document: Refile::FileDouble.new("foo")}
+          user = users_class.create! post_attributes: { document: Refile::FileDouble.new("foo") }
           post = user.post
 
-          user.update! post_attributes: {id: post.id, document: Refile::FileDouble.new("bar")}
+          user.update! post_attributes: { id: post.id, document: Refile::FileDouble.new("bar") }
 
           post.reload
           expect(post.document.read).to eq("bar")
@@ -168,7 +168,7 @@ describe Refile::ActiveRecord::Attachment do
 
       describe "#save" do
         it "stores the assigned file" do
-          user = users_class.create! posts_attributes: [{document: Refile::FileDouble.new("foo")}]
+          user = users_class.create! posts_attributes: [{ document: Refile::FileDouble.new("foo") }]
 
           post = user.posts.first.reload
           expect(post.document.read).to eq("foo")
@@ -176,9 +176,9 @@ describe Refile::ActiveRecord::Attachment do
         end
 
         it "replaces an existing file" do
-          user = users_class.create! posts_attributes: [{document: Refile::FileDouble.new("foo")}]
+          user = users_class.create! posts_attributes: [{ document: Refile::FileDouble.new("foo") }]
           post = user.posts.first
-          user.update! posts_attributes: [{id: post.id, document: Refile::FileDouble.new("bar")}]
+          user.update! posts_attributes: [{ id: post.id, document: Refile::FileDouble.new("bar") }]
 
           post.reload
           expect(post.document.read).to eq("bar")

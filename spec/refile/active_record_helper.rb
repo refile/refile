@@ -20,9 +20,7 @@ class TestMigration < ActiveRecord::Migration
       t.column :document_size, :integer
     end
 
-    create_table :users, force: true do |t|
-    end
-
+    create_table :users, force: true
   end
 end
 
