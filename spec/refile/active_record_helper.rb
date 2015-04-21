@@ -11,6 +11,7 @@ ActiveRecord::Base.establish_connection(
 class TestMigration < ActiveRecord::Migration
   def self.up
     create_table :posts, force: true do |t|
+      t.integer :user_id
       t.column :title, :string
       t.column :image_id, :string
       t.column :document_id, :string
@@ -18,6 +19,10 @@ class TestMigration < ActiveRecord::Migration
       t.column :document_content_type, :string
       t.column :document_size, :integer
     end
+
+    create_table :users, force: true do |t|
+    end
+
   end
 end
 
