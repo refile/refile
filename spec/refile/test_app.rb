@@ -27,6 +27,7 @@ require "capybara/rails"
 require "capybara/rspec"
 require "refile/spec_helper"
 require "refile/active_record_helper"
+require "capybara/poltergeist"
 
 if ENV["SAUCE_BROWSER"]
   Capybara.register_driver :selenium do |app|
@@ -37,6 +38,8 @@ if ENV["SAUCE_BROWSER"]
     driver
   end
 end
+
+Capybara.javascript_driver = :poltergeist
 
 Capybara.configure do |config|
   config.server_port = 56_120
@@ -54,7 +57,9 @@ module TestAppHelpers
         page.source.chomp
       end
     else
-      Net::HTTP.get_response(URI(url)).body.chomp
+      uri = URI(url)
+      uri.scheme ||= "http"
+      Net::HTTP.get_response(URI(uri.to_s)).body.chomp
     end
   end
 end
