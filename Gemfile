@@ -12,9 +12,9 @@ gem "capybara"
 gem "pry"
 gem "aws-sdk"
 gem "rack-test", "~> 0.6.2"
-gem "rails", "~> 4.1.8"
-gem "sqlite3"
+gem "rails", "~> 4.1.10"
+gem "sqlite3",                          platforms: [:ruby]
+gem "activerecord-jdbcsqlite3-adapter", platforms: [:jruby]
 gem "selenium-webdriver"
 gem "yard"
 gem "rubocop"
-gem "redcarpet"

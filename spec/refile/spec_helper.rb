@@ -40,8 +40,8 @@ Refile.processor(:concat) do |file, *words|
   File.open(tempfile.path, "r")
 end
 
-Refile.processor(:convert_case) do |file, format:|
-  case format
+Refile.processor(:convert_case) do |file, options = {}|
+  case options[:format]
     when "up" then StringIO.new(file.read.upcase)
     when "down" then StringIO.new(file.read.downcase)
     else file
