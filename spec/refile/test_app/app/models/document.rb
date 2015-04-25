@@ -1,4 +1,4 @@
 class Document < ActiveRecord::Base
   belongs_to :post
-  attachment :file
+  attachment :file, cache: :limited_cache
 end

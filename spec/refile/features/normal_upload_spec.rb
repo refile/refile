@@ -14,16 +14,6 @@ feature "Normal HTTP Post file uploads" do
     expect(download_link("Document")).to eq("hello")
   end
 
-  scenario "Upload multiple files", :js do
-    visit "/multiple/posts/new"
-    fill_in "Title", with: "A cool post"
-    attach_file "Documents", [path("hello.txt"), path("world.txt")]
-    click_button "Create"
-
-    expect(download_link("Document: hello.txt")).to eq("hello")
-    expect(download_link("Document: world.txt")).to eq("world")
-  end
-
   scenario "Fail to upload a file that is too large" do
     visit "/normal/posts/new"
     fill_in "Title", with: "A cool post"

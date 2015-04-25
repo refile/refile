@@ -35,6 +35,8 @@ module Refile
         end
       end
 
+      # @ignore
+      #   rubocop:disable Metrics/MethodLength
       def accepts_attachments_for(association_name, attachment: :file)
         association = reflect_on_association(association_name)
         name = "#{association_name}_#{attachment.to_s.pluralize}"
@@ -45,7 +47,9 @@ module Refile
           end
 
           define_method :"#{name}_data" do
-            send(association_name).map(&:"#{attachment}_data")
+            if send(association_name).all? { |record| record.send("#{attachment}_attacher").valid? }
+              send(association_name).map(&:"#{attachment}_data")
+            end
           end
 
           define_method :"#{name}" do
@@ -53,8 +57,19 @@ module Refile
           end
 
           define_method :"#{name}=" do |files|
-            files.select(&:present?).each do |file|
-              send(association_name).build(attachment => file)
+            cache = begin
+              JSON.parse(files.first)
+            rescue JSON::ParserError
+            end
+            files = files.drop(1)
+            if files.empty? and cache.present?
+              cache.select(&:present?).each do |file|
+                send(association_name).build(attachment => file.to_json)
+              end
+            else
+              files.select(&:present?).each do |file|
+                send(association_name).build(attachment => file)
+              end
             end
           end
         end

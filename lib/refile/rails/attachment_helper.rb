@@ -78,9 +78,7 @@ module Refile
         options[:data].merge!(direct: true).merge!(definition.cache.presign.as_json)
       end
 
-      hidden_field_name = if options[:multiple] then "#{method}[]" else method end
-
-      html = hidden_field(object_name, hidden_field_name, value: object.send("#{method}_data").to_json, object: object, id: nil)
+      html = hidden_field(object_name, method, multiple: options[:multiple], value: object.send("#{method}_data").to_json, object: object, id: nil)
       html + file_field(object_name, method, options)
     end
   end
