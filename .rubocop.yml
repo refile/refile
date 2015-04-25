@@ -31,6 +31,9 @@ Style/StringLiteralsInInterpolation:
 Style/ClosingParenthesisIndentation:
   Enabled: false
 
+Style/OneLineConditional:
+  Enabled: false
+
 Style/AndOr:
   Enabled: false
 

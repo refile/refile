@@ -5,6 +5,10 @@ Refile::TestApp.routes.draw do
     resources :posts, controller: "normal_posts"
   end
 
+  scope path: "multiple", as: "multiple" do
+    resources :posts, controller: "multiple_posts"
+  end
+
   scope path: "direct", as: "direct" do
     resources :posts, only: [:new, :create], controller: "direct_posts"
   end

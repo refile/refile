@@ -18,3 +18,5 @@ gem "activerecord-jdbcsqlite3-adapter", platforms: [:jruby]
 gem "poltergeist"
 gem "yard"
 gem "rubocop"
+gem "puma"
+gem "mini_magick"
