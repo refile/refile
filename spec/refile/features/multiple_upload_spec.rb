@@ -42,4 +42,21 @@ feature "Multiple file uploads", :js do
     expect(download_link("Document: hello.txt")).to eq("hello")
     expect(download_link("Document: world.txt")).to eq("world")
   end
+
+  describe "with direct upload" do
+    scenario "Successfully upload a file" do
+      visit "/direct/posts/new"
+      fill_in "Title", with: "A cool post"
+      attach_file "Documents", [path("hello.txt"), path("world.txt")]
+
+      expect(page).to have_content("Upload started")
+      expect(page).to have_content("Upload success")
+      expect(page).to have_content("Upload complete")
+
+      click_button "Create"
+
+      expect(download_link("Document: hello.txt")).to eq("hello")
+      expect(download_link("Document: world.txt")).to eq("world")
+    end
+  end
 end
