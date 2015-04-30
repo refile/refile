@@ -299,6 +299,7 @@ module Refile
   require "refile/signature"
   require "refile/type"
   require "refile/backend_macros"
+  require "refile/attachment_definition"
   require "refile/attacher"
   require "refile/attachment"
   require "refile/random_hasher"
