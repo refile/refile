@@ -6,6 +6,8 @@ feature "Direct HTTP post file uploads", :js do
     fill_in "Title", with: "A cool post"
     attach_file "Document", path("hello.txt")
 
+    expect(page).to have_content("Presign start")
+    expect(page).to have_content("Presign complete")
     expect(page).to have_content("Upload started")
     expect(page).to have_content("Upload complete token accepted")
     expect(page).to have_content("Upload success token accepted")
@@ -21,6 +23,8 @@ feature "Direct HTTP post file uploads", :js do
     fill_in "Title", with: "A cool post"
     attach_file "Document", path("large.txt")
 
+    expect(page).to have_content("Presign start")
+    expect(page).to have_content("Presign complete")
     expect(page).to have_content("Upload started")
     expect(page).to have_content("Upload failure too large")
   end

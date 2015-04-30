@@ -10,6 +10,14 @@ if(document.addEventListener) {
     if(form) {
       var input = document.querySelector("#post_document");
 
+      ["start", "complete", "failure", "success"].forEach(function(ev) {
+        form.addEventListener("presign:" + ev, function() {
+          var p = document.createElement("p");
+          p.textContent = "Presign " + ev;
+          form.appendChild(p);
+        });
+      });
+
       form.addEventListener("upload:start", function() {
         var p = document.createElement("p");
         p.textContent = "Upload started";

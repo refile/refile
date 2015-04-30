@@ -4,7 +4,7 @@ class PresignedPostsController < ApplicationController
   end
 
   def create
-    @post = Post.new(params.require(:post).permit(:title, :document))
+    @post = Post.new(params.require(:post).permit(:title, :document, documents_files: []))
 
     if @post.save
       redirect_to [:normal, @post]

@@ -59,4 +59,35 @@ feature "Multiple file uploads", :js do
       expect(download_link("Document: world.txt")).to eq("world")
     end
   end
+
+  describe "with presigned upload" do
+    scenario "Successfully upload a file" do
+      visit "/presigned/posts/new"
+      fill_in "Title", with: "A cool post"
+      attach_file "Documents", [path("hello.txt"), path("world.txt")]
+
+      expect(page).to have_content("Presign start")
+      expect(page).to have_content("Presign complete")
+      expect(page).to have_content("Upload started")
+      expect(page).to have_content("Upload complete token accepted")
+      expect(page).to have_content("Upload success token accepted")
+
+      click_button "Create"
+
+      expect(page).to have_selector("h1", text: "A cool post")
+      expect(download_link("Document: hello.txt")).to eq("hello")
+      expect(download_link("Document: world.txt")).to eq("world")
+    end
+
+    scenario "Fail to upload a file that is too large" do
+      visit "/presigned/posts/new"
+      fill_in "Title", with: "A cool post"
+      attach_file "Documents", [path("large.txt"), path("world.txt")]
+
+      expect(page).to have_content("Presign start")
+      expect(page).to have_content("Presign complete")
+      expect(page).to have_content("Upload started")
+      expect(page).to have_content("Upload failure too large")
+    end
+  end
 end
