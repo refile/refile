@@ -609,6 +609,10 @@ class Image < ActiveRecord::Base
 end
 ```
 
+Note it must be possible to persist images given only the associated post and a
+file. There must not be any other validations or constraints which prevent
+images from being saved.
+
 From the post model, you can use the `accepts_attachments_for` macro:
 
 ``` ruby
