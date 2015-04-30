@@ -5,6 +5,7 @@ module Refile
 
       # Attachment method which hooks into ActiveRecord models
       #
+      # @return [void]
       # @see Refile::Attachment#attachment
       def attachment(name, raise_errors: false, **options)
         super
@@ -35,6 +36,33 @@ module Refile
         end
       end
 
+      # Macro which generates accessors for assigning multiple attachments at
+      # once. This is primarily useful together with multiple file uploads.
+      #
+      # The name of the generated accessors will be the name of the association
+      # and the name of the attachment in the associated model. So if a `Post`
+      # accepts attachments for `images`, and the attachment in the `Image`
+      # model is named `file`, then the accessors will be named `images_files`.
+      #
+      # @example in model
+      #   class Post
+      #     has_many :images
+      #     accepts_attachments_for :images
+      #   end
+      #
+      # @example in associated model
+      #   class Image
+      #     attachment :image
+      #   end
+      #
+      # @example in form
+      #   <%= form_for @post do |form| %>
+      #     <%= form.attachment_field :images_files, multiple: true %>
+      #   <% end %>
+      #
+      # @param [Symbol] association_name     Name of the association
+      # @param [Symbol] attachment           Name of the attachment in the associated model
+      # @return [void]
       # @ignore
       #   rubocop:disable Metrics/MethodLength
       def accepts_attachments_for(association_name, attachment: :file)
