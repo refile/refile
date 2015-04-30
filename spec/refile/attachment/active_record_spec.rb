@@ -144,7 +144,7 @@ describe Refile::ActiveRecord::Attachment do
 
     describe "#:association_:name" do
       it "builds records from assigned files" do
-        post.documents_files = [nil, Refile::FileDouble.new("hello"), Refile::FileDouble.new("world")]
+        post.documents_files = [Refile::FileDouble.new("hello"), Refile::FileDouble.new("world")]
         expect(post.documents[0].file.read).to eq("hello")
         expect(post.documents[1].file.read).to eq("world")
         expect(post.documents.size).to eq(2)
@@ -165,7 +165,7 @@ describe Refile::ActiveRecord::Attachment do
       it "prefers newly uploaded files over cache" do
         post.documents_files = [
           [
-            { id: Refile.cache.upload(Refile::FileDouble.new("moo")).id },
+            { id: Refile.cache.upload(Refile::FileDouble.new("moo")).id }
           ].to_json,
           Refile::FileDouble.new("hello"),
           Refile::FileDouble.new("world")

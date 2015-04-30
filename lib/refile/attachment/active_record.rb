@@ -85,11 +85,10 @@ module Refile
           end
 
           define_method :"#{name}=" do |files|
-            cache = begin
-              JSON.parse(files.first.to_s)
-            rescue JSON::ParserError
-            end
-            files = files.drop(1)
+            cache, files = files.partition { |file| file.is_a?(String) }
+
+            cache = Refile.parse_json(cache.first)
+
             if files.empty? and cache.present?
               cache.select(&:present?).each do |file|
                 send(association_name).build(attachment => file.to_json)
