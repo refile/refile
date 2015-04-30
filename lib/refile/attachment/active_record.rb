@@ -86,7 +86,7 @@ module Refile
 
           define_method :"#{name}=" do |files|
             cache = begin
-              JSON.parse(files.first)
+              JSON.parse(files.first.to_s)
             rescue JSON::ParserError
             end
             files = files.drop(1)
