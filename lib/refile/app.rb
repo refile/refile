@@ -33,23 +33,33 @@ module Refile
     end
 
     get "/:token/:backend/:id/:filename" do
-      stream_file file
+      add_cache_headers
+      halt if request.head?
+      stream_file file.download
     end
 
     get "/:token/:backend/:processor/:id/:file_basename.:extension" do
-      stream_file processor.call(file, format: params[:extension])
+      add_cache_headers
+      halt if request.head?
+      stream_file processor.call(file.download, format: params[:extension])
     end
 
     get "/:token/:backend/:processor/:id/:filename" do
-      stream_file processor.call(file)
+      add_cache_headers
+      halt if request.head?
+      stream_file processor.call(file.download)
     end
 
     get "/:token/:backend/:processor/*/:id/:file_basename.:extension" do
-      stream_file processor.call(file, *params[:splat].first.split("/"), format: params[:extension])
+      add_cache_headers
+      halt if request.head?
+      stream_file processor.call(file.download, *params[:splat].first.split("/"), format: params[:extension])
     end
 
     get "/:token/:backend/:processor/*/:id/:filename" do
-      stream_file processor.call(file, *params[:splat].first.split("/"))
+      add_cache_headers
+      halt if request.head?
+      stream_file processor.call(file.download, *params[:splat].first.split("/"))
     end
 
     options "/:backend" do
@@ -89,10 +99,14 @@ module Refile
       Refile.logger
     end
 
+    def add_cache_headers
+      expires Refile.content_max_age, :public, :must_revalidate
+      etag file.etag
+      last_modified file.last_modified
+    end
+
     def stream_file(file)
       halt 403 unless verified?
-
-      expires Refile.content_max_age, :public, :must_revalidate
 
       if file.respond_to?(:path)
         path = file.path
@@ -119,7 +133,7 @@ module Refile
         log_error("Could not find attachment by id: #{params[:id]}")
         halt 404
       end
-      file.download
+      file
     end
 
     def processor
