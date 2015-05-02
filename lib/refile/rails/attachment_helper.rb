@@ -63,22 +63,22 @@ module Refile
     def attachment_field(object_name, method, object:, **options)
       options[:data] ||= {}
 
-      attacher = object.send(:"#{method}_attacher")
-      options[:accept] = attacher.accept
+      definition = object.send(:"#{method}_attachment_definition")
+      options[:accept] = definition.accept
 
       if options[:direct]
         host = options[:host] || Refile.host || request.base_url
-        backend_name = Refile.backends.key(attacher.cache)
+        backend_name = Refile.backends.key(definition.cache)
 
         url = ::File.join(host, main_app.refile_app_path, backend_name)
         options[:data].merge!(direct: true, as: "file", url: url)
       end
 
-      if options[:presigned] and attacher.cache.respond_to?(:presign)
-        options[:data].merge!(direct: true).merge!(attacher.cache.presign.as_json)
+      if options[:presigned] and definition.cache.respond_to?(:presign)
+        options[:data].merge!(direct: true).merge!(definition.cache.presign.as_json)
       end
 
-      html = hidden_field(object_name, method, value: attacher.data.to_json, object: object, id: nil)
+      html = hidden_field(object_name, method, value: object.send("#{method}_data").to_json, object: object, id: nil)
       html + file_field(object_name, method, options)
     end
   end

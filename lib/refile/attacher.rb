@@ -1,23 +1,28 @@
 module Refile
   # @api private
   class Attacher
-    attr_reader :record, :name, :cache, :store, :options, :errors, :type, :valid_extensions, :valid_content_types
+    attr_reader :definition, :record, :errors
     attr_accessor :remove
 
     Presence = ->(val) { val if val != "" }
 
-    def initialize(record, name, cache:, store:, raise_errors: true, type: nil, extension: nil, content_type: nil)
+    def initialize(definition, record)
+      @definition = definition
       @record = record
-      @name = name
-      @raise_errors = raise_errors
-      @cache = Refile.backends.fetch(cache.to_s)
-      @store = Refile.backends.fetch(store.to_s)
-      @type = type
-      @valid_extensions = [extension].flatten if extension
-      @valid_content_types = [content_type].flatten if content_type
-      @valid_content_types ||= Refile.types.fetch(type).content_type if type
       @errors = []
       @metadata = {}
+    end
+
+    def name
+      @definition.name
+    end
+
+    def cache
+      @definition.cache
+    end
+
+    def store
+      @definition.store
     end
 
     def id
@@ -88,7 +93,7 @@ module Refile
       if valid?
         @metadata[:id] = cache.upload(uploadable).id
         write_metadata
-      elsif @raise_errors
+      elsif @definition.raise_errors?
         raise Refile::Invalid, @errors.join(", ")
       end
     end
@@ -104,13 +109,13 @@ module Refile
         if valid?
           @metadata[:id] = cache.upload(response.file).id
           write_metadata
-        elsif @raise_errors
+        elsif @definition.raise_errors?
           raise Refile::Invalid, @errors.join(", ")
         end
       end
     rescue RestClient::Exception
       @errors = [:download_failed]
-      raise if @raise_errors
+      raise if @definition.raise_errors?
     end
 
     def store!
@@ -132,14 +137,6 @@ module Refile
       @metadata = {}
     end
 
-    def accept
-      if valid_content_types
-        valid_content_types.join(",")
-      elsif valid_extensions
-        valid_extensions.map { |e| ".#{e}" }.join(",")
-      end
-    end
-
     def remove?
       remove and remove != "" and remove !~ /\A0|false$\z/
     end
@@ -148,16 +145,13 @@ module Refile
       not @metadata.empty?
     end
 
-    def valid?
-      @errors = []
-      @errors << :invalid_extension if valid_extensions and not valid_extensions.include?(extension)
-      @errors << :invalid_content_type if valid_content_types and not valid_content_types.include?(content_type)
-      @errors << :too_large if cache.max_size and size and size >= cache.max_size
-      @errors.empty?
-    end
-
     def data
       @metadata if valid?
+    end
+
+    def valid?
+      @errors = @definition.validate(self)
+      @errors.empty?
     end
 
   private

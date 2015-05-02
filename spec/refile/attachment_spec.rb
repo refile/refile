@@ -348,12 +348,12 @@ describe Refile::Attachment do
     end
   end
 
-  describe ":name_attacher.accept" do
+  describe ":name_definition.accept" do
     context "with `extension`" do
       let(:options) { { extension: %w[jpg png] } }
 
       it "returns an accept string" do
-        expect(instance.document_attacher.accept).to eq(".jpg,.png")
+        expect(instance.document_attachment_definition.accept).to eq(".jpg,.png")
       end
     end
 
@@ -361,7 +361,7 @@ describe Refile::Attachment do
       let(:options) { { content_type: %w[image/jpeg image/png], extension: "zip" } }
 
       it "returns an accept string" do
-        expect(instance.document_attacher.accept).to eq("image/jpeg,image/png")
+        expect(instance.document_attachment_definition.accept).to eq("image/jpeg,image/png")
       end
     end
   end

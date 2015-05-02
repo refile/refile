@@ -110,4 +110,81 @@ describe Refile::ActiveRecord::Attachment do
       expect(file.exists?).to be_falsy
     end
   end
+
+  context "when attachment assigned to nested model" do
+    let(:base_users_class) do
+      Class.new(ActiveRecord::Base) do
+        self.table_name = :users
+
+        def self.name
+          "User"
+        end
+      end
+    end
+
+    context "when model has one nested attachment" do
+      let(:users_class) do
+        posts_class = klass
+        base_users_class.tap do |klass|
+          klass.instance_eval do
+            has_one :post, class: posts_class
+            accepts_nested_attributes_for :post
+          end
+        end
+      end
+
+      describe "#save" do
+        it "stores the assigned file" do
+          user = users_class.create! post_attributes: { document: Refile::FileDouble.new("foo") }
+
+          post = user.post.reload
+          expect(post.document.read).to eq("foo")
+          expect(Refile.store.read(post.document.id)).to eq("foo")
+        end
+
+        it "replaces an existing file" do
+          user = users_class.create! post_attributes: { document: Refile::FileDouble.new("foo") }
+          post = user.post
+
+          user.update! post_attributes: { id: post.id, document: Refile::FileDouble.new("bar") }
+
+          post.reload
+          expect(post.document.read).to eq("bar")
+          expect(Refile.store.read(post.document.id)).to eq("bar")
+        end
+      end
+    end
+
+    context "when model has many nested attachments" do
+      let(:users_class) do
+        posts_class = klass
+        base_users_class.tap do |klass|
+          klass.instance_eval do
+            has_many :posts, class: posts_class
+            accepts_nested_attributes_for :posts
+          end
+        end
+      end
+
+      describe "#save" do
+        it "stores the assigned file" do
+          user = users_class.create! posts_attributes: [{ document: Refile::FileDouble.new("foo") }]
+
+          post = user.posts.first.reload
+          expect(post.document.read).to eq("foo")
+          expect(Refile.store.read(post.document.id)).to eq("foo")
+        end
+
+        it "replaces an existing file" do
+          user = users_class.create! posts_attributes: [{ document: Refile::FileDouble.new("foo") }]
+          post = user.posts.first
+          user.update! posts_attributes: [{ id: post.id, document: Refile::FileDouble.new("bar") }]
+
+          post.reload
+          expect(post.document.read).to eq("bar")
+          expect(Refile.store.read(post.document.id)).to eq("bar")
+        end
+      end
+    end
+  end
 end

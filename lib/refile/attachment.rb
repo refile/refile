@@ -37,21 +37,29 @@ module Refile
     # @ignore
     #   rubocop:disable Metrics/MethodLength
     def attachment(name, cache: :cache, store: :store, raise_errors: true, type: nil, extension: nil, content_type: nil)
+      definition = AttachmentDefinition.new(name,
+        cache: cache,
+        store: store,
+        raise_errors: raise_errors,
+        type: type,
+        extension: extension,
+        content_type: content_type
+      )
+
+      define_singleton_method :"#{name}_attachment_definition" do
+        definition
+      end
+
       mod = Module.new do
         attacher = :"#{name}_attacher"
 
+        define_method :"#{name}_attachment_definition" do
+          definition
+        end
+
         define_method attacher do
           ivar = :"@#{attacher}"
-          instance_variable_get(ivar) or begin
-            instance_variable_set(ivar, Attacher.new(self, name,
-              cache: cache,
-              store: store,
-              raise_errors: raise_errors,
-              type: type,
-              extension: extension,
-              content_type: content_type
-            ))
-          end
+          instance_variable_get(ivar) or instance_variable_set(ivar, Attacher.new(definition, self))
         end
 
         define_method "#{name}=" do |value|
@@ -75,6 +83,10 @@ module Refile
         end
 
         define_method "remote_#{name}_url" do
+        end
+
+        define_method "#{name}_data" do
+          send(attacher).data
         end
 
         define_singleton_method("to_s")    { "Refile::Attachment(#{name})" }

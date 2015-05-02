@@ -21,6 +21,11 @@ module Refile
           end
         end
 
+        define_method "#{name}=" do |value|
+          send("#{name}_id_will_change!")
+          super(value)
+        end
+
         before_save do
           send(attacher).store!
         end

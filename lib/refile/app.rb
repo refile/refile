@@ -109,12 +109,10 @@ module Refile
     end
 
     def backend
-      backend = Refile.backends[params[:backend]]
-      unless backend
-        log_error("Could not find backend: #{params[:backend]}")
+      Refile.backends.fetch(params[:backend]) do |name|
+        log_error("Could not find backend: #{name}")
         halt 404
       end
-      backend
     end
 
     def file
@@ -127,12 +125,10 @@ module Refile
     end
 
     def processor
-      processor = Refile.processors[params[:processor]]
-      unless processor
-        log_error("Could not find processor: #{params[:processor]}")
+      Refile.processors.fetch(params[:processor]) do |name|
+        log_error("Could not find processor: #{name}")
         halt 404
       end
-      processor
     end
 
     def log_error(message)
