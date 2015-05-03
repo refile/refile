@@ -579,9 +579,9 @@ attachment :profile_image, type: :document
 
 ## Multiple file uploads
 
-File input fields support the `multiple` attriute which allows users to attach
-multiple files at once. Refile supports this attribute. You can add the attribute
-to your attachment fields like this:
+File input fields support the `multiple` attribute which allows users to attach
+multiple files at once. Refile supports this attribute. You can add the
+attribute to your attachment fields like this:
 
 ``` erb
 <%= form.attachment_field :images_files, multiple: true %>
