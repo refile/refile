@@ -182,7 +182,7 @@ describe Refile::ActiveRecord::Attachment do
         ]
         post.save
         post.update_attributes documents_files: [
-          Refile::FileDouble.new("foo"),
+          Refile::FileDouble.new("foo")
         ]
         retrieved = post_class.find(post.id)
         expect(retrieved.documents[0].file.read).to eq("foo")
@@ -199,7 +199,7 @@ describe Refile::ActiveRecord::Attachment do
           ]
           post.save
           post.update_attributes documents_files: [
-            Refile::FileDouble.new("foo"),
+            Refile::FileDouble.new("foo")
           ]
           retrieved = post_class.find(post.id)
           expect(retrieved.documents[0].file.read).to eq("hello")
