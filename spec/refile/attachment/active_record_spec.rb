@@ -123,7 +123,7 @@ describe Refile::ActiveRecord::Attachment do
           "Post"
         end
 
-        has_many :documents, class: foo
+        has_many :documents, class: foo, dependent: :destroy
         accepts_attachments_for :documents, **opts
       end
     end
@@ -173,6 +173,40 @@ describe Refile::ActiveRecord::Attachment do
         expect(post.documents[0].file.read).to eq("hello")
         expect(post.documents[1].file.read).to eq("world")
         expect(post.documents.size).to eq(2)
+      end
+
+      it "clears previously assigned files" do
+        post.documents_files = [
+          Refile::FileDouble.new("hello"),
+          Refile::FileDouble.new("world")
+        ]
+        post.save
+        post.update_attributes documents_files: [
+          Refile::FileDouble.new("foo"),
+        ]
+        retrieved = post_class.find(post.id)
+        expect(retrieved.documents[0].file.read).to eq("foo")
+        expect(retrieved.documents.size).to eq(1)
+      end
+
+      context "with append: true" do
+        let(:options) { { append: true } }
+
+        it "appends to previously assigned files" do
+          post.documents_files = [
+            Refile::FileDouble.new("hello"),
+            Refile::FileDouble.new("world")
+          ]
+          post.save
+          post.update_attributes documents_files: [
+            Refile::FileDouble.new("foo"),
+          ]
+          retrieved = post_class.find(post.id)
+          expect(retrieved.documents[0].file.read).to eq("hello")
+          expect(retrieved.documents[1].file.read).to eq("world")
+          expect(retrieved.documents[2].file.read).to eq("foo")
+          expect(retrieved.documents.size).to eq(3)
+        end
       end
     end
 

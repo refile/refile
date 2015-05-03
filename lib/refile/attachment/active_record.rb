@@ -46,7 +46,7 @@ module Refile
       #
       # @example in model
       #   class Post
-      #     has_many :images
+      #     has_many :images, dependent: :destroy
       #     accepts_attachments_for :images
       #   end
       #
@@ -62,10 +62,11 @@ module Refile
       #
       # @param [Symbol] association_name     Name of the association
       # @param [Symbol] attachment           Name of the attachment in the associated model
+      # @param [Symbol] append               If true, new files are appended instead of replacing the entire list of associated models.
       # @return [void]
       # @ignore
       #   rubocop:disable Metrics/MethodLength
-      def accepts_attachments_for(association_name, attachment: :file)
+      def accepts_attachments_for(association_name, attachment: :file, append: false)
         association = reflect_on_association(association_name)
         name = "#{association_name}_#{attachment.to_s.pluralize}"
 
@@ -88,6 +89,10 @@ module Refile
             cache, files = files.partition { |file| file.is_a?(String) }
 
             cache = Refile.parse_json(cache.first)
+
+            if not append and files.present? or cache.present?
+              send("#{association_name}=", [])
+            end
 
             if files.empty? and cache.present?
               cache.select(&:present?).each do |file|

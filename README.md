@@ -617,7 +617,7 @@ From the post model, you can use the `accepts_attachments_for` macro:
 
 ``` ruby
 class Post < ActiveRecord::Base
-  has_many :images
+  has_many :images, dependent: :destroy
   accepts_attachments_for :image, attachment: :file
 end
 ```
@@ -627,7 +627,7 @@ this case.
 
 ``` ruby
 class Post < ActiveRecord::Base
-  has_many :images
+  has_many :images, dependent: :destroy
   accepts_attachments_for :image
 end
 ```
