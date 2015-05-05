@@ -67,12 +67,12 @@ describe Refile::Attachment do
   end
 
   describe "remote_:name_url=" do
-    it "does nothign when nil is assigned" do
+    it "does nothing when nil is assigned" do
       instance.remote_document_url = nil
       expect(instance.document).to be_nil
     end
 
-    it "does nothign when empty string is assigned" do
+    it "does nothing when empty string is assigned" do
       instance.remote_document_url = nil
       expect(instance.document).to be_nil
     end
