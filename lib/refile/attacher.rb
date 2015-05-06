@@ -106,6 +106,7 @@ module Refile
           content_type: response.headers[:content_type]
         }
         if valid?
+          response.file.open if response.file.closed? # https://github.com/refile/refile/pull/210
           @metadata[:id] = cache.upload(response.file).id
           write_metadata
         elsif @definition.raise_errors?
