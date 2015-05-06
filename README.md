@@ -24,6 +24,7 @@ Features:
 - Streaming IO for fast and memory friendly uploads
 - Works across form redisplays, i.e. when validations fail, even on S3
 - Effortless direct uploads, even to S3
+- Support for multiple file uploads
 
 Sponsored by:
 
@@ -574,6 +575,80 @@ Now you can use them like this:
 
 ``` ruby
 attachment :profile_image, type: :document
+```
+
+## Multiple file uploads
+
+File input fields support the `multiple` attribute which allows users to attach
+multiple files at once. Refile supports this attribute. You can add the
+attribute to your attachment fields like this:
+
+``` erb
+<%= form.attachment_field :images_files, multiple: true %>
+```
+
+Multiple file uploads also work nicely with direct and presigned uploads:
+
+``` erb
+<%= form.attachment_field :images_files, multiple: true, direct: true, presigned: true %>
+```
+
+Note that you will get separate events for each uploaded file. So when you
+attach two files, the `upload:start` event and other events will be triggered
+twice, once for each file.
+
+When you upload multiple files, your application will receive an array of
+files, instead of a single file. To map these files to model object, Refile's
+ActiveRecord integration ships with a nice macro makes this trivial. Suppose
+you have an image model like this:
+
+``` ruby
+class Image < ActiveRecord::Base
+  belongs_to :post
+  attachment :file
+end
+```
+
+Note it must be possible to persist images given only the associated post and a
+file. There must not be any other validations or constraints which prevent
+images from being saved.
+
+From the post model, you can use the `accepts_attachments_for` macro:
+
+``` ruby
+class Post < ActiveRecord::Base
+  has_many :images, dependent: :destroy
+  accepts_attachments_for :image, attachment: :file
+end
+```
+
+The `attachment` option defaults to `:file`, so we could have left it out in
+this case.
+
+``` ruby
+class Post < ActiveRecord::Base
+  has_many :images, dependent: :destroy
+  accepts_attachments_for :image
+end
+```
+
+You can add the attachment field to your post form:
+
+``` erb
+<%= form_for @post do |form| %>
+  <%= form.label :images_files %>
+  <%= form.attachment_field :images_files, multiple: true %>
+<% end %>
+```
+
+Now you only need to permit the generated accessor in your controller.  Since
+`images_files` is an array, you need to tell Rails to allow array values for
+it:
+
+``` ruby
+def post_params
+  params.require(:post).permit(images_files: [])
+end
 ```
 
 ## Removing attached files

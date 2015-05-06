@@ -111,6 +111,116 @@ describe Refile::ActiveRecord::Attachment do
     end
   end
 
+  describe ".accepts_nested_attributes_for" do
+    let(:options) { {} }
+    let(:post_class) do
+      opts = options
+      foo = document_class
+      Class.new(ActiveRecord::Base) do
+        self.table_name = :posts
+
+        def self.name
+          "Post"
+        end
+
+        has_many :documents, class: foo, dependent: :destroy
+        accepts_attachments_for :documents, **opts
+      end
+    end
+
+    let(:document_class) do
+      Class.new(ActiveRecord::Base) do
+        self.table_name = :documents
+
+        def self.name
+          "Document"
+        end
+
+        attachment :file
+      end
+    end
+
+    let(:post) { post_class.new }
+
+    describe "#:association_:name" do
+      it "builds records from assigned files" do
+        post.documents_files = [Refile::FileDouble.new("hello"), Refile::FileDouble.new("world")]
+        expect(post.documents[0].file.read).to eq("hello")
+        expect(post.documents[1].file.read).to eq("world")
+        expect(post.documents.size).to eq(2)
+      end
+
+      it "builds records from cache" do
+        post.documents_files = [
+          [
+            { id: Refile.cache.upload(Refile::FileDouble.new("hello")).id },
+            { id: Refile.cache.upload(Refile::FileDouble.new("world")).id }
+          ].to_json
+        ]
+        expect(post.documents[0].file.read).to eq("hello")
+        expect(post.documents[1].file.read).to eq("world")
+        expect(post.documents.size).to eq(2)
+      end
+
+      it "prefers newly uploaded files over cache" do
+        post.documents_files = [
+          [
+            { id: Refile.cache.upload(Refile::FileDouble.new("moo")).id }
+          ].to_json,
+          Refile::FileDouble.new("hello"),
+          Refile::FileDouble.new("world")
+        ]
+        expect(post.documents[0].file.read).to eq("hello")
+        expect(post.documents[1].file.read).to eq("world")
+        expect(post.documents.size).to eq(2)
+      end
+
+      it "clears previously assigned files" do
+        post.documents_files = [
+          Refile::FileDouble.new("hello"),
+          Refile::FileDouble.new("world")
+        ]
+        post.save
+        post.update_attributes documents_files: [
+          Refile::FileDouble.new("foo")
+        ]
+        retrieved = post_class.find(post.id)
+        expect(retrieved.documents[0].file.read).to eq("foo")
+        expect(retrieved.documents.size).to eq(1)
+      end
+
+      context "with append: true" do
+        let(:options) { { append: true } }
+
+        it "appends to previously assigned files" do
+          post.documents_files = [
+            Refile::FileDouble.new("hello"),
+            Refile::FileDouble.new("world")
+          ]
+          post.save
+          post.update_attributes documents_files: [
+            Refile::FileDouble.new("foo")
+          ]
+          retrieved = post_class.find(post.id)
+          expect(retrieved.documents[0].file.read).to eq("hello")
+          expect(retrieved.documents[1].file.read).to eq("world")
+          expect(retrieved.documents[2].file.read).to eq("foo")
+          expect(retrieved.documents.size).to eq(3)
+        end
+      end
+    end
+
+    describe "#:association_:name_data" do
+      it "returns metadata of all files" do
+        post.documents_files = [nil, Refile::FileDouble.new("hello"), Refile::FileDouble.new("world")]
+        data = post.documents_files_data
+        expect(Refile.cache.read(data[0][:id])).to eq("hello")
+        expect(Refile.cache.read(data[1][:id])).to eq("world")
+        expect(data.size).to eq(2)
+      end
+    end
+  end
+
   context "when attachment assigned to nested model" do
     let(:base_users_class) do
       Class.new(ActiveRecord::Base) do

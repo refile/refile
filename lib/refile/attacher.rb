@@ -79,9 +79,8 @@ module Refile
     end
 
     def retrieve!(value)
-      @metadata = JSON.parse(value, symbolize_names: true) || {}
+      @metadata = Refile.parse_json(value, symbolize_names: true) || {}
       write_metadata if cache_id
-    rescue JSON::ParserError
     end
 
     def cache!(uploadable)

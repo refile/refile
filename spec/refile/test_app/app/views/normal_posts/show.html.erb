@@ -17,3 +17,11 @@
 <%= link_to "Edit", edit_normal_post_url(@post) %>
 
 <%= link_to "Delete", normal_post_url(@post), method: :delete %>
+
+<ul>
+  <% @post.documents.each do |document| %>
+    <li>
+      <%= link_to "Document: #{document.file_filename}", attachment_url(document, :file) %>
+    </li>
+  <% end %>
+</ul>

@@ -1,0 +1,16 @@
+<%= form_for [:multiple, @post] do |form| %>
+  <p>
+    <%= @post.errors.full_messages.to_sentence %>
+  </p>
+  <p>
+    <%= form.label :title %>
+    <%= form.text_field :title %>
+  </p>
+  <p>
+    <%= form.label :documents_files %>
+    <%= form.attachment_field :documents_files, multiple: true %>
+  </p>
+  <p>
+    <%= form.submit %>
+  </p>
+<% end %>

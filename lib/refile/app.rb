@@ -64,6 +64,11 @@ module Refile
       { id: file.id }.to_json
     end
 
+    get "/:backend/presign" do
+      content_type :json
+      backend.presign.to_json
+    end
+
     not_found do
       content_type :text
       "not found"

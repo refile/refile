@@ -293,6 +293,13 @@ module Refile
 
       expected == actual
     end
+
+    # @api private
+    def parse_json(data, *args)
+      JSON.parse(data.to_s, *args)
+    rescue JSON::ParserError
+      nil
+    end
   end
 
   require "refile/version"

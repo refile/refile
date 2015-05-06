@@ -21,6 +21,14 @@ class TestMigration < ActiveRecord::Migration
     end
 
     create_table :users, force: true
+
+    create_table :documents, force: true do |t|
+      t.belongs_to :post, null: false
+      t.column :file_id, :string, null: false
+      t.column :file_filename, :string
+      t.column :file_content_type, :string
+      t.column :file_size, :integer, null: false
+    end
   end
 end
 
