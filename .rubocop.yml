@@ -4,6 +4,9 @@ Metrics/LineLength:
 Metrics/ClassLength:
   Max: 300
 
+Metrics/ModuleLength:
+  Max: 300
+
 Metrics/MethodLength:
   Max: 25
 
