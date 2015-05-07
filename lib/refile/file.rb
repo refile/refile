@@ -53,6 +53,16 @@ module Refile
       backend.exists?(id)
     end
 
+    # @return [String] the eTag of the file
+    def etag
+      backend.etag(id)
+    end
+
+    # @return [Time] last modified time of the file
+    def last_modified
+      backend.last_modified(id)
+    end
+
     # @return [IO] an IO object which contains the contents of the file
     def to_io
       io

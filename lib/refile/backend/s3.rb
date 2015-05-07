@@ -115,6 +115,22 @@ module Refile
         object(id).exists?
       end
 
+      # Return eTag of the file
+      #
+      # @param [Sring] id           The id of the file
+      # @return [String]
+      verify_id def etag(id)
+        object(id).etag.gsub('"', '')
+      end
+
+      # Return last modified time of the file
+      #
+      # @param [Sring] id           The id of the file
+      # @return [Time]
+      verify_id def last_modified(id)
+        object(id).last_modified
+      end
+
       # Remove all files in this backend. You must confirm the deletion by
       # passing the symbol `:confirm` as an argument to this method.
       #

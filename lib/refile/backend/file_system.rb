@@ -92,6 +92,22 @@ module Refile
         ::File.exist?(path(id))
       end
 
+      # Return eTag of the file
+      #
+      # @param [Sring] id           The id of the file
+      # @return [String]
+      verify_id def etag(id)
+        Digest::MD5.file(path(id)).hexdigest
+      end
+
+      # Return last modified time of the file
+      #
+      # @param [Sring] id           The id of the file
+      # @return [Time]
+      verify_id def last_modified(id)
+        open(id).mtime
+      end
+
       # Remove all files in this backend. You must confirm the deletion by
       # passing the symbol `:confirm` as an argument to this method.
       #
