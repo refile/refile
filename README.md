@@ -143,6 +143,7 @@ require "refile/backend/s3"
 aws = {
   access_key_id: "xyz",
   secret_access_key: "abc",
+  region: "sa-east-1",  
   bucket: "my-bucket",
 }
 Refile.cache = Refile::Backend::S3.new(prefix: "cache", **aws)
@@ -151,7 +152,7 @@ Refile.store = Refile::Backend::S3.new(prefix: "store", **aws)
 
 And add to your Gemfile:
 ```ruby
-gem "aws-sdk", '< 2'
+gem "aws-sdk"
 ```
 
 Try this in the quick start example above and your files are now uploaded to

@@ -61,6 +61,10 @@ module Refile
       @io.read(*args)
     end
 
+    def rewind
+      @io.rewind
+    end
+
     def size
       @io.size
     end
