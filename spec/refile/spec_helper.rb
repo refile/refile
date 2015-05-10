@@ -6,6 +6,8 @@ require "webmock/rspec"
 
 tmp_path = Dir.mktmpdir
 
+WebMock.disable_net_connect!(allow_localhost: true)
+
 at_exit do
   FileUtils.remove_entry_secure(tmp_path)
 end
@@ -87,11 +89,4 @@ end
 
 RSpec.configure do |config|
   config.include PathHelper
-  config.before(:all) do
-    if ENV["S3"]
-      WebMock.allow_net_connect!
-    else
-      WebMock.disable_net_connect!(allow_localhost: true)
-    end
-  end
 end
