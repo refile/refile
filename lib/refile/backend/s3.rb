@@ -9,6 +9,7 @@ module Refile
     #   backend = Refile::Backend::S3.new(
     #     access_key_id: "xyz",
     #     secret_access_key: "abcd1234",
+    #     region: "sa-east-1",
     #     bucket: "my-bucket",
     #     prefix: "files"
     #   )
@@ -23,6 +24,7 @@ module Refile
       #
       # @param [String] access_key_id
       # @param [String] secret_access_key
+      # @param [String] region            The AWS region to connect to
       # @param [String] bucket            The name of the bucket where files will be stored
       # @param [String] prefix            A prefix to add to all files. Prefixes on S3 are kind of like folders.
       # @param [Integer, nil] max_size    The maximum size of an uploaded file
@@ -30,13 +32,13 @@ module Refile
       # @param [Hash] s3_options          Additional options to initialize S3 with
       # @see http://docs.aws.amazon.com/AWSRubySDK/latest/AWS/Core/Configuration.html
       # @see http://docs.aws.amazon.com/AWSRubySDK/latest/AWS/S3.html
-      def initialize(access_key_id:, secret_access_key:, bucket:, max_size: nil, prefix: nil, hasher: Refile::RandomHasher.new, **s3_options)
+      def initialize(access_key_id:, secret_access_key:, region:, bucket:, max_size: nil, prefix: nil, hasher: Refile::RandomHasher.new, **s3_options)
         @access_key_id = access_key_id
         @secret_access_key = secret_access_key
-        @s3_options = { access_key_id: access_key_id, secret_access_key: secret_access_key }.merge s3_options
-        @s3 = AWS::S3.new @s3_options
+        @s3_options = { access_key_id: access_key_id, secret_access_key: secret_access_key, region: region }.merge s3_options
+        @s3 = Aws::S3::Resource.new @s3_options
         @bucket_name = bucket
-        @bucket = @s3.buckets[@bucket_name]
+        @bucket = @s3.bucket @bucket_name
         @hasher = hasher
         @prefix = prefix
         @max_size = max_size
@@ -50,9 +52,9 @@ module Refile
         id = @hasher.hash(uploadable)
 
         if uploadable.is_a?(Refile::File) and uploadable.backend.is_a?(S3) and uploadable.backend.access_key_id == access_key_id
-          uploadable.backend.object(uploadable.id).copy_to(object(id))
+          object(id).copy_from(copy_source: [@bucket_name, uploadable.backend.object(uploadable.id).key].join("/"))
         else
-          object(id).write(uploadable, content_length: uploadable.size)
+          object(id).put(body: uploadable, content_length: uploadable.size)
         end
 
         Refile::File.new(self, id)
@@ -84,7 +86,7 @@ module Refile
       # @param [Sring] id           The id of the file
       # @return [IO]                An IO object containing the file contents
       verify_id def open(id)
-        Kernel.open(object(id).url_for(:read))
+        Kernel.open(object(id).presigned_url(:get))
       end
 
       # Return the entire contents of the uploaded file as a String.
@@ -92,8 +94,8 @@ module Refile
       # @param [String] id           The id of the file
       # @return [String]             The file's contents
       verify_id def read(id)
-        object(id).read
-      rescue AWS::S3::Errors::NoSuchKey
+        object(id).get.body.read
+      rescue Aws::S3::Errors::NoSuchKey
         nil
       end
 
@@ -102,8 +104,8 @@ module Refile
       # @param [Sring] id           The id of the file
       # @return [Integer]           The file's size
       verify_id def size(id)
-        object(id).content_length
-      rescue AWS::S3::Errors::NoSuchKey
+        object(id).get.content_length
+      rescue Aws::S3::Errors::NoSuchKey
         nil
       end
 
@@ -125,7 +127,7 @@ module Refile
       # @return [void]
       def clear!(confirm = nil)
         raise Refile::Confirm unless confirm == :confirm
-        @bucket.objects.with_prefix(@prefix).delete_all
+        @bucket.objects(prefix: @prefix).delete
       end
 
       # Return a presign signature which can be used to upload a file into this
@@ -135,12 +137,12 @@ module Refile
       def presign
         id = RandomHasher.new.hash
         signature = @bucket.presigned_post(key: [*@prefix, id].join("/"))
-        signature.where(content_length: @max_size) if @max_size
+        signature.content_length_range(0..@max_size) if @max_size
         Signature.new(as: "file", id: id, url: signature.url.to_s, fields: signature.fields)
       end
 
       verify_id def object(id)
-        @bucket.objects[[*@prefix, id].join("/")]
+        @bucket.object([*@prefix, id].join("/"))
       end
     end
   end
