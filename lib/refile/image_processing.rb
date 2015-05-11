@@ -1,5 +1,6 @@
 require "refile"
 require "mini_magick"
+require "mini_magick/version"
 
 module Refile
   # Processes images via MiniMagick, resizing cropping and padding them.
@@ -129,11 +130,22 @@ module Refile
     # @param [String] format        the file format to convert to
     # @return [File]                the processed file
     def call(file, *args, format: nil)
+      check_mini_magick_version
+
       img = ::MiniMagick::Image.new(file.path)
       img.format(format.to_s.downcase, nil) if format
       send(@method, img, *args)
 
       ::File.open(img.path, "rb")
+    end
+
+    private
+
+    class CapabilityError < StandardError;end
+    def check_mini_magick_version
+      if MiniMagick.version < Gem::Version.new("4.0.0")
+        raise CapabilityError, "Refile requires mini_magick >= 4.0.0"
+      end
     end
   end
 end
