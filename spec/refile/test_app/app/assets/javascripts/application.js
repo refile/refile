@@ -26,25 +26,25 @@ if(document.addEventListener) {
 
       form.addEventListener("upload:complete", function(e) {
         var p = document.createElement("p");
-        p.textContent = "Upload complete " + e.detail;
+        p.textContent = "Upload complete " + e.detail.xhr.responseText;
         form.appendChild(p);
       });
 
       form.addEventListener("upload:progress", function(e) {
         var p = document.createElement("p");
-        p.textContent = "Upload progress " + e.detail.loaded + " " + e.detail.total;
+        p.textContent = "Upload progress " + e.detail.progress.loaded + " " + e.detail.progress.total;
         form.appendChild(p);
       });
 
       form.addEventListener("upload:failure", function(e) {
         var p = document.createElement("p");
-        p.textContent = "Upload failure " + e.detail
+        p.textContent = "Upload failure " + e.detail.xhr.responseText
         form.appendChild(p);
       });
     }
   });
 
   $(document).on("upload:success", "form#direct", function(e) {
-    $("<p></p>").text("Upload success " + e.originalEvent.detail).appendTo(this);
+    $("<p></p>").text("Upload success " + e.originalEvent.detail.xhr.responseText).appendTo(this);
   });
 }

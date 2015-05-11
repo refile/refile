@@ -19,12 +19,6 @@
     return data;
   }
 
-  function dispatchEvent(element, name, detail) {
-    var ev = document.createEvent('CustomEvent');
-    ev.initCustomEvent(name, true, false, detail);
-    element.dispatchEvent(ev);
-  }
-
   if(!document.addEventListener) { return; } // IE8
 
   document.addEventListener("change", function(changeEvent) {
@@ -38,17 +32,23 @@
       var fields = JSON.parse(input.getAttribute("data-fields") || "null");
 
       var requests = [].map.call(input.files, function(file, index) {
+        function dispatchEvent(element, name, progress) {
+          var ev = document.createEvent('CustomEvent');
+          ev.initCustomEvent(name, true, false, { xhr: xhr, file: file, index: index, progress: progress });
+          element.dispatchEvent(ev);
+        }
+
         var xhr = new XMLHttpRequest();
 
         xhr.file = file;
 
         xhr.addEventListener("load", function() {
           xhr.complete = true;
-          dispatchEvent(input, "upload:complete", xhr.responseText);
+          dispatchEvent(input, "upload:complete");
           if(isSuccess(xhr)) {
-            dispatchEvent(input, "upload:success", xhr.responseText);
+            dispatchEvent(input, "upload:success");
           } else {
-            dispatchEvent(input, "upload:failure", xhr.responseText);
+            dispatchEvent(input, "upload:failure");
           }
           if(requests.every(function(xhr) { return xhr.complete })) {
             finalizeUpload();
@@ -60,19 +60,19 @@
         });
 
         if(input.getAttribute("data-presigned")) {
-          dispatchEvent(input, "presign:start", xhr);
+          dispatchEvent(input, "presign:start");
           var presignXhr = new XMLHttpRequest();
           presignXhr.addEventListener("load", function() {
-            dispatchEvent(input, "presign:complete", xhr);
+            dispatchEvent(input, "presign:complete");
             if(isSuccess(presignXhr)) {
-              dispatchEvent(input, "presign:success", xhr);
+              dispatchEvent(input, "presign:success");
               var data = JSON.parse(presignXhr.responseText)
               xhr.id = data.id;
               xhr.open("POST", data.url, true);
               xhr.send(formData(data.as, file, data.fields));
-              dispatchEvent(input, "upload:start", xhr);
+              dispatchEvent(input, "upload:start");
             } else {
-              dispatchEvent(input, "presign:failure", xhr);
+              dispatchEvent(input, "presign:failure");
               xhr.complete = true;
             };
           });
@@ -81,7 +81,7 @@
         } else {
           xhr.open("POST", url, true);
           xhr.send(formData(input.getAttribute("data-as"), file, fields));
-          dispatchEvent(input, "upload:start", xhr);
+          dispatchEvent(input, "upload:start");
         }
 
         return xhr;
