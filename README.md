@@ -36,7 +36,8 @@ Add the gem:
 
 ``` ruby
 gem "mini_magick"
-gem "refile", require: ["refile/rails", "refile/image_processing"]
+gem "refile", require: "refile/rails"
+gem "refile-mini_magick"
 ```
 
 We're requiring both Refile's Rails integration and image processing via the
@@ -134,20 +135,26 @@ file will be promoted to the store. On the other hand, the user might simply
 give up and leave, now the file is left in the cache for later cleanup.
 
 Refile has convenient accessors for setting the `cache` and `store`, so for
-example you can switch to the S3 backend like this:
+example if you add the refile-s3 gem to your Gemfile:
+
+``` ruby
+gem "refile-s3"
+```
+
+Now you can upload files to S3 easily by using these accessors:
 
 ``` ruby
 # config/initializers/refile.rb
-require "refile/backend/s3"
+require "refile/s3"
 
 aws = {
   access_key_id: "xyz",
   secret_access_key: "abc",
-  region: "sa-east-1",  
+  region: "sa-east-1",
   bucket: "my-bucket",
 }
-Refile.cache = Refile::Backend::S3.new(prefix: "cache", **aws)
-Refile.store = Refile::Backend::S3.new(prefix: "store", **aws)
+Refile.cache = Refile::S3.new(prefix: "cache", **aws)
+Refile.store = Refile::S3.new(prefix: "store", **aws)
 ```
 
 And add to your Gemfile:
@@ -162,13 +169,14 @@ Backends also provide the option of restricting the size of files they accept.
 For example:
 
 ``` ruby
-Refile.cache = Refile::Backend::S3.new(max_size: 10.megabytes, ...)
+Refile.cache = Refile::S3.new(max_size: 10.megabytes, ...)
 ```
 
-The Refile gem ships with [S3](lib/refile/backend/s3.rb) and
-[FileSystem](lib/refile/backend/file_system.rb) backends. Additional backends
+The Refile gem only ships with a
+[FileSystem](lib/refile/backend/file_system.rb) backend. Additional backends
 are provided by other gems.
 
+- [Amazon S3](lib/refile/backend/s3.rb)
 - [Fog](https://github.com/refile/refile-fog) provides support for a ton of
   different cloud storage providers, including Google Storage and Rackspace
   CloudFiles.
@@ -323,9 +331,7 @@ elloh
 ```
 
 Refile calls `call` on the processor and passes in the retrieved file, as well
-as all additional arguments sent through the URL. See the
-[built in image processors](lib/refile/image_processing.rb) for a more advanced
-example.
+as all additional arguments sent through the URL.
 
 ## 4. Rails helpers
 
