@@ -47,9 +47,6 @@ Capybara.configure do |config|
   config.server_port = 56_120
 end
 
-Refile.allow_origin = "*"
-Refile.host = "//localhost:56120"
-
 module TestAppHelpers
   def download_link(text)
     url = find_link(text)[:href]

@@ -36,7 +36,7 @@ module Refile
     # @param [Hash] options                      Additional options for the image tag
     # @see #attachment_url
     # @return [ActiveSupport::SafeBuffer, nil]   The generated image tag
-    def attachment_image_tag(record, name, *args, fallback: nil, format: nil, host: nil, **options)
+    def attachment_image_tag(record, name, *args, fallback: nil, format: nil, host: Refile.host, **options)
       file = record && record.public_send(name)
       classes = ["attachment", (record.class.model_name.singular if record), name, *options[:class]]
 

@@ -26,6 +26,10 @@ Refile.backends["limited_cache"] = FakePresignBackend.new(File.expand_path("defa
 
 Refile.direct_upload = %w[cache limited_cache]
 
+Refile.allow_origin = "*"
+
+Refile.host = "//localhost:56120"
+
 Refile.processor(:reverse) do |file|
   StringIO.new(file.read.reverse)
 end
