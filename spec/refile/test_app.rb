@@ -28,7 +28,6 @@ require "capybara/rails"
 require "capybara/rspec"
 require "refile/spec_helper"
 require "refile/active_record_helper"
-require "refile/image_processing"
 require "capybara/poltergeist"
 
 if ENV["SAUCE_BROWSER"]
