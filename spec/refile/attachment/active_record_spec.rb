@@ -207,6 +207,24 @@ describe Refile::ActiveRecord::Attachment do
           expect(retrieved.documents[2].file.read).to eq("foo")
           expect(retrieved.documents.size).to eq(3)
         end
+
+        it "appends to previously assigned files with cached files" do
+          post.documents_files = [
+            Refile::FileDouble.new("hello"),
+            Refile::FileDouble.new("world")
+          ]
+          post.save
+          post.update_attributes documents_files: [
+            [{
+              id: Refile.cache.upload(Refile::FileDouble.new("hello")).id,
+              filename: "some.jpg",
+              content_type: "image/jpeg",
+              size: 1234
+            }].to_json
+          ]
+          retrieved = post_class.find(post.id)
+          expect(retrieved.documents.size).to eq(3)
+        end
       end
     end
 

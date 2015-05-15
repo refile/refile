@@ -90,7 +90,7 @@ module Refile
 
             cache = Refile.parse_json(cache.first)
 
-            if not append and files.present? or cache.present?
+            if not append and (files.present? or cache.present?)
               send("#{association_name}=", [])
             end
 
