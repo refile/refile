@@ -177,6 +177,17 @@ RSpec.shared_examples_for :backend do
       expect { file.read(1, buffer) }.to raise_error
     end
 
+    describe "#rewind" do
+      it "rewinds file to beginning" do
+        file = backend.upload(uploadable)
+
+        expect(file.read(2)).to eq("he")
+        expect(file.read(2)).to eq("ll")
+        file.rewind
+        expect(file.read(2)).to eq("he")
+      end
+    end
+
     describe "#read" do
       it "can read file contents" do
         file = backend.upload(uploadable)
