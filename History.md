@@ -1,3 +1,9 @@
+# 0.5.5
+
+Release date: 2015-05-19
+
+- [FIXED] Upgrade rest-client version due to security concerns.
+
 # 0.5.4
 
 Release date: 2015-04-14
