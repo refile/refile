@@ -17,6 +17,7 @@ module Refile
     # - `remove_image=`
     # - `remote_image_url`
     # - `remote_image_url=`
+    # - `image_url`
     #
     # @example
     #   class User
@@ -83,6 +84,10 @@ module Refile
         end
 
         define_method "remote_#{name}_url" do
+        end
+
+        define_method "#{name}_url" do |*args|
+          Refile.attachment_url(self, name, *args)
         end
 
         define_method "#{name}_data" do

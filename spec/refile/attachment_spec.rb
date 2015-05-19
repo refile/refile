@@ -66,6 +66,17 @@ describe Refile::Attachment do
     end
   end
 
+  describe ":url" do
+    it "generates URL with extra options" do
+      allow(Refile).to receive(:token).and_return("token")
+
+      file = Refile.store.upload(Refile::FileDouble.new("hello"))
+      instance.document_id = file.id
+
+      expect(instance.document_url("fill", 800, 800)).to eq("http://localhost:56120/attachments/token/store/fill/800/800/#{file.id}/document")
+    end
+  end
+
   describe "remote_:name_url=" do
     it "does nothing when nil is assigned" do
       instance.remote_document_url = nil

@@ -40,7 +40,7 @@ describe Refile::AttachmentHelper do
     end
 
     it "builds with host" do
-      expect(src).to eq "//localhost:56120#{attachment_path}"
+      expect(src).to eq "http://localhost:56120#{attachment_path}"
     end
   end
 end

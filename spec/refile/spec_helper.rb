@@ -28,7 +28,7 @@ Refile.direct_upload = %w[cache limited_cache]
 
 Refile.allow_origin = "*"
 
-Refile.host = "//localhost:56120"
+Refile.host = "http://localhost:56120"
 
 Refile.processor(:reverse) do |file|
   StringIO.new(file.read.reverse)
