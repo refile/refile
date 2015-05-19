@@ -75,6 +75,15 @@ module Refile
     # @return [Boolean]
     attr_accessor :automount
 
+    # Using your own custom routes, but still need access to the cache?
+    #
+    # If set to true then make sure automount is set to true as well. 
+    #
+    # The default is false.
+    #
+    # @return [Boolean]
+    attr_accessor :cache_only
+
     # Value for generating signed attachment urls to protect from DoS
     #
     # @return [String]
@@ -322,6 +331,7 @@ Refile.configure do |config|
   config.logger = Logger.new(STDOUT) unless ENV["RACK_ENV"] == "test"
   config.mount_point = "attachments"
   config.automount = true
+  config.cache_only = false
   config.content_max_age = 60 * 60 * 24 * 365
   config.types[:image] = Refile::Type.new(:image, content_type: %w[image/jpeg image/gif image/png])
 end
