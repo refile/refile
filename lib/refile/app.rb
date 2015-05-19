@@ -33,22 +33,27 @@ module Refile
     end
 
     get "/:token/:backend/:id/:filename" do
+      halt 404 unless download_allowed?
       stream_file file
     end
 
     get "/:token/:backend/:processor/:id/:file_basename.:extension" do
+      halt 404 unless download_allowed?
       stream_file processor.call(file, format: params[:extension])
     end
 
     get "/:token/:backend/:processor/:id/:filename" do
+      halt 404 unless download_allowed?
       stream_file processor.call(file)
     end
 
     get "/:token/:backend/:processor/*/:id/:file_basename.:extension" do
+      halt 404 unless download_allowed?
       stream_file processor.call(file, *params[:splat].first.split("/"), format: params[:extension])
     end
 
     get "/:token/:backend/:processor/*/:id/:filename" do
+      halt 404 unless download_allowed?
       stream_file processor.call(file, *params[:splat].first.split("/"))
     end
 
@@ -57,7 +62,7 @@ module Refile
     end
 
     post "/:backend" do
-      halt 404 unless Refile.direct_upload.include?(params[:backend])
+      halt 404 unless upload_allowed?
       tempfile = request.params.fetch("file").fetch(:tempfile)
       file = backend.upload(tempfile)
       content_type :json
@@ -65,6 +70,7 @@ module Refile
     end
 
     get "/:backend/presign" do
+      halt 404 unless upload_allowed?
       content_type :json
       backend.presign.to_json
     end
@@ -89,6 +95,14 @@ module Refile
     end
 
   private
+
+    def download_allowed?
+      Refile.allow_downloads_from == :all or Refile.allow_downloads_from.include?(params[:backend])
+    end
+
+    def upload_allowed?
+      Refile.allow_uploads_to == :all or Refile.allow_uploads_to.include?(params[:backend])
+    end
 
     def logger
       Refile.logger

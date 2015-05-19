@@ -42,8 +42,16 @@ module Refile
     # in this config option. This defaults to `["cache"]`, only allowing direct
     # uploads to the cache backend.
     #
-    # @return [Array[String]]
-    attr_accessor :direct_upload
+    # @return [Array[String], :all]
+    attr_accessor :allow_uploads_to
+
+    # A list of names which identify backends in the global backend registry.
+    # The Rack application allows GET requests to only the backends specified
+    # in this config option. This defaults to `:all`, allowing files from all
+    # backends to be downloaded.
+    #
+    # @return [Array[String], :all]
+    attr_accessor :allow_downloads_from
 
     # Logger that should be used by rack application
     #
@@ -317,7 +325,8 @@ module Refile
 end
 
 Refile.configure do |config|
-  config.direct_upload = ["cache"]
+  config.allow_uploads_to = ["cache"]
+  config.allow_downloads_from = :all
   config.allow_origin = "*"
   config.logger = Logger.new(STDOUT) unless ENV["RACK_ENV"] == "test"
   config.mount_point = "attachments"

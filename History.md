@@ -1,3 +1,9 @@
+# 1.0.0
+
+Unreleased
+
+- [BREAKING] `Refile.direct_upload` has been renamed to `Refile.allow_uploads_to`.
+
 # 0.5.5
 
 Release date: 2015-05-19

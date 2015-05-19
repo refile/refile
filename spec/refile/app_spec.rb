@@ -119,6 +119,36 @@ describe Refile::App do
         expect(last_response.body).to eq("forbidden")
       end
     end
+
+    context "when unrestricted" do
+      before do
+        allow(Refile).to receive(:allow_downloads_from).and_return(:all)
+      end
+
+      it "gets signatures from all backends" do
+        file = Refile.store.upload(StringIO.new("hello"))
+        get "/token/store/#{file.id}/test.txt"
+        expect(last_response.status).to eq(200)
+      end
+    end
+
+    context "when restricted" do
+      before do
+        allow(Refile).to receive(:allow_downloads_from).and_return(["store"])
+      end
+
+      it "gets signatures from allowed backend" do
+        file = Refile.store.upload(StringIO.new("hello"))
+        get "/token/store/#{file.id}/test.txt"
+        expect(last_response.status).to eq(200)
+      end
+
+      it "returns 404 if backend is not allowed" do
+        file = Refile.store.upload(StringIO.new("hello"))
+        get "/token/cache/#{file.id}/test.txt"
+        expect(last_response.status).to eq(404)
+      end
+    end
   end
 
   describe "GET /:backend/:processor/:id/:filename" do
@@ -179,15 +209,6 @@ describe Refile::App do
   end
 
   describe "POST /:backend" do
-    it "returns 404 if backend is not marked as direct upload" do
-      file = Rack::Test::UploadedFile.new(path("hello.txt"))
-      post "/token/store", file: file
-
-      expect(last_response.status).to eq(404)
-      expect(last_response.content_type).to eq("text/plain;charset=utf-8")
-      expect(last_response.body).to eq("not found")
-    end
-
     it "uploads a file for direct upload backends" do
       file = Rack::Test::UploadedFile.new(path("hello.txt"))
       post "/cache", file: file
@@ -204,6 +225,72 @@ describe Refile::App do
 
       expect(last_response.status).to eq(200)
       expect(JSON.parse(last_response.body)["id"]).not_to be_empty
+    end
+
+    context "when unrestricted" do
+      before do
+        allow(Refile).to receive(:allow_uploads_to).and_return(:all)
+      end
+
+      it "allows uploads to all backends" do
+        post "/store", file: Rack::Test::UploadedFile.new(path("hello.txt"))
+        expect(last_response.status).to eq(200)
+      end
+    end
+
+    context "when restricted" do
+      before do
+        allow(Refile).to receive(:allow_uploads_to).and_return(["cache"])
+      end
+
+      it "allows uploads to allowed backends" do
+        post "/cache", file: Rack::Test::UploadedFile.new(path("hello.txt"))
+        expect(last_response.status).to eq(200)
+      end
+
+      it "returns 404 if backend is not allowed" do
+        post "/store", file: Rack::Test::UploadedFile.new(path("hello.txt"))
+        expect(last_response.status).to eq(404)
+      end
+    end
+  end
+
+  describe "GET /:backend/presign" do
+    it "returns presign signature" do
+      get "/limited_cache/presign"
+
+      expect(last_response.status).to eq(200)
+      result = JSON.parse(last_response.body)
+      expect(result["id"]).not_to be_empty
+      expect(result["url"]).to eq("/presigned/posts/upload")
+      expect(result["as"]).to eq("file")
+    end
+
+    context "when unrestricted" do
+      before do
+        allow(Refile).to receive(:allow_uploads_to).and_return(:all)
+      end
+
+      it "gets signatures from all backends" do
+        get "/limited_cache/presign"
+        expect(last_response.status).to eq(200)
+      end
+    end
+
+    context "when restricted" do
+      before do
+        allow(Refile).to receive(:allow_uploads_to).and_return(["limited_cache"])
+      end
+
+      it "gets signatures from allowed backend" do
+        get "/limited_cache/presign"
+        expect(last_response.status).to eq(200)
+      end
+
+      it "returns 404 if backend is not allowed" do
+        get "/store/presign"
+        expect(last_response.status).to eq(404)
+      end
     end
   end
 
