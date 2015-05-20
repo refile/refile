@@ -22,7 +22,7 @@ class FakePresignBackend < Refile::Backend::FileSystem
   end
 end
 
-Refile.secret_key = '144c82de680afe5e8e91fc7cf13c22b2f8d2d4b1a4a0e92531979b12e2fa8b6dd6239c65be28517f27f442bfba11572a8bef80acf44a11f465ba85dde85488d5'
+Refile.secret_key = "144c82de680afe5e8e91fc7cf13c22b2f8d2d4b1a4a0e92531979b12e2fa8b6dd6239c65be28517f27f442bfba11572a8bef80acf44a11f465ba85dde85488d5"
 
 Refile.backends["limited_cache"] = FakePresignBackend.new(File.expand_path("default_cache", tmp_path), max_size: 100)
 
