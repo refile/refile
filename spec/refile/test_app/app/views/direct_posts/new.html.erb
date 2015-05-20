@@ -19,6 +19,10 @@
     <%= form.attachment_field :image, direct: true %>
   </p>
   <p>
+    <%= form.label :requires_document %>
+    <%= form.check_box :requires_document %>
+  </p>
+  <p>
     <%= form.submit "Create" %>
   </p>
 <% end %>

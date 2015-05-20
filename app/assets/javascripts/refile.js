@@ -26,7 +26,8 @@
     if(input.tagName === "INPUT" && input.type === "file" && input.getAttribute("data-direct")) {
       if(!input.files) { return; } // IE9, bail out if file API is not supported.
 
-      var metadataField = input.previousSibling;
+      var reference = input.getAttribute("data-reference");
+      var metadataField = document.querySelector("input[type=hidden][data-reference='" + reference + "']");
 
       var url = input.getAttribute("data-url");
       var fields = JSON.parse(input.getAttribute("data-fields") || "null");
