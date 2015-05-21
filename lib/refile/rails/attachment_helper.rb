@@ -79,8 +79,15 @@ module Refile
         options[:data].merge!(direct: true, presigned: true, url: url)
       end
 
-      html = hidden_field(object_name, method, multiple: options[:multiple], value: object.send("#{method}_data").to_json, object: object, id: nil)
-      html + file_field(object_name, method, options)
+      options[:data][:reference] = SecureRandom.hex
+
+      hidden_field(object_name, method,
+        multiple: options[:multiple],
+        value: object.send("#{method}_data").to_json,
+        object: object,
+        id: nil,
+        data: { reference: options[:data][:reference] }
+      ) + file_field(object_name, method, options)
     end
   end
 end
