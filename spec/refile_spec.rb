@@ -44,6 +44,7 @@ RSpec.describe Refile do
     let(:klass) do
       Class.new do
         extend Refile::Attachment
+        attr_accessor :document_id
         attachment :document
       end
     end
