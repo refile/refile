@@ -26,7 +26,7 @@ module Refile
     end
 
     def id
-      Presence[read(:id)]
+      Presence[read(:id, true)]
     end
 
     def size
@@ -121,11 +121,11 @@ module Refile
     def store!
       if remove?
         delete!
-        write(:id, nil)
+        write(:id, nil, true)
       elsif cache_id
         file = store.upload(get)
         delete!
-        write(:id, file.id)
+        write(:id, file.id, true)
       end
       write_metadata
       @metadata = {}
@@ -156,15 +156,17 @@ module Refile
 
   private
 
-    def read(column)
+    def read(column, strict = false)
       m = "#{name}_#{column}"
-      value ||= record.send(m) if record.respond_to?(m)
+      value ||= record.send(m) if strict or record.respond_to?(m)
       value
     end
 
-    def write(column, value)
+    def write(column, value, strict = false)
       m = "#{name}_#{column}="
-      record.send(m, value) if record.respond_to?(m) and not record.frozen?
+      unless record.frozen?
+        record.send(m, value) if strict or record.respond_to?(m)
+      end
     end
 
     def write_metadata
