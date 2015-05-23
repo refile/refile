@@ -40,6 +40,56 @@ RSpec.describe Refile do
     end
   end
 
+  describe ".file_url" do
+    let(:file) { Refile.cache.upload(Refile::FileDouble.new("hello")) }
+    let(:id) { file.id }
+
+    before do
+      allow(Refile).to receive(:token).and_return("token")
+      allow(Refile).to receive(:host).and_return(nil)
+      allow(Refile).to receive(:mount_point).and_return(nil)
+    end
+
+    it "generates a url from an attachment" do
+      expect(Refile.file_url(file, filename: "document")).to eq("/token/cache/#{id}/document")
+    end
+
+    it "uses supplied host option" do
+      expect(Refile.file_url(file, host: "http://example.org", filename: "document")).to eq("http://example.org/token/cache/#{id}/document")
+    end
+
+    it "falls back to Refile.host" do
+      allow(Refile).to receive(:host).and_return("http://elabs.se")
+
+      expect(Refile.file_url(file, filename: "document")).to eq("http://elabs.se/token/cache/#{id}/document")
+    end
+
+    it "adds a prefix" do
+      expect(Refile.file_url(file, prefix: "moo", filename: "document")).to eq("/moo/token/cache/#{id}/document")
+    end
+
+    it "takes prefix from Refile.mount_point" do
+      allow(Refile).to receive(:mount_point).and_return("attachments")
+      expect(Refile.file_url(file, filename: "document")).to eq("/attachments/token/cache/#{id}/document")
+    end
+
+    it "adds an escaped filename" do
+      expect(Refile.file_url(file, filename: "test.png")).to eq("/token/cache/#{id}/test.png")
+      expect(Refile.file_url(file, filename: "tes/t.png")).to eq("/token/cache/#{id}/tes%2Ft.png")
+    end
+
+    it "adds a format" do
+      expect(Refile.file_url(file, format: "png", filename: "document")).to eq("/token/cache/#{id}/document.png")
+    end
+
+    context "with no file" do
+      it "returns nil" do
+        expect(Refile.file_url(nil, filename: "document")).to be_nil
+      end
+    end
+  end
+
+
   describe ".attachment_url" do
     let(:klass) do
       Class.new do
