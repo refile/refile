@@ -89,7 +89,6 @@ RSpec.describe Refile do
     end
   end
 
-
   describe ".attachment_url" do
     let(:klass) do
       Class.new do

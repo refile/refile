@@ -163,10 +163,9 @@ module Refile
     end
 
     def write(column, value, strict = false)
+      return if record.frozen?
       m = "#{name}_#{column}="
-      unless record.frozen?
-        record.send(m, value) if strict or record.respond_to?(m)
-      end
+      record.send(m, value) if strict or record.respond_to?(m)
     end
 
     def write_metadata

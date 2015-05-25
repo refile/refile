@@ -175,7 +175,7 @@ describe Refile::Attachment do
 
     it "complains when `id` attribute not writable" do
       instance.document = Refile::FileDouble.new("hello")
-      cache = instance.document
+      instance.document
 
       klass.class_eval do
         undef :document_id=
