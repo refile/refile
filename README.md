@@ -2,7 +2,6 @@
 
 [![Gem Version](https://badge.fury.io/rb/refile.svg)](http://badge.fury.io/rb/refile)
 [![Build Status](https://travis-ci.org/refile/refile.svg?branch=master)](https://travis-ci.org/refile/refile)
-[![Code Climate](https://codeclimate.com/github/refile/refile/badges/gpa.svg)](https://codeclimate.com/github/refile/refile)
 [![Inline docs](http://inch-ci.org/github/refile/refile.svg?branch=master)](http://inch-ci.org/github/refile/refile)
 
 Refile is a modern file upload library for Ruby applications. It is simple, yet
