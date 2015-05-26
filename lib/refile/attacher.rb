@@ -102,7 +102,7 @@ module Refile
         response = RestClient::Request.new(method: :get, url: url, raw_response: true).execute
         @metadata = {
           size: response.file.size,
-          filename: ::File.basename(url),
+          filename: URI.parse(url).path.split("/").last,
           content_type: response.headers[:content_type]
         }
         if valid?
