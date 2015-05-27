@@ -214,6 +214,44 @@ module Refile
       end
     end
 
+    # This method receives a {Refile::File} and generates a URL to it.
+    #
+    # Optionally the name of a processor and arguments to it can be appended.
+    #
+    # The `filename` option must be given.
+    #
+    # The host defaults to {Refile.host}, which is useful for serving all
+    # attachments from a CDN. You can also override the host via the `host`
+    # option.
+    #
+    # Returns `nil` if the supplied file is `nil`.
+    #
+    # @example
+    #   file_url(Refile.store.get(id))
+    #
+    # @example With processor
+    #   file_url(Refile.store.get(id), :image, :fill, 300, 300, format: "jpg")
+    #
+    # @param [Refile::File] file           The file to generate a URL for
+    # @param [String] filename             The filename to be appended to the URL
+    # @param [String, nil] format          A file extension to be appended to the URL
+    # @param [String, nil] host            Override the host
+    # @param [String, nil] prefix          Adds a prefix to the URL if the application is not mounted at root
+    # @return [String, nil]                The generated URL
+    def file_url(file, *args, prefix: Refile.mount_point, filename:, format: nil, host: Refile.host)
+      return unless file
+      backend_name = Refile.backends.key(file.backend)
+
+      filename = Rack::Utils.escape(filename)
+      filename << "." << format.to_s if format
+
+      uri = URI(host.to_s)
+      base_path = ::File.join("", backend_name, *args.map(&:to_s), file.id.to_s, filename)
+      uri.path = ::File.join("", *prefix, token(base_path), base_path)
+
+      uri.to_s
+    end
+
     # Generate a URL to an attachment. This method receives an instance of a
     # class which has used the {Refile::Attachment#attachment} macro to
     # generate an attachment column, and the name of this column, and based on
@@ -252,16 +290,7 @@ module Refile
       filename ||= attacher.basename || name.to_s
       format ||= attacher.extension
 
-      backend_name = Refile.backends.key(file.backend)
-
-      filename = Rack::Utils.escape(filename)
-      filename << "." << format.to_s if format
-
-      uri = URI(host.to_s)
-      base_path = ::File.join("", backend_name, *args.map(&:to_s), file.id.to_s, filename)
-      uri.path = ::File.join("", *prefix, token(base_path), base_path)
-
-      uri.to_s
+      file_url(file, *args, prefix: prefix, filename: filename, format: format, host: host)
     end
 
     # Generate a signature for a given path concatenated with the configured secret token.

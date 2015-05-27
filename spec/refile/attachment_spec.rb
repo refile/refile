@@ -64,6 +64,16 @@ describe Refile::Attachment do
 
       expect(instance.document.id).to eq(file.id)
     end
+
+    it "complains when `id` attribute not readable" do
+      klass.class_eval do
+        undef :document_id
+      end
+
+      expect do
+        instance.document
+      end.to raise_error(NoMethodError)
+    end
   end
 
   describe ":url" do
@@ -161,6 +171,18 @@ describe Refile::Attachment do
       expect(instance.document.read).to eq("hello")
       expect(instance.document_size).to eq(5)
       expect(Refile.cache.get(cache.id).exists?).to be_falsy
+    end
+
+    it "complains when `id` attribute not writable" do
+      instance.document = Refile::FileDouble.new("hello")
+
+      klass.class_eval do
+        undef :document_id=
+      end
+
+      expect do
+        instance.document_attacher.store!
+      end.to raise_error(NoMethodError)
     end
 
     it "does nothing when not cached" do
