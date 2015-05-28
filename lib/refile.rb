@@ -3,7 +3,14 @@ require "fileutils"
 require "tempfile"
 require "rest_client"
 require "logger"
-require "mime/types"
+
+begin
+
+  # Use mime/types/columnar if available, for reduced memory usage
+  require "mime/types/columnar"
+rescue LoadError
+  require "mime/types"
+end
 
 module Refile
   # @api private
