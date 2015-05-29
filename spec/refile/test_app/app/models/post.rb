@@ -5,7 +5,7 @@ class Post < ActiveRecord::Base
   attachment :document, cache: :limited_cache
   validates_presence_of :title
 
-  has_many :documents
+  has_many :documents, dependent: :destroy
   accepts_attachments_for :documents
 
   validates_presence_of :document, if: :requires_document?

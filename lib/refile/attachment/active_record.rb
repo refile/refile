@@ -86,7 +86,7 @@ module Refile
           define_method :"#{name}_data" do
             if send(association_name).all? { |record| record.send("#{attachment}_attacher").valid? }
               send(association_name).map(&:"#{attachment}_data")
-            end
+            end.select(&:present?)
           end
 
           define_method :"#{name}" do

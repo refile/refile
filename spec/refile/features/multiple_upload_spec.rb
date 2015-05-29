@@ -43,6 +43,34 @@ feature "Multiple file uploads", :js do
     expect(download_link("Document: world.txt")).to eq("world")
   end
 
+  scenario "Edit with changes" do
+    visit "/multiple/posts/new"
+    fill_in "Title", with: "A cool post"
+    attach_file "Documents", [path("hello.txt"), path("world.txt")]
+    click_button "Create"
+
+    click_link "Edit multiple"
+    attach_file "Documents", [path("monkey.txt")]
+    click_button "Update"
+
+    expect(download_link("Document: monkey.txt")).to eq("monkey")
+    expect(page).not_to have_link("Document: hello.txt")
+    expect(page).not_to have_link("Document: world.txt")
+  end
+
+  scenario "Edit without changes" do
+    visit "/multiple/posts/new"
+    fill_in "Title", with: "A cool post"
+    attach_file "Documents", [path("hello.txt"), path("world.txt")]
+    click_button "Create"
+
+    click_link "Edit multiple"
+    click_button "Update"
+
+    expect(download_link("Document: hello.txt")).to eq("hello")
+    expect(download_link("Document: world.txt")).to eq("world")
+  end
+
   describe "with direct upload" do
     scenario "Successfully upload a file" do
       visit "/direct/posts/new"
