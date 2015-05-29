@@ -83,11 +83,19 @@ module Refile
 
       hidden_field(object_name, method,
         multiple: options[:multiple],
-        value: object.send("#{method}_data").to_json,
+        value: hidden_field_value(object, method),
         object: object,
         id: nil,
         data: { reference: options[:data][:reference] }
       ) + file_field(object_name, method, options)
+    end
+
+    def hidden_field_value(object, method)
+      if Array(object.send("#{method}_data")).all?(&:blank?)
+        nil
+      else
+        object.send("#{method}_data").to_json
+      end
     end
   end
 end
