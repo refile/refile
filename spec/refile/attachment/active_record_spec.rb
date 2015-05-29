@@ -270,6 +270,15 @@ describe Refile::ActiveRecord::Attachment do
           expect(Refile.store.read(post.document.id)).to eq("foo")
         end
 
+        it "removes files marked for removal" do
+          user = users_class.create!
+          post = klass.create!(user_id: user.id, document: Refile::FileDouble.new("foo"))
+
+          user.update_attributes!(post_attributes: { id: post.id, remove_document: true })
+
+          expect(post.reload.document).to be_nil
+        end
+
         it "replaces an existing file" do
           user = users_class.create! post_attributes: { document: Refile::FileDouble.new("foo") }
           post = user.post
@@ -301,6 +310,15 @@ describe Refile::ActiveRecord::Attachment do
           post = user.posts.first.reload
           expect(post.document.read).to eq("foo")
           expect(Refile.store.read(post.document.id)).to eq("foo")
+        end
+
+        it "removes files marked for removal" do
+          user = users_class.create!
+          post = klass.create!(user_id: user.id, document: Refile::FileDouble.new("foo"))
+
+          user.update_attributes!(posts_attributes: { id: post.id, remove_document: true })
+
+          expect(post.reload.document).to be_nil
         end
 
         it "replaces an existing file" do

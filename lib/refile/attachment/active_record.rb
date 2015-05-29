@@ -27,6 +27,16 @@ module Refile
           super(value)
         end
 
+        define_method "remove_#{name}=" do |value|
+          send("#{name}_id_will_change!")
+          super(value)
+        end
+
+        define_method "remote_#{name}_url=" do |value|
+          send("#{name}_id_will_change!")
+          super(value)
+        end
+
         before_save do
           send(attacher).store!
         end
@@ -64,8 +74,6 @@ module Refile
       # @param [Symbol] attachment           Name of the attachment in the associated model
       # @param [Symbol] append               If true, new files are appended instead of replacing the entire list of associated models.
       # @return [void]
-      # @ignore
-      #   rubocop:disable Metrics/MethodLength
       def accepts_attachments_for(association_name, attachment: :file, append: false)
         association = reflect_on_association(association_name)
         name = "#{association_name}_#{attachment.to_s.pluralize}"

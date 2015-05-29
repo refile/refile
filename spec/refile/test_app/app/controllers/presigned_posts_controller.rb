@@ -13,7 +13,6 @@ class PresignedPostsController < ApplicationController
     end
   end
 
-  # rubocop:disable Metrics/AbcSize
   def upload
     if params[:token] == "xyz123"
       if params[:file].size < 100
