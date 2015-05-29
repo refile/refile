@@ -86,6 +86,10 @@ And start uploading! Finally show the file in your view:
 <%= image_tag attachment_url(@user, :profile_image, :fill, 300, 300, format: "jpg") %>
 ```
 
+### Video Tutorial
+Get started with an example usage of the refile gem.
+[GoRails #37](https://gorails.com/episodes/file-uploads-with-refile)
+
 ## How it works
 
 Refile consists of several parts:
