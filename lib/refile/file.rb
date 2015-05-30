@@ -72,6 +72,7 @@ module Refile
       Tempfile.new(id, binmode: true).tap do |tempfile|
         IO.copy_stream(io, tempfile)
         tempfile.rewind
+        tempfile.fsync
       end
     end
 
