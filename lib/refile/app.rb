@@ -116,9 +116,8 @@ module Refile
       if file.respond_to?(:path)
         path = file.path
       else
-        path = Dir::Tmpname.create(params[:id], binmode: true)
+        path = Dir::Tmpname.create(params[:id]) {}
         IO.copy_stream file, path
-        path.fsync
       end
 
       filename = request.path.split("/").last
