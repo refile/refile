@@ -45,14 +45,14 @@
 
         xhr.addEventListener("load", function() {
           xhr.complete = true;
+          if(requests.every(function(xhr) { return xhr.complete })) {
+            finalizeUpload();
+          }
           dispatchEvent(input, "upload:complete");
           if(isSuccess(xhr)) {
             dispatchEvent(input, "upload:success");
           } else {
             dispatchEvent(input, "upload:failure");
-          }
-          if(requests.every(function(xhr) { return xhr.complete })) {
-            finalizeUpload();
           }
         });
 

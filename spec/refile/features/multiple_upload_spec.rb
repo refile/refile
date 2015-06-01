@@ -80,6 +80,7 @@ feature "Multiple file uploads", :js do
       expect(page).to have_content("Upload started")
       expect(page).to have_content("Upload success")
       expect(page).to have_content("Upload complete")
+      expect(page).to have_content("All uploads complete")
 
       click_button "Create"
 

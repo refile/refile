@@ -47,4 +47,11 @@ if(document.addEventListener) {
   $(document).on("upload:success", "form#direct", function(e) {
     $("<p></p>").text("Upload success " + e.originalEvent.detail.xhr.responseText).appendTo(this);
   });
+
+  $(document).on("upload:complete", "form", function(e) {
+    if(!$(this).find("input.uploading").length) {
+      $(this).find("input[type=submit]").removeAttr("disabled")
+      $(this).append("<p>All uploads complete</p>")
+    }
+  });
 }
