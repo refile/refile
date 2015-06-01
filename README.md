@@ -34,7 +34,6 @@ Sponsored by:
 Add the gem:
 
 ``` ruby
-gem "mini_magick"
 gem "refile", require: "refile/rails"
 gem "refile-mini_magick"
 ```
