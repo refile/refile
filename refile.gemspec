@@ -1,7 +1,4 @@
-# coding: utf-8
-lib = File.expand_path("../lib", __FILE__)
-$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require "refile/version"
+require "./lib/refile/version"
 
 Gem::Specification.new do |spec|
   spec.name          = "refile"
@@ -12,10 +9,8 @@ Gem::Specification.new do |spec|
   spec.homepage      = "https://github.com/refile/refile"
   spec.license       = "MIT"
 
-  spec.files         = `git ls-files -z`.split("\x0")
-  spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
-  spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
-  spec.require_paths = %w[lib spec]
+  spec.files         = `git ls-files lib spec Readme.md`.split($/).reject { |f| f.include?("test_app") }
+  spec.require_paths = %w[lib spec] # spec is used by backend gems to run their tests
 
   spec.required_ruby_version = ">= 2.1.0"
 
