@@ -85,6 +85,11 @@ module Refile
       "forbidden"
     end
 
+    error ArgumentError do
+      status 400
+      "Upload failure error"
+    end
+
     error Refile::InvalidMaxSize do
       status 413
       "Upload failure error"

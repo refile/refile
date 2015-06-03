@@ -266,9 +266,22 @@ describe Refile::App do
           allow_any_instance_of(Refile::App).to receive(:backend).and_return(backend)
         end
 
-        it "returns 413 if file is too big", focus: true do
+        it "returns 413 if file is too big" do
           post "/store_max_size", file: Rack::Test::UploadedFile.new(path("hello.txt"))
           expect(last_response.status).to eq(413)
+        end
+      end
+
+      context "when other unexpected exception happens" do
+        before do
+          backend = double
+          allow(backend).to receive(:upload).with(anything()).and_raise(ArgumentError)
+          allow_any_instance_of(Refile::App).to receive(:backend).and_return(backend)
+        end
+
+        it "returns 400 if file is too big" do
+          post "/store_max_size", file: Rack::Test::UploadedFile.new(path("hello.txt"))
+          expect(last_response.status).to eq(400)
         end
       end
     end
