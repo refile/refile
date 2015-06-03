@@ -46,7 +46,7 @@ RSpec.describe Refile::BackendMacros do
 
     it "raises Refile::Invalid if size is exceeded" do
       instance.max_size = 8
-      expect { instance.upload(Refile::FileDouble.new("hello world")) }.to raise_error(Refile::Invalid)
+      expect { instance.upload(Refile::FileDouble.new("hello world")) }.to raise_error(Refile::InvalidMaxSize)
     end
   end
 

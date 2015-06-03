@@ -26,7 +26,7 @@ module Refile
             end
           end
           if max_size and uploadable.size > max_size
-            raise Refile::Invalid, "#{uploadable.inspect} is too large"
+            raise Refile::InvalidMaxSize, "#{uploadable.inspect} is too large"
           end
           super(uploadable)
         end

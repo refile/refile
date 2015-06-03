@@ -12,6 +12,9 @@ module Refile
   # @api private
   class InvalidID < Invalid; end
 
+  # @api pricate
+  class InvalidMaxSize < Invalid; end
+
   # @api private
   class Confirm < StandardError
     def message
