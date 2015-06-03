@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Jonas Nicklas"]
   spec.email         = ["jonas.nicklas@gmail.com"]
   spec.summary       = "Simple and powerful file upload library"
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/refile/refile"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
