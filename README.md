@@ -656,6 +656,19 @@ def post_params
 end
 ```
 
+When editing a record with `accepts_attachments_for`, the default behaviour is
+to replace the entire list of attachments when new attachments are uploaded. It
+is also possible to append the new attachments to the list of attachments instead
+so that older attachments are kept. To enable this, set the `append` option to
+`true`.
+
+``` ruby
+class Post < ActiveRecord::Base
+  has_many :images, dependent: :destroy
+  accepts_attachments_for :images, append: true
+end
+```
+
 ## Removing attached files
 
 File input fields unfortunately do not have the option of removing an already
