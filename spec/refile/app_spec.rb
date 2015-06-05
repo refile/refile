@@ -254,7 +254,7 @@ describe Refile::App do
       end
     end
 
-    context "when file is invalid", focus:true do
+    context "when file is invalid" do
       before do
         allow(Refile).to receive(:allow_uploads_to).and_return(:all)
       end
@@ -262,7 +262,7 @@ describe Refile::App do
       context "when file is too big" do
         before do
           backend = double
-          allow(backend).to receive(:upload).with(anything()).and_raise(Refile::InvalidMaxSize)
+          allow(backend).to receive(:upload).with(anything).and_raise(Refile::InvalidMaxSize)
           allow_any_instance_of(Refile::App).to receive(:backend).and_return(backend)
         end
 
@@ -275,7 +275,7 @@ describe Refile::App do
       context "when other unexpected exception happens" do
         before do
           backend = double
-          allow(backend).to receive(:upload).with(anything()).and_raise(Refile::InvalidFile)
+          allow(backend).to receive(:upload).with(anything).and_raise(Refile::InvalidFile)
           allow_any_instance_of(Refile::App).to receive(:backend).and_return(backend)
         end
 
