@@ -275,7 +275,7 @@ describe Refile::App do
       context "when other unexpected exception happens" do
         before do
           backend = double
-          allow(backend).to receive(:upload).with(anything()).and_raise(ArgumentError)
+          allow(backend).to receive(:upload).with(anything()).and_raise(Refile::InvalidFile)
           allow_any_instance_of(Refile::App).to receive(:backend).and_return(backend)
         end
 

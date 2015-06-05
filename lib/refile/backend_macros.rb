@@ -22,7 +22,7 @@ module Refile
         define_method(method) do |uploadable|
           [:size, :read, :eof?, :close].each do |m|
             unless uploadable.respond_to?(m)
-              raise ArgumentError, "does not respond to `#{m}`."
+              raise Refile::InvalidFile, "does not respond to `#{m}`."
             end
           end
           if max_size and uploadable.size > max_size

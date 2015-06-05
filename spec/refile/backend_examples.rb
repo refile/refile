@@ -5,8 +5,8 @@ RSpec.shared_examples_for :backend do
 
   describe "#upload" do
     it "raises ArgumentError when invalid object is uploaded" do
-      expect { backend.upload(double(size: 123)) }.to raise_error(ArgumentError)
-      expect { backend.upload("hello") }.to raise_error(ArgumentError)
+      expect { backend.upload(double(size: 123)) }.to raise_error(Refile::InvalidFile)
+      expect { backend.upload("hello") }.to raise_error(Refile::InvalidFile)
     end
 
     it "raises Refile::Invalid when object is too large" do

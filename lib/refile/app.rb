@@ -85,7 +85,7 @@ module Refile
       "forbidden"
     end
 
-    error ArgumentError do
+    error Refile::InvalidFile do
       status 400
       "Upload failure error"
     end
