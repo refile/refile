@@ -23,20 +23,20 @@ RSpec.describe Refile::BackendMacros do
       expect(instance.upload(double(size: 444, read: io, eof?: true, close: nil))).to be_truthy
     end
 
-    it "raises ArgumentError if argument does not respond to `size`" do
-      expect { instance.upload(double(read: io, eof?: true, close: nil)) }.to raise_error(ArgumentError)
+    it "raises Refile::InvalidFile if argument does not respond to `size`" do
+      expect { instance.upload(double(read: io, eof?: true, close: nil)) }.to raise_error(Refile::InvalidFile)
     end
 
-    it "raises ArgumentError if argument does not respond to `read`" do
-      expect { instance.upload(double(size: 444, eof?: true, close: nil)) }.to raise_error(ArgumentError)
+    it "raises Refile::InvalidFile if argument does not respond to `read`" do
+      expect { instance.upload(double(size: 444, eof?: true, close: nil)) }.to raise_error(Refile::InvalidFile)
     end
 
-    it "raises ArgumentError if argument does not respond to `eof?`" do
-      expect { instance.upload(double(size: 444, read: true, close: nil)) }.to raise_error(ArgumentError)
+    it "raises Refile::InvalidFile if argument does not respond to `eof?`" do
+      expect { instance.upload(double(size: 444, read: true, close: nil)) }.to raise_error(Refile::InvalidFile)
     end
 
-    it "raises ArgumentError if argument does not respond to `close`" do
-      expect { instance.upload(double(size: 444, read: true, eof?: true)) }.to raise_error(ArgumentError)
+    it "raises Refile::InvalidFile if argument does not respond to `close`" do
+      expect { instance.upload(double(size: 444, read: true, eof?: true)) }.to raise_error(Refile::InvalidFile)
     end
 
     it "returns true if size is respeced" do
@@ -46,7 +46,7 @@ RSpec.describe Refile::BackendMacros do
 
     it "raises Refile::Invalid if size is exceeded" do
       instance.max_size = 8
-      expect { instance.upload(Refile::FileDouble.new("hello world")) }.to raise_error(Refile::Invalid)
+      expect { instance.upload(Refile::FileDouble.new("hello world")) }.to raise_error(Refile::InvalidMaxSize)
     end
   end
 

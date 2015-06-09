@@ -253,6 +253,38 @@ describe Refile::App do
         expect(last_response.status).to eq(404)
       end
     end
+
+    context "when file is invalid" do
+      before do
+        allow(Refile).to receive(:allow_uploads_to).and_return(:all)
+      end
+
+      context "when file is too big" do
+        before do
+          backend = double
+          allow(backend).to receive(:upload).with(anything).and_raise(Refile::InvalidMaxSize)
+          allow_any_instance_of(Refile::App).to receive(:backend).and_return(backend)
+        end
+
+        it "returns 413 if file is too big" do
+          post "/store_max_size", file: Rack::Test::UploadedFile.new(path("hello.txt"))
+          expect(last_response.status).to eq(413)
+        end
+      end
+
+      context "when other unexpected exception happens" do
+        before do
+          backend = double
+          allow(backend).to receive(:upload).with(anything).and_raise(Refile::InvalidFile)
+          allow_any_instance_of(Refile::App).to receive(:backend).and_return(backend)
+        end
+
+        it "returns 400 if file is too big" do
+          post "/store_max_size", file: Rack::Test::UploadedFile.new(path("hello.txt"))
+          expect(last_response.status).to eq(400)
+        end
+      end
+    end
   end
 
   describe "GET /:backend/presign" do

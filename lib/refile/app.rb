@@ -85,6 +85,16 @@ module Refile
       "forbidden"
     end
 
+    error Refile::InvalidFile do
+      status 400
+      "Upload failure error"
+    end
+
+    error Refile::InvalidMaxSize do
+      status 413
+      "Upload failure error"
+    end
+
     error do |error_thrown|
       log_error("Error -> #{error_thrown}")
       error_thrown.backtrace.each do |line|
