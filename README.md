@@ -235,6 +235,7 @@ integrate with any ORM, so building your own should not be too difficult. Some
 integrations are already available via gems:
 
 * [refile-sequel](https://github.com/refile/refile-sequel)
+* [refile-mongoid](https://github.com/krettan/refile-mongoid)
 
 ### Pure Ruby classes
 
