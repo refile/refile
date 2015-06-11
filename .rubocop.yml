@@ -78,3 +78,6 @@ Lint/DefEndAlignment:
 
 Lint/HandleExceptions:
   Enabled: false
+
+Style/SpecialGlobalVars:
+  Enabled: false
