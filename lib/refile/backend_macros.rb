@@ -20,7 +20,7 @@ module Refile
     def verify_uploadable(method)
       mod = Module.new do
         define_method(method) do |uploadable|
-          [:size, :read, :eof?, :close].each do |m|
+          [:size, :read, :eof?, :rewind, :close].each do |m|
             unless uploadable.respond_to?(m)
               raise Refile::InvalidFile, "does not respond to `#{m}`."
             end

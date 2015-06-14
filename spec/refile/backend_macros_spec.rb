@@ -20,23 +20,27 @@ RSpec.describe Refile::BackendMacros do
     let(:io) { StringIO.new("hello") }
 
     it "works if it conforms to required API" do
-      expect(instance.upload(double(size: 444, read: io, eof?: true, close: nil))).to be_truthy
+      expect(instance.upload(double(size: 444, read: io, eof?: true, rewind: true, close: nil))).to be_truthy
     end
 
-    it "raises Refile::InvalidFile if argument does not respond to `size`" do
-      expect { instance.upload(double(read: io, eof?: true, close: nil)) }.to raise_error(Refile::InvalidFile)
+    it "raises ArgumentError if argument does not respond to `size`" do
+      expect { instance.upload(double(read: io, eof?: true, rewind: true, close: nil)) }.to raise_error(Refile::InvalidFile)
     end
 
-    it "raises Refile::InvalidFile if argument does not respond to `read`" do
-      expect { instance.upload(double(size: 444, eof?: true, close: nil)) }.to raise_error(Refile::InvalidFile)
+    it "raises ArgumentError if argument does not respond to `read`" do
+      expect { instance.upload(double(size: 444, eof?: true, rewind: true, close: nil)) }.to raise_error(Refile::InvalidFile)
     end
 
-    it "raises Refile::InvalidFile if argument does not respond to `eof?`" do
-      expect { instance.upload(double(size: 444, read: true, close: nil)) }.to raise_error(Refile::InvalidFile)
+    it "raises ArgumentError if argument does not respond to `eof?`" do
+      expect { instance.upload(double(size: 444, read: true, rewind: true, close: nil)) }.to raise_error(Refile::InvalidFile)
     end
 
-    it "raises Refile::InvalidFile if argument does not respond to `close`" do
-      expect { instance.upload(double(size: 444, read: true, eof?: true)) }.to raise_error(Refile::InvalidFile)
+    it "raises ArgumentError if argument does not respond to `rewind`" do
+      expect { instance.upload(double(size: 444, read: true, eof?: true, close: nil)) }.to raise_error(Refile::InvalidFile)
+    end
+
+    it "raises ArgumentError if argument does not respond to `close`" do
+      expect { instance.upload(double(size: 444, read: true, rewind: true, eof?: true)) }.to raise_error(Refile::InvalidFile)
     end
 
     it "returns true if size is respeced" do

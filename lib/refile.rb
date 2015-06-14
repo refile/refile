@@ -126,7 +126,8 @@ module Refile
     # An IO-like object is recommended to be an instance of the `IO` class or
     # one of its subclasses, like `File` or a `StringIO`, or a `Refile::File`.
     # It can also be any other object which responds to `size`, `read`, `eof`?
-    # and `close` and mimics the behaviour of IO objects for these methods.
+    # `rewind` and `close` and mimics the behaviour of IO objects for these
+    # methods.
     #
     # @example With processor class
     #   class Reverse
