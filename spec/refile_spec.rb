@@ -183,7 +183,7 @@ RSpec.describe Refile do
     it "returns raise error when secret token is nil" do
       allow(Refile).to receive(:secret_key).and_return(nil)
 
-      expect { Refile.token("/store/f5f2e4/document.pdf") }.to raise_error
+      expect { Refile.token("/store/f5f2e4/document.pdf") }.to raise_error(RuntimeError, /Refile\.secret_key was not set/)
     end
   end
 end
