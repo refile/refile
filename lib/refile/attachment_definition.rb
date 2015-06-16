@@ -37,8 +37,7 @@ module Refile
 
     def validate(attacher)
       errors = []
-      extension_included = valid_extensions && valid_extensions.map(&:downcase).include?(attacher.extension.downcase)
-      errors << :invalid_extension if valid_extensions and not extension_included
+      errors << :invalid_extension if valid_extensions and not valid_extensions.include?(attacher.extension)
       errors << :invalid_content_type if valid_content_types and not valid_content_types.include?(attacher.content_type)
       errors << :too_large if cache.max_size and attacher.size and attacher.size >= cache.max_size
       errors
