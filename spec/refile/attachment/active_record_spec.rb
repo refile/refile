@@ -19,59 +19,6 @@ describe Refile::ActiveRecord::Attachment do
   describe "#valid?" do
     let(:options) { { type: :image, cache: :limited_cache } }
 
-    context "extension validation" do
-      let(:options) { { cache: :limited_cache, extension: %w(Png) } }
-
-      context "with file" do
-        it "returns true when extension is included in list" do
-          post = klass.new
-          post.document = Refile::FileDouble.new("hello", "image.Png")
-          expect(post.valid?).to be_truthy
-          expect(post.errors[:document]).to be_empty
-        end
-
-        it "returns true when extension is included in list but chars are randomcase" do
-          post = klass.new
-          post.document = Refile::FileDouble.new("hello", "image.PNG")
-          expect(post.valid?).to be_truthy
-          expect(post.errors[:document]).to be_empty
-        end
-
-        it "returns false when extension is invalid" do
-          post = klass.new
-          post.document = Refile::FileDouble.new("hello", "image.jpg")
-          expect(post.valid?).to be_falsy
-          expect(post.errors[:document].length).to eq(1)
-        end
-      end
-
-      context "with metadata" do
-        it "returns true when extension is included in list" do
-          file = Refile.cache.upload(StringIO.new("hello"))
-          post = klass.new
-          post.document = { id: file.id, filename: "image.Png" }.to_json
-          expect(post.valid?).to be_truthy
-          expect(post.errors[:document]).to be_empty
-        end
-
-        it "returns true when extension is included in list but chars are randomcase" do
-          file = Refile.cache.upload(StringIO.new("hello"))
-          post = klass.new
-          post.document = { id: file.id, filename: "image.PNG" }.to_json
-          expect(post.valid?).to be_truthy
-          expect(post.errors[:document]).to be_empty
-        end
-
-        it "returns false when extension is invalid" do
-          file = Refile.cache.upload(StringIO.new("hello"))
-          post = klass.new
-          post.document = { id: file.id, filename: "image.jpg" }.to_json
-          expect(post.valid?).to be_falsy
-          expect(post.errors[:document].length).to eq(1)
-        end
-      end
-    end
-
     context "with file" do
       it "returns true when no file is assigned" do
         post = klass.new
