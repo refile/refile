@@ -20,7 +20,7 @@ describe Refile::ActiveRecord::Attachment do
     let(:options) { { type: :image, cache: :limited_cache } }
 
     context "extension validation" do
-      let(:options) { { cache: :limited_cache, extension: %w(Png) } }
+      let(:options) { { cache: :limited_cache, extension: %w[Png] } }
 
       context "with file" do
         it "returns true when extension is included in list" do
