@@ -33,7 +33,7 @@ RSpec.shared_examples_for :backend do
       expect(retrieved.exists?).to be_truthy
     end
 
-    context 'when Encoding.default_internal is set to UTF-8' do
+    context "when Encoding.default_internal is set to UTF-8" do
       let(:binary) { "\x89PNG\r\n\x1A\n\x00\x00".force_encoding("ASCII-8BIT") }
       let(:binary_file) { uploadable(binary) }
 
