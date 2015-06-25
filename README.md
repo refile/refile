@@ -747,6 +747,18 @@ needs:
 - Choose whatever number of days you're comfortable with, I chose "1"
 - Click "Review" and finally "Create and activate Rule"
 
+## simple_form
+
+simple_form gem is also supported:
+
+```Ruby
+# in initializer or Gemfile
+require 'refile/simple_form'
+
+# in forms
+<%= f.input :cover_image, as: :attachment, direct: true, presigned: true %>
+```
+
 ## License
 
 [MIT](LICENSE.txt)
