@@ -176,7 +176,7 @@ describe Refile::ActiveRecord::Attachment do
           "Post"
         end
 
-        has_many :documents, class: foo, dependent: :destroy
+        has_many :documents, anonymous_class: foo, dependent: :destroy
         accepts_attachments_for :documents, **opts
       end
     end
@@ -308,7 +308,7 @@ describe Refile::ActiveRecord::Attachment do
         posts_class = klass
         base_users_class.tap do |klass|
           klass.instance_eval do
-            has_one :post, class: posts_class
+            has_one :post, anonymous_class: posts_class
             accepts_nested_attributes_for :post
           end
         end
@@ -350,7 +350,7 @@ describe Refile::ActiveRecord::Attachment do
         posts_class = klass
         base_users_class.tap do |klass|
           klass.instance_eval do
-            has_many :posts, class: posts_class
+            has_many :posts, anonymous_class: posts_class
             accepts_nested_attributes_for :posts
           end
         end
