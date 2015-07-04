@@ -155,11 +155,6 @@ Refile.cache = Refile::S3.new(prefix: "cache", **aws)
 Refile.store = Refile::S3.new(prefix: "store", **aws)
 ```
 
-And add to your Gemfile:
-```ruby
-gem "aws-sdk"
-```
-
 Try this in the quick start example above and your files are now uploaded to
 S3.
 
