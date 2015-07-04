@@ -21,7 +21,7 @@ module Refile
     #
     # @example
     #   class User
-    #     extends Refile::Attachment
+    #     extend Refile::Attachment
     #
     #     attachment :image
     #     attr_accessor :image_id
