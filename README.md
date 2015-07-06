@@ -40,7 +40,7 @@ gem "refile-mini_magick"
 
 We're requiring both Refile's Rails integration and image processing via the
 [MiniMagick](https://github.com/minimagick/minimagick) gem, which requires
-[ImageMagick](http://imagemagick.org/) to be installed. To install it simply
+[ImageMagick](http://imagemagick.org/) (or [GraphicsMagick](http://www.graphicsmagick.org/)) to be installed. To install it simply
 run:
 
 ``` sh
