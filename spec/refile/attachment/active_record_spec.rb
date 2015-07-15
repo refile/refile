@@ -13,6 +13,7 @@ describe Refile::ActiveRecord::Attachment do
       end
 
       attachment :document, **opts
+      attachment :image
     end
   end
 
@@ -38,6 +39,14 @@ describe Refile::ActiveRecord::Attachment do
         post.document = Refile::FileDouble.new("hello", content_type: "image/png")
         expect(post.valid?).to be_truthy
         expect(post.errors[:document]).to be_empty
+      end
+
+      it "marks record as changed" do
+        post = klass.create!(image: Refile::FileDouble.new("foo", content_type: "image/png"))
+        post.image = Refile::FileDouble.new("bar", content_type: "image/png")
+
+        expect(post.image_id_changed?).to be_truthy
+        expect(post.changed?).to be_truthy
       end
     end
 
