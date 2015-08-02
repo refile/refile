@@ -369,10 +369,11 @@ There's also a helper for generating image tags:
 <%= attachment_image_tag(@user, :profile_image, :fill, 300, 300) %>
 ```
 
-With this helper you can specify an image which is used as a fallback in case
+With this helper you can specify an image/asset which is used as a fallback in case
 no file has been uploaded:
 
 ``` erb
+<%= attachment_url(@user, :profile_image, :fill, 300, 300, fallback: "default.png") %>
 <%= attachment_image_tag(@user, :profile_image, :fill, 300, 300, fallback: "default.png") %>
 ```
 
