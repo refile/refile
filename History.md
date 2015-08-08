@@ -3,6 +3,7 @@
 Unreleased
 
 - [BREAKING] `Refile.direct_upload` has been renamed to `Refile.allow_uploads_to`.
+- [FIXED] `attachment_field` generates the right `data-url` when has `default_url_options`
 
 # 0.5.5
 
