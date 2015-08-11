@@ -169,7 +169,7 @@ The Refile gem only ships with a
 [FileSystem](lib/refile/backend/file_system.rb) backend. Additional backends
 are provided by other gems.
 
-- [Amazon S3](lib/refile/backend/s3.rb)
+- [Amazon S3](https://github.com/refile/refile-s3)
 - [Fog](https://github.com/refile/refile-fog) provides support for a ton of
   different cloud storage providers, including Google Storage and Rackspace
   CloudFiles.
