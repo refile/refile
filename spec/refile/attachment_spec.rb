@@ -42,6 +42,21 @@ describe Refile::Attachment do
       expect(instance.document_content_type).to eq("text/plain")
     end
 
+    it "receives parsed data and retrieves file from it" do
+      file = Refile.cache.upload(Refile::FileDouble.new("hello"))
+      instance.document = { id: file.id, filename: "foo.txt", content_type: "text/plain", size: 5 }
+
+      expect(instance.document.read).to eq("hello")
+
+      expect(instance.document_attacher.data[:filename]).to eq("foo.txt")
+      expect(instance.document_attacher.data[:size]).to eq(5)
+      expect(instance.document_attacher.data[:content_type]).to eq("text/plain")
+
+      expect(instance.document_filename).to eq("foo.txt")
+      expect(instance.document_size).to eq(5)
+      expect(instance.document_content_type).to eq("text/plain")
+    end
+
     it "does nothing when assigned string lacks an id" do
       instance.document = { size: 5 }.to_json
 
