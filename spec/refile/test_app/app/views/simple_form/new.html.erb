@@ -1,0 +1,8 @@
+<%= simple_form_for @post do |form| %>
+  <p>
+    <%= form.input :image, as: :attachment, direct: true %>
+  </p>
+  <p>
+    <%= form.submit "Create" %>
+  </p>
+<% end %>
