@@ -12,10 +12,10 @@ module Refile
   # @api private
   class InvalidID < Invalid; end
 
-  # @api pricate
+  # @api private
   class InvalidMaxSize < Invalid; end
 
-  # @api pricate
+  # @api private
   class InvalidFile < Invalid; end
 
   # @api private
