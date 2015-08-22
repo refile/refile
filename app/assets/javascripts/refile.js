@@ -48,12 +48,12 @@
           if(requests.every(function(xhr) { return xhr.complete })) {
             finalizeUpload();
           }
-          dispatchEvent(input, "upload:complete");
           if(isSuccess(xhr)) {
             dispatchEvent(input, "upload:success");
           } else {
             dispatchEvent(input, "upload:failure");
           }
+          dispatchEvent(input, "upload:complete");
         });
 
         xhr.upload.addEventListener("progress", function(progressEvent) {
