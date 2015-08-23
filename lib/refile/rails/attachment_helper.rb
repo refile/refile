@@ -68,14 +68,15 @@ module Refile
 
       host = options[:host] || Refile.host || request.base_url
       backend_name = Refile.backends.key(definition.cache)
+      refile_app_path = URI(main_app.refile_app_path).path
 
       if options[:direct]
-        url = ::File.join(host, main_app.refile_app_path, backend_name)
+        url = ::File.join(host, refile_app_path, backend_name)
         options[:data].merge!(direct: true, as: "file", url: url)
       end
 
       if options[:presigned] and definition.cache.respond_to?(:presign)
-        url = ::File.join(host, main_app.refile_app_path, backend_name, "presign")
+        url = ::File.join(host, refile_app_path, backend_name, "presign")
         options[:data].merge!(direct: true, presigned: true, url: url)
       end
 
