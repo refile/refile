@@ -42,7 +42,9 @@ module Refile
         end
 
         after_destroy do
-          send(attacher).delete!
+          unless Refile.soft_delete
+            send(attacher).delete!
+          end
         end
       end
 

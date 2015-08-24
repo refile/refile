@@ -162,6 +162,16 @@ describe Refile::ActiveRecord::Attachment do
       post.destroy
       expect(file.exists?).to be_falsy
     end
+
+    it "keeps the stored file if soft_delete is enabled" do
+      Refile.soft_delete = true
+      post = klass.new
+      post.document = Refile::FileDouble.new("hello")
+      post.save
+      file = post.document
+      post.destroy
+      expect(file.exists?).to be_truthy
+    end
   end
 
   describe ".accepts_nested_attributes_for" do
