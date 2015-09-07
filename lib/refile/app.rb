@@ -32,6 +32,11 @@ module Refile
       end
     end
 
+    # This will match all token authenticated requests
+    before "/:token/:backend/*" do
+      halt 403 unless verified?
+    end
+
     get "/:token/:backend/:id/:filename" do
       halt 404 unless download_allowed?
       stream_file file
@@ -119,8 +124,6 @@ module Refile
     end
 
     def stream_file(file)
-      halt 403 unless verified?
-
       expires Refile.content_max_age, :public, :must_revalidate
 
       if file.respond_to?(:path)
