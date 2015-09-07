@@ -17,6 +17,6 @@ gem "sqlite3",                          platforms: [:ruby]
 gem "activerecord-jdbcsqlite3-adapter", platforms: [:jruby]
 gem "poltergeist"
 gem "yard"
-gem "rubocop"
+gem "rubocop", "~>0.33.0"
 gem "puma"
 gem "mini_magick"
