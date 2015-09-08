@@ -118,6 +118,16 @@ describe Refile::App do
         expect(last_response.status).to eq(403)
         expect(last_response.body).to eq("forbidden")
       end
+
+      it "does not retrieve nor process files for unauthenticated requests" do
+        file = Refile.store.upload(StringIO.new("hello"))
+
+        expect(Refile.store).not_to receive(:get)
+        get "/eviltoken/store/#{file.id}/hello"
+
+        expect(last_response.status).to eq(403)
+        expect(last_response.body).to eq("forbidden")
+      end
     end
 
     context "when unrestricted" do
