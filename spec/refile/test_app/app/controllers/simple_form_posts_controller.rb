@@ -1,0 +1,2 @@
+class SimpleFormPostsController < DirectPostsController
+end

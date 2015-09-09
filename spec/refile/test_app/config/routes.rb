@@ -18,4 +18,8 @@ Refile::TestApp.routes.draw do
       post :upload, on: :collection
     end
   end
+
+  scope path: "simple_form", as: "simple_form" do
+    resources :posts, only: [:new, :create], controller: "simple_form_posts"
+  end
 end
