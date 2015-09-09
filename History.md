@@ -3,6 +3,7 @@
 Unreleased
 
 - [BREAKING] `Refile.direct_upload` has been renamed to `Refile.allow_uploads_to`.
+- [BREAKING] `Refile.mount_point` no longer implicitly adds a leading slash.
 
 # 0.5.5
 

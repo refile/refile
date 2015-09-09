@@ -1,6 +1,21 @@
 require "refile"
 
 RSpec.describe Refile do
+  before do
+    allow(Refile).to receive(:token).and_return("token")
+    allow(Refile).to receive(:host).and_return(nil)
+    allow(Refile).to receive(:mount_point).and_return(nil)
+  end
+
+  let(:klass) do
+    Class.new do
+      extend Refile::Attachment
+      attr_accessor :document_id
+      attachment :document
+    end
+  end
+  let(:instance) { klass.new }
+
   describe ".extract_filename" do
     it "extracts filename from original_filename" do
       name = Refile.extract_filename(double(original_filename: "/foo/bar/baz.png"))
@@ -40,15 +55,34 @@ RSpec.describe Refile do
     end
   end
 
+  describe ".app_url" do
+    it "generates a root url when all options unset" do
+      expect(Refile.app_url).to eq("/")
+    end
+
+    it "uses supplied host option" do
+      expect(Refile.app_url(host: "http://example.org")).to eq("http://example.org/")
+    end
+
+    it "falls back to Refile.host" do
+      allow(Refile).to receive(:host).and_return("http://elabs.se")
+
+      expect(Refile.app_url).to eq("http://elabs.se/")
+    end
+
+    it "adds a prefix" do
+      expect(Refile.app_url(prefix: "/moo")).to eq("/moo")
+    end
+
+    it "takes prefix from Refile.mount_point" do
+      allow(Refile).to receive(:mount_point).and_return("/attachments")
+      expect(Refile.app_url).to eq("/attachments")
+    end
+  end
+
   describe ".file_url" do
     let(:file) { Refile.cache.upload(Refile::FileDouble.new("hello")) }
     let(:id) { file.id }
-
-    before do
-      allow(Refile).to receive(:token).and_return("token")
-      allow(Refile).to receive(:host).and_return(nil)
-      allow(Refile).to receive(:mount_point).and_return(nil)
-    end
 
     it "generates a url from an attachment" do
       expect(Refile.file_url(file, filename: "document")).to eq("/token/cache/#{id}/document")
@@ -64,12 +98,19 @@ RSpec.describe Refile do
       expect(Refile.file_url(file, filename: "document")).to eq("http://elabs.se/token/cache/#{id}/document")
     end
 
+    it "falls back to Refile.cdn_host" do
+      allow(Refile).to receive(:cdn_host).and_return("http://foo.cloudfront.com")
+      allow(Refile).to receive(:host).and_return("http://elabs.se")
+
+      expect(Refile.file_url(file, filename: "document")).to eq("http://foo.cloudfront.com/token/cache/#{id}/document")
+    end
+
     it "adds a prefix" do
-      expect(Refile.file_url(file, prefix: "moo", filename: "document")).to eq("/moo/token/cache/#{id}/document")
+      expect(Refile.file_url(file, prefix: "/moo", filename: "document")).to eq("/moo/token/cache/#{id}/document")
     end
 
     it "takes prefix from Refile.mount_point" do
-      allow(Refile).to receive(:mount_point).and_return("attachments")
+      allow(Refile).to receive(:mount_point).and_return("/attachments")
       expect(Refile.file_url(file, filename: "document")).to eq("/attachments/token/cache/#{id}/document")
     end
 
@@ -90,21 +131,7 @@ RSpec.describe Refile do
   end
 
   describe ".attachment_url" do
-    let(:klass) do
-      Class.new do
-        extend Refile::Attachment
-        attr_accessor :document_id
-        attachment :document
-      end
-    end
-    let(:instance) { klass.new }
     let(:id) { instance.document_attacher.cache_id }
-
-    before do
-      allow(Refile).to receive(:token).and_return("token")
-      allow(Refile).to receive(:host).and_return(nil)
-      allow(Refile).to receive(:mount_point).and_return(nil)
-    end
 
     context "with file" do
       before do
@@ -125,12 +152,19 @@ RSpec.describe Refile do
         expect(Refile.attachment_url(instance, :document)).to eq("http://elabs.se/token/cache/#{id}/document")
       end
 
+      it "falls back to Refile.cdn_host" do
+        allow(Refile).to receive(:cdn_host).and_return("http://foo.cloudfront.com")
+        allow(Refile).to receive(:host).and_return("http://elabs.se")
+
+        expect(Refile.attachment_url(instance, :document)).to eq("http://foo.cloudfront.com/token/cache/#{id}/document")
+      end
+
       it "adds a prefix" do
-        expect(Refile.attachment_url(instance, :document, prefix: "moo")).to eq("/moo/token/cache/#{id}/document")
+        expect(Refile.attachment_url(instance, :document, prefix: "/moo")).to eq("/moo/token/cache/#{id}/document")
       end
 
       it "takes prefix from Refile.mount_point" do
-        allow(Refile).to receive(:mount_point).and_return("attachments")
+        allow(Refile).to receive(:mount_point).and_return("/attachments")
         expect(Refile.attachment_url(instance, :document)).to eq("/attachments/token/cache/#{id}/document")
       end
 
@@ -171,7 +205,135 @@ RSpec.describe Refile do
     end
   end
 
+  describe ".upload_url" do
+    it "generates an upload url" do
+      expect(Refile.upload_url(Refile.cache)).to eq("/cache")
+    end
+
+    it "uses supplied host option" do
+      expect(Refile.upload_url(Refile.cache, host: "http://example.org")).to eq("http://example.org/cache")
+    end
+
+    it "falls back to Refile.host" do
+      allow(Refile).to receive(:host).and_return("http://elabs.se")
+
+      expect(Refile.upload_url(Refile.cache)).to eq("http://elabs.se/cache")
+    end
+
+    it "does not fall back to Refile.cdn_host" do
+      allow(Refile).to receive(:cdn_host).and_return("http://foo.cloudfront.com")
+
+      expect(Refile.upload_url(Refile.cache)).to eq("/cache")
+    end
+
+    it "adds a prefix" do
+      expect(Refile.upload_url(Refile.cache, prefix: "/moo")).to eq("/moo/cache")
+    end
+
+    it "takes prefix from Refile.mount_point" do
+      allow(Refile).to receive(:mount_point).and_return("/attachments")
+      expect(Refile.upload_url(Refile.cache)).to eq("/attachments/cache")
+    end
+  end
+
+  describe ".presign_url" do
+    it "generates an upload url" do
+      expect(Refile.presign_url(Refile.cache)).to eq("/cache/presign")
+    end
+
+    it "uses supplied host option" do
+      expect(Refile.presign_url(Refile.cache, host: "http://example.org")).to eq("http://example.org/cache/presign")
+    end
+
+    it "falls back to Refile.host" do
+      allow(Refile).to receive(:host).and_return("http://elabs.se")
+
+      expect(Refile.presign_url(Refile.cache)).to eq("http://elabs.se/cache/presign")
+    end
+
+    it "does not fall back to Refile.cdn_host" do
+      allow(Refile).to receive(:cdn_host).and_return("http://foo.cloudfront.com")
+
+      expect(Refile.presign_url(Refile.cache)).to eq("/cache/presign")
+    end
+
+    it "adds a prefix" do
+      expect(Refile.presign_url(Refile.cache, prefix: "/moo")).to eq("/moo/cache/presign")
+    end
+
+    it "takes prefix from Refile.mount_point" do
+      allow(Refile).to receive(:mount_point).and_return("/attachments")
+      expect(Refile.presign_url(Refile.cache)).to eq("/attachments/cache/presign")
+    end
+  end
+
+  describe ".attachment_upload_url" do
+    it "generates an upload url" do
+      expect(Refile.attachment_upload_url(instance, :document)).to eq("/cache")
+    end
+
+    it "uses supplied host option" do
+      expect(Refile.attachment_upload_url(instance, :document, host: "http://example.org")).to eq("http://example.org/cache")
+    end
+
+    it "falls back to Refile.host" do
+      allow(Refile).to receive(:host).and_return("http://elabs.se")
+
+      expect(Refile.attachment_upload_url(instance, :document)).to eq("http://elabs.se/cache")
+    end
+
+    it "does not fall back to Refile.cdn_host" do
+      allow(Refile).to receive(:cdn_host).and_return("http://foo.cloudfront.com")
+
+      expect(Refile.attachment_upload_url(instance, :document)).to eq("/cache")
+    end
+
+    it "adds a prefix" do
+      expect(Refile.attachment_upload_url(instance, :document, prefix: "/moo")).to eq("/moo/cache")
+    end
+
+    it "takes prefix from Refile.mount_point" do
+      allow(Refile).to receive(:mount_point).and_return("/attachments")
+      expect(Refile.attachment_upload_url(instance, :document)).to eq("/attachments/cache")
+    end
+  end
+
+  describe ".attachment_presign_url" do
+    it "generates an upload url" do
+      expect(Refile.attachment_presign_url(instance, :document)).to eq("/cache/presign")
+    end
+
+    it "uses supplied host option" do
+      expect(Refile.attachment_presign_url(instance, :document, host: "http://example.org")).to eq("http://example.org/cache/presign")
+    end
+
+    it "falls back to Refile.host" do
+      allow(Refile).to receive(:host).and_return("http://elabs.se")
+
+      expect(Refile.attachment_presign_url(instance, :document)).to eq("http://elabs.se/cache/presign")
+    end
+
+    it "does not fall back to Refile.cdn_host" do
+      allow(Refile).to receive(:cdn_host).and_return("http://foo.cloudfront.com")
+
+      expect(Refile.attachment_presign_url(instance, :document)).to eq("/cache/presign")
+    end
+
+    it "adds a prefix" do
+      expect(Refile.attachment_presign_url(instance, :document, prefix: "/moo")).to eq("/moo/cache/presign")
+    end
+
+    it "takes prefix from Refile.mount_point" do
+      allow(Refile).to receive(:mount_point).and_return("/attachments")
+      expect(Refile.attachment_presign_url(instance, :document)).to eq("/attachments/cache/presign")
+    end
+  end
+
   describe ".token" do
+    before do
+      allow(Refile).to receive(:token).and_call_original
+    end
+
     it "returns digest of given path and secret token" do
       allow(Refile).to receive(:secret_key).and_return("abcd1234")
 

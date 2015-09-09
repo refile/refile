@@ -36,12 +36,12 @@ module Refile
     # @param [Hash] options                      Additional options for the image tag
     # @see #attachment_url
     # @return [ActiveSupport::SafeBuffer, nil]   The generated image tag
-    def attachment_image_tag(record, name, *args, fallback: nil, format: nil, host: Refile.host, **options)
+    def attachment_image_tag(record, name, *args, fallback: nil, host: nil, prefix: nil, format: nil, **options)
       file = record && record.public_send(name)
       classes = ["attachment", (record.class.model_name.singular if record), name, *options[:class]]
 
       if file
-        image_tag(attachment_url(record, name, *args, format: format, host: host), options.merge(class: classes))
+        image_tag(attachment_url(record, name, *args, host: host, prefix: prefix, format: format), options.merge(class: classes))
       elsif fallback
         classes << "fallback"
         image_tag(fallback, options.merge(class: classes))
@@ -60,22 +60,19 @@ module Refile
     # @option options [Boolean] direct      If set to true, adds the appropriate data attributes for direct uploads with refile.js.
     # @option options [Boolean] presign     If set to true, adds the appropriate data attributes for presigned uploads with refile.js.
     # @return [ActiveSupport::SafeBuffer]   The generated form field
-    def attachment_field(object_name, method, object:, **options)
+    def attachment_field(object_name, method, object:, host: nil, prefix: nil, **options)
       options[:data] ||= {}
 
       definition = object.send(:"#{method}_attachment_definition")
       options[:accept] = definition.accept
 
-      host = options[:host] || Refile.host || request.base_url
-      backend_name = Refile.backends.key(definition.cache)
-
       if options[:direct]
-        url = ::File.join(host, main_app.refile_app_path, backend_name)
+        url = Refile.attachment_upload_url(object, method, host: host, prefix: prefix)
         options[:data].merge!(direct: true, as: "file", url: url)
       end
 
       if options[:presigned] and definition.cache.respond_to?(:presign)
-        url = ::File.join(host, main_app.refile_app_path, backend_name, "presign")
+        url = Refile.attachment_presign_url(object, method, host: host, prefix: prefix)
         options[:data].merge!(direct: true, presigned: true, url: url)
       end
 

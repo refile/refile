@@ -263,7 +263,7 @@ explains how to set this up (bonus: faster static assets!). Once you've set this
 up, simply configure Refile to use your CDN:
 
 ``` ruby
-Refile.host = "//your-dist-url.cloudfront.net"
+Refile.cdn_host = "//your-dist-url.cloudfront.net"
 ```
 
 Using a [protocol-relative URL](http://www.paulirish.com/2010/the-protocol-relative-url/) for `Refile.host` is recommended.
