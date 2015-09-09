@@ -19,11 +19,17 @@ module Refile
     # @param [Refile::Attachment] object   Instance of a class which has an attached file
     # @param [Symbol] name                 The name of the attachment column
     # @param [String, nil] filename        The filename to be appended to the URL
+    # @param [String, nil] fallback        The path to an asset to be used as a fallback
     # @param [String, nil] format          A file extension to be appended to the URL
     # @param [String, nil] host            Override the host
     # @return [String, nil]                The generated URL
-    def attachment_url(record, name, *args, **opts)
-      Refile.attachment_url(record, name, *args, **opts)
+    def attachment_url(record, name, *args, fallback: nil, **opts)
+      file = record && record.public_send(name)
+      if file
+        Refile.attachment_url(record, name, *args, **opts)
+      elsif fallback
+        asset_url(fallback)
+      end
     end
 
     # Generates an image tag for the given attachment, adding appropriate
