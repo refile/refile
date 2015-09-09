@@ -3,7 +3,7 @@ require "refile"
 RSpec.describe Refile do
   before do
     allow(Refile).to receive(:token).and_return("token")
-    allow(Refile).to receive(:host).and_return(nil)
+    allow(Refile).to receive(:app_host).and_return(nil)
     allow(Refile).to receive(:mount_point).and_return(nil)
   end
 
@@ -64,8 +64,8 @@ RSpec.describe Refile do
       expect(Refile.app_url(host: "http://example.org")).to eq("http://example.org/")
     end
 
-    it "falls back to Refile.host" do
-      allow(Refile).to receive(:host).and_return("http://elabs.se")
+    it "falls back to Refile.app_host" do
+      allow(Refile).to receive(:app_host).and_return("http://elabs.se")
 
       expect(Refile.app_url).to eq("http://elabs.se/")
     end
@@ -92,15 +92,15 @@ RSpec.describe Refile do
       expect(Refile.file_url(file, host: "http://example.org", filename: "document")).to eq("http://example.org/token/cache/#{id}/document")
     end
 
-    it "falls back to Refile.host" do
-      allow(Refile).to receive(:host).and_return("http://elabs.se")
+    it "falls back to Refile.app_host" do
+      allow(Refile).to receive(:app_host).and_return("http://elabs.se")
 
       expect(Refile.file_url(file, filename: "document")).to eq("http://elabs.se/token/cache/#{id}/document")
     end
 
     it "falls back to Refile.cdn_host" do
       allow(Refile).to receive(:cdn_host).and_return("http://foo.cloudfront.com")
-      allow(Refile).to receive(:host).and_return("http://elabs.se")
+      allow(Refile).to receive(:app_host).and_return("http://elabs.se")
 
       expect(Refile.file_url(file, filename: "document")).to eq("http://foo.cloudfront.com/token/cache/#{id}/document")
     end
@@ -146,15 +146,15 @@ RSpec.describe Refile do
         expect(Refile.attachment_url(instance, :document, host: "http://example.org")).to eq("http://example.org/token/cache/#{id}/document")
       end
 
-      it "falls back to Refile.host" do
-        allow(Refile).to receive(:host).and_return("http://elabs.se")
+      it "falls back to Refile.app_host" do
+        allow(Refile).to receive(:app_host).and_return("http://elabs.se")
 
         expect(Refile.attachment_url(instance, :document)).to eq("http://elabs.se/token/cache/#{id}/document")
       end
 
       it "falls back to Refile.cdn_host" do
         allow(Refile).to receive(:cdn_host).and_return("http://foo.cloudfront.com")
-        allow(Refile).to receive(:host).and_return("http://elabs.se")
+        allow(Refile).to receive(:app_host).and_return("http://elabs.se")
 
         expect(Refile.attachment_url(instance, :document)).to eq("http://foo.cloudfront.com/token/cache/#{id}/document")
       end
@@ -214,8 +214,8 @@ RSpec.describe Refile do
       expect(Refile.upload_url(Refile.cache, host: "http://example.org")).to eq("http://example.org/cache")
     end
 
-    it "falls back to Refile.host" do
-      allow(Refile).to receive(:host).and_return("http://elabs.se")
+    it "falls back to Refile.app_host" do
+      allow(Refile).to receive(:app_host).and_return("http://elabs.se")
 
       expect(Refile.upload_url(Refile.cache)).to eq("http://elabs.se/cache")
     end
@@ -245,8 +245,8 @@ RSpec.describe Refile do
       expect(Refile.presign_url(Refile.cache, host: "http://example.org")).to eq("http://example.org/cache/presign")
     end
 
-    it "falls back to Refile.host" do
-      allow(Refile).to receive(:host).and_return("http://elabs.se")
+    it "falls back to Refile.app_host" do
+      allow(Refile).to receive(:app_host).and_return("http://elabs.se")
 
       expect(Refile.presign_url(Refile.cache)).to eq("http://elabs.se/cache/presign")
     end
@@ -276,8 +276,8 @@ RSpec.describe Refile do
       expect(Refile.attachment_upload_url(instance, :document, host: "http://example.org")).to eq("http://example.org/cache")
     end
 
-    it "falls back to Refile.host" do
-      allow(Refile).to receive(:host).and_return("http://elabs.se")
+    it "falls back to Refile.app_host" do
+      allow(Refile).to receive(:app_host).and_return("http://elabs.se")
 
       expect(Refile.attachment_upload_url(instance, :document)).to eq("http://elabs.se/cache")
     end
@@ -307,8 +307,8 @@ RSpec.describe Refile do
       expect(Refile.attachment_presign_url(instance, :document, host: "http://example.org")).to eq("http://example.org/cache/presign")
     end
 
-    it "falls back to Refile.host" do
-      allow(Refile).to receive(:host).and_return("http://elabs.se")
+    it "falls back to Refile.app_host" do
+      allow(Refile).to receive(:app_host).and_return("http://elabs.se")
 
       expect(Refile.attachment_presign_url(instance, :document)).to eq("http://elabs.se/cache/presign")
     end

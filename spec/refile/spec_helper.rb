@@ -30,7 +30,7 @@ Refile.allow_uploads_to = %w[cache limited_cache]
 
 Refile.allow_origin = "*"
 
-Refile.host = "http://localhost:56120"
+Refile.app_host = "http://localhost:56120"
 
 Refile.processor(:reverse) do |file|
   StringIO.new(file.read.reverse)
