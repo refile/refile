@@ -71,7 +71,7 @@ module Refile
     end
 
     def set(value)
-      if value.is_a?(String)
+      if value.is_a?(String) or value.is_a?(Hash)
         retrieve!(value)
       else
         cache!(value)
@@ -79,7 +79,11 @@ module Refile
     end
 
     def retrieve!(value)
-      @metadata = Refile.parse_json(value, symbolize_names: true) || {}
+      if value.is_a?(String)
+        @metadata = Refile.parse_json(value, symbolize_names: true) || {}
+      elsif value.is_a?(Hash)
+        @metadata = value
+      end
       write_metadata if cache_id
     end
 
