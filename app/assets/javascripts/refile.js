@@ -63,6 +63,7 @@
         if(input.getAttribute("data-presigned")) {
           dispatchEvent(input, "presign:start");
           var presignXhr = new XMLHttpRequest();
+          var presignUrl = url + "?t=" + Date.now() + "." + index;
           presignXhr.addEventListener("load", function() {
             dispatchEvent(input, "presign:complete");
             if(isSuccess(presignXhr)) {
@@ -77,7 +78,7 @@
               xhr.complete = true;
             };
           });
-          presignXhr.open("GET", url, true);
+          presignXhr.open("GET", presignUrl, true);
           presignXhr.send();
         } else {
           xhr.open("POST", url, true);
