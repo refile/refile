@@ -267,7 +267,7 @@ up, simply configure Refile to use your CDN:
 Refile.cdn_host = "//your-dist-url.cloudfront.net"
 ```
 
-Using a [protocol-relative URL](http://www.paulirish.com/2010/the-protocol-relative-url/) for `Refile.host` is recommended.
+Using a [protocol-relative URL](http://www.paulirish.com/2010/the-protocol-relative-url/) for `Refile.cdn_host` is recommended.
 
 ### Mounting
 
