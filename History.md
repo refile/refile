@@ -1,9 +1,27 @@
-# 1.0.0
+# 0.6.0
 
-Unreleased
+Release date: 2015-09-10
 
 - [BREAKING] `Refile.direct_upload` has been renamed to `Refile.allow_uploads_to`.
 - [BREAKING] `Refile.mount_point` no longer implicitly adds a leading slash.
+- [BREAKING] Attachment URLs are now signed, it is no longer possible to generate them client-side
+- [BREAKING] S3 support has been extracted to a separate gem, see https://github.com/refile/refile-s3
+- [BREAKING] MiniMagick support has been extracted to a separate gem, see https://github.com/refile/refile-mini_magick
+- [ADDED] `Refile.cdn_host` and `Refile.app_host`, since not all parts of a Refile should run behind a CDN
+- [ADDED] Support for multiple file uploads via `accepts_attachments_for`
+- [ADDED] Supports JRuby 9.0.0.0 and up
+- [ADDED] Backends can configure what they consider a valid ID
+- [ADDED] Refile files are rewindable
+- [ADDED] Added shortcut to generate URLs to model
+- [ADDED] `Refile.file_url` to generate a URL to a file without an attachment
+- [ADDED] `attachment_url` can take a fallback
+- [ADDED] Support for simple_form
+- [FIXED] Multiple validation errors caused problems for attachment fields
+- [FIXED] Using Refile with nested forms
+- [FIXED] Problem finding hidden field when field is wrapped in error div
+- [FIXED] Incorrect filename is sometimes extracted
+- [FIXED] Make sure temporary files are flushed to disk
+- [DEPRECATED] `Refile.host` is deprecated in favour of `Refile.cdn_host`
 
 # 0.5.5
 
