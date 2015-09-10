@@ -5,6 +5,11 @@ module Refile
   # @api private
   class Engine < Rails::Engine
     initializer "refile.setup", before: :load_environment_config do
+      if RUBY_PLATFORM == "java"
+        # Work around a bug in JRuby, see: https://github.com/jruby/jruby/issues/2779
+        Encoding.default_internal = nil
+      end
+
       Refile.store ||= Refile::Backend::FileSystem.new(Rails.root.join("tmp/uploads/store").to_s)
       Refile.cache ||= Refile::Backend::FileSystem.new(Rails.root.join("tmp/uploads/cache").to_s)
 
