@@ -20,23 +20,16 @@ describe Refile::AttachmentHelper do
   end
   let(:attachment_path) { "/attachments/00cc2633d08c6045485f1fae2cd6d4de20a5a159/store/xxx/document" }
 
-  def with_setting(key, value)
-    old = Refile.send(key)
-    Refile.send("#{key}=", value)
-    yield
-  ensure
-    Refile.send("#{key}=", old)
+  before do
+    allow(Refile).to receive(:secret_key).and_return("xxxxxxxxxxx")
   end
-
-  around { |example| with_setting(:secret_key, "xxxxxxxxxxx", &example) }
 
   describe "#attachment_image_tag" do
     let(:src) { attachment_image_tag(klass.new(document_id: "xxx"), :document)[/src="(\S+)"/, 1] }
 
     it "builds with path" do
-      with_setting :host, nil do
-        expect(src).to eq attachment_path
-      end
+      allow(Refile).to receive(:app_host).and_return(nil)
+      expect(src).to eq attachment_path
     end
 
     it "builds with host" do
