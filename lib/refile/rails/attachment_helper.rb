@@ -66,19 +66,19 @@ module Refile
     # @option options [Boolean] direct      If set to true, adds the appropriate data attributes for direct uploads with refile.js.
     # @option options [Boolean] presign     If set to true, adds the appropriate data attributes for presigned uploads with refile.js.
     # @return [ActiveSupport::SafeBuffer]   The generated form field
-    def attachment_field(object_name, method, object:, host: nil, prefix: nil, **options)
+    def attachment_field(object_name, method, object:, **options)
       options[:data] ||= {}
 
       definition = object.send(:"#{method}_attachment_definition")
       options[:accept] = definition.accept
 
       if options[:direct]
-        url = Refile.attachment_upload_url(object, method, host: host, prefix: prefix)
+        url = Refile.attachment_upload_url(object, method, host: options[:host], prefix: options[:prefix])
         options[:data].merge!(direct: true, as: "file", url: url)
       end
 
       if options[:presigned] and definition.cache.respond_to?(:presign)
-        url = Refile.attachment_presign_url(object, method, host: host, prefix: prefix)
+        url = Refile.attachment_presign_url(object, method, host: options[:host], prefix: options[:prefix])
         options[:data].merge!(direct: true, presigned: true, url: url)
       end
 
