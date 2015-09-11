@@ -129,6 +129,13 @@ module Refile
     # @return [String]
     attr_accessor :secret_key
 
+    # Should we keep files after a record is deleted?
+    #
+    # The default is false.
+    #
+    # @return [Boolean]
+    attr_accessor :soft_delete
+
     # A global registry of backends.
     #
     # @return [Hash{String => Backend}]
@@ -498,4 +505,5 @@ Refile.configure do |config|
   config.automount = true
   config.content_max_age = 60 * 60 * 24 * 365
   config.types[:image] = Refile::Type.new(:image, content_type: %w[image/jpeg image/gif image/png])
+  config.soft_delete = false
 end
