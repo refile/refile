@@ -60,7 +60,10 @@ end
 Generate a migration:
 
 ``` sh
-rails generate migration add_profile_image_to_users profile_image_id:string
+rails generate migration add_profile_image_to_users profile_image_id:string &&
+profile_image_filename:string && profile_image_content_size:string &&
+profile_image_content_type:string
+
 rake db:migrate
 ```
 
