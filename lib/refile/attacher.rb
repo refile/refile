@@ -74,9 +74,9 @@ module Refile
 
     def set(value)
       case value
-      when nil then self.remove = true
-      when String, Hash then retrieve!(value)
-      else cache!(value)
+        when nil then self.remove = true
+        when String, Hash then retrieve!(value)
+        else cache!(value)
       end
     end
 

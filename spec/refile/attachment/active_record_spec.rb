@@ -102,7 +102,6 @@ describe Refile::ActiveRecord::Attachment do
         expect(post.valid?).to be_truthy
         expect(post.errors[:document]).to be_empty
       end
-
     end
 
     context "when file is required" do
