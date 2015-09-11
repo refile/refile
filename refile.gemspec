@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.homepage      = "https://github.com/refile/refile"
   spec.license       = "MIT"
 
-  spec.files         = `git ls-files lib spec Readme.md`.split($/).reject { |f| f.include?("test_app") }
+  spec.files         = `git ls-files lib spec app config Readme.md`.split($/).reject { |f| f.include?("test_app") }
   spec.require_paths = %w[lib spec] # spec is used by backend gems to run their tests
 
   spec.required_ruby_version = ">= 2.1.0"
