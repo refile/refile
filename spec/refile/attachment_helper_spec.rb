@@ -43,4 +43,16 @@ describe Refile::AttachmentHelper do
       expect(src).to eq "http://localhost:56120#{attachment_path}"
     end
   end
+
+  context "with presenter" do
+    let(:presenter_class) { Class.new(SimpleDelegator) }
+    let(:model) { klass.new(document_id: "xxx") }
+    let(:presenter) { presenter_class.new model }
+
+    describe "#attachment_image_tag" do
+      it "work correct" do
+        expect{attachment_image_tag(presenter, :document)}.to_not raise_error(NoMethodError, /model_name/)
+      end
+    end
+  end
 end
