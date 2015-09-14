@@ -34,8 +34,9 @@ module Refile
     # @param [Symbol, nil] type                         The type of file that can be uploaded, see {Refile.types}
     # @param [String, Array<String>, nil] extension     Limit the uploaded file to the given extension or list of extensions
     # @param [String, Array<String>, nil] content_type  Limit the uploaded file to the given content type or list of content types
+    # @param [true, false] destroy                      Whether to remove stored file if its model is destroyed
     # @return [void]
-    def attachment(name, cache: :cache, store: :store, raise_errors: true, type: nil, extension: nil, content_type: nil)
+    def attachment(name, cache: :cache, store: :store, raise_errors: true, type: nil, extension: nil, content_type: nil, destroy: true)
       definition = AttachmentDefinition.new(name,
         cache: cache,
         store: store,
