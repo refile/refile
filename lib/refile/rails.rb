@@ -19,6 +19,7 @@ module Refile
 
       ActionView::Base.send(:include, Refile::AttachmentHelper)
       ActionView::Helpers::FormBuilder.send(:include, AttachmentHelper::FormBuilder)
+      ActionView::Helpers::FormTagHelper.send(:include, AttachmentHelper::FormTagHelper)
     end
 
     initializer "refile.app" do

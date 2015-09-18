@@ -5,7 +5,9 @@ require "action_view"
 
 describe Refile::AttachmentHelper do
   include Refile::AttachmentHelper
+  include Refile::AttachmentHelper::FormTagHelper
   include ActionView::Helpers::AssetTagHelper
+  include ActionView::Helpers::FormTagHelper
 
   let(:klass) do
     Class.new(ActiveRecord::Base) do
@@ -34,6 +36,15 @@ describe Refile::AttachmentHelper do
 
     it "builds with host" do
       expect(src).to eq "http://localhost:56120#{attachment_path}"
+    end
+  end
+
+  describe "#attachment_field_tag" do
+    let(:field) { attachment_field_tag(klass.new(document_id: "xxx"), "klass", "document") }
+
+    it "builds with name" do
+      name = field[/name="(\S+)"/, 1]
+      expect(name).to eq "document"
     end
   end
 end

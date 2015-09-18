@@ -10,6 +10,18 @@ module Refile
       end
     end
 
+    module FormTagHelper
+      def attachment_field_tag(object, object_name, method, options = {})
+        build_attachment_options(object, method, options)
+
+        hidden_field_tag(method, object.send("#{method}_data").try(:to_json),
+          multiple: options[:multiple],
+          id: nil,
+          data: { reference: options[:data][:reference] }
+        ) + file_field_tag(object_name, options)
+      end
+    end
+
     # View helper which generates a url for an attachment. This generates a URL
     # to the {Refile::App} which is assumed to be mounted in the Rails
     # application.
@@ -67,6 +79,26 @@ module Refile
     # @option options [Boolean] presign     If set to true, adds the appropriate data attributes for presigned uploads with refile.js.
     # @return [ActiveSupport::SafeBuffer]   The generated form field
     def attachment_field(object_name, method, object:, **options)
+      build_attachment_options(object, method, options)
+
+      hidden_field(object_name, method,
+        multiple: options[:multiple],
+        value: object.send("#{method}_data").try(:to_json),
+        object: object,
+        id: nil,
+        data: { reference: options[:data][:reference] }
+      ) + file_field(object_name, method, options)
+    end
+
+    # Fill up attachment options to be passed to the input field.
+    #
+    # @param object                         The object to generate a field for, required for direct/presigned uploads to work.
+    # @param method                         The name of the field
+    # @param [Hash] options
+    # @option options [Boolean] direct      If set to true, adds the appropriate data attributes for direct uploads with refile.js.
+    # @option options [Boolean] presign     If set to true, adds the appropriate data attributes for presigned uploads with refile.js.
+    # @return [Hash]   The generated form field
+    def build_attachment_options(object, method, options)
       options[:data] ||= {}
 
       definition = object.send(:"#{method}_attachment_definition")
@@ -83,14 +115,7 @@ module Refile
       end
 
       options[:data][:reference] = SecureRandom.hex
-
-      hidden_field(object_name, method,
-        multiple: options[:multiple],
-        value: object.send("#{method}_data").try(:to_json),
-        object: object,
-        id: nil,
-        data: { reference: options[:data][:reference] }
-      ) + file_field(object_name, method, options)
+      options
     end
   end
 end
