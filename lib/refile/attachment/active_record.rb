@@ -5,10 +5,11 @@ module Refile
 
       # Attachment method which hooks into ActiveRecord models
       #
+      # @param [true, false] destroy  Whether to remove the stored file if its model is destroyed
       # @return [void]
       # @see Refile::Attachment#attachment
       def attachment(name, raise_errors: false, destroy: true, **options)
-        super
+        super(name, raise_errors: raise_errors, **options)
 
         attacher = "#{name}_attacher"
 
