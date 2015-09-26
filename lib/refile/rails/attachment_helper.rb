@@ -38,8 +38,13 @@ module Refile
     #
     # Returns `nil` if there is no file attached and no fallback specified.
     #
-    # @param [String] fallback                   The path to an image asset to be used as a fallback
-    # @param [Hash] options                      Additional options for the image tag
+    # @param [Refile::Attachment] record    Instance of a class which has an attached file
+    # @param [Symbol] name                  The name of the attachment column
+    # @param [String, nil] fallback         The path to an image asset to be used as a fallback
+    # @param [String, nil] host             Override the host
+    # @param [String, nil] prefix           Adds a prefix to the URL if the application is not mounted at root
+    # @param [String, nil] format           A file extension to be appended to the URL
+    # @param [Hash] options                 Additional options for the image tag
     # @see #attachment_url
     # @return [ActiveSupport::SafeBuffer, nil]   The generated image tag
     def attachment_image_tag(record, name, *args, fallback: nil, host: nil, prefix: nil, format: nil, **options)
