@@ -264,10 +264,10 @@ explains how to set this up (bonus: faster static assets!). Once you've set this
 up, simply configure Refile to use your CDN:
 
 ``` ruby
-Refile.cdn_host = "//your-dist-url.cloudfront.net"
+Refile.cdn_host = "https://your-dist-url.cloudfront.net"
 ```
 
-Using a [protocol-relative URL](http://www.paulirish.com/2010/the-protocol-relative-url/) for `Refile.cdn_host` is recommended.
+Using [the HTTPS protocol](https://www.eff.org/encrypt-the-web-report) for `Refile.cdn_host` is recommended. There aren't [any performance concerns](https://istlsfastyet.com/), and it is always safe to request HTTPS assets.
 
 ### Mounting
 
