@@ -124,7 +124,7 @@ module Refile
     end
 
     def stream_file(file)
-      expires Refile.content_max_age, :public, :must_revalidate
+      expires Refile.content_max_age, :public
 
       if file.respond_to?(:path)
         path = file.path
