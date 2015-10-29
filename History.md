@@ -1,3 +1,15 @@
+# 0.6.2
+
+Release date: 2015-09-10
+
+- [CHANGED] Removed must-revalidate header, since it serves no purpose
+
+# 0.6.1
+
+Release date: 2015-09-11
+
+- [FIXED] Include missing files in gem bundle
+
 # 0.6.0
 
 Release date: 2015-09-10
