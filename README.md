@@ -175,6 +175,7 @@ are provided by other gems.
   different cloud storage providers, including Google Storage and Rackspace
   CloudFiles.
 - [Postgresql](https://github.com/krists/refile-postgres)
+- [Gridfs](https://github.com/Titinux/refile-gridfs)
 - [In Memory](https://github.com/refile/refile-memory)
 
 ### Uploadable
