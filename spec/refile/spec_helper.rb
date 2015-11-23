@@ -3,6 +3,7 @@ ENV["RACK_ENV"] = "test"
 require "refile"
 require "refile/backend_examples"
 require "webmock/rspec"
+require "refile/file_double"
 
 tmp_path = Dir.mktmpdir
 
@@ -55,37 +56,6 @@ Refile.processor(:convert_case) do |file, options = {}|
     when "up" then StringIO.new(file.read.upcase)
     when "down" then StringIO.new(file.read.downcase)
     else file
-  end
-end
-
-module Refile
-  class FileDouble
-    attr_reader :original_filename, :content_type
-    def initialize(data, name = nil, content_type: nil)
-      @io = StringIO.new(data)
-      @original_filename = name
-      @content_type = content_type
-    end
-
-    def read(*args)
-      @io.read(*args)
-    end
-
-    def rewind
-      @io.rewind
-    end
-
-    def size
-      @io.size
-    end
-
-    def eof?
-      @io.eof?
-    end
-
-    def close
-      @io.close
-    end
   end
 end
 
