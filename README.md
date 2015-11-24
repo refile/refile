@@ -248,6 +248,19 @@ class User
 end
 ```
 
+### Keeping uploaded files
+
+By default Refile will delete a stored file when its model is destroyed. You can change this behaviour by passing in the `destroy` option.
+
+```ruby
+class User < ActiveRecord::Base
+  attachment :profile_image, destroy: false
+end
+
+```
+
+Now Refile will not delete the `profile_image` file from the store if the user is destroyed.
+
 ## 3. Rack Application
 
 Refile includes a Rack application (an endpoint, not a middleware), written in

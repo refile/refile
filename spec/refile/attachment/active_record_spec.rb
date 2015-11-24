@@ -154,13 +154,41 @@ describe Refile::ActiveRecord::Attachment do
   end
 
   describe "#destroy" do
-    it "removes the stored file" do
-      post = klass.new
-      post.document = Refile::FileDouble.new("hello")
-      post.save
-      file = post.document
-      post.destroy
-      expect(file.exists?).to be_falsy
+    context "default behaviour" do
+      it "removes the stored file" do
+        post = klass.new
+        post.document = Refile::FileDouble.new("hello")
+        post.save
+        file = post.document
+        post.destroy
+        expect(file.exists?).to be_falsy
+      end
+    end
+
+    context "with destroy: true" do
+      let(:options) { { destroy: true } }
+
+      it "removes the stored file" do
+        post = klass.new
+        post.document = Refile::FileDouble.new("hello")
+        post.save
+        file = post.document
+        post.destroy
+        expect(file.exists?).to be_falsy
+      end
+    end
+
+    context "with destroy: false" do
+      let(:options) { { destroy: false } }
+
+      it "does not remove the stored file" do
+        post = klass.new
+        post.document = Refile::FileDouble.new("hello")
+        post.save
+        file = post.document
+        post.destroy
+        expect(file.exists?).to be_truthy
+      end
     end
   end
 
