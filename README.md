@@ -780,6 +780,42 @@ needs:
 - Choose whatever number of days you're comfortable with, I chose "1"
 - Click "Review" and finally "Create and activate Rule"
 
+## Testing
+
+When testing your own classes that use Refile, you can use `Refile::FileDouble` objects instead of real files.
+
+```ruby
+# app/models/post.rb
+class Post < ActiveRecord::Base
+  attachment :image, type: :image
+end
+
+# spec/models/post_spec.rb
+require "rails_helper"
+require "refile/file_double"
+
+RSpec.describe Post, type: :model do
+  it "allows attaching an image" do
+    post = Post.new
+
+    post.image = Refile::FileDouble.new("dummy", "logo.png", content_type: "image/png")
+    post.save
+
+    expect(post.image_id).not_to be_nil
+  end
+  
+  it "doesn't allow attaching other files" do
+    post = Post.new
+
+    post.image = Refile::FileDouble.new("dummy", "file.txt", content_type: "text/plain")
+    post.save
+
+    expect(post.image_id).to be_nil
+  end
+end
+
+```
+
 ## simple_form
 
 simple_form gem is also supported:
