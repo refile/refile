@@ -3,8 +3,10 @@ require "refile/attachment/active_record"
 
 describe Refile::ActiveRecord::Attachment do
   let(:options) { {} }
+  let(:required) { false }
   let(:klass) do
     opts = options
+    req = required
     Class.new(ActiveRecord::Base) do
       self.table_name = :posts
 
@@ -13,6 +15,7 @@ describe Refile::ActiveRecord::Attachment do
       end
 
       attachment :document, **opts
+      validates_presence_of :document, if: -> { req }
     end
   end
 
@@ -98,6 +101,29 @@ describe Refile::ActiveRecord::Attachment do
         post.document = Refile::FileDouble.new("hello", content_type: "image/png")
         expect(post.valid?).to be_truthy
         expect(post.errors[:document]).to be_empty
+      end
+    end
+
+    context "when file is required" do
+      let(:required) { true }
+      let(:options) { {} }
+
+      it "returns false without file" do
+        post = klass.new
+        expect(post.valid?).to be_falsy
+      end
+
+      it "returns true with file" do
+        post = klass.new
+        post.document = Refile::FileDouble.new("hello", "image.png")
+        expect(post.valid?).to be_truthy
+      end
+
+      it "returns false when nil is assigned after a file" do
+        post = klass.new
+        post.document = Refile::FileDouble.new("hello", "image.png")
+        post.document = nil
+        expect(post.valid?).to be_falsy
       end
     end
 

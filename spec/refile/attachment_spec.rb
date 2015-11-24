@@ -70,6 +70,17 @@ describe Refile::Attachment do
       expect(instance.document).to be_nil
       expect(instance.document_size).to be_nil
     end
+
+    it "accepts nil" do
+      instance.document = nil
+      expect(instance.document).to be_nil
+    end
+
+    it "removes a document when assigned nil" do
+      instance.document = Refile::FileDouble.new("hello", "foo.txt", content_type: "text/plain")
+      instance.document = nil
+      expect(instance.document).to be_nil
+    end
   end
 
   describe ":name" do

@@ -63,7 +63,9 @@ module Refile
     end
 
     def get
-      if cache_id
+      if remove?
+        nil
+      elsif cache_id
         cache.get(cache_id)
       elsif id
         store.get(id)
@@ -71,10 +73,10 @@ module Refile
     end
 
     def set(value)
-      if value.is_a?(String) or value.is_a?(Hash)
-        retrieve!(value)
-      else
-        cache!(value)
+      case value
+        when nil then self.remove = true
+        when String, Hash then retrieve!(value)
+        else cache!(value)
       end
     end
 
