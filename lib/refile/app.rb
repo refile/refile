@@ -133,7 +133,18 @@ module Refile
         IO.copy_stream file, path
       end
 
-      filename = request.path.split("/").last
+      *folders, filename = request.path.split("/")
+
+      if Refile.public_path
+        public_folder = Pathname(Refile.public_path).join(*folders.reject(&:empty?))
+        public_path = ::File.join public_folder, filename
+
+        FileUtils.mkdir_p public_folder
+        FileUtils.move path, public_path
+        FileUtils.chmod "a+r", public_path
+
+        path = public_path
+      end
 
       send_file path, filename: filename, disposition: "inline", type: ::File.extname(request.path)
     end
