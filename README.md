@@ -392,6 +392,8 @@ no file has been uploaded:
 <%= attachment_image_tag(@user, :profile_image, :fill, 300, 300, fallback: "default.png") %>
 ```
 
+All helper methods are available with `refile_` prefix to avoid name clashes
+
 ## 5. JavaScript library
 
 Refile's JavaScript library is small but powerful.

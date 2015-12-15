@@ -32,6 +32,8 @@ module Refile
       end
     end
 
+    alias_method :refile_attachment_url, :attachment_url
+
     # Generates an image tag for the given attachment, adding appropriate
     # classes and optionally falling back to the given fallback image if there
     # is no file attached.
@@ -53,6 +55,8 @@ module Refile
         image_tag(fallback, options.merge(class: classes))
       end
     end
+
+    alias_method :refile_attachment_image_tag, :attachment_image_tag
 
     # Generates a form field which can be used with records which have
     # attachments. This will generate both a file field as well as a hidden
@@ -92,5 +96,7 @@ module Refile
         data: { reference: options[:data][:reference] }
       ) + file_field(object_name, method, options)
     end
+
+    alias_method :refile_attachment_field, :attachment_field
   end
 end
