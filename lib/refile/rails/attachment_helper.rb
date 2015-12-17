@@ -84,13 +84,16 @@ module Refile
 
       options[:data][:reference] = SecureRandom.hex
 
-      hidden_field(object_name, method,
+      hidden_options = {
         multiple: options[:multiple],
         value: object.send("#{method}_data").try(:to_json),
         object: object,
         id: nil,
         data: { reference: options[:data][:reference] }
-      ) + file_field(object_name, method, options)
+      }
+      hidden_options.merge!(index: options[:index]) if options.key?(:index)
+
+      hidden_field(object_name, method, hidden_options) + file_field(object_name, method, options)
     end
   end
 end
