@@ -37,7 +37,6 @@ describe Refile::AttachmentHelper do
     end
   end
 
-
   it "has alias methods" do
     %i(refile_attachment_image_tag refile_attachment_field refile_attachment_url).each do |method|
       expect(self.respond_to? method).to be_truthy
