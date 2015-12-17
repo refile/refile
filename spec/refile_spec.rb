@@ -205,6 +205,12 @@ RSpec.describe Refile do
     end
   end
 
+  describe ".refile_atttachment_url" do
+    it "respons to alias method" do
+      expect(Refile.respond_to? :refile_attachment_url).to be_truthy
+    end
+  end
+
   describe ".upload_url" do
     it "generates an upload url" do
       expect(Refile.upload_url(Refile.cache)).to eq("/cache")

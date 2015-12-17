@@ -391,6 +391,8 @@ module Refile
       file_url(file, *args, host: host, prefix: prefix, filename: filename, format: format)
     end
 
+    alias_method :refile_attachment_url, :attachment_url
+
     # Receives an instance of a class which has used the
     # {Refile::Attachment#attachment} macro to generate an attachment column,
     # and the name of this column, and based on this generates a URL to a
