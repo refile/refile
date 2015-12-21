@@ -128,12 +128,13 @@ module Refile
       if remove?
         delete!
         write(:id, nil, true)
+        remove_metadata
       elsif cache_id
         file = store.upload(get)
         delete!
         write(:id, file.id, true)
+        write_metadata
       end
-      write_metadata
       @metadata = {}
     end
 
@@ -178,6 +179,12 @@ module Refile
       write(:size, size)
       write(:content_type, content_type)
       write(:filename, filename)
+    end
+
+    def remove_metadata
+      write(:size, nil)
+      write(:content_type, nil)
+      write(:filename, nil)
     end
   end
 end
