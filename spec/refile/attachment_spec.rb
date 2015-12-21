@@ -246,8 +246,23 @@ describe Refile::Attachment do
       instance.document_attacher.store!
 
       expect(instance.document_id).to be_nil
-      expect(instance.document_size).to be_nil
       expect(Refile.store.exists?(file.id)).to be_falsy
+    end
+
+    it "removes metadata when remove? returns true" do
+      file = Refile.store.upload(Refile::FileDouble.new("hello"))
+      instance.document_id = file.id
+      instance.document_size = file.size
+      instance.document_filename = "foo"
+      instance.document_content_type = "bar"
+
+      instance.document_attacher.remove = true
+      instance.document_attacher.store!
+
+      expect(instance.document_id).to be_nil
+      expect(instance.document_size).to be_nil
+      expect(instance.document_filename).to be_nil
+      expect(instance.document_content_type).to be_nil
     end
   end
 
