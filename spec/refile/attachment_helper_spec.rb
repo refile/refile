@@ -40,11 +40,12 @@ describe Refile::AttachmentHelper do
 
   describe "#attachment_field" do
     context "with index given" do
-      let(:html) { attachment_field("post", :document, object: klass.new, index: 0) }
+      let(:html) { Capybara.string(attachment_field("post", :document, object: klass.new, index: 0)) }
 
       it "generates file and hidden inputs with identical names" do
-        expect(html).to include('name="post[0][document]" type="file"')
-        expect(html).to include('name="post[0][document]" type="hidden"')
+        field_name = "post[0][document]"
+        expect(html).to have_field(field_name, type: "file")
+        expect(html).to have_selector(:css, "input[name='#{field_name}'][type=hidden]", visible: false)
       end
     end
   end

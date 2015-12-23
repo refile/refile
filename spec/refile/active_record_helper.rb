@@ -32,6 +32,4 @@ class TestMigration < ActiveRecord::Migration
   end
 end
 
-quietly do
-  TestMigration.up
-end
+TestMigration.up

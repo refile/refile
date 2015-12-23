@@ -4,7 +4,9 @@ describe Refile::App do
   include Rack::Test::Methods
 
   def app
-    Refile::App.new
+    res = Refile::App.new
+    res.settings.set :public_folder, ""
+    res
   end
 
   before do
@@ -14,7 +16,6 @@ describe Refile::App do
   describe "GET /:backend/:id/:filename" do
     it "returns a stored file" do
       file = Refile.store.upload(StringIO.new("hello"))
-
       get "/token/store/#{file.id}/hello"
 
       expect(last_response.status).to eq(200)
@@ -23,7 +24,6 @@ describe Refile::App do
 
     it "sets appropriate content type from extension" do
       file = Refile.store.upload(StringIO.new("hello"))
-
       get "/token/store/#{file.id}/hello.html"
 
       expect(last_response.status).to eq(200)
