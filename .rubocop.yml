@@ -1,3 +1,7 @@
+AllCops:
+  Exclude:
+    - 'gemfiles/**/*'
+    - 'vendor/**/*'
 Metrics/LineLength:
   Max: 150 # TODO: we should decrease this to 120
 
