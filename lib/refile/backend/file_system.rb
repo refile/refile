@@ -37,6 +37,8 @@ module Refile
         IO.copy_stream(uploadable, path(id))
 
         Refile::File.new(self, id)
+      ensure
+        uploadable.close
       end
 
       # Get a file from this backend.
