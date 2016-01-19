@@ -1,0 +1,9 @@
+---
+ja:
+  activerecord:
+    errors:
+      messages:
+        too_large: 大きすぎます
+        download_failed: ダウンロードすることができませんでした
+        invalid_content_type: 無効なファイル形式になってい
+        invalid_extension: 無効なファイル形式になってい
