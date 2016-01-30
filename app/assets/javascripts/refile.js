@@ -56,6 +56,13 @@
           dispatchEvent(input, "upload:complete");
         });
 
+        var failure = function () {
+          dispatchEvent(input, "upload:failure");
+          dispatchEvent(input, "upload:complete");
+        }
+        xhr.addEventListener("error", failure);
+        xhr.addEventListener("abort", failure);
+
         xhr.upload.addEventListener("progress", function(progressEvent) {
           dispatchEvent(input, "upload:progress", progressEvent);
         });
@@ -65,7 +72,6 @@
           var presignXhr = new XMLHttpRequest();
           var presignUrl = url + "?t=" + Date.now() + "." + index;
           presignXhr.addEventListener("load", function() {
-            dispatchEvent(input, "presign:complete");
             if(isSuccess(presignXhr)) {
               dispatchEvent(input, "presign:success");
               var data = JSON.parse(presignXhr.responseText)
@@ -74,10 +80,17 @@
               xhr.send(formData(data.as, file, data.fields));
               dispatchEvent(input, "upload:start");
             } else {
-              dispatchEvent(input, "presign:failure");
               xhr.complete = true;
+              dispatchEvent(input, "presign:failure");
             };
+            dispatchEvent(input, "presign:complete");
           });
+          var presignFailure = function () {
+            dispatchEvent(input, "presign:failure");
+            dispatchEvent(input, "presign:complete");
+          }
+          presignXhr.addEventListener("error", presignFailure);
+          presignXhr.addEventListener("abort", presignFailure);
           presignXhr.open("GET", presignUrl, true);
           presignXhr.send();
         } else {
