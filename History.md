@@ -1,6 +1,6 @@
 # 0.6.2
 
-Release date: 2015-09-10
+Release date: 2015-10-29
 
 - [CHANGED] Removed must-revalidate header, since it serves no purpose
 
