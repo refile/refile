@@ -69,9 +69,11 @@ module Refile
     post "/:backend" do
       halt 404 unless upload_allowed?
       tempfile = request.params.fetch("file").fetch(:tempfile)
+      filename = request.params.fetch("file").fetch(:filename)
       file = backend.upload(tempfile)
+      url = Refile.file_url(file, filename: filename)
       content_type :json
-      { id: file.id }.to_json
+      { id: file.id, url: url }.to_json
     end
 
     get "/:backend/presign" do
