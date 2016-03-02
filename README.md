@@ -646,7 +646,7 @@ twice, once for each file.
 
 When you upload multiple files, your application will receive an array of
 files, instead of a single file. To map these files to model object, Refile's
-ActiveRecord integration ships with a nice macro makes this trivial. Suppose
+ActiveRecord integration ships with a nice macro that makes this trivial. Suppose
 you have an image model like this:
 
 ``` ruby
