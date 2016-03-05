@@ -183,7 +183,10 @@
       var fields = JSON.parse(input.getAttribute("data-fields") || "null");
 
       for(var i = 0; i < input.files.length; i++) {
-        if(input.getAttribute("data-max-width") || input.getAttribute("data-max-height"))
+        if((input.getAttribute("data-max-width")
+          || input.getAttribute("data-max-height"))
+            && input.files[i].type.match(/image.*/))
+
           resizeImage(input.files[i], input, i, createRequest);
         else
           requests.push(createRequest(file, index));
@@ -246,7 +249,7 @@
         }
 
         return xhr;
-      };
+      }
 
       if(input.files.length) {
         input.classList.add("uploading");
