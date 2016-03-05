@@ -82,6 +82,9 @@ module Refile
         options[:data].merge!(direct: true, presigned: true, url: url)
       end
 
+      options[:data].merge!(max_width: options[:max_width]) if options[:max_width]
+      options[:data].merge!(max_height: options[:max_height]) if options[:max_height]
+
       options[:data][:reference] = SecureRandom.hex
 
       hidden_options = {
