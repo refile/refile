@@ -230,7 +230,7 @@
               var data = JSON.parse(presignXhr.responseText)
               xhr.id = data.id;
               xhr.open("POST", data.url, true);
-              xhr.send(formData(data.as, file, data.fields));
+              xhr.send(formData(data.as, fileData, data.fields));
               dispatchEvent(input, "upload:start");
             } else {
               dispatchEvent(input, "presign:failure");
@@ -241,7 +241,7 @@
           presignXhr.send();
         } else {
           xhr.open("POST", url, true);
-          xhr.send(formData(input.getAttribute("data-as"), file, fields));
+          xhr.send(formData(input.getAttribute("data-as"), fileData, fields));
           dispatchEvent(input, "upload:start");
         }
 
