@@ -182,17 +182,7 @@
       var url = input.getAttribute("data-url");
       var fields = JSON.parse(input.getAttribute("data-fields") || "null");
 
-      for(var i = 0; i < input.files.length; i++) {
-        if((input.getAttribute("data-max-width")
-          || input.getAttribute("data-max-height"))
-            && input.files[i].type.match(/image.*/))
-
-          resizeImage(input.files[i], input, i, createRequest);
-        else
-          requests.push(createRequest(file, index));
-      }
-
-      function createRequest(file, index) {
+      var createRequest = function(file, index) {
         function dispatchEvent(element, name, progress) {
           var ev = document.createEvent('CustomEvent');
           ev.initCustomEvent(name, true, false, { xhr: xhr, file: file, index: index, progress: progress });
@@ -249,6 +239,16 @@
         }
 
         return xhr;
+      }
+
+      for(var i = 0; i < input.files.length; i++) {
+        if((input.getAttribute("data-max-width")
+          || input.getAttribute("data-max-height"))
+            && input.files[i].type.match(/image.*/))
+
+          resizeImage(input.files[i], input, i, createRequest);
+        else
+          requests.push(createRequest(input.files[i], i));
       }
 
       if(input.files.length) {
