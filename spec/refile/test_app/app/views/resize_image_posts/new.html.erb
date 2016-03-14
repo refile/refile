@@ -1,0 +1,16 @@
+<%= form_for [:resize_image, @post], html: { id: "direct" } do |form| %>
+  <p>
+    <%= @post.errors.full_messages.to_sentence %>
+  </p>
+  <p>
+    <%= form.label :title %>
+    <%= form.text_field :title %>
+  </p>
+  <p>
+    <%= form.label :image %>
+    <%= form.attachment_field :image, direct: true, max_width: 400 %>
+  </p>
+  <p>
+    <%= form.submit "Create" %>
+  </p>
+<% end %>
