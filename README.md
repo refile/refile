@@ -664,7 +664,7 @@ From the post model, you can use the `accepts_attachments_for` macro:
 
 ``` ruby
 class Post < ActiveRecord::Base
-  has_many :images, dependent: :destroy
+  has_many :images, dependent: :destroy, autosave: true
   accepts_attachments_for :images, attachment: :file
 end
 ```
@@ -674,10 +674,12 @@ this case.
 
 ``` ruby
 class Post < ActiveRecord::Base
-  has_many :images, dependent: :destroy
+  has_many :images, dependent: :destroy, autosave: true
   accepts_attachments_for :images
 end
 ```
+
+Note: Leaving out the `autosave` option will only save the attachments when the post is created.
 
 You can add the attachment field to your post form:
 
@@ -816,7 +818,7 @@ RSpec.describe Post, type: :model do
 
     expect(post.image_id).not_to be_nil
   end
-  
+
   it "doesn't allow attaching other files" do
     post = Post.new
 
