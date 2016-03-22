@@ -82,18 +82,22 @@ module Refile
         options[:data].merge!(direct: true, presigned: true, url: url)
       end
 
+      attacher_value = object.send("#{method}_data")
+
       options[:data][:reference] = SecureRandom.hex
 
-      hidden_options = {
-        multiple: options[:multiple],
-        value: object.send("#{method}_data").try(:to_json),
-        object: object,
-        id: nil,
-        data: { reference: options[:data][:reference] }
-      }
-      hidden_options.merge!(index: options[:index]) if options.key?(:index)
+      hidden_options = {}.tap do |opts|
+        opts[:id] = nil
+        opts[:style] = "display: none;"
+        opts[:multiple] = options[:multiple]
+        opts[:value] = attacher_value.try(:to_json)
+        opts[:object] = object
+        opts[:data] = { reference: options[:data][:reference] }
+        opts[:index] = options[:index] if options.key?(:index)
+        opts[:disabled] = true if attacher_value.blank?
+      end
 
-      hidden_field(object_name, method, hidden_options) + file_field(object_name, method, options)
+      text_field(object_name, method, hidden_options) + file_field(object_name, method, options)
     end
   end
 end

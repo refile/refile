@@ -360,7 +360,7 @@ Will generate something like:
 
 ``` html
 <form action="/users" enctype="multipart/form-data" method="post">
-  <input name="user[profile_image]" type="hidden">
+  <input name="user[profile_image]" type="text" style="display:none;">
   <input name="user[profile_image]" type="file">
 </form>
 ```
@@ -816,7 +816,7 @@ RSpec.describe Post, type: :model do
 
     expect(post.image_id).not_to be_nil
   end
-  
+
   it "doesn't allow attaching other files" do
     post = Post.new
 
