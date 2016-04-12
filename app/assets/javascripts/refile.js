@@ -98,10 +98,21 @@
 
         if(requests.every(isSuccess)) {
           var dataObj = requests.map(function(xhr) {
-            var data = JSON.parse(xhr.responseText);
-            var id = xhr.id || data.id;
-            var url = xhr.url || data.url;
-            return { id: id, url: url, filename: xhr.file.name, content_type: xhr.file.type, size: xhr.file.size };
+            var json, data = { filename: xhr.file.name, content_type: xhr.file.type, size: xhr.file.size };
+
+            try {
+              json = JSON.parse(xhr.responseText);
+            } catch(e) {
+              json = {};
+            }
+
+            var id = xhr.id || json.id;
+            var url = xhr.url || json.url;
+
+            if (id) data.id = id;
+            if (url) data.url = url;
+
+            return data;
           });
           if(!input.multiple) dataObj = dataObj[0];
           if(metadataField) metadataField.value = JSON.stringify(dataObj);
