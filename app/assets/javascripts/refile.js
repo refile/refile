@@ -97,12 +97,14 @@
         input.classList.remove("uploading");
 
         if(requests.every(isSuccess)) {
-          var data = requests.map(function(xhr) {
-            var id = xhr.id || JSON.parse(xhr.responseText).id;
-            return { id: id, filename: xhr.file.name, content_type: xhr.file.type, size: xhr.file.size };
+          var dataObj = requests.map(function(xhr) {
+            var data = JSON.parse(xhr.responseText);
+            var id = xhr.id || data.id;
+            var url = xhr.url || data.url;
+            return { id: id, url: url, filename: xhr.file.name, content_type: xhr.file.type, size: xhr.file.size };
           });
-          if(!input.multiple) data = data[0];
-          if(metadataField) metadataField.value = JSON.stringify(data);
+          if(!input.multiple) dataObj = dataObj[0];
+          if(metadataField) metadataField.value = JSON.stringify(dataObj);
 
           input.removeAttribute("name");
         }
