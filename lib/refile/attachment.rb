@@ -18,6 +18,7 @@ module Refile
     # - `remote_image_url`
     # - `remote_image_url=`
     # - `image_url`
+    # - `image_presigned_url`
     #
     # @example
     #   class User
@@ -86,6 +87,11 @@ module Refile
 
         define_method "#{name}_url" do |*args|
           Refile.attachment_url(self, name, *args)
+        end
+
+        define_method "presigned_#{name}_url" do |expires_in = 900|
+          _attacher = send(attacher)
+          _attacher.store.object(_attacher.id).presigned_url(:get, expires_in: expires_in) unless _attacher.id.nil?
         end
 
         define_method "#{name}_data" do
