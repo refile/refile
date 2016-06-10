@@ -45,7 +45,7 @@ describe Refile::AttachmentHelper do
       it "generates file and hidden inputs with identical names" do
         field_name = "post[0][document]"
         expect(html).to have_field(field_name, type: "file")
-        expect(html).to have_selector(:css, "input[name='#{field_name}'][type=hidden]", visible: false)
+        expect(html).to have_selector(:css, "input[name='#{field_name}'][type=hidden]", visible: false, count: 1)
       end
     end
   end

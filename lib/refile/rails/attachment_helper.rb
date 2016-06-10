@@ -83,6 +83,7 @@ module Refile
       end
 
       options[:data][:reference] = SecureRandom.hex
+      options[:include_hidden] = false
 
       hidden_options = {
         multiple: options[:multiple],
