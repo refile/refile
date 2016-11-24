@@ -35,6 +35,7 @@ module Refile
     # This will match all token authenticated requests
     before "/:token/:backend/*" do
       halt 403 unless verified?
+      halt 304 if has_if_modified_since?
     end
 
     get "/:token/:backend/:id/:filename" do
@@ -92,6 +93,11 @@ module Refile
       "forbidden"
     end
 
+    error 304 do
+      content_type :text
+      "not modified"
+    end
+
     error Refile::InvalidFile do
       status 400
       "Upload failure error"
@@ -119,6 +125,10 @@ module Refile
 
     def upload_allowed?
       Refile.allow_uploads_to == :all or Refile.allow_uploads_to.include?(params[:backend])
+    end
+
+    def has_if_modified_since?
+      !request.env["HTTP_IF_MODIFIED_SINCE"].blank?
     end
 
     def logger
