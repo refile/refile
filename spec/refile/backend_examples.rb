@@ -32,6 +32,29 @@ RSpec.shared_examples_for :backend do
       expect(retrieved.size).to eq(5)
       expect(retrieved.exists?).to be_truthy
     end
+
+    context "when Encoding.default_internal is set to UTF-8" do
+      let(:binary) { "\x89PNG\r\n\x1A\n\x00\x00".force_encoding("ASCII-8BIT") }
+      let(:binary_file) { uploadable(binary) }
+
+      before do
+        @encoding_before = Encoding.default_internal
+        Encoding.default_internal = Encoding::UTF_8
+      end
+      after do
+        Encoding.default_internal = @encoding_before
+      end
+
+      it "can store an uploaded file binary file" do
+        file = backend.upload(binary_file)
+        file2 = backend.upload(file)
+
+        retrieved = backend.get(file2.id)
+
+        expect(retrieved.size).to eq(10)
+        expect(retrieved.exists?).to be_truthy
+      end
+    end
   end
 
   describe "#delete" do
