@@ -1,0 +1,9 @@
+---
+fr:
+  activerecord:
+    errors:
+      messages:
+        too_large: est trop grande
+        download_failed: n'a pas pu être téléchargé
+        invalid_content_type: a un format de fichier non valide
+        invalid_extension: a un format de fichier non valide
