@@ -361,4 +361,27 @@ describe Refile::App do
     expect(last_response.content_type).to eq("text/plain;charset=utf-8")
     expect(last_response.body).to eq("not found")
   end
+
+  describe "GET file with public_path provided" do
+    before { allow(Refile).to receive(:public_path).and_return("public") }
+    after { FileUtils.remove_entry_secure "public" }
+
+    it "should save processed file in public folder" do
+      file = Refile.store.upload(StringIO.new("hello"))
+
+      [
+        "/token/store/#{file.id}/hello",
+        "/token/store/#{file.id}/hello.html",
+        "/token/store/reverse/#{file.id}/hello",
+        "/token/store/upcase/#{file.id}/hello",
+        "/token/store/concat/foo/bar/baz/#{file.id}/hello",
+        "/token/store/convert_case/#{file.id}/hello.up"
+      ].each do |path|
+        get path
+
+        expect(last_response.status).to eq(200)
+        expect(File.exist?("public/#{path}")).to eq true
+      end
+    end
+  end
 end

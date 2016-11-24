@@ -342,6 +342,18 @@ elloh
 Refile calls `call` on the processor and passes in the retrieved file, as well
 as all additional arguments sent through the URL.
 
+### Saving processed files in public folder
+
+If using CDN is not an option then you probably want to save processed files
+in public folder.
+You should only define `public_path` option like this:
+
+``` ruby
+Refile.public_path = '/your/public/folder'
+# or
+Refile.public_path = Rails.public_path if Rails.env.development?
+```
+
 ## 4. Rails helpers
 
 Refile provides the `attachment_field` form helper which generates a file field
@@ -816,7 +828,7 @@ RSpec.describe Post, type: :model do
 
     expect(post.image_id).not_to be_nil
   end
-  
+
   it "doesn't allow attaching other files" do
     post = Post.new
 

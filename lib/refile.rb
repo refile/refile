@@ -129,6 +129,13 @@ module Refile
     # @return [String]
     attr_accessor :secret_key
 
+    # Public path for storing processed files
+    #
+    # The default is nil. That means no files would be stored.
+    #
+    # @return [String]
+    attr_accessor :public_path
+
     # A global registry of backends.
     #
     # @return [Hash{String => Backend}]
