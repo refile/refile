@@ -71,7 +71,13 @@ module Refile
       tempfile = request.params.fetch("file").fetch(:tempfile)
       filename = request.params.fetch("file").fetch(:filename)
       file = backend.upload(tempfile)
-      url = Refile.file_url(file, filename: filename)
+      # rescale patch
+      url = if params[:data_scale_height] && params[:data_scale_width]
+              Refile.file_url(file, :fill, params[:data_scale_width], params[:data_scale_height], filename: filename)
+            else
+              Refile.file_url(file, filename: filename)
+            end
+      # rescale patch
       content_type :json
       { id: file.id, url: url }.to_json
     end

@@ -80,7 +80,14 @@ module Refile
 
       if options[:direct]
         url = Refile.attachment_upload_url(object, method, host: options[:host], prefix: options[:prefix])
-        options[:data].merge!(direct: true, as: "file", url: url)
+        # rescaling patch
+        options[:data].merge!(direct: true, as: "file", url: url, 'scale-width' => options[:scale_width], 'scale-height' => options[:scale_height])
+        if options[:scale_width]
+          options[:data].merge!('scale-width' => options[:scale_width])
+        elsif options[:scale_width]
+          options[:data].merge!('scale-height' => options[:scale_height])
+        end
+        # rescaling patch
       end
 
       if options[:presigned] and definition.cache.respond_to?(:presign)

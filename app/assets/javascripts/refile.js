@@ -82,7 +82,12 @@
           presignXhr.send();
         } else {
           xhr.open("POST", url, true);
-          xhr.send(formData(input.getAttribute("data-as"), file, fields));
+          // rescaling patch
+          var customFormData = formData(input.getAttribute("data-as"), file, fields)
+          customFormData.append("data_scale_height", input.getAttribute('data-scale-height'));
+          customFormData.append("data_scale_width", input.getAttribute('data-scale-width'));
+          xhr.send(customFormData);
+          // rescaling patch
           dispatchEvent(input, "upload:start");
         }
 
