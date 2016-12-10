@@ -768,6 +768,24 @@ end
 Refile will now fetch the file from the given URL, following redirects if
 needed.
 
+## Using Refile inside of Rails Engines
+
+If you want to use Refile inside of a Rails Engine you need to load it the folloing way:
+
+``` ruby
+# gemspec of Rails Engine
+s.add_dependency 'mini_magick'
+s.add_dependency 'refile'
+s.add_dependency 'refile-mini_magick'
+```
+
+``` ruby
+# lib file of Rails Engine
+require 'mini_magick'
+require 'refile/rails'
+require 'refile/mini_magick'
+```
+
 ## Cache expiry
 
 Files will accumulate in your cache, and you'll probably want to remove them
