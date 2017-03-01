@@ -83,6 +83,16 @@ module Refile
       @io = nil
     end
 
+    # Prevent from exposing secure information unexpectedly
+    #
+    # @return [Hash]
+    def as_json(options={})
+      {
+        id: id,
+        backend: backend.to_s
+      }
+    end
+
   private
 
     def io
