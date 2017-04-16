@@ -14,6 +14,16 @@ feature "Normal HTTP Post file uploads" do
     expect(download_link("Document")).to eq("hello")
   end
 
+  scenario "Successfully upload a image" do
+    visit "/normal/posts/new"
+    fill_in "Title", with: "A cool post"
+    attach_file "Image", path("image.jpg")
+    click_button "Create"
+
+    expect(page).to have_selector("h1", text: "A cool post")
+    expect(find('img')['src']).to start_with(Refile.host)
+  end
+
   scenario "Fail to upload a file that is too large" do
     visit "/normal/posts/new"
     fill_in "Title", with: "A cool post"
