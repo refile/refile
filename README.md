@@ -289,6 +289,12 @@ If you are using Rails and have required [refile/rails.rb](lib/refile/rails.rb),
 then the Rack application is mounted for you at `/attachments`. You should be able
 to see this when you run `rake routes`.
 
+You can configure Refile to use a different `mount_point` than `/attachments`:
+
+``` ruby
+Refile.mount_point = "/your-preferred-mount-point"
+```
+
 You could also run the application on its own, it doesn't need to be mounted to
 work.
 
@@ -816,7 +822,7 @@ RSpec.describe Post, type: :model do
 
     expect(post.image_id).not_to be_nil
   end
-  
+
   it "doesn't allow attaching other files" do
     post = Post.new
 
@@ -826,7 +832,6 @@ RSpec.describe Post, type: :model do
     expect(post.image_id).to be_nil
   end
 end
-
 ```
 
 ## simple_form
