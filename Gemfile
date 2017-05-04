@@ -13,7 +13,7 @@ gem "pry"
 gem "pry-byebug", platforms: [:mri]
 gem "aws-sdk"
 gem "rack-test", "~> 0.6.2"
-gem "rails", "~> 4.1.12"
+gem "rails", "~> 5"
 gem "sqlite3",                          platforms: [:ruby]
 gem "activerecord-jdbcsqlite3-adapter", platforms: [:jruby]
 gem "poltergeist"
