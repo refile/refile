@@ -11,7 +11,7 @@ module PmacsRefile
   #   end
   #
   # @example as standalone app
-  #   require "refile"
+  #   require "pmacs_refile"
   #
   #   run PmacsRefile::App.new
   class App < Sinatra::Base
