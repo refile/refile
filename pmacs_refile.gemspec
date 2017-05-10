@@ -1,4 +1,4 @@
-require "./lib/refile/version"
+require "./lib/pmacs_refile/version"
 
 Gem::Specification.new do |spec|
   spec.name          = "pmacs_refile"
