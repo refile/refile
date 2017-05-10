@@ -1,4 +1,4 @@
-require pmacs_refile/test_app"
+require "pmacs_refile/test_app"
 
 feature "Multiple file uploads", :js do
   scenario "Upload multiple files" do

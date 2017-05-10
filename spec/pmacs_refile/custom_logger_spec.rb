@@ -1,6 +1,6 @@
-require pmacs_refile/custom_logger"
+require "pmacs_refile/custom_logger"
 
-describe Refile::CustomLogger do
+describe PmacsRefile::CustomLogger do
   let(:rack_app) do
     ->(_) { [200, {}, ["Success"]] }
   end

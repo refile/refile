@@ -1,7 +1,7 @@
-RSpec.describe Refile::BackendMacros do
+RSpec.describe PmacsRefile::BackendMacros do
   let(:klass) do
     Class.new do
-      extend Refile::BackendMacros
+      extend PmacsRefile::BackendMacros
 
       attr_accessor :max_size
 
@@ -24,33 +24,33 @@ RSpec.describe Refile::BackendMacros do
     end
 
     it "raises ArgumentError if argument does not respond to `size`" do
-      expect { instance.upload(double(read: io, eof?: true, rewind: true, close: nil)) }.to raise_error(Refile::InvalidFile)
+      expect { instance.upload(double(read: io, eof?: true, rewind: true, close: nil)) }.to raise_error(PmacsRefile::InvalidFile)
     end
 
     it "raises ArgumentError if argument does not respond to `read`" do
-      expect { instance.upload(double(size: 444, eof?: true, rewind: true, close: nil)) }.to raise_error(Refile::InvalidFile)
+      expect { instance.upload(double(size: 444, eof?: true, rewind: true, close: nil)) }.to raise_error(PmacsRefile::InvalidFile)
     end
 
     it "raises ArgumentError if argument does not respond to `eof?`" do
-      expect { instance.upload(double(size: 444, read: true, rewind: true, close: nil)) }.to raise_error(Refile::InvalidFile)
+      expect { instance.upload(double(size: 444, read: true, rewind: true, close: nil)) }.to raise_error(PmacsRefile::InvalidFile)
     end
 
     it "raises ArgumentError if argument does not respond to `rewind`" do
-      expect { instance.upload(double(size: 444, read: true, eof?: true, close: nil)) }.to raise_error(Refile::InvalidFile)
+      expect { instance.upload(double(size: 444, read: true, eof?: true, close: nil)) }.to raise_error(PmacsRefile::InvalidFile)
     end
 
     it "raises ArgumentError if argument does not respond to `close`" do
-      expect { instance.upload(double(size: 444, read: true, rewind: true, eof?: true)) }.to raise_error(Refile::InvalidFile)
+      expect { instance.upload(double(size: 444, read: true, rewind: true, eof?: true)) }.to raise_error(PmacsRefile::InvalidFile)
     end
 
     it "returns true if size is respeced" do
       instance.max_size = 8
-      expect(instance.upload(Refile::FileDouble.new("hello"))).to be_truthy
+      expect(instance.upload(PmacsRefile::FileDouble.new("hello"))).to be_truthy
     end
 
-    it "raises Refile::Invalid if size is exceeded" do
+    it "raises PmacsRefile::Invalid if size is exceeded" do
       instance.max_size = 8
-      expect { instance.upload(Refile::FileDouble.new("hello world")) }.to raise_error(Refile::InvalidMaxSize)
+      expect { instance.upload(PmacsRefile::FileDouble.new("hello world")) }.to raise_error(PmacsRefile::InvalidMaxSize)
     end
   end
 
@@ -60,7 +60,7 @@ RSpec.describe Refile::BackendMacros do
     end
 
     it "raises ArgumentError if argument does not respond to `size`" do
-      expect { instance.get("ev/il") }.to raise_error(Refile::InvalidID)
+      expect { instance.get("ev/il") }.to raise_error(PmacsRefile::InvalidID)
     end
   end
 

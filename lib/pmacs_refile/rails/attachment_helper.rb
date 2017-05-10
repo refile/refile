@@ -1,5 +1,5 @@
 module PmacsRefile
-  # Rails view helpers which aid in using Refile from views.
+  # Rails view helpers which aid in using PmacsRefile from views.
   module AttachmentHelper
     # Form builder extension
     module FormBuilder
@@ -17,12 +17,12 @@ module PmacsRefile
     end
 
     # View helper which generates a url for an attachment. This generates a URL
-    # to the {Refile::App} which is assumed to be mounted in the Rails
+    # to the {PmacsRefile::App} which is assumed to be mounted in the Rails
     # application.
     #
-    # @see Refile.attachment_url
+    # @see PmacsRefile.attachment_url
     #
-    # @param [Refile::Attachment] object   Instance of a class which has an attached file
+    # @param [PmacsRefile::Attachment] object   Instance of a class which has an attached file
     # @param [Symbol] name                 The name of the attachment column
     # @param [String, nil] filename        The filename to be appended to the URL
     # @param [String, nil] fallback        The path to an asset to be used as a fallback
@@ -32,7 +32,7 @@ module PmacsRefile
     def attachment_url(record, name, *args, fallback: nil, **opts)
       file = record && record.public_send(name)
       if file
-        Refile.attachment_url(record, name, *args, **opts)
+        PmacsRefile.attachment_url(record, name, *args, **opts)
       elsif fallback
         asset_url(fallback)
       end
@@ -79,12 +79,12 @@ module PmacsRefile
       options[:accept] = definition.accept
 
       if options[:direct]
-        url = Refile.attachment_upload_url(object, method, host: options[:host], prefix: options[:prefix])
+        url = PmacsRefile.attachment_upload_url(object, method, host: options[:host], prefix: options[:prefix])
         options[:data].merge!(direct: true, as: "file", url: url)
       end
 
       if options[:presigned] and definition.cache.respond_to?(:presign)
-        url = Refile.attachment_presign_url(object, method, host: options[:host], prefix: options[:prefix])
+        url = PmacsRefile.attachment_presign_url(object, method, host: options[:host], prefix: options[:prefix])
         options[:data].merge!(direct: true, presigned: true, url: url)
       end
 

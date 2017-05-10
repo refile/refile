@@ -7,7 +7,7 @@ module PmacsRefile
       #
       # @param [true, false] destroy  Whether to remove the stored file if its model is destroyed
       # @return [void]
-      # @see Refile::Attachment#attachment
+      # @see PmacsRefile::Attachment#attachment
       def attachment(name, raise_errors: false, destroy: true, **options)
         super(name, raise_errors: raise_errors, **options)
 
@@ -97,7 +97,7 @@ module PmacsRefile
           define_method :"#{name}=" do |files|
             cache, files = files.partition { |file| file.is_a?(String) }
 
-            cache = Refile.parse_json(cache.first)
+            cache = PmacsRefile.parse_json(cache.first)
 
             if not append and (files.present? or cache.present?)
               send("#{association_name}=", [])
@@ -121,4 +121,4 @@ module PmacsRefile
   end
 end
 
-::ActiveRecord::Base.extend(Refile::ActiveRecord::Attachment)
+::ActiveRecord::Base.extend(PmacsRefile::ActiveRecord::Attachment)

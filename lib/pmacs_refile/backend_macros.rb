@@ -10,7 +10,7 @@ module PmacsRefile
           if self.class.valid_id?(id)
             super(id)
           else
-            raise Refile::InvalidID
+            raise PmacsRefile::InvalidID
           end
         end
       end
@@ -22,11 +22,11 @@ module PmacsRefile
         define_method(method) do |uploadable|
           [:size, :read, :eof?, :rewind, :close].each do |m|
             unless uploadable.respond_to?(m)
-              raise Refile::InvalidFile, "does not respond to `#{m}`."
+              raise PmacsRefile::InvalidFile, "does not respond to `#{m}`."
             end
           end
           if max_size and uploadable.size > max_size
-            raise Refile::InvalidMaxSize, "#{uploadable.inspect} is too large"
+            raise PmacsRefile::InvalidMaxSize, "#{uploadable.inspect} is too large"
           end
           super(uploadable)
         end

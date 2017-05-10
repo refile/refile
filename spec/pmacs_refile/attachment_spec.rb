@@ -1,9 +1,9 @@
-describe Refile::Attachment do
+describe PmacsRefile::Attachment do
   let(:options) { {} }
   let(:klass) do
     opts = options
     Class.new do
-      extend Refile::Attachment
+      extend PmacsRefile::Attachment
 
       attr_accessor :document_id, :document_filename, :document_size, :document_content_type
 
@@ -14,7 +14,7 @@ describe Refile::Attachment do
 
   describe ":name=" do
     it "receives a file, caches it and sets the _id parameter" do
-      instance.document = Refile::FileDouble.new("hello", "foo.txt", content_type: "text/plain")
+      instance.document = PmacsRefile::FileDouble.new("hello", "foo.txt", content_type: "text/plain")
 
       expect(instance.document.read).to eq("hello")
 
@@ -28,7 +28,7 @@ describe Refile::Attachment do
     end
 
     it "receives serialized data and retrieves file from it" do
-      file = Refile.cache.upload(Refile::FileDouble.new("hello"))
+      file = PmacsRefile.cache.upload(PmacsRefile::FileDouble.new("hello"))
       instance.document = { id: file.id, filename: "foo.txt", content_type: "text/plain", size: 5 }.to_json
 
       expect(instance.document.read).to eq("hello")
@@ -43,7 +43,7 @@ describe Refile::Attachment do
     end
 
     it "receives parsed data and retrieves file from it" do
-      file = Refile.cache.upload(Refile::FileDouble.new("hello"))
+      file = PmacsRefile.cache.upload(PmacsRefile::FileDouble.new("hello"))
       instance.document = { id: file.id, filename: "foo.txt", content_type: "text/plain", size: 5 }
 
       expect(instance.document.read).to eq("hello")
@@ -77,7 +77,7 @@ describe Refile::Attachment do
     end
 
     it "removes a document when assigned nil" do
-      instance.document = Refile::FileDouble.new("hello", "foo.txt", content_type: "text/plain")
+      instance.document = PmacsRefile::FileDouble.new("hello", "foo.txt", content_type: "text/plain")
       instance.document = nil
       expect(instance.document).to be_nil
     end
@@ -85,7 +85,7 @@ describe Refile::Attachment do
 
   describe ":name" do
     it "gets a file from the store" do
-      file = Refile.store.upload(Refile::FileDouble.new("hello"))
+      file = PmacsRefile.store.upload(PmacsRefile::FileDouble.new("hello"))
       instance.document_id = file.id
 
       expect(instance.document.id).to eq(file.id)
@@ -104,9 +104,9 @@ describe Refile::Attachment do
 
   describe ":url" do
     it "generates URL with extra options" do
-      allow(Refile).to receive(:token).and_return("token")
+      allow(PmacsRefile).to receive(:token).and_return("token")
 
-      file = Refile.store.upload(Refile::FileDouble.new("hello"))
+      file = PmacsRefile.store.upload(PmacsRefile::FileDouble.new("hello"))
       instance.document_id = file.id
 
       expect(instance.document_url("fill", 800, 800)).to eq("http://localhost:56120/attachments/token/store/fill/800/800/#{file.id}/document")
@@ -145,7 +145,7 @@ describe Refile::Attachment do
         expect(instance.document_size).to eq(3)
         expect(instance.document_content_type).to eq("text/plain")
 
-        expect(Refile.cache.get(instance.document.id).read).to eq("abc")
+        expect(PmacsRefile.cache.get(instance.document.id).read).to eq("abc")
       end
     end
 
@@ -159,7 +159,7 @@ describe Refile::Attachment do
       it "follows redirects and fetches the file, caches it and sets the _id parameter" do
         instance.remote_document_url = "http://www.example.com/1"
         expect(instance.document.read).to eq("woop")
-        expect(Refile.cache.get(instance.document.id).read).to eq("woop")
+        expect(PmacsRefile.cache.get(instance.document.id).read).to eq("woop")
       end
 
       context "when errors enabled" do
@@ -186,21 +186,21 @@ describe Refile::Attachment do
 
   describe ":name_attacher.store!" do
     it "puts a cached file into the store" do
-      instance.document = Refile::FileDouble.new("hello")
+      instance.document = PmacsRefile::FileDouble.new("hello")
       cache = instance.document
 
       instance.document_attacher.store!
 
-      expect(Refile.store.get(instance.document_id).read).to eq("hello")
-      expect(Refile.store.get(instance.document.id).read).to eq("hello")
+      expect(PmacsRefile.store.get(instance.document_id).read).to eq("hello")
+      expect(PmacsRefile.store.get(instance.document.id).read).to eq("hello")
 
       expect(instance.document.read).to eq("hello")
       expect(instance.document_size).to eq(5)
-      expect(Refile.cache.get(cache.id).exists?).to be_falsy
+      expect(PmacsRefile.cache.get(cache.id).exists?).to be_falsy
     end
 
     it "complains when `id` attribute not writable" do
-      instance.document = Refile::FileDouble.new("hello")
+      instance.document = PmacsRefile::FileDouble.new("hello")
 
       klass.class_eval do
         undef :document_id=
@@ -212,45 +212,45 @@ describe Refile::Attachment do
     end
 
     it "does nothing when not cached" do
-      file = Refile.store.upload(Refile::FileDouble.new("hello"))
+      file = PmacsRefile.store.upload(PmacsRefile::FileDouble.new("hello"))
       instance.document_id = file.id
 
       instance.document_attacher.store!
 
-      expect(Refile.store.get(instance.document_id).read).to eq("hello")
-      expect(Refile.store.get(instance.document.id).read).to eq("hello")
+      expect(PmacsRefile.store.get(instance.document_id).read).to eq("hello")
+      expect(PmacsRefile.store.get(instance.document.id).read).to eq("hello")
     end
 
     it "overwrites previously stored file" do
-      file = Refile.store.upload(Refile::FileDouble.new("hello"))
+      file = PmacsRefile.store.upload(PmacsRefile::FileDouble.new("hello"))
       instance.document_id = file.id
 
-      instance.document = Refile::FileDouble.new("world")
+      instance.document = PmacsRefile::FileDouble.new("world")
       cache = instance.document
 
       instance.document_attacher.store!
 
-      expect(Refile.store.get(instance.document_id).read).to eq("world")
-      expect(Refile.store.get(instance.document.id).read).to eq("world")
+      expect(PmacsRefile.store.get(instance.document_id).read).to eq("world")
+      expect(PmacsRefile.store.get(instance.document.id).read).to eq("world")
 
       expect(instance.document.read).to eq("world")
-      expect(Refile.cache.get(cache.id).exists?).to be_falsy
-      expect(Refile.store.get(file.id).exists?).to be_falsy
+      expect(PmacsRefile.cache.get(cache.id).exists?).to be_falsy
+      expect(PmacsRefile.store.get(file.id).exists?).to be_falsy
     end
 
     it "removes an uploaded file when remove? returns true" do
-      file = Refile.store.upload(Refile::FileDouble.new("hello"))
+      file = PmacsRefile.store.upload(PmacsRefile::FileDouble.new("hello"))
       instance.document_id = file.id
 
       instance.document_attacher.remove = true
       instance.document_attacher.store!
 
       expect(instance.document_id).to be_nil
-      expect(Refile.store.exists?(file.id)).to be_falsy
+      expect(PmacsRefile.store.exists?(file.id)).to be_falsy
     end
 
     it "removes metadata when remove? returns true" do
-      file = Refile.store.upload(Refile::FileDouble.new("hello"))
+      file = PmacsRefile.store.upload(PmacsRefile::FileDouble.new("hello"))
       instance.document_id = file.id
       instance.document_size = file.size
       instance.document_filename = "foo"
@@ -268,22 +268,22 @@ describe Refile::Attachment do
 
   describe ":name_attacher.delete!" do
     it "deletes a stored file" do
-      instance.document = Refile::FileDouble.new("hello")
+      instance.document = PmacsRefile::FileDouble.new("hello")
       instance.document_attacher.store!
       file = instance.document
 
       instance.document_attacher.delete!
 
-      expect(Refile.store.exists?(file.id)).to be_falsy
+      expect(PmacsRefile.store.exists?(file.id)).to be_falsy
     end
 
     it "deletes a cached file" do
-      instance.document = Refile::FileDouble.new("hello")
+      instance.document = PmacsRefile::FileDouble.new("hello")
       file = instance.document
 
       instance.document_attacher.delete!
 
-      expect(Refile.cache.exists?(file.id)).to be_falsy
+      expect(PmacsRefile.cache.exists?(file.id)).to be_falsy
     end
   end
 
@@ -322,7 +322,7 @@ describe Refile::Attachment do
     end
 
     it "returns false and if valid file is attached" do
-      file = Refile::FileDouble.new("hello", content_type: "image/png")
+      file = PmacsRefile::FileDouble.new("hello", content_type: "image/png")
 
       instance.document = file
 
@@ -330,7 +330,7 @@ describe Refile::Attachment do
     end
 
     it "returns false and sets errors if invalid file is attached" do
-      file = Refile::FileDouble.new("hello", content_type: "text/plain")
+      file = PmacsRefile::FileDouble.new("hello", content_type: "text/plain")
 
       instance.document = file
 
@@ -341,31 +341,31 @@ describe Refile::Attachment do
 
   describe ":name_attacher.extension" do
     it "is nil when not inferrable" do
-      file = Refile::FileDouble.new("hello")
+      file = PmacsRefile::FileDouble.new("hello")
       instance.document = file
       expect(instance.document_attacher.extension).to be_nil
     end
 
     it "is inferred from the filename" do
-      file = Refile::FileDouble.new("hello", "hello.txt")
+      file = PmacsRefile::FileDouble.new("hello", "hello.txt")
       instance.document = file
       expect(instance.document_attacher.extension).to eq("txt")
     end
 
     it "is inferred from the content type" do
-      file = Refile::FileDouble.new("hello", content_type: "image/png")
+      file = PmacsRefile::FileDouble.new("hello", content_type: "image/png")
       instance.document = file
       expect(instance.document_attacher.extension).to eq("png")
     end
 
     it "returns nil with unknown content type" do
-      file = Refile::FileDouble.new("hello", content_type: "foo/doesnotexist")
+      file = PmacsRefile::FileDouble.new("hello", content_type: "foo/doesnotexist")
       instance.document = file
       expect(instance.document_attacher.extension).to be_nil
     end
 
     it "is nil when filename has no extension" do
-      file = Refile::FileDouble.new("hello", "hello")
+      file = PmacsRefile::FileDouble.new("hello", "hello")
       instance.document = file
       expect(instance.document_attacher.extension).to be_nil
     end
@@ -373,19 +373,19 @@ describe Refile::Attachment do
 
   describe ":name_attacher.basename" do
     it "is nil when not inferrable" do
-      file = Refile::FileDouble.new("hello")
+      file = PmacsRefile::FileDouble.new("hello")
       instance.document = file
       expect(instance.document_attacher.basename).to be_nil
     end
 
     it "is inferred from the filename" do
-      file = Refile::FileDouble.new("hello", "hello.txt")
+      file = PmacsRefile::FileDouble.new("hello", "hello.txt")
       instance.document = file
       expect(instance.document_attacher.basename).to eq("hello")
     end
 
     it "returns filename if filename has no extension" do
-      file = Refile::FileDouble.new("hello", "hello")
+      file = PmacsRefile::FileDouble.new("hello", "hello")
       instance.document = file
       expect(instance.document_attacher.basename).to eq("hello")
     end
@@ -395,15 +395,15 @@ describe Refile::Attachment do
     let(:options) { { cache: :limited_cache, raise_errors: false } }
 
     it "is blank when valid file uploaded" do
-      file = Refile::FileDouble.new("hello")
+      file = PmacsRefile::FileDouble.new("hello")
       instance.document = file
 
       expect(instance.document_attacher.errors).to be_empty
-      expect(Refile.cache.get(instance.document.id).exists?).to be_truthy
+      expect(PmacsRefile.cache.get(instance.document.id).exists?).to be_truthy
     end
 
     it "contains a list of errors when invalid file uploaded" do
-      file = Refile::FileDouble.new("a" * 120)
+      file = PmacsRefile::FileDouble.new("a" * 120)
       instance.document = file
 
       expect(instance.document_attacher.errors).to eq([:too_large])
@@ -411,14 +411,14 @@ describe Refile::Attachment do
     end
 
     it "is reset when valid file uploaded" do
-      file = Refile::FileDouble.new("a" * 120)
+      file = PmacsRefile::FileDouble.new("a" * 120)
       instance.document = file
 
-      file = Refile::FileDouble.new("hello")
+      file = PmacsRefile::FileDouble.new("hello")
       instance.document = file
 
       expect(instance.document_attacher.errors).to be_empty
-      expect(Refile.cache.get(instance.document.id).exists?).to be_truthy
+      expect(PmacsRefile.cache.get(instance.document.id).exists?).to be_truthy
     end
   end
 
@@ -444,10 +444,10 @@ describe Refile::Attachment do
     let(:options) { { cache: :limited_cache, raise_errors: true } }
 
     it "raises an error when invalid file assigned" do
-      file = Refile::FileDouble.new("a" * 120)
+      file = PmacsRefile::FileDouble.new("a" * 120)
       expect do
         instance.document = file
-      end.to raise_error(Refile::Invalid)
+      end.to raise_error(PmacsRefile::Invalid)
 
       expect(instance.document_attacher.errors).to eq([:too_large])
       expect(instance.document).to be_nil
@@ -458,7 +458,7 @@ describe Refile::Attachment do
     let(:options) { { cache: :limited_cache, raise_errors: false } }
 
     it "does not raise an error when invalid file assigned" do
-      file = Refile::FileDouble.new("a" * 120)
+      file = PmacsRefile::FileDouble.new("a" * 120)
       instance.document = file
 
       expect(instance.document_attacher.errors).to eq([:too_large])
@@ -470,15 +470,15 @@ describe Refile::Attachment do
     let(:options) { { extension: "txt", raise_errors: false } }
 
     it "allows file with correct extension to be uploaded" do
-      file = Refile::FileDouble.new("hello", "hello.txt")
+      file = PmacsRefile::FileDouble.new("hello", "hello.txt")
       instance.document = file
 
       expect(instance.document_attacher.errors).to be_empty
-      expect(Refile.cache.get(instance.document.id).exists?).to be_truthy
+      expect(PmacsRefile.cache.get(instance.document.id).exists?).to be_truthy
     end
 
     it "sets error when file with other extension is uploaded" do
-      file = Refile::FileDouble.new("hello", "hello.php")
+      file = PmacsRefile::FileDouble.new("hello", "hello.php")
       instance.document = file
 
       expect(instance.document_attacher.errors).to eq([:invalid_extension])
@@ -486,7 +486,7 @@ describe Refile::Attachment do
     end
 
     it "sets error when file with no extension is uploaded" do
-      file = Refile::FileDouble.new("hello")
+      file = PmacsRefile::FileDouble.new("hello")
       instance.document = file
 
       expect(instance.document_attacher.errors).to eq([:invalid_extension])
@@ -498,15 +498,15 @@ describe Refile::Attachment do
     let(:options) { { content_type: "text/plain", raise_errors: false } }
 
     it "allows file with correct content type to be uploaded" do
-      file = Refile::FileDouble.new("hello", content_type: "text/plain")
+      file = PmacsRefile::FileDouble.new("hello", content_type: "text/plain")
       instance.document = file
 
       expect(instance.document_attacher.errors).to be_empty
-      expect(Refile.cache.get(instance.document.id).exists?).to be_truthy
+      expect(PmacsRefile.cache.get(instance.document.id).exists?).to be_truthy
     end
 
     it "sets error when file with other content type is uploaded" do
-      file = Refile::FileDouble.new("hello", content_type: "application/php")
+      file = PmacsRefile::FileDouble.new("hello", content_type: "application/php")
       instance.document = file
 
       expect(instance.document_attacher.errors).to eq([:invalid_content_type])
@@ -514,7 +514,7 @@ describe Refile::Attachment do
     end
 
     it "sets error when file with no content type is uploaded" do
-      file = Refile::FileDouble.new("hello")
+      file = PmacsRefile::FileDouble.new("hello")
       instance.document = file
 
       expect(instance.document_attacher.errors).to eq([:invalid_content_type])
@@ -526,15 +526,15 @@ describe Refile::Attachment do
     let(:options) { { type: :image, raise_errors: false } }
 
     it "allows image to be uploaded" do
-      file = Refile::FileDouble.new("hello", content_type: "image/jpeg")
+      file = PmacsRefile::FileDouble.new("hello", content_type: "image/jpeg")
       instance.document = file
 
       expect(instance.document_attacher.errors).to be_empty
-      expect(Refile.cache.get(instance.document.id).exists?).to be_truthy
+      expect(PmacsRefile.cache.get(instance.document.id).exists?).to be_truthy
     end
 
     it "sets error when file with other content type is uploaded" do
-      file = Refile::FileDouble.new("hello", content_type: "application/php")
+      file = PmacsRefile::FileDouble.new("hello", content_type: "application/php")
       instance.document = file
 
       expect(instance.document_attacher.errors).to eq([:invalid_content_type])
@@ -542,7 +542,7 @@ describe Refile::Attachment do
     end
 
     it "sets error when file with no content type is uploaded" do
-      file = Refile::FileDouble.new("hello")
+      file = PmacsRefile::FileDouble.new("hello")
       instance.document = file
 
       expect(instance.document_attacher.errors).to eq([:invalid_content_type])
@@ -552,8 +552,8 @@ describe Refile::Attachment do
 
   it "includes the module with methods in an instrospectable way" do
     expect { puts klass.ancestors }
-      .to output(/Refile::Attachment\(document\)/).to_stdout
+      .to output(/PmacsRefile::Attachment\(document\)/).to_stdout
     expect { p klass.ancestors }
-      .to output(/Refile::Attachment\(document\)/).to_stdout
+      .to output(/PmacsRefile::Attachment\(document\)/).to_stdout
   end
 end

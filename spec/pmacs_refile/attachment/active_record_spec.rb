@@ -1,7 +1,7 @@
-require pmacs_refile/active_record_helper"
-require pmacs_refile/attachment/active_record"
+require "pmacs_refile/active_record_helper"
+require "pmacs_refile/attachment/active_record"
 
-describe Refile::ActiveRecord::Attachment do
+describe PmacsRefile::ActiveRecord::Attachment do
   let(:options) { {} }
   let(:required) { false }
   let(:klass) do
@@ -28,21 +28,21 @@ describe Refile::ActiveRecord::Attachment do
       context "with file" do
         it "returns true when extension is included in list" do
           post = klass.new
-          post.document = Refile::FileDouble.new("hello", "image.Png")
+          post.document = PmacsRefile::FileDouble.new("hello", "image.Png")
           expect(post.valid?).to be_truthy
           expect(post.errors[:document]).to be_empty
         end
 
         it "returns true when extension is included in list but chars are randomcase" do
           post = klass.new
-          post.document = Refile::FileDouble.new("hello", "image.PNG")
+          post.document = PmacsRefile::FileDouble.new("hello", "image.PNG")
           expect(post.valid?).to be_truthy
           expect(post.errors[:document]).to be_empty
         end
 
         it "returns false when extension is invalid" do
           post = klass.new
-          post.document = Refile::FileDouble.new("hello", "image.jpg")
+          post.document = PmacsRefile::FileDouble.new("hello", "image.jpg")
           expect(post.valid?).to be_falsy
           expect(post.errors[:document].length).to eq(1)
         end
@@ -50,7 +50,7 @@ describe Refile::ActiveRecord::Attachment do
 
       context "with metadata" do
         it "returns true when extension is included in list" do
-          file = Refile.cache.upload(StringIO.new("hello"))
+          file = PmacsRefile.cache.upload(StringIO.new("hello"))
           post = klass.new
           post.document = { id: file.id, filename: "image.Png" }.to_json
           expect(post.valid?).to be_truthy
@@ -58,7 +58,7 @@ describe Refile::ActiveRecord::Attachment do
         end
 
         it "returns true when extension is included in list but chars are randomcase" do
-          file = Refile.cache.upload(StringIO.new("hello"))
+          file = PmacsRefile.cache.upload(StringIO.new("hello"))
           post = klass.new
           post.document = { id: file.id, filename: "image.PNG" }.to_json
           expect(post.valid?).to be_truthy
@@ -66,7 +66,7 @@ describe Refile::ActiveRecord::Attachment do
         end
 
         it "returns false when extension is invalid" do
-          file = Refile.cache.upload(StringIO.new("hello"))
+          file = PmacsRefile.cache.upload(StringIO.new("hello"))
           post = klass.new
           post.document = { id: file.id, filename: "image.jpg" }.to_json
           expect(post.valid?).to be_falsy
@@ -84,21 +84,21 @@ describe Refile::ActiveRecord::Attachment do
 
       it "returns false when type is invalid" do
         post = klass.new
-        post.document = Refile::FileDouble.new("hello", content_type: "text/plain")
+        post.document = PmacsRefile::FileDouble.new("hello", content_type: "text/plain")
         expect(post.valid?).to be_falsy
         expect(post.errors[:document].length).to eq(1)
       end
 
       it "returns false when it has multiple errors" do
         post = klass.new
-        post.document = Refile::FileDouble.new("h" * 200, content_type: "text/plain")
+        post.document = PmacsRefile::FileDouble.new("h" * 200, content_type: "text/plain")
         expect(post.valid?).to be_falsy
         expect(post.errors[:document].length).to eq(2)
       end
 
       it "returns true when type is invalid" do
         post = klass.new
-        post.document = Refile::FileDouble.new("hello", content_type: "image/png")
+        post.document = PmacsRefile::FileDouble.new("hello", content_type: "image/png")
         expect(post.valid?).to be_truthy
         expect(post.errors[:document]).to be_empty
       end
@@ -115,13 +115,13 @@ describe Refile::ActiveRecord::Attachment do
 
       it "returns true with file" do
         post = klass.new
-        post.document = Refile::FileDouble.new("hello", "image.png")
+        post.document = PmacsRefile::FileDouble.new("hello", "image.png")
         expect(post.valid?).to be_truthy
       end
 
       it "returns false when nil is assigned after a file" do
         post = klass.new
-        post.document = Refile::FileDouble.new("hello", "image.png")
+        post.document = PmacsRefile::FileDouble.new("hello", "image.png")
         post.document = nil
         expect(post.valid?).to be_falsy
       end
@@ -129,7 +129,7 @@ describe Refile::ActiveRecord::Attachment do
 
     context "with metadata" do
       it "returns false when metadata doesn't have an id" do
-        Refile.cache.upload(StringIO.new("hello"))
+        PmacsRefile.cache.upload(StringIO.new("hello"))
         post = klass.new
         post.document = { content_type: "text/png" }.to_json
         expect(post.valid?).to be_falsy
@@ -137,7 +137,7 @@ describe Refile::ActiveRecord::Attachment do
       end
 
       it "returns false when type is invalid" do
-        file = Refile.cache.upload(StringIO.new("hello"))
+        file = PmacsRefile.cache.upload(StringIO.new("hello"))
         post = klass.new
         post.document = { id: file.id, content_type: "text/png" }.to_json
         expect(post.valid?).to be_falsy
@@ -145,7 +145,7 @@ describe Refile::ActiveRecord::Attachment do
       end
 
       it "returns true when type is invalid" do
-        file = Refile.cache.upload(StringIO.new("hello"))
+        file = PmacsRefile.cache.upload(StringIO.new("hello"))
         post = klass.new
         post.document = { id: file.id, content_type: "image/png" }.to_json
         expect(post.valid?).to be_truthy
@@ -157,24 +157,24 @@ describe Refile::ActiveRecord::Attachment do
   describe "#save" do
     it "stores the assigned file" do
       post = klass.new
-      post.document = Refile::FileDouble.new("hello")
+      post.document = PmacsRefile::FileDouble.new("hello")
       post.save
       post = klass.find(post.id)
       expect(post.document.read).to eq("hello")
-      expect(Refile.store.read(post.document.id)).to eq("hello")
+      expect(PmacsRefile.store.read(post.document.id)).to eq("hello")
     end
 
     it "replaces an existing file" do
       post = klass.new
-      post.document = Refile::FileDouble.new("hello")
+      post.document = PmacsRefile::FileDouble.new("hello")
       post.save
       old_document = post.document
 
       post = klass.find(post.id)
-      post.document = Refile::FileDouble.new("hello")
+      post.document = PmacsRefile::FileDouble.new("hello")
       post.save
 
-      expect(Refile.store.read(post.document.id)).to eq("hello")
+      expect(PmacsRefile.store.read(post.document.id)).to eq("hello")
       expect(post.document.id).not_to be eq old_document.id
     end
   end
@@ -183,7 +183,7 @@ describe Refile::ActiveRecord::Attachment do
     context "default behaviour" do
       it "removes the stored file" do
         post = klass.new
-        post.document = Refile::FileDouble.new("hello")
+        post.document = PmacsRefile::FileDouble.new("hello")
         post.save
         file = post.document
         post.destroy
@@ -196,7 +196,7 @@ describe Refile::ActiveRecord::Attachment do
 
       it "removes the stored file" do
         post = klass.new
-        post.document = Refile::FileDouble.new("hello")
+        post.document = PmacsRefile::FileDouble.new("hello")
         post.save
         file = post.document
         post.destroy
@@ -209,7 +209,7 @@ describe Refile::ActiveRecord::Attachment do
 
       it "does not remove the stored file" do
         post = klass.new
-        post.document = Refile::FileDouble.new("hello")
+        post.document = PmacsRefile::FileDouble.new("hello")
         post.save
         file = post.document
         post.destroy
@@ -251,7 +251,7 @@ describe Refile::ActiveRecord::Attachment do
 
     describe "#:association_:name" do
       it "builds records from assigned files" do
-        post.documents_files = [Refile::FileDouble.new("hello"), Refile::FileDouble.new("world")]
+        post.documents_files = [PmacsRefile::FileDouble.new("hello"), PmacsRefile::FileDouble.new("world")]
         expect(post.documents[0].file.read).to eq("hello")
         expect(post.documents[1].file.read).to eq("world")
         expect(post.documents.size).to eq(2)
@@ -260,8 +260,8 @@ describe Refile::ActiveRecord::Attachment do
       it "builds records from cache" do
         post.documents_files = [
           [
-            { id: Refile.cache.upload(Refile::FileDouble.new("hello")).id },
-            { id: Refile.cache.upload(Refile::FileDouble.new("world")).id }
+            { id: PmacsRefile.cache.upload(PmacsRefile::FileDouble.new("hello")).id },
+            { id: PmacsRefile.cache.upload(PmacsRefile::FileDouble.new("world")).id }
           ].to_json
         ]
         expect(post.documents[0].file.read).to eq("hello")
@@ -272,10 +272,10 @@ describe Refile::ActiveRecord::Attachment do
       it "prefers newly uploaded files over cache" do
         post.documents_files = [
           [
-            { id: Refile.cache.upload(Refile::FileDouble.new("moo")).id }
+            { id: PmacsRefile.cache.upload(PmacsRefile::FileDouble.new("moo")).id }
           ].to_json,
-          Refile::FileDouble.new("hello"),
-          Refile::FileDouble.new("world")
+          PmacsRefile::FileDouble.new("hello"),
+          PmacsRefile::FileDouble.new("world")
         ]
         expect(post.documents[0].file.read).to eq("hello")
         expect(post.documents[1].file.read).to eq("world")
@@ -284,12 +284,12 @@ describe Refile::ActiveRecord::Attachment do
 
       it "clears previously assigned files" do
         post.documents_files = [
-          Refile::FileDouble.new("hello"),
-          Refile::FileDouble.new("world")
+          PmacsRefile::FileDouble.new("hello"),
+          PmacsRefile::FileDouble.new("world")
         ]
         post.save
         post.update_attributes documents_files: [
-          Refile::FileDouble.new("foo")
+          PmacsRefile::FileDouble.new("foo")
         ]
         retrieved = post_class.find(post.id)
         expect(retrieved.documents[0].file.read).to eq("foo")
@@ -301,12 +301,12 @@ describe Refile::ActiveRecord::Attachment do
 
         it "appends to previously assigned files" do
           post.documents_files = [
-            Refile::FileDouble.new("hello"),
-            Refile::FileDouble.new("world")
+            PmacsRefile::FileDouble.new("hello"),
+            PmacsRefile::FileDouble.new("world")
           ]
           post.save
           post.update_attributes documents_files: [
-            Refile::FileDouble.new("foo")
+            PmacsRefile::FileDouble.new("foo")
           ]
           retrieved = post_class.find(post.id)
           expect(retrieved.documents[0].file.read).to eq("hello")
@@ -317,13 +317,13 @@ describe Refile::ActiveRecord::Attachment do
 
         it "appends to previously assigned files with cached files" do
           post.documents_files = [
-            Refile::FileDouble.new("hello"),
-            Refile::FileDouble.new("world")
+            PmacsRefile::FileDouble.new("hello"),
+            PmacsRefile::FileDouble.new("world")
           ]
           post.save
           post.update_attributes documents_files: [
             [{
-              id: Refile.cache.upload(Refile::FileDouble.new("hello")).id,
+              id: PmacsRefile.cache.upload(PmacsRefile::FileDouble.new("hello")).id,
               filename: "some.jpg",
               content_type: "image/jpeg",
               size: 1234
@@ -337,10 +337,10 @@ describe Refile::ActiveRecord::Attachment do
 
     describe "#:association_:name_data" do
       it "returns metadata of all files" do
-        post.documents_files = [nil, Refile::FileDouble.new("hello"), Refile::FileDouble.new("world")]
+        post.documents_files = [nil, PmacsRefile::FileDouble.new("hello"), PmacsRefile::FileDouble.new("world")]
         data = post.documents_files_data
-        expect(Refile.cache.read(data[0][:id])).to eq("hello")
-        expect(Refile.cache.read(data[1][:id])).to eq("world")
+        expect(PmacsRefile.cache.read(data[0][:id])).to eq("hello")
+        expect(PmacsRefile.cache.read(data[1][:id])).to eq("world")
         expect(data.size).to eq(2)
       end
     end
@@ -370,16 +370,16 @@ describe Refile::ActiveRecord::Attachment do
 
       describe "#save" do
         it "stores the assigned file" do
-          user = users_class.create! post_attributes: { document: Refile::FileDouble.new("foo") }
+          user = users_class.create! post_attributes: { document: PmacsRefile::FileDouble.new("foo") }
 
           post = user.post.reload
           expect(post.document.read).to eq("foo")
-          expect(Refile.store.read(post.document.id)).to eq("foo")
+          expect(PmacsRefile.store.read(post.document.id)).to eq("foo")
         end
 
         it "removes files marked for removal" do
           user = users_class.create!
-          post = klass.create!(user_id: user.id, document: Refile::FileDouble.new("foo"))
+          post = klass.create!(user_id: user.id, document: PmacsRefile::FileDouble.new("foo"))
 
           user.update_attributes!(post_attributes: { id: post.id, remove_document: true })
 
@@ -387,14 +387,14 @@ describe Refile::ActiveRecord::Attachment do
         end
 
         it "replaces an existing file" do
-          user = users_class.create! post_attributes: { document: Refile::FileDouble.new("foo") }
+          user = users_class.create! post_attributes: { document: PmacsRefile::FileDouble.new("foo") }
           post = user.post
 
-          user.update! post_attributes: { id: post.id, document: Refile::FileDouble.new("bar") }
+          user.update! post_attributes: { id: post.id, document: PmacsRefile::FileDouble.new("bar") }
 
           post.reload
           expect(post.document.read).to eq("bar")
-          expect(Refile.store.read(post.document.id)).to eq("bar")
+          expect(PmacsRefile.store.read(post.document.id)).to eq("bar")
         end
       end
     end
@@ -412,16 +412,16 @@ describe Refile::ActiveRecord::Attachment do
 
       describe "#save" do
         it "stores the assigned file" do
-          user = users_class.create! posts_attributes: [{ document: Refile::FileDouble.new("foo") }]
+          user = users_class.create! posts_attributes: [{ document: PmacsRefile::FileDouble.new("foo") }]
 
           post = user.posts.first.reload
           expect(post.document.read).to eq("foo")
-          expect(Refile.store.read(post.document.id)).to eq("foo")
+          expect(PmacsRefile.store.read(post.document.id)).to eq("foo")
         end
 
         it "removes files marked for removal" do
           user = users_class.create!
-          post = klass.create!(user_id: user.id, document: Refile::FileDouble.new("foo"))
+          post = klass.create!(user_id: user.id, document: PmacsRefile::FileDouble.new("foo"))
 
           user.update_attributes!(posts_attributes: { id: post.id, remove_document: true })
 
@@ -429,13 +429,13 @@ describe Refile::ActiveRecord::Attachment do
         end
 
         it "replaces an existing file" do
-          user = users_class.create! posts_attributes: [{ document: Refile::FileDouble.new("foo") }]
+          user = users_class.create! posts_attributes: [{ document: PmacsRefile::FileDouble.new("foo") }]
           post = user.posts.first
-          user.update! posts_attributes: [{ id: post.id, document: Refile::FileDouble.new("bar") }]
+          user.update! posts_attributes: [{ id: post.id, document: PmacsRefile::FileDouble.new("bar") }]
 
           post.reload
           expect(post.document.read).to eq("bar")
-          expect(Refile.store.read(post.document.id)).to eq("bar")
+          expect(PmacsRefile.store.read(post.document.id)).to eq("bar")
         end
       end
     end

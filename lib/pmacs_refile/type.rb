@@ -10,7 +10,7 @@ module PmacsRefile
   #
   # Simply define a new type like this:
   #
-  #     Refile.types[:document] = Refile::Type.new(:document,
+  #     PmacsRefile.types[:document] = PmacsRefile::Type.new(:document,
   #       content_type: %w[text/plain application/pdf]
   #     )
   #

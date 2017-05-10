@@ -2,8 +2,8 @@ require "pry"
 require "yaml"
 require "rails/all"
 
-require pmacs_refile"
-require pmacs_refile/rails"
+require "pmacs_refile"
+require "pmacs_refile/rails"
 require "jquery/rails"
 
 module PmacsRefile
@@ -26,8 +26,8 @@ require "rspec"
 require "rspec/rails"
 require "capybara/rails"
 require "capybara/rspec"
-require pmacs_refile/spec_helper"
-require pmacs_refile/active_record_helper"
+require "pmacs_refile/spec_helper"
+require "pmacs_refile/active_record_helper"
 require "capybara/poltergeist"
 
 if ENV["SAUCE_BROWSER"]
@@ -65,6 +65,6 @@ end
 RSpec.configure do |config|
   config.include TestAppHelpers, type: :feature
   config.before(:all) do
-    Refile.logger = Rails.logger
+    PmacsRefile.logger = Rails.logger
   end
 end

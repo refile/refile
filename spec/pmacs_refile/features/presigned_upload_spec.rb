@@ -1,4 +1,4 @@
-require pmacs_refile/test_app"
+require "pmacs_refile/test_app"
 
 feature "Direct HTTP post file uploads", :js do
   scenario "Successfully upload a file" do

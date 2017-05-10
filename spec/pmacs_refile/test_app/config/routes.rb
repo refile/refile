@@ -1,4 +1,4 @@
-Refile::TestApp.routes.draw do
+PmacsRefile::TestApp.routes.draw do
   root to: "home#index"
 
   scope path: "normal", as: "normal" do

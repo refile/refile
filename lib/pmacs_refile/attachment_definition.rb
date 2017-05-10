@@ -12,15 +12,15 @@ module PmacsRefile
       @type = type
       @valid_extensions = [extension].flatten if extension
       @valid_content_types = [content_type].flatten if content_type
-      @valid_content_types ||= Refile.types.fetch(type).content_type if type
+      @valid_content_types ||= PmacsRefile.types.fetch(type).content_type if type
     end
 
     def cache
-      Refile.backends.fetch(@cache_name.to_s)
+      PmacsRefile.backends.fetch(@cache_name.to_s)
     end
 
     def store
-      Refile.backends.fetch(@store_name.to_s)
+      PmacsRefile.backends.fetch(@store_name.to_s)
     end
 
     def accept

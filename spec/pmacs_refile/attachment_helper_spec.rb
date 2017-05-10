@@ -1,9 +1,9 @@
-require pmacs_refile/rails/attachment_helper"
-require pmacs_refile/active_record_helper"
-require pmacs_refile/attachment/active_record"
+require "pmacs_refile/rails/attachment_helper"
+require "pmacs_refile/active_record_helper"
+require "pmacs_refile/attachment/active_record"
 require "action_view"
 
-describe Refile::AttachmentHelper do
+describe PmacsRefile::AttachmentHelper do
   include PmacsRefile::AttachmentHelper
   include ActionView::Helpers::AssetTagHelper
   include ActionView::Helpers::FormHelper
@@ -22,14 +22,14 @@ describe Refile::AttachmentHelper do
   let(:attachment_path) { "/attachments/00cc2633d08c6045485f1fae2cd6d4de20a5a159/store/xxx/document" }
 
   before do
-    allow(Refile).to receive(:secret_key).and_return("xxxxxxxxxxx")
+    allow(PmacsRefile).to receive(:secret_key).and_return("xxxxxxxxxxx")
   end
 
   describe "#attachment_image_tag" do
     let(:src) { attachment_image_tag(klass.new(document_id: "xxx"), :document)[/src="(\S+)"/, 1] }
 
     it "builds with path" do
-      allow(Refile).to receive(:app_host).and_return(nil)
+      allow(PmacsRefile).to receive(:app_host).and_return(nil)
       expect(src).to eq attachment_path
     end
 

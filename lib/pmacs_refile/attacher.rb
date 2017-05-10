@@ -82,7 +82,7 @@ module PmacsRefile
 
     def retrieve!(value)
       if value.is_a?(String)
-        @metadata = Refile.parse_json(value, symbolize_names: true) || {}
+        @metadata = PmacsRefile.parse_json(value, symbolize_names: true) || {}
       elsif value.is_a?(Hash)
         @metadata = value
       end
@@ -92,14 +92,14 @@ module PmacsRefile
     def cache!(uploadable)
       @metadata = {
         size: uploadable.size,
-        content_type: Refile.extract_content_type(uploadable),
-        filename: Refile.extract_filename(uploadable)
+        content_type: PmacsRefile.extract_content_type(uploadable),
+        filename: PmacsRefile.extract_filename(uploadable)
       }
       if valid?
         @metadata[:id] = cache.upload(uploadable).id
         write_metadata
       elsif @definition.raise_errors?
-        raise Refile::Invalid, @errors.join(", ")
+        raise PmacsRefile::Invalid, @errors.join(", ")
       end
     end
 
@@ -116,7 +116,7 @@ module PmacsRefile
           @metadata[:id] = cache.upload(response.file).id
           write_metadata
         elsif @definition.raise_errors?
-          raise Refile::Invalid, @errors.join(", ")
+          raise PmacsRefile::Invalid, @errors.join(", ")
         end
       end
     rescue RestClient::Exception

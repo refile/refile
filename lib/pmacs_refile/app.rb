@@ -7,13 +7,13 @@ module PmacsRefile
   #
   # @example mounted in Rails
   #   Rails.application.routes.draw do
-  #     mount Refile::App.new, at: "attachments", as: :refile_app
+  #     mount PmacsRefile::App.new, at: "attachments", as: :refile_app
   #   end
   #
   # @example as standalone app
   #   require "refile"
   #
-  #   run Refile::App.new
+  #   run PmacsRefile::App.new
   class App < Sinatra::Base
     configure do
       set :show_exceptions, false
@@ -21,12 +21,12 @@ module PmacsRefile
       set :sessions, false
       set :logging, false
       set :dump_errors, false
-      use CustomLogger, "Refile::App", proc { Refile.logger }
+      use CustomLogger, "PmacsRefile::App", proc { PmacsRefile.logger }
     end
 
     before do
-      if Refile.allow_origin
-        response["Access-Control-Allow-Origin"] = Refile.allow_origin
+      if PmacsRefile.allow_origin
+        response["Access-Control-Allow-Origin"] = PmacsRefile.allow_origin
         response["Access-Control-Allow-Headers"] = request.env["HTTP_ACCESS_CONTROL_REQUEST_HEADERS"].to_s
         response["Access-Control-Allow-Method"] = request.env["HTTP_ACCESS_CONTROL_REQUEST_METHOD"].to_s
       end
@@ -71,7 +71,7 @@ module PmacsRefile
       tempfile = request.params.fetch("file").fetch(:tempfile)
       filename = request.params.fetch("file").fetch(:filename)
       file = backend.upload(tempfile)
-      url = Refile.file_url(file, filename: filename)
+      url = PmacsRefile.file_url(file, filename: filename)
       content_type :json
       { id: file.id, url: url }.to_json
     end
@@ -92,12 +92,12 @@ module PmacsRefile
       "forbidden"
     end
 
-    error Refile::InvalidFile do
+    error PmacsRefile::InvalidFile do
       status 400
       "Upload failure error"
     end
 
-    error Refile::InvalidMaxSize do
+    error PmacsRefile::InvalidMaxSize do
       status 413
       "Upload failure error"
     end
@@ -114,19 +114,19 @@ module PmacsRefile
   private
 
     def download_allowed?
-      Refile.allow_downloads_from == :all or Refile.allow_downloads_from.include?(params[:backend])
+      PmacsRefile.allow_downloads_from == :all or PmacsRefile.allow_downloads_from.include?(params[:backend])
     end
 
     def upload_allowed?
-      Refile.allow_uploads_to == :all or Refile.allow_uploads_to.include?(params[:backend])
+      PmacsRefile.allow_uploads_to == :all or PmacsRefile.allow_uploads_to.include?(params[:backend])
     end
 
     def logger
-      Refile.logger
+      PmacsRefile.logger
     end
 
     def stream_file(file)
-      expires Refile.content_max_age, :public
+      expires PmacsRefile.content_max_age, :public
 
       if file.respond_to?(:path)
         path = file.path
@@ -141,7 +141,7 @@ module PmacsRefile
     end
 
     def backend
-      Refile.backends.fetch(params[:backend]) do |name|
+      PmacsRefile.backends.fetch(params[:backend]) do |name|
         log_error("Could not find backend: #{name}")
         halt 404
       end
@@ -157,7 +157,7 @@ module PmacsRefile
     end
 
     def processor
-      Refile.processors.fetch(params[:processor]) do |name|
+      PmacsRefile.processors.fetch(params[:processor]) do |name|
         log_error("Could not find processor: #{name}")
         halt 404
       end
@@ -170,7 +170,7 @@ module PmacsRefile
     def verified?
       base_path = request.path.gsub(::File.join(request.script_name, params[:token]), "")
 
-      Refile.valid_token?(base_path, params[:token])
+      PmacsRefile.valid_token?(base_path, params[:token])
     end
   end
 end

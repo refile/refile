@@ -16,7 +16,7 @@ class PresignedPostsController < ApplicationController
   def upload
     if params[:token] == "xyz123"
       if params[:file].size < 100
-        File.open(File.join(Refile.backends["limited_cache"].directory, params[:id]), "wb") do |file|
+        File.open(File.join(PmacsRefile.backends["limited_cache"].directory, params[:id]), "wb") do |file|
           file.write(params[:file].read)
         end
         render plain: "token accepted"

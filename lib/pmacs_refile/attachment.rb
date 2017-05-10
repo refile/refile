@@ -21,17 +21,17 @@ module PmacsRefile
     #
     # @example
     #   class User
-    #     extend Refile::Attachment
+    #     extend PmacsRefile::Attachment
     #
     #     attachment :image
     #     attr_accessor :image_id
     #   end
     #
     # @param [String] name                              Name of the column which accessor are generated for
-    # @param [#to_s] cache                              Name of a backend in {Refile.backends} to use as transient cache
-    # @param [#to_s] store                              Name of a backend in {Refile.backends} to use as permanent store
+    # @param [#to_s] cache                              Name of a backend in {PmacsRefile.backends} to use as transient cache
+    # @param [#to_s] store                              Name of a backend in {PmacsRefile.backends} to use as permanent store
     # @param [true, false] raise_errors                 Whether to raise errors in case an invalid file is assigned
-    # @param [Symbol, nil] type                         The type of file that can be uploaded, see {Refile.types}
+    # @param [Symbol, nil] type                         The type of file that can be uploaded, see {PmacsRefile.types}
     # @param [String, Array<String>, nil] extension     Limit the uploaded file to the given extension or list of extensions
     # @param [String, Array<String>, nil] content_type  Limit the uploaded file to the given content type or list of content types
     # @return [void]
@@ -85,15 +85,15 @@ module PmacsRefile
         end
 
         define_method "#{name}_url" do |*args|
-          Refile.attachment_url(self, name, *args)
+          PmacsRefile.attachment_url(self, name, *args)
         end
 
         define_method "#{name}_data" do
           send(attacher).data
         end
 
-        define_singleton_method("to_s")    { "Refile::Attachment(#{name})" }
-        define_singleton_method("inspect") { "Refile::Attachment(#{name})" }
+        define_singleton_method("to_s")    { "PmacsRefile::Attachment(#{name})" }
+        define_singleton_method("inspect") { "PmacsRefile::Attachment(#{name})" }
       end
 
       include mod

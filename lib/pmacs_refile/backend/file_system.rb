@@ -3,11 +3,11 @@ module PmacsRefile
     # A backend which stores uploaded files in the local filesystem
     #
     # @example
-    #   backend = Refile::Backend::FileSystem.new("some/path")
+    #   backend = PmacsRefile::Backend::FileSystem.new("some/path")
     #   file = backend.upload(StringIO.new("hello"))
     #   backend.read(file.id) # => "hello"
     class FileSystem
-      extend Refile::BackendMacros
+      extend PmacsRefile::BackendMacros
 
       # @return [String] the directory where files are stored
       attr_reader :directory
@@ -20,7 +20,7 @@ module PmacsRefile
       # @param [String] directory         The path to a directory where files should be stored
       # @param [Integer, nil] max_size    The maximum size of an uploaded file
       # @param [#hash] hasher             A hasher which is used to generate ids from files
-      def initialize(directory, max_size: nil, hasher: Refile::RandomHasher.new)
+      def initialize(directory, max_size: nil, hasher: PmacsRefile::RandomHasher.new)
         @hasher = hasher
         @directory = directory
         @max_size = max_size
@@ -31,26 +31,26 @@ module PmacsRefile
       # Upload a file into this backend
       #
       # @param [IO] uploadable      An uploadable IO-like object.
-      # @return [Refile::File]      The uploaded file
+      # @return [PmacsRefile::File]      The uploaded file
       verify_uploadable def upload(uploadable)
         id = @hasher.hash(uploadable)
         IO.copy_stream(uploadable, path(id))
 
-        Refile::File.new(self, id)
+        PmacsRefile::File.new(self, id)
       ensure
         uploadable.close
       end
 
       # Get a file from this backend.
       #
-      # Note that this method will always return a {Refile::File} object, even
+      # Note that this method will always return a {PmacsRefile::File} object, even
       # if a file with the given id does not exist in this backend. Use
       # {FileSystem#exists?} to check if the file actually exists.
       #
       # @param [Sring] id           The id of the file
-      # @return [Refile::File]      The retrieved file
+      # @return [PmacsRefile::File]      The retrieved file
       verify_id def get(id)
-        Refile::File.new(self, id)
+        PmacsRefile::File.new(self, id)
       end
 
       # Delete a file from this backend
@@ -99,11 +99,11 @@ module PmacsRefile
       #
       # @example
       #   backend.clear!(:confirm)
-      # @raise [Refile::Confirm]     Unless the `:confirm` symbol has been passed.
+      # @raise [PmacsRefile::Confirm]     Unless the `:confirm` symbol has been passed.
       # @param [:confirm] confirm    Pass the symbol `:confirm` to confirm deletion.
       # @return [void]
       def clear!(confirm = nil)
-        raise Refile::Confirm unless confirm == :confirm
+        raise PmacsRefile::Confirm unless confirm == :confirm
         FileUtils.rm_rf(@directory)
         FileUtils.mkdir_p(@directory)
       end

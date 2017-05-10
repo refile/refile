@@ -1,16 +1,16 @@
 RSpec.shared_examples_for :backend do
   def uploadable(data = "hello")
-    Refile::FileDouble.new(data)
+    PmacsRefile::FileDouble.new(data)
   end
 
   describe "#upload" do
     it "raises ArgumentError when invalid object is uploaded" do
-      expect { backend.upload(double(size: 123)) }.to raise_error(Refile::InvalidFile)
-      expect { backend.upload("hello") }.to raise_error(Refile::InvalidFile)
+      expect { backend.upload(double(size: 123)) }.to raise_error(PmacsRefile::InvalidFile)
+      expect { backend.upload("hello") }.to raise_error(PmacsRefile::InvalidFile)
     end
 
-    it "raises Refile::Invalid when object is too large" do
-      expect { backend.upload(uploadable("a" * 200)) }.to raise_error(Refile::Invalid)
+    it "raises PmacsRefile::Invalid when object is too large" do
+      expect { backend.upload(uploadable("a" * 200)) }.to raise_error(PmacsRefile::Invalid)
     end
 
     it "stores file for later retrieval" do
@@ -69,7 +69,7 @@ RSpec.shared_examples_for :backend do
     end
 
     it "raises error when called with invalid ID" do
-      expect { backend.delete("/evil") }.to raise_error(Refile::InvalidID)
+      expect { backend.delete("/evil") }.to raise_error(PmacsRefile::InvalidID)
     end
   end
 
@@ -89,7 +89,7 @@ RSpec.shared_examples_for :backend do
     end
 
     it "raises error when called with invalid ID" do
-      expect { backend.read("/evil") }.to raise_error(Refile::InvalidID)
+      expect { backend.read("/evil") }.to raise_error(PmacsRefile::InvalidID)
     end
   end
 
@@ -109,7 +109,7 @@ RSpec.shared_examples_for :backend do
     end
 
     it "raises error when called with invalid ID" do
-      expect { backend.size("/evil") }.to raise_error(Refile::InvalidID)
+      expect { backend.size("/evil") }.to raise_error(PmacsRefile::InvalidID)
     end
   end
 
@@ -129,7 +129,7 @@ RSpec.shared_examples_for :backend do
     end
 
     it "raises error when called with invalid ID" do
-      expect { backend.exists?("/evil") }.to raise_error(Refile::InvalidID)
+      expect { backend.exists?("/evil") }.to raise_error(PmacsRefile::InvalidID)
     end
   end
 
@@ -145,7 +145,7 @@ RSpec.shared_examples_for :backend do
     it "complains when called without confirm" do
       file = backend.upload(uploadable)
 
-      expect { backend.clear! }.to raise_error(Refile::Confirm)
+      expect { backend.clear! }.to raise_error(PmacsRefile::Confirm)
 
       expect(backend.get(file.id).exists?).to be_truthy
     end
