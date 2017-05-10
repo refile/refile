@@ -51,7 +51,7 @@ Documentation:
   Enabled: false # TODO: Enable again once we have more docs
 
 Style/CaseIndentation:
-  IndentWhenRelativeTo: case
+  EnforcedStyle: case
   SupportedStyles:
     - case
     - end
@@ -75,7 +75,7 @@ Style/TrivialAccessors:
   ExactNameMatch: true
 
 Lint/EndAlignment:
-  AlignWith: variable
+  EnforcedStyleAlignWith: variable
 
 Lint/DefEndAlignment:
   Enabled: false
