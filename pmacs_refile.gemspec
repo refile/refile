@@ -1,7 +1,7 @@
 require "./lib/refile/version"
 
 Gem::Specification.new do |spec|
-  spec.name          = "refile"
+  spec.name          = "pmacs_refile"
   spec.version       = Refile::VERSION
   spec.authors       = ["Jonas Nicklas"]
   spec.email         = ["jonas.nicklas@gmail.com"]
