@@ -1,8 +1,8 @@
-require "./lib/refile/version"
+require "./lib/pmacs_refile/version"
 
 Gem::Specification.new do |spec|
   spec.name          = "pmacs_refile"
-  spec.version       = Refile::VERSION
+  spec.version       = PmacsRefile::VERSION
   spec.authors       = ["Jonas Nicklas"]
   spec.email         = ["jonas.nicklas@gmail.com"]
   spec.summary       = "Simple and powerful file upload library"
