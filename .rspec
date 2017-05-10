@@ -1,2 +1,2 @@
--r refile/spec_helper
+-r pmacs_refile/spec_helper
 -r pry

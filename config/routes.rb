@@ -1,5 +1,5 @@
-if Refile.automount
+if PmacsRefile.automount
   Rails.application.routes.draw do
-    mount Refile.app, at: Refile.mount_point, as: :refile_app
+    mount PmacsRefile.app, at: PmacsRefile.mount_point, as: :refile_app
   end
 end

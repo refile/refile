@@ -1,0 +1,1263 @@
+Refile::App: [2017-05-03 22:57:04 -0400] GET "/token/store" 404 0.6ms
+
+Refile::App: [2017-05-03 22:57:04 -0400] GET "/" 404 0.3ms
+
+Refile::App: [2017-05-03 22:57:04 -0400] GET "/token/store/61e4348fa4c57558aad03c117fdb8d7530cf3e4e1e6e8b8ca373403c500f/hello" 200 2.4ms
+
+Refile::App: [2017-05-03 22:57:04 -0400] GET "/token/store/a1b8901dd18c788d642c5e51aa177c84346edc67868fd6a24cd5a0d0fbd6/hello.html" 200 1.5ms
+
+Refile::App: Could not find attachment by id: doesnotexist
+Refile::App: [2017-05-03 22:57:04 -0400] GET "/token/store/doesnotexist/hello" 404 0.6ms
+
+Refile::App: Could not find backend: doesnotexist
+Refile::App: [2017-05-03 22:57:04 -0400] GET "/token/doesnotexist/57e4d77a1e5971808ae89470f6b3d9a88b2f06662344a0c723080dba62f0/hello" 404 0.3ms
+
+Refile::App: [2017-05-03 22:57:04 -0400] HEAD "/token/store/a803d5d1b1a96146183f237b26649a5855b4aa9f142078e578fc3ffff7b3/hello" 200 6.3ms
+
+Refile::App: Could not find attachment by id: doesnotexist
+Refile::App: [2017-05-03 22:57:04 -0400] HEAD "/token/store/doesnotexist/hello" 404 0.5ms
+
+Refile::App: [2017-05-03 22:57:04 -0400] POST "/token/store/60f14a72b8eca6110ad9eae0025aaeebb0c90708bd6eb9653e0442356c09/hello" 404 0.4ms
+
+Refile::App: [2017-05-03 22:57:04 -0400] GET "/token/store/0761ddca8494eb3e550dcecc84783f13f6835b74255a1dbe33ddfdaa641b/hello" 200 1.0ms
+
+Refile::App: [2017-05-03 22:57:04 -0400] GET "/5f939842719fed2ab78b3c0b8eaf2475d15ad05b/store/899f3f0e2b2d2454cc174d1337e95baca91107f6ead08965c2078bd148b4/hello" 200 0.8ms
+
+Refile::App: [2017-05-03 22:57:04 -0400] GET "/eviltoken/store/cb142739bb323325601dba6e664f015b597ccc5c6fbb3d7e5c1fe40af9d4/hello" 403 0.4ms
+
+Refile::App: [2017-05-03 22:57:04 -0400] GET "/eviltoken/store/1556e32d727c7a9d49a74033388de7dff1fb9c189cc880729bc6469670db/hello" 403 0.4ms
+
+Refile::App: [2017-05-03 22:57:04 -0400] GET "/token/store/04b90d5e2d18932b40c8d635bf162b6ae8812b1987fc8a1f5185ed834d1a/test.txt" 200 1.1ms
+
+Refile::App: [2017-05-03 22:57:04 -0400] GET "/token/store/e2d1517cf7b35a759555f37aa78688fccec436bc6a06d527faa6cc177d09/test.txt" 200 1.1ms
+
+Refile::App: [2017-05-03 22:57:04 -0400] GET "/token/cache/b4f4ad2188d1712a109388d12f81b7da15510e064b13e68d63c9f3c0635d/test.txt" 404 0.5ms
+
+Refile::App: Could not find processor: doesnotexist
+Refile::App: [2017-05-03 22:57:04 -0400] GET "/token/store/doesnotexist/67a64077bed33bafa068c64eb4c785c42a4b34942dd5b0b6a8a7b6e665c1/hello" 404 1.1ms
+
+Refile::App: [2017-05-03 22:57:04 -0400] GET "/token/store/reverse/ff2a3d8d2d0dfcd8986673db4aabe4463a019f8fcb8476125922b7ee8a73/hello" 200 1.3ms
+
+Refile::App: [2017-05-03 22:57:04 -0400] GET "/token/store/upcase/4fed3c5a063e7869e6e1f055ccd6780f065416539acde15e3c5cd8be7a7d/hello" 200 1.4ms
+
+Refile::App: [2017-05-03 22:57:04 -0400] GET "/token/store/concat/foo/bar/baz/77f29e647c0a7d7e28ac7745369c7262f50c6264c7a413ce7d4715c478c0/hello" 200 2.4ms
+
+Refile::App: [2017-05-03 22:57:04 -0400] GET "/token/store/convert_case/ba988a8aa8bb20bd9920b8751839de638c0f9682f33dc644f753c05a5dc3/hello.up" 200 2.1ms
+
+Refile::App: [2017-05-03 22:57:04 -0400] GET "/eviltoken/store/reverse/0ad0b6c67578a0b0560c5337a6685e55055d0bf6d77fd9248b79864183aa/hello" 403 0.3ms
+
+Refile::App: [2017-05-03 22:57:04 -0400] POST "/cache" 200 4.5ms
+
+Refile::App: [2017-05-03 22:57:04 -0400] POST "/cache" 200 1.4ms
+
+Refile::App: [2017-05-03 22:57:04 -0400] POST "/cache" 200 1.6ms
+
+Refile::App: [2017-05-03 22:57:04 -0400] POST "/store" 200 1.7ms
+
+Refile::App: [2017-05-03 22:57:04 -0400] POST "/cache" 200 1.5ms
+
+Refile::App: [2017-05-03 22:57:04 -0400] POST "/store" 404 0.6ms
+
+Refile::App: [2017-05-03 22:57:04 -0400] POST "/store_max_size" 413 0.9ms
+
+Refile::App: [2017-05-03 22:57:04 -0400] POST "/store_max_size" 400 0.9ms
+
+Refile::App: [2017-05-03 22:57:04 -0400] GET "/limited_cache/presign" 200 2.0ms
+
+Refile::App: [2017-05-03 22:57:04 -0400] GET "/limited_cache/presign" 200 0.9ms
+
+Refile::App: [2017-05-03 22:57:04 -0400] GET "/limited_cache/presign" 200 0.8ms
+
+Refile::App: [2017-05-03 22:57:04 -0400] GET "/store/presign" 404 0.3ms
+
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "posts" ("document_id", "document_size") VALUES (?, ?)[0m  [["document_id", "fe07ffa24196bf5ca86d425cea072e8eefafaa3fbcacaeef57692b920158"], ["document_size", 5]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mPost Load (0.3ms)[0m  [1m[34mSELECT  "posts".* FROM "posts" WHERE "posts"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "posts" ("document_id", "document_size") VALUES (?, ?)[0m  [["document_id", "3f8255a38382964626b1c5d99f4b94b94580b4a0d841d2c8bdf02290a913"], ["document_size", 5]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mPost Load (0.1ms)[0m  [1m[34mSELECT  "posts".* FROM "posts" WHERE "posts"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[33mUPDATE "posts" SET "document_id" = ? WHERE "posts"."id" = ?[0m  [["document_id", "199fec17c71eeeeb53d2145234e8eebaf55e9b674050b0116c4d3c7b9666"], ["id", 2]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "posts" ("document_id", "document_size") VALUES (?, ?)[0m  [["document_id", "32ffad67e6f17a5c1de9a78e9011f9ff064481223c159c8e2208ac99bbc5"], ["document_size", 5]]
+  [1m[35m (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[31mDELETE FROM "posts" WHERE "posts"."id" = ?[0m  [["id", 3]]
+  [1m[35m (0.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "posts" ("document_id", "document_size") VALUES (?, ?)[0m  [["document_id", "50eb1eddd892b0e0f9f72bff10a8006542bc758a6316924697557c045d5e"], ["document_size", 5]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[31mDELETE FROM "posts" WHERE "posts"."id" = ?[0m  [["id", 4]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "posts" ("document_id", "document_size") VALUES (?, ?)[0m  [["document_id", "e896f8cb66acc775e235a42c24aff6fe2dd426f86aae5cc3f71d47df71c7"], ["document_size", 5]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[31mDELETE FROM "posts" WHERE "posts"."id" = ?[0m  [["id", 5]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "posts" DEFAULT VALUES[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "documents" ("post_id", "file_id", "file_size") VALUES (?, ?, ?)[0m  [["post_id", 6], ["file_id", "6d78e6e4c41b021c8ff4349486766a9fa469078577b11c2153efc8ad8d68"], ["file_size", 5]]
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "documents" ("post_id", "file_id", "file_size") VALUES (?, ?, ?)[0m  [["post_id", 6], ["file_id", "fc58a32eacdda32612278d863a5303d186140d9b12d226c10dfbbfe3a190"], ["file_size", 5]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[31mDELETE FROM "documents" WHERE "documents"."id" = ?[0m  [["id", 1]]
+  [1m[35mSQL (0.1ms)[0m  [1m[31mDELETE FROM "documents" WHERE "documents"."id" = ?[0m  [["id", 2]]
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "documents" ("post_id", "file_id", "file_size") VALUES (?, ?, ?)[0m  [["post_id", 6], ["file_id", "06be162941a3fe61228f0d29091a0f86a146b859bdeb89469332a4c1d7bf"], ["file_size", 3]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mPost Load (0.1ms)[0m  [1m[34mSELECT  "posts".* FROM "posts" WHERE "posts"."id" = ? LIMIT ?[0m  [["id", 6], ["LIMIT", 1]]
+  [1m[36mDocument Load (0.1ms)[0m  [1m[34mSELECT "documents".* FROM "documents" WHERE "documents"."post_id" = ?[0m  [["post_id", 6]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "posts" DEFAULT VALUES[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "documents" ("post_id", "file_id", "file_size") VALUES (?, ?, ?)[0m  [["post_id", 7], ["file_id", "ec154f46de8757f8ad63b4f1c347d1d679f83024a0a433b5fe0b32316dcf"], ["file_size", 5]]
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "documents" ("post_id", "file_id", "file_size") VALUES (?, ?, ?)[0m  [["post_id", 7], ["file_id", "50b160fec2f7444e66d7e7aac96b2a220861126adc06d79217838bf3c17f"], ["file_size", 5]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "documents" ("post_id", "file_id", "file_size") VALUES (?, ?, ?)[0m  [["post_id", 7], ["file_id", "1d710bd6fc529f8c1df4805db54ceee45d204e549bb2c2e3cb4ba8b0f67b"], ["file_size", 3]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mPost Load (0.1ms)[0m  [1m[34mSELECT  "posts".* FROM "posts" WHERE "posts"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+  [1m[36mDocument Load (0.1ms)[0m  [1m[34mSELECT "documents".* FROM "documents" WHERE "documents"."post_id" = ?[0m  [["post_id", 7]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "posts" DEFAULT VALUES[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "documents" ("post_id", "file_id", "file_size") VALUES (?, ?, ?)[0m  [["post_id", 8], ["file_id", "011c681e10a7bdcc9b93ebad930e044b9d22d8ece4c6846753f82f8c3aaf"], ["file_size", 5]]
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "documents" ("post_id", "file_id", "file_size") VALUES (?, ?, ?)[0m  [["post_id", 8], ["file_id", "fe940a9ee3ca582b359017d25eea874fb12a3d4e329a5b70b719d1ce9ba5"], ["file_size", 5]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "documents" ("post_id", "file_id", "file_filename", "file_content_type", "file_size") VALUES (?, ?, ?, ?, ?)[0m  [["post_id", 8], ["file_id", "b539ea579e62fcc87660e59693a2a23c7391476b001b751f1784d4f7eab9"], ["file_filename", "some.jpg"], ["file_content_type", "image/jpeg"], ["file_size", 1234]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mPost Load (0.1ms)[0m  [1m[34mSELECT  "posts".* FROM "posts" WHERE "posts"."id" = ? LIMIT ?[0m  [["id", 8], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "documents" WHERE "documents"."post_id" = ?[0m  [["post_id", 8]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "users" DEFAULT VALUES[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "posts" ("user_id", "document_id", "document_size") VALUES (?, ?, ?)[0m  [["user_id", 1], ["document_id", "6ea018650ad1742779b1c9ef05ecaf3b2c657c2429c0ad448a7de0fd818e"], ["document_size", 3]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mPost Load (0.1ms)[0m  [1m[34mSELECT  "posts".* FROM "posts" WHERE "posts"."id" = ? LIMIT ?[0m  [["id", 9], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "users" DEFAULT VALUES[0m
+  [1m[35m (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "posts" ("user_id", "document_id", "document_size") VALUES (?, ?, ?)[0m  [["user_id", 2], ["document_id", "fe2222360a06d5e24e814f51f17f16d5364c1f794917952abb978263d120"], ["document_size", 3]]
+  [1m[35m (0.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mPost Load (0.2ms)[0m  [1m[34mSELECT  "posts".* FROM "posts" WHERE "posts"."user_id" = ? LIMIT ?[0m  [["user_id", 2], ["LIMIT", 1]]
+  [1m[35mSQL (0.2ms)[0m  [1m[33mUPDATE "posts" SET "document_id" = ?, "document_size" = ? WHERE "posts"."id" = ?[0m  [["document_id", nil], ["document_size", nil], ["id", 10]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mPost Load (0.1ms)[0m  [1m[34mSELECT  "posts".* FROM "posts" WHERE "posts"."id" = ? LIMIT ?[0m  [["id", 10], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "users" DEFAULT VALUES[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "posts" ("user_id", "document_id", "document_size") VALUES (?, ?, ?)[0m  [["user_id", 3], ["document_id", "8ce27a29b05a4d98e50c4cdbc0e5d28295e690681f3c29dcbf466a06803d"], ["document_size", 3]]
+  [1m[35m (0.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[33mUPDATE "posts" SET "document_id" = ? WHERE "posts"."id" = ?[0m  [["document_id", "824e5b7605049ef0b05c2af86b5aef8e65df805de8b9f689a111d27ca523"], ["id", 11]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mPost Load (0.1ms)[0m  [1m[34mSELECT  "posts".* FROM "posts" WHERE "posts"."id" = ? LIMIT ?[0m  [["id", 11], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "users" DEFAULT VALUES[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "posts" ("user_id", "document_id", "document_size") VALUES (?, ?, ?)[0m  [["user_id", 4], ["document_id", "56b65e98d65a1744beceef93e837dab78cb1572c6afb1f7055fbaee4adfc"], ["document_size", 3]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mPost Load (0.1ms)[0m  [1m[34mSELECT  "posts".* FROM "posts" WHERE "posts"."user_id" = ? ORDER BY "posts"."id" ASC LIMIT ?[0m  [["user_id", 4], ["LIMIT", 1]]
+  [1m[36mPost Load (0.1ms)[0m  [1m[34mSELECT  "posts".* FROM "posts" WHERE "posts"."id" = ? LIMIT ?[0m  [["id", 12], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "users" DEFAULT VALUES[0m
+  [1m[35m (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "posts" ("user_id", "document_id", "document_size") VALUES (?, ?, ?)[0m  [["user_id", 5], ["document_id", "b543ec22169f5a7777a26f1ae9aa29fd28b42cba18d702aef3bdd15cb99e"], ["document_size", 3]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mPost Load (0.2ms)[0m  [1m[34mSELECT "posts".* FROM "posts" WHERE "posts"."user_id" = ? AND "posts"."id" = 13[0m  [["user_id", 5]]
+  [1m[35mSQL (0.2ms)[0m  [1m[33mUPDATE "posts" SET "document_id" = ?, "document_size" = ? WHERE "posts"."id" = ?[0m  [["document_id", nil], ["document_size", nil], ["id", 13]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mPost Load (0.1ms)[0m  [1m[34mSELECT  "posts".* FROM "posts" WHERE "posts"."id" = ? LIMIT ?[0m  [["id", 13], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "users" DEFAULT VALUES[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "posts" ("user_id", "document_id", "document_size") VALUES (?, ?, ?)[0m  [["user_id", 6], ["document_id", "4539c961d2e314875daa48c7091beb441318c8bda887bb0ad20d282d9d22"], ["document_size", 3]]
+  [1m[35m (1.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mPost Load (0.2ms)[0m  [1m[34mSELECT  "posts".* FROM "posts" WHERE "posts"."user_id" = ? ORDER BY "posts"."id" ASC LIMIT ?[0m  [["user_id", 6], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mPost Load (0.3ms)[0m  [1m[34mSELECT "posts".* FROM "posts" WHERE "posts"."user_id" = ? AND "posts"."id" = 14[0m  [["user_id", 6]]
+  [1m[35mSQL (0.2ms)[0m  [1m[33mUPDATE "posts" SET "document_id" = ? WHERE "posts"."id" = ?[0m  [["document_id", "025871c49757795a5289ffd2be8adcfc531158bb0facd5c213027414e6f1"], ["id", 14]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mPost Load (0.1ms)[0m  [1m[34mSELECT  "posts".* FROM "posts" WHERE "posts"."id" = ? LIMIT ?[0m  [["id", 14], ["LIMIT", 1]]
+Refile::App: [2017-05-09 20:58:21 -0400] GET "/token/store" 404 0.7ms
+
+Refile::App: [2017-05-09 20:58:21 -0400] GET "/" 404 0.4ms
+
+Refile::App: [2017-05-09 20:58:21 -0400] GET "/token/store/14af02815c7e5e8db9b072d220f3c62414fcdad548f96a21c2c96201abc5/hello" 200 2.7ms
+
+Refile::App: [2017-05-09 20:58:21 -0400] GET "/token/store/04512141d96a48f2e4c54f66ba1b19610811a354795126853c72d1345109/hello.html" 200 1.0ms
+
+Refile::App: Could not find attachment by id: doesnotexist
+Refile::App: [2017-05-09 20:58:21 -0400] GET "/token/store/doesnotexist/hello" 404 0.6ms
+
+Refile::App: Could not find backend: doesnotexist
+Refile::App: [2017-05-09 20:58:21 -0400] GET "/token/doesnotexist/45bf6a7b002512d03f81f9410d658bcbb14f9fb1aedc20f7a37fa5fc2728/hello" 404 0.4ms
+
+Refile::App: [2017-05-09 20:58:21 -0400] HEAD "/token/store/c3053568c5cdd3a96ea24e53e617cd061efb2026d1876afd5257e3c5c0f6/hello" 200 7.7ms
+
+Refile::App: Could not find attachment by id: doesnotexist
+Refile::App: [2017-05-09 20:58:21 -0400] HEAD "/token/store/doesnotexist/hello" 404 0.5ms
+
+Refile::App: [2017-05-09 20:58:21 -0400] POST "/token/store/c3a4f0013c8dc6fc7569b0fd8a9fbf03235f7066c4b8892b727c16faebd1/hello" 404 0.4ms
+
+Refile::App: [2017-05-09 20:58:21 -0400] GET "/token/store/e1b0742195100c979712fc424c6cf851d530b0730a32132f422cd66023a4/hello" 200 0.9ms
+
+Refile::App: [2017-05-09 20:58:21 -0400] GET "/538fad826d05a6d86c4f205a79df9e4cb889a878/store/82c6711b33a020cc5ff1dda557e339554a1b2a0cda2cf4c9097862d2d35a/hello" 200 0.9ms
+
+Refile::App: [2017-05-09 20:58:21 -0400] GET "/eviltoken/store/198f5708164bcd5e44790e99f23a4bdbca83776b3ffec8ba409dda83834e/hello" 403 0.3ms
+
+Refile::App: [2017-05-09 20:58:21 -0400] GET "/eviltoken/store/7af766190951363f58eba0482d9e8fd29fd3ff3940fb9be1ddbb98e262d6/hello" 403 0.4ms
+
+Refile::App: [2017-05-09 20:58:21 -0400] GET "/token/store/276fe606c72cd6d27a62def8f94210ff5e34922f4d25274b195386756231/test.txt" 200 1.0ms
+
+Refile::App: [2017-05-09 20:58:21 -0400] GET "/token/store/560548506e3da42c523b9330d65f4da565886f1c07939a921669eeaf3c99/test.txt" 200 1.4ms
+
+Refile::App: [2017-05-09 20:58:21 -0400] GET "/token/cache/8235d7ff2e5a96d2c1fee6f262f842dd9e0f33dd87b245f5c464050861f9/test.txt" 404 0.5ms
+
+Refile::App: Could not find processor: doesnotexist
+Refile::App: [2017-05-09 20:58:21 -0400] GET "/token/store/doesnotexist/027b5c4b0a0fcc73a7c4cd4ac0b04913b8e8207541a9447c7b0107500222/hello" 404 1.2ms
+
+Refile::App: [2017-05-09 20:58:21 -0400] GET "/token/store/reverse/1efa8a5b14b7aff3eb0271c4d6bb061262a6fc84958bdc371751a106eecb/hello" 200 1.2ms
+
+Refile::App: [2017-05-09 20:58:21 -0400] GET "/token/store/upcase/6efd5559993c680919b4f89bf8322c3c198432d7c593524f077363821e57/hello" 200 1.2ms
+
+Refile::App: [2017-05-09 20:58:21 -0400] GET "/token/store/concat/foo/bar/baz/a8c8f3c60f13810d3d5f74add16dff9d43efd7de6a19c198fd722f679893/hello" 200 2.0ms
+
+Refile::App: [2017-05-09 20:58:21 -0400] GET "/token/store/convert_case/9e0e80e4c9b07c3f41ed3e7b0f48bd440bedbd46e3323620b836e77cd12b/hello.up" 200 2.0ms
+
+Refile::App: [2017-05-09 20:58:21 -0400] GET "/eviltoken/store/reverse/706381097d0c1db4d04c399a08f30e33a8511a2055f131b27f15f36c0413/hello" 403 0.3ms
+
+Refile::App: [2017-05-09 20:58:21 -0400] POST "/cache" 200 5.5ms
+
+Refile::App: [2017-05-09 20:58:21 -0400] POST "/cache" 200 2.4ms
+
+Refile::App: [2017-05-09 20:58:21 -0400] POST "/cache" 200 2.6ms
+
+Refile::App: [2017-05-09 20:58:21 -0400] POST "/store" 200 1.8ms
+
+Refile::App: [2017-05-09 20:58:21 -0400] POST "/cache" 200 1.5ms
+
+Refile::App: [2017-05-09 20:58:21 -0400] POST "/store" 404 0.9ms
+
+Refile::App: [2017-05-09 20:58:21 -0400] POST "/store_max_size" 413 1.1ms
+
+Refile::App: [2017-05-09 20:58:21 -0400] POST "/store_max_size" 400 0.9ms
+
+Refile::App: [2017-05-09 20:58:21 -0400] GET "/limited_cache/presign" 200 1.7ms
+
+Refile::App: [2017-05-09 20:58:21 -0400] GET "/limited_cache/presign" 200 0.8ms
+
+Refile::App: [2017-05-09 20:58:21 -0400] GET "/limited_cache/presign" 200 0.8ms
+
+Refile::App: [2017-05-09 20:58:21 -0400] GET "/store/presign" 404 0.3ms
+
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "posts" ("document_id", "document_size") VALUES (?, ?)[0m  [["document_id", "b0a5c8a1e5989cb0de6363f87d550448e70602788ce7f19618e3586e3e56"], ["document_size", 5]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mPost Load (0.2ms)[0m  [1m[34mSELECT  "posts".* FROM "posts" WHERE "posts"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "posts" ("document_id", "document_size") VALUES (?, ?)[0m  [["document_id", "7fca20d7748d3fa179020e117f2dd19c6485a888b1522cd684740d1eb226"], ["document_size", 5]]
+  [1m[35m (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mPost Load (0.1ms)[0m  [1m[34mSELECT  "posts".* FROM "posts" WHERE "posts"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[33mUPDATE "posts" SET "document_id" = ? WHERE "posts"."id" = ?[0m  [["document_id", "3c930545980e979df55685e410a8b401a95be1503e669eb3d5aeb80390ee"], ["id", 2]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "posts" ("document_id", "document_size") VALUES (?, ?)[0m  [["document_id", "1a3f004ff2e9bd9ad055dfc8d0b196f7a3201bd4a8e12ce61d4e01c87920"], ["document_size", 5]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[31mDELETE FROM "posts" WHERE "posts"."id" = ?[0m  [["id", 3]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "posts" ("document_id", "document_size") VALUES (?, ?)[0m  [["document_id", "f1f8ed046ed57c62bb9bc102c701ae61ea8ff2b1080abb825aff05072b58"], ["document_size", 5]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[31mDELETE FROM "posts" WHERE "posts"."id" = ?[0m  [["id", 4]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "posts" ("document_id", "document_size") VALUES (?, ?)[0m  [["document_id", "c6f22aac362c25ae3dae084e02c993717b333b7fb7d1fd67230a5cf68a38"], ["document_size", 5]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[31mDELETE FROM "posts" WHERE "posts"."id" = ?[0m  [["id", 5]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "posts" DEFAULT VALUES[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "documents" ("post_id", "file_id", "file_size") VALUES (?, ?, ?)[0m  [["post_id", 6], ["file_id", "e2033c0d2e3a1d725e2e289d5aef1cc647751d7083dce0c782bb246cd405"], ["file_size", 5]]
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "documents" ("post_id", "file_id", "file_size") VALUES (?, ?, ?)[0m  [["post_id", 6], ["file_id", "226f1255b2a0bd772eba757acddff54ba09072b43779941c4636047f4373"], ["file_size", 5]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[31mDELETE FROM "documents" WHERE "documents"."id" = ?[0m  [["id", 1]]
+  [1m[35mSQL (0.1ms)[0m  [1m[31mDELETE FROM "documents" WHERE "documents"."id" = ?[0m  [["id", 2]]
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "documents" ("post_id", "file_id", "file_size") VALUES (?, ?, ?)[0m  [["post_id", 6], ["file_id", "11925c4d9f8efc23d8d66f0f98efdd17527e1a1820c3b9f1d5671abc05a9"], ["file_size", 3]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mPost Load (0.1ms)[0m  [1m[34mSELECT  "posts".* FROM "posts" WHERE "posts"."id" = ? LIMIT ?[0m  [["id", 6], ["LIMIT", 1]]
+  [1m[36mDocument Load (0.1ms)[0m  [1m[34mSELECT "documents".* FROM "documents" WHERE "documents"."post_id" = ?[0m  [["post_id", 6]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "posts" DEFAULT VALUES[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "documents" ("post_id", "file_id", "file_size") VALUES (?, ?, ?)[0m  [["post_id", 7], ["file_id", "4999e07b9dfa26cfc4f560614bd6c1da6c12a0b556186f221ab0f9a0b5c2"], ["file_size", 5]]
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "documents" ("post_id", "file_id", "file_size") VALUES (?, ?, ?)[0m  [["post_id", 7], ["file_id", "4e783a4d3f63e5a21c14d5509300eb9f2b4e05b94aa744c8bd084e1d1fa5"], ["file_size", 5]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "documents" ("post_id", "file_id", "file_size") VALUES (?, ?, ?)[0m  [["post_id", 7], ["file_id", "75fb199b81d65155a9b6e42989bd4094c9c258b39442b104237a4a07de51"], ["file_size", 3]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mPost Load (0.1ms)[0m  [1m[34mSELECT  "posts".* FROM "posts" WHERE "posts"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+  [1m[36mDocument Load (0.1ms)[0m  [1m[34mSELECT "documents".* FROM "documents" WHERE "documents"."post_id" = ?[0m  [["post_id", 7]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "posts" DEFAULT VALUES[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "documents" ("post_id", "file_id", "file_size") VALUES (?, ?, ?)[0m  [["post_id", 8], ["file_id", "ccf52f480217eafd8076b588468c2ada7ccdde0a16efa2ec6590ce96ca31"], ["file_size", 5]]
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "documents" ("post_id", "file_id", "file_size") VALUES (?, ?, ?)[0m  [["post_id", 8], ["file_id", "18ce0dfeef86f488778e3e469d50be1c181d9a72942597172ae38715a822"], ["file_size", 5]]
+  [1m[35m (0.5ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "documents" ("post_id", "file_id", "file_filename", "file_content_type", "file_size") VALUES (?, ?, ?, ?, ?)[0m  [["post_id", 8], ["file_id", "9a3865db42c12bf9c80723b55851449de0b321e276ff03efa9c1bc0c4c3b"], ["file_filename", "some.jpg"], ["file_content_type", "image/jpeg"], ["file_size", 1234]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mPost Load (0.1ms)[0m  [1m[34mSELECT  "posts".* FROM "posts" WHERE "posts"."id" = ? LIMIT ?[0m  [["id", 8], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "documents" WHERE "documents"."post_id" = ?[0m  [["post_id", 8]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "users" DEFAULT VALUES[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "posts" ("user_id", "document_id", "document_size") VALUES (?, ?, ?)[0m  [["user_id", 1], ["document_id", "d7777fc0fc0994e0736c5622be6e16ea05ae7435435f00dda141d84bb584"], ["document_size", 3]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mPost Load (0.1ms)[0m  [1m[34mSELECT  "posts".* FROM "posts" WHERE "posts"."id" = ? LIMIT ?[0m  [["id", 9], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "users" DEFAULT VALUES[0m
+  [1m[35m (1.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "posts" ("user_id", "document_id", "document_size") VALUES (?, ?, ?)[0m  [["user_id", 2], ["document_id", "1b34e8834a5ece34c4a27d5aaa9b226a2b87168f921db19381a477cb3555"], ["document_size", 3]]
+  [1m[35m (0.5ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mPost Load (0.2ms)[0m  [1m[34mSELECT  "posts".* FROM "posts" WHERE "posts"."user_id" = ? LIMIT ?[0m  [["user_id", 2], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[33mUPDATE "posts" SET "document_id" = ?, "document_size" = ? WHERE "posts"."id" = ?[0m  [["document_id", nil], ["document_size", nil], ["id", 10]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mPost Load (0.2ms)[0m  [1m[34mSELECT  "posts".* FROM "posts" WHERE "posts"."id" = ? LIMIT ?[0m  [["id", 10], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "users" DEFAULT VALUES[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "posts" ("user_id", "document_id", "document_size") VALUES (?, ?, ?)[0m  [["user_id", 3], ["document_id", "c8b1fdb1ff7a26cb40c8710bb16dc68bd08055130cf5e6d399720a8b2227"], ["document_size", 3]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[33mUPDATE "posts" SET "document_id" = ? WHERE "posts"."id" = ?[0m  [["document_id", "e181ff8c8445651ddbb355c26e60cca26ac35aa1bfa1caa1cf2273f33089"], ["id", 11]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mPost Load (0.1ms)[0m  [1m[34mSELECT  "posts".* FROM "posts" WHERE "posts"."id" = ? LIMIT ?[0m  [["id", 11], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "users" DEFAULT VALUES[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "posts" ("user_id", "document_id", "document_size") VALUES (?, ?, ?)[0m  [["user_id", 4], ["document_id", "f0afdaf5ce1fcaf0cd36f6f1639495cbd214f4b340c6be04c17403ff1bf5"], ["document_size", 3]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mPost Load (0.2ms)[0m  [1m[34mSELECT  "posts".* FROM "posts" WHERE "posts"."user_id" = ? ORDER BY "posts"."id" ASC LIMIT ?[0m  [["user_id", 4], ["LIMIT", 1]]
+  [1m[36mPost Load (0.1ms)[0m  [1m[34mSELECT  "posts".* FROM "posts" WHERE "posts"."id" = ? LIMIT ?[0m  [["id", 12], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "users" DEFAULT VALUES[0m
+  [1m[35m (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "posts" ("user_id", "document_id", "document_size") VALUES (?, ?, ?)[0m  [["user_id", 5], ["document_id", "5949361fadbbefabd525050221d274c96221ba57a7cec22691a525815054"], ["document_size", 3]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mPost Load (0.2ms)[0m  [1m[34mSELECT "posts".* FROM "posts" WHERE "posts"."user_id" = ? AND "posts"."id" = 13[0m  [["user_id", 5]]
+  [1m[35mSQL (0.3ms)[0m  [1m[33mUPDATE "posts" SET "document_id" = ?, "document_size" = ? WHERE "posts"."id" = ?[0m  [["document_id", nil], ["document_size", nil], ["id", 13]]
+  [1m[35m (1.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mPost Load (0.1ms)[0m  [1m[34mSELECT  "posts".* FROM "posts" WHERE "posts"."id" = ? LIMIT ?[0m  [["id", 13], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "users" DEFAULT VALUES[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "posts" ("user_id", "document_id", "document_size") VALUES (?, ?, ?)[0m  [["user_id", 6], ["document_id", "628de2944aa949e62838ce2d7e77e91cac307fa92cee09672be2c9e4a7ef"], ["document_size", 3]]
+  [1m[35m (1.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mPost Load (0.1ms)[0m  [1m[34mSELECT  "posts".* FROM "posts" WHERE "posts"."user_id" = ? ORDER BY "posts"."id" ASC LIMIT ?[0m  [["user_id", 6], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mPost Load (0.2ms)[0m  [1m[34mSELECT "posts".* FROM "posts" WHERE "posts"."user_id" = ? AND "posts"."id" = 14[0m  [["user_id", 6]]
+  [1m[35mSQL (0.3ms)[0m  [1m[33mUPDATE "posts" SET "document_id" = ? WHERE "posts"."id" = ?[0m  [["document_id", "1edfc9a1585d1ef5eaea32385d487929b291003b83ce9cf51361f4e8f2a3"], ["id", 14]]
+  [1m[35m (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mPost Load (0.1ms)[0m  [1m[34mSELECT  "posts".* FROM "posts" WHERE "posts"."id" = ? LIMIT ?[0m  [["id", 14], ["LIMIT", 1]]
+Refile::App: [2017-05-09 21:07:20 -0400] GET "/token/store" 404 0.7ms
+
+Refile::App: [2017-05-09 21:07:20 -0400] GET "/" 404 0.4ms
+
+Refile::App: [2017-05-09 21:07:20 -0400] GET "/token/store/6aa2a30b6e903ed5e11ad7074efa06f3cb1567b3ffc363609533db1dcf65/hello" 200 2.2ms
+
+Refile::App: [2017-05-09 21:07:20 -0400] GET "/token/store/ce386f20562f40bc18fadf44999f6d37766c67b7d6096762344daf0f6bfe/hello.html" 200 1.0ms
+
+Refile::App: Could not find attachment by id: doesnotexist
+Refile::App: [2017-05-09 21:07:20 -0400] GET "/token/store/doesnotexist/hello" 404 0.6ms
+
+Refile::App: Could not find backend: doesnotexist
+Refile::App: [2017-05-09 21:07:20 -0400] GET "/token/doesnotexist/8e9d498c361bd9a28e6c9690334c794a7fa604ebbd1b04fcba6b084c24e0/hello" 404 0.4ms
+
+Refile::App: [2017-05-09 21:07:20 -0400] HEAD "/token/store/898a3c6d5cba5da93a6000bf4c6eea2b4ee075becb47b9e8fb43ff43b237/hello" 200 7.1ms
+
+Refile::App: Could not find attachment by id: doesnotexist
+Refile::App: [2017-05-09 21:07:20 -0400] HEAD "/token/store/doesnotexist/hello" 404 0.5ms
+
+Refile::App: [2017-05-09 21:07:20 -0400] POST "/token/store/8a0006b4763f53cce12d621df193cdcf40c5b348e25301be852e30f21271/hello" 404 0.3ms
+
+Refile::App: [2017-05-09 21:07:20 -0400] GET "/token/store/d7174ad077d3291a9e88cec1eae61b9424ca158fbd52a75cf0c91eb4b5cd/hello" 200 1.1ms
+
+Refile::App: [2017-05-09 21:07:20 -0400] GET "/0abdd732b9439ec3d83f0e119cdef17cd25b7b0e/store/8981f87abaeda83c0487efa994148f5f410bd9065714bfaf88c859dd35bb/hello" 200 0.8ms
+
+Refile::App: [2017-05-09 21:07:20 -0400] GET "/eviltoken/store/78affa2211e575a5e9a4488f98e0f1d377dd98d53e2fd943ce6929bcacd8/hello" 403 0.3ms
+
+Refile::App: [2017-05-09 21:07:20 -0400] GET "/eviltoken/store/12814ac45b1e9dc366d02931e57167bbac2a54a7a0540e176bcd888e6986/hello" 403 0.3ms
+
+Refile::App: [2017-05-09 21:07:20 -0400] GET "/token/store/c0a90dbb661680d8eb4d5e311ce97d9bb5c59a05e262aa1c64bd53acefe8/test.txt" 200 1.1ms
+
+Refile::App: [2017-05-09 21:07:20 -0400] GET "/token/store/ca12850fb2e36df21997468cc30767c262393089f8164ab4ab22814ffc15/test.txt" 200 1.0ms
+
+Refile::App: [2017-05-09 21:07:20 -0400] GET "/token/cache/dd1d0de33a418fa055bac1ab9a294e5ded2d911c43ddf7a5d0f4abafa136/test.txt" 404 0.4ms
+
+Refile::App: Could not find processor: doesnotexist
+Refile::App: [2017-05-09 21:07:20 -0400] GET "/token/store/doesnotexist/f2368a397534bdb36d259a63704f5220ca609e32f7a9e34912a71823958c/hello" 404 1.1ms
+
+Refile::App: [2017-05-09 21:07:20 -0400] GET "/token/store/reverse/3dd2086086a14786e4187e4b5543a3a14d9d7a484502d0facb0f0c2e8e65/hello" 200 1.1ms
+
+Refile::App: [2017-05-09 21:07:20 -0400] GET "/token/store/upcase/a93c374968dba7875eb4df89bda8a6b473a2dbfcda04f2e86b51885e612a/hello" 200 1.1ms
+
+Refile::App: [2017-05-09 21:07:20 -0400] GET "/token/store/concat/foo/bar/baz/669766bde651bb7d4f8561b8b5a218f2300683d116c903c3807f12d4c06c/hello" 200 2.9ms
+
+Refile::App: [2017-05-09 21:07:20 -0400] GET "/token/store/convert_case/33ef5557dc18adfe6e826c217285cddc1c5ef46701b396e7bfe695f95b02/hello.up" 200 2.8ms
+
+Refile::App: [2017-05-09 21:07:20 -0400] GET "/eviltoken/store/reverse/c71fba56e85ad46538d6b26f95833ce494d213255ddcbe63cc3be3d15959/hello" 403 0.4ms
+
+Refile::App: [2017-05-09 21:07:20 -0400] POST "/cache" 200 4.5ms
+
+Refile::App: [2017-05-09 21:07:20 -0400] POST "/cache" 200 1.6ms
+
+Refile::App: [2017-05-09 21:07:20 -0400] POST "/cache" 200 1.7ms
+
+Refile::App: [2017-05-09 21:07:20 -0400] POST "/store" 200 1.6ms
+
+Refile::App: [2017-05-09 21:07:20 -0400] POST "/cache" 200 1.4ms
+
+Refile::App: [2017-05-09 21:07:20 -0400] POST "/store" 404 0.6ms
+
+Refile::App: [2017-05-09 21:07:20 -0400] POST "/store_max_size" 413 1.7ms
+
+Refile::App: [2017-05-09 21:07:20 -0400] POST "/store_max_size" 400 1.6ms
+
+Refile::App: [2017-05-09 21:07:20 -0400] GET "/limited_cache/presign" 200 2.1ms
+
+Refile::App: [2017-05-09 21:07:20 -0400] GET "/limited_cache/presign" 200 1.0ms
+
+Refile::App: [2017-05-09 21:07:20 -0400] GET "/limited_cache/presign" 200 0.8ms
+
+Refile::App: [2017-05-09 21:07:20 -0400] GET "/store/presign" 404 0.3ms
+
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "posts" ("document_id", "document_size") VALUES (?, ?)[0m  [["document_id", "f811fe5af7a80daa78d3600ec5a2e5b5d83e905248f84e71e2edbfbd9710"], ["document_size", 5]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mPost Load (0.3ms)[0m  [1m[34mSELECT  "posts".* FROM "posts" WHERE "posts"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "posts" ("document_id", "document_size") VALUES (?, ?)[0m  [["document_id", "04d9ac6bff098d8fe486164215b90dcfb9f737ea6ce097ba78d0dd3d1e1d"], ["document_size", 5]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mPost Load (0.1ms)[0m  [1m[34mSELECT  "posts".* FROM "posts" WHERE "posts"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[33mUPDATE "posts" SET "document_id" = ? WHERE "posts"."id" = ?[0m  [["document_id", "59e43e39ccd238b8a9acae8639ba126018957c886c69358efcfc0c38a5c9"], ["id", 2]]
+  [1m[35m (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "posts" ("document_id", "document_size") VALUES (?, ?)[0m  [["document_id", "b51cea6b9b3c8dfac0f7db2ad28669229d8be38eb9e23c8d5801bf71418c"], ["document_size", 5]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[31mDELETE FROM "posts" WHERE "posts"."id" = ?[0m  [["id", 3]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "posts" ("document_id", "document_size") VALUES (?, ?)[0m  [["document_id", "e9798fc07c388e7b986562bc86b1d5cbf5af693cf6ae789767902ba6832e"], ["document_size", 5]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[31mDELETE FROM "posts" WHERE "posts"."id" = ?[0m  [["id", 4]]
+  [1m[35m (0.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "posts" ("document_id", "document_size") VALUES (?, ?)[0m  [["document_id", "cdccf8b359cfd1c4f4bd2cdf77fe0f00bc6bb806fcea6cf8b77cda9512fe"], ["document_size", 5]]
+  [1m[35m (0.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[31mDELETE FROM "posts" WHERE "posts"."id" = ?[0m  [["id", 5]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "posts" DEFAULT VALUES[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "documents" ("post_id", "file_id", "file_size") VALUES (?, ?, ?)[0m  [["post_id", 6], ["file_id", "b6113820a56e5a48f38a377442e8ac9e07949f426f55abda70832ababd96"], ["file_size", 5]]
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "documents" ("post_id", "file_id", "file_size") VALUES (?, ?, ?)[0m  [["post_id", 6], ["file_id", "e8d0dd9701584edb3cd463cb78cb600c13a93cf443b92dd2882303972a71"], ["file_size", 5]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[31mDELETE FROM "documents" WHERE "documents"."id" = ?[0m  [["id", 1]]
+  [1m[35mSQL (0.1ms)[0m  [1m[31mDELETE FROM "documents" WHERE "documents"."id" = ?[0m  [["id", 2]]
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "documents" ("post_id", "file_id", "file_size") VALUES (?, ?, ?)[0m  [["post_id", 6], ["file_id", "c3dad99c0b37079f9c7434ff8637ac240013644d7ac4229bdc4d451a34eb"], ["file_size", 3]]
+  [1m[35m (0.5ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mPost Load (0.1ms)[0m  [1m[34mSELECT  "posts".* FROM "posts" WHERE "posts"."id" = ? LIMIT ?[0m  [["id", 6], ["LIMIT", 1]]
+  [1m[36mDocument Load (0.1ms)[0m  [1m[34mSELECT "documents".* FROM "documents" WHERE "documents"."post_id" = ?[0m  [["post_id", 6]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "posts" DEFAULT VALUES[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "documents" ("post_id", "file_id", "file_size") VALUES (?, ?, ?)[0m  [["post_id", 7], ["file_id", "e9463fe44dcaf43fcebbdb2c75ea6fb761175440b637ec64f9ffe7e1a595"], ["file_size", 5]]
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "documents" ("post_id", "file_id", "file_size") VALUES (?, ?, ?)[0m  [["post_id", 7], ["file_id", "98ce5a00b27d2a5dec47b862d7c2e09bc217aa5aeb1f97395bbac903549b"], ["file_size", 5]]
+  [1m[35m (0.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "documents" ("post_id", "file_id", "file_size") VALUES (?, ?, ?)[0m  [["post_id", 7], ["file_id", "e54f73cb9a04fd6f8ab5209a32a9d8ff02d282a3de884ed220cc885da6e1"], ["file_size", 3]]
+  [1m[35m (0.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mPost Load (0.1ms)[0m  [1m[34mSELECT  "posts".* FROM "posts" WHERE "posts"."id" = ? LIMIT ?[0m  [["id", 7], ["LIMIT", 1]]
+  [1m[36mDocument Load (0.1ms)[0m  [1m[34mSELECT "documents".* FROM "documents" WHERE "documents"."post_id" = ?[0m  [["post_id", 7]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "posts" DEFAULT VALUES[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "documents" ("post_id", "file_id", "file_size") VALUES (?, ?, ?)[0m  [["post_id", 8], ["file_id", "c158315dbc441eef7f92e509c52b7348f109d3741d7811b178d737a77cb2"], ["file_size", 5]]
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "documents" ("post_id", "file_id", "file_size") VALUES (?, ?, ?)[0m  [["post_id", 8], ["file_id", "0554a099502400be712076f13f71af2c867078550c5c29bd01fd34e0cdb4"], ["file_size", 5]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "documents" ("post_id", "file_id", "file_filename", "file_content_type", "file_size") VALUES (?, ?, ?, ?, ?)[0m  [["post_id", 8], ["file_id", "cd4c1ad0fdf02dac87405974fc5e302b100dfd3752d2e82d90120e1b01e3"], ["file_filename", "some.jpg"], ["file_content_type", "image/jpeg"], ["file_size", 1234]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mPost Load (0.1ms)[0m  [1m[34mSELECT  "posts".* FROM "posts" WHERE "posts"."id" = ? LIMIT ?[0m  [["id", 8], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "documents" WHERE "documents"."post_id" = ?[0m  [["post_id", 8]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "users" DEFAULT VALUES[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "posts" ("user_id", "document_id", "document_size") VALUES (?, ?, ?)[0m  [["user_id", 1], ["document_id", "60753b46e8a790179b11131fd6feebd3886e7b7da24e0d99da45c4f849d2"], ["document_size", 3]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mPost Load (0.1ms)[0m  [1m[34mSELECT  "posts".* FROM "posts" WHERE "posts"."id" = ? LIMIT ?[0m  [["id", 9], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "users" DEFAULT VALUES[0m
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "posts" ("user_id", "document_id", "document_size") VALUES (?, ?, ?)[0m  [["user_id", 2], ["document_id", "f282f5d6751aced179a4a4c0c4f344149b63f57662b7ba77931f9b77bf2c"], ["document_size", 3]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mPost Load (0.2ms)[0m  [1m[34mSELECT  "posts".* FROM "posts" WHERE "posts"."user_id" = ? LIMIT ?[0m  [["user_id", 2], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[33mUPDATE "posts" SET "document_id" = ?, "document_size" = ? WHERE "posts"."id" = ?[0m  [["document_id", nil], ["document_size", nil], ["id", 10]]
+  [1m[35m (1.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mPost Load (0.1ms)[0m  [1m[34mSELECT  "posts".* FROM "posts" WHERE "posts"."id" = ? LIMIT ?[0m  [["id", 10], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "users" DEFAULT VALUES[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "posts" ("user_id", "document_id", "document_size") VALUES (?, ?, ?)[0m  [["user_id", 3], ["document_id", "9514a98a80c6f173e3f562cd5f6761cac26ed72ed396780a4f5379ccbecc"], ["document_size", 3]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[33mUPDATE "posts" SET "document_id" = ? WHERE "posts"."id" = ?[0m  [["document_id", "bd486e3b758e28a72c90aca188708685ed0eb1fd5e5a984a908cfd14fde6"], ["id", 11]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mPost Load (0.1ms)[0m  [1m[34mSELECT  "posts".* FROM "posts" WHERE "posts"."id" = ? LIMIT ?[0m  [["id", 11], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "users" DEFAULT VALUES[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "posts" ("user_id", "document_id", "document_size") VALUES (?, ?, ?)[0m  [["user_id", 4], ["document_id", "34ed925abb786b23b927e801198a564a28548aedd3089bac4d146bdef24d"], ["document_size", 3]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mPost Load (0.2ms)[0m  [1m[34mSELECT  "posts".* FROM "posts" WHERE "posts"."user_id" = ? ORDER BY "posts"."id" ASC LIMIT ?[0m  [["user_id", 4], ["LIMIT", 1]]
+  [1m[36mPost Load (0.1ms)[0m  [1m[34mSELECT  "posts".* FROM "posts" WHERE "posts"."id" = ? LIMIT ?[0m  [["id", 12], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "users" DEFAULT VALUES[0m
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "posts" ("user_id", "document_id", "document_size") VALUES (?, ?, ?)[0m  [["user_id", 5], ["document_id", "515b229f56cfd090b6a433ee71aa264667228f6365b23801341c5595ccec"], ["document_size", 3]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mPost Load (0.2ms)[0m  [1m[34mSELECT "posts".* FROM "posts" WHERE "posts"."user_id" = ? AND "posts"."id" = 13[0m  [["user_id", 5]]
+  [1m[35mSQL (0.2ms)[0m  [1m[33mUPDATE "posts" SET "document_id" = ?, "document_size" = ? WHERE "posts"."id" = ?[0m  [["document_id", nil], ["document_size", nil], ["id", 13]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mPost Load (0.1ms)[0m  [1m[34mSELECT  "posts".* FROM "posts" WHERE "posts"."id" = ? LIMIT ?[0m  [["id", 13], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "users" DEFAULT VALUES[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "posts" ("user_id", "document_id", "document_size") VALUES (?, ?, ?)[0m  [["user_id", 6], ["document_id", "b8dbcad396a7748b5a9c8894757b5ad958066f1c1c884a3bfbdac62682d1"], ["document_size", 3]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mPost Load (0.1ms)[0m  [1m[34mSELECT  "posts".* FROM "posts" WHERE "posts"."user_id" = ? ORDER BY "posts"."id" ASC LIMIT ?[0m  [["user_id", 6], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mPost Load (0.1ms)[0m  [1m[34mSELECT "posts".* FROM "posts" WHERE "posts"."user_id" = ? AND "posts"."id" = 14[0m  [["user_id", 6]]
+  [1m[35mSQL (0.1ms)[0m  [1m[33mUPDATE "posts" SET "document_id" = ? WHERE "posts"."id" = ?[0m  [["document_id", "06ba0399433c0826afcf590e6d2647ef24e7287449cbd1416aabb056c2f1"], ["id", 14]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mPost Load (0.1ms)[0m  [1m[34mSELECT  "posts".* FROM "posts" WHERE "posts"."id" = ? LIMIT ?[0m  [["id", 14], ["LIMIT", 1]]
+Started GET "/direct/posts/new" for 127.0.0.1 at 2017-05-09 21:07:22 -0400
+Processing by DirectPostsController#new as HTML
+  Rendering direct_posts/new.html.erb within layouts/application
+  Rendered direct_posts/new.html.erb within layouts/application (34.8ms)
+Completed 200 OK in 344ms (Views: 321.7ms | ActiveRecord: 2.1ms)
+Started GET "/assets/application-fbe08a5b0efebdf59ad86e4b2222f7746b88d4f69d7d796991d7abf5cd5044a6.js" for 127.0.0.1 at 2017-05-09 21:07:23 -0400
+Started OPTIONS "/attachments/limited_cache" for 127.0.0.1 at 2017-05-09 21:07:23 -0400
+Refile::App: [2017-05-09 21:07:23 -0400] OPTIONS "/attachments/limited_cache" 200 0.4ms
+
+Started POST "/attachments/limited_cache" for 127.0.0.1 at 2017-05-09 21:07:23 -0400
+Refile::App: [2017-05-09 21:07:23 -0400] POST "/attachments/limited_cache" 200 1.0ms
+
+Started POST "/direct/posts" for 127.0.0.1 at 2017-05-09 21:07:23 -0400
+Processing by DirectPostsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"2P7fxlQ7dCGqenNygASh5G+XsMalcZK906MZY4TFZ3vUnoLOYCfe9gQozUWXKNF5WRasHKQysB6vVppHhqswbg==", "post"=>{"title"=>"A cool post", "document"=>"{\"id\":\"f53ad68dd0c39db5dad2c3409f6c5fd91ab810ed5353905343fbd46dd86b\",\"filename\":\"hello.txt\",\"content_type\":\"text/plain\",\"size\":6}", "documents_files"=>["[]"], "image"=>"", "requires_document"=>"0"}, "commit"=>"Create"}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "posts" ("title", "image_id", "document_id", "document_filename", "document_content_type", "document_size") VALUES (?, ?, ?, ?, ?, ?)[0m  [["title", "A cool post"], ["image_id", nil], ["document_id", "4db814667c46dc20101f000e9f81b2682cbabc6035f81eb417d5780cc9d6"], ["document_filename", "hello.txt"], ["document_content_type", "text/plain"], ["document_size", 6]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://127.0.0.1:56120/normal/posts/15
+Completed 302 Found in 5ms (ActiveRecord: 0.9ms)
+Started GET "/normal/posts/15" for 127.0.0.1 at 2017-05-09 21:07:23 -0400
+Processing by NormalPostsController#show as HTML
+  Parameters: {"id"=>"15"}
+  [1m[36mPost Load (0.2ms)[0m  [1m[34mSELECT  "posts".* FROM "posts" WHERE "posts"."id" = ? LIMIT ?[0m  [["id", 15], ["LIMIT", 1]]
+  Rendering normal_posts/show.html.erb within layouts/application
+  [1m[36mDocument Load (0.1ms)[0m  [1m[34mSELECT "documents".* FROM "documents" WHERE "documents"."post_id" = ?[0m  [["post_id", 15]]
+  Rendered normal_posts/show.html.erb within layouts/application (5.6ms)
+Completed 200 OK in 15ms (Views: 11.9ms | ActiveRecord: 0.7ms)
+Started GET "/attachments/ce11a126913d748077b1df46846d721500bcda5d/store/4db814667c46dc20101f000e9f81b2682cbabc6035f81eb417d5780cc9d6/hello.txt" for 127.0.0.1 at 2017-05-09 21:07:23 -0400
+Refile::App: [2017-05-09 21:07:23 -0400] GET "/attachments/ce11a126913d748077b1df46846d721500bcda5d/store/4db814667c46dc20101f000e9f81b2682cbabc6035f81eb417d5780cc9d6/hello.txt" 200 9.5ms
+
+Started GET "/direct/posts/new" for 127.0.0.1 at 2017-05-09 21:07:23 -0400
+Processing by DirectPostsController#new as HTML
+  Rendering direct_posts/new.html.erb within layouts/application
+  Rendered direct_posts/new.html.erb within layouts/application (2.9ms)
+Completed 200 OK in 8ms (Views: 6.9ms | ActiveRecord: 0.0ms)
+Started POST "/attachments/limited_cache" for 127.0.0.1 at 2017-05-09 21:07:23 -0400
+Refile::App: [2017-05-09 21:07:23 -0400] POST "/attachments/limited_cache" 413 0.7ms
+
+Started GET "/direct/posts/new" for 127.0.0.1 at 2017-05-09 21:07:23 -0400
+Processing by DirectPostsController#new as HTML
+  Rendering direct_posts/new.html.erb within layouts/application
+  Rendered direct_posts/new.html.erb within layouts/application (2.8ms)
+Completed 200 OK in 8ms (Views: 6.7ms | ActiveRecord: 0.0ms)
+Started POST "/direct/posts" for 127.0.0.1 at 2017-05-09 21:07:23 -0400
+Processing by DirectPostsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"fuPKE7TwO8GMvY/NHBkwtqtlewkVlBhXx7XZWNWd737wtrAPvWfEprnj39yZpJ+5ugCxzjgiptAsx6H1TuEBgQ==", "post"=>{"title"=>"A cool post", "document"=>"{}", "documents_files"=>["[]"], "image"=>"", "requires_document"=>"1"}, "commit"=>"Create"}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  Rendering direct_posts/new.html.erb within layouts/application
+  Rendered direct_posts/new.html.erb within layouts/application (3.0ms)
+Completed 200 OK in 9ms (Views: 6.8ms | ActiveRecord: 0.1ms)
+Started POST "/attachments/limited_cache" for 127.0.0.1 at 2017-05-09 21:07:24 -0400
+Refile::App: [2017-05-09 21:07:24 -0400] POST "/attachments/limited_cache" 200 9.8ms
+
+Started POST "/direct/posts" for 127.0.0.1 at 2017-05-09 21:07:24 -0400
+Processing by DirectPostsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"rfBSmd4xGFodaDkxKGT4JgsI1Cumw4mc/JJ35GhYrbAjpSiF16bnPSg2aSCt2VcpGm0e7It1NxsX4A9J8yRDTw==", "post"=>{"title"=>"A cool post", "document"=>"{\"id\":\"8750cd6f017a33dc953dab9754e452d760f49339b80de4ba19b039616702\",\"filename\":\"hello.txt\",\"content_type\":\"text/plain\",\"size\":6}", "documents_files"=>["[]"], "image"=>"", "requires_document"=>"1"}, "commit"=>"Create"}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "posts" ("title", "image_id", "document_id", "document_filename", "document_content_type", "document_size") VALUES (?, ?, ?, ?, ?, ?)[0m  [["title", "A cool post"], ["image_id", nil], ["document_id", "db238d16d559ab8bbf13cb1f37b639c3c1a765976a5c4b2637892f982921"], ["document_filename", "hello.txt"], ["document_content_type", "text/plain"], ["document_size", 6]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://127.0.0.1:56120/normal/posts/16
+Completed 302 Found in 5ms (ActiveRecord: 1.4ms)
+Started GET "/normal/posts/16" for 127.0.0.1 at 2017-05-09 21:07:24 -0400
+Processing by NormalPostsController#show as HTML
+  Parameters: {"id"=>"16"}
+  [1m[36mPost Load (0.1ms)[0m  [1m[34mSELECT  "posts".* FROM "posts" WHERE "posts"."id" = ? LIMIT ?[0m  [["id", 16], ["LIMIT", 1]]
+  Rendering normal_posts/show.html.erb within layouts/application
+  [1m[36mDocument Load (0.1ms)[0m  [1m[34mSELECT "documents".* FROM "documents" WHERE "documents"."post_id" = ?[0m  [["post_id", 16]]
+  Rendered normal_posts/show.html.erb within layouts/application (2.0ms)
+Completed 200 OK in 7ms (Views: 5.8ms | ActiveRecord: 0.2ms)
+Started GET "/attachments/8d9395808c5062adfc1bdb7a8c449117096e8090/store/db238d16d559ab8bbf13cb1f37b639c3c1a765976a5c4b2637892f982921/hello.txt" for 127.0.0.1 at 2017-05-09 21:07:24 -0400
+Refile::App: [2017-05-09 21:07:24 -0400] GET "/attachments/8d9395808c5062adfc1bdb7a8c449117096e8090/store/db238d16d559ab8bbf13cb1f37b639c3c1a765976a5c4b2637892f982921/hello.txt" 200 9.4ms
+
+Started GET "/direct/posts/new" for 127.0.0.1 at 2017-05-09 21:07:24 -0400
+Processing by DirectPostsController#new as HTML
+  Rendering direct_posts/new.html.erb within layouts/application
+  Rendered direct_posts/new.html.erb within layouts/application (2.9ms)
+Completed 200 OK in 8ms (Views: 6.6ms | ActiveRecord: 0.0ms)
+Started OPTIONS "/attachments/cache" for 127.0.0.1 at 2017-05-09 21:07:24 -0400
+Refile::App: [2017-05-09 21:07:24 -0400] OPTIONS "/attachments/cache" 200 0.4ms
+
+Started POST "/attachments/cache" for 127.0.0.1 at 2017-05-09 21:07:24 -0400
+Refile::App: [2017-05-09 21:07:24 -0400] POST "/attachments/cache" 200 9.8ms
+
+Started POST "/direct/posts" for 127.0.0.1 at 2017-05-09 21:07:24 -0400
+Processing by DirectPostsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"7SeottsW0R/onu8Ob+wjaYa9nemrpMlZbkztSn/vr1olr98aYMpBnvODafCr864lL8kARNZHd5u58x4upUDacA==", "post"=>{"title"=>"A cool post", "document"=>"{}", "documents_files"=>["[]"], "image"=>"{\"id\":\"c22b70d8932c69d85a81651dbea4c59e32c931bb4aad307be6a842d8d1db\",\"filename\":\"large.txt\",\"content_type\":\"text/plain\",\"size\":2901}", "requires_document"=>"0"}, "commit"=>"Create"}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  Rendering direct_posts/new.html.erb within layouts/application
+  Rendered direct_posts/new.html.erb within layouts/application (2.9ms)
+Completed 200 OK in 12ms (Views: 9.6ms | ActiveRecord: 0.1ms)
+Started GET "/multiple/posts/new" for 127.0.0.1 at 2017-05-09 21:07:24 -0400
+Processing by MultiplePostsController#new as HTML
+  Rendering multiple_posts/form.html.erb within layouts/application
+  Rendered multiple_posts/form.html.erb within layouts/application (3.2ms)
+Completed 200 OK in 12ms (Views: 11.4ms | ActiveRecord: 0.0ms)
+Started POST "/multiple/posts" for 127.0.0.1 at 2017-05-09 21:07:24 -0400
+Processing by MultiplePostsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"lDYLE3e6wnO7dCEPkYMSAKbaZVFPnQG6udtXwTa1b3JM5OUuebqXPZSZFpi4bcjxqjplCT1yTPPdNys2KS6Vew==", "post"=>{"title"=>"A cool post", "documents_files"=>["[]", #<ActionDispatch::Http::UploadedFile:0x007fd66edc1e40 @tempfile=#<Tempfile:/var/folders/xs/5xpqc0cj1cj_vxzp6cwb5fp40000gn/T/RackMultipart20170509-45769-8g9ksy.txt>, @original_filename="hello.txt", @content_type="text/plain", @headers="Content-Disposition: form-data; name=\"post[documents_files][]\"; filename=\"hello.txt\"\r\nContent-Type: text/plain\r\n">, #<ActionDispatch::Http::UploadedFile:0x007fd66edc1e18 @tempfile=#<Tempfile:/var/folders/xs/5xpqc0cj1cj_vxzp6cwb5fp40000gn/T/RackMultipart20170509-45769-d3d69.txt>, @original_filename="world.txt", @content_type="text/plain", @headers="Content-Disposition: form-data; name=\"post[documents_files][]\"; filename=\"world.txt\"\r\nContent-Type: text/plain\r\n">]}, "commit"=>"Create Post"}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "posts" ("title") VALUES (?)[0m  [["title", "A cool post"]]
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "documents" ("post_id", "file_id", "file_filename", "file_content_type", "file_size") VALUES (?, ?, ?, ?, ?)[0m  [["post_id", 17], ["file_id", "774ec63ba2db4a804301a9a257c9da31e40b59915c326d5fb36c08d924d5"], ["file_filename", "hello.txt"], ["file_content_type", "text/plain"], ["file_size", 6]]
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "documents" ("post_id", "file_id", "file_filename", "file_content_type", "file_size") VALUES (?, ?, ?, ?, ?)[0m  [["post_id", 17], ["file_id", "18cada75b0ade251fc206bf96f3de30f82856334d9432e19b77221949e3d"], ["file_filename", "world.txt"], ["file_content_type", "text/plain"], ["file_size", 6]]
+  [1m[35m (0.9ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://127.0.0.1:56120/normal/posts/17
+Completed 302 Found in 18ms (ActiveRecord: 1.7ms)
+Started GET "/normal/posts/17" for 127.0.0.1 at 2017-05-09 21:07:24 -0400
+Processing by NormalPostsController#show as HTML
+  Parameters: {"id"=>"17"}
+  [1m[36mPost Load (0.1ms)[0m  [1m[34mSELECT  "posts".* FROM "posts" WHERE "posts"."id" = ? LIMIT ?[0m  [["id", 17], ["LIMIT", 1]]
+  Rendering normal_posts/show.html.erb within layouts/application
+  [1m[36mDocument Load (0.1ms)[0m  [1m[34mSELECT "documents".* FROM "documents" WHERE "documents"."post_id" = ?[0m  [["post_id", 17]]
+  Rendered normal_posts/show.html.erb within layouts/application (2.4ms)
+Completed 200 OK in 9ms (Views: 7.1ms | ActiveRecord: 0.2ms)
+Started GET "/attachments/acf10eb006093ad2e46df0f76188fab24f96fda3/store/774ec63ba2db4a804301a9a257c9da31e40b59915c326d5fb36c08d924d5/hello.txt" for 127.0.0.1 at 2017-05-09 21:07:24 -0400
+Refile::App: [2017-05-09 21:07:24 -0400] GET "/attachments/acf10eb006093ad2e46df0f76188fab24f96fda3/store/774ec63ba2db4a804301a9a257c9da31e40b59915c326d5fb36c08d924d5/hello.txt" 200 9.5ms
+
+Started GET "/attachments/43f2bc878993745880eafdf3e0777dc6a7d54807/store/18cada75b0ade251fc206bf96f3de30f82856334d9432e19b77221949e3d/world.txt" for 127.0.0.1 at 2017-05-09 21:07:24 -0400
+Refile::App: [2017-05-09 21:07:24 -0400] GET "/attachments/43f2bc878993745880eafdf3e0777dc6a7d54807/store/18cada75b0ade251fc206bf96f3de30f82856334d9432e19b77221949e3d/world.txt" 200 1.0ms
+
+Started GET "/multiple/posts/new" for 127.0.0.1 at 2017-05-09 21:07:24 -0400
+Processing by MultiplePostsController#new as HTML
+  Rendering multiple_posts/form.html.erb within layouts/application
+  Rendered multiple_posts/form.html.erb within layouts/application (1.9ms)
+Completed 200 OK in 7ms (Views: 6.4ms | ActiveRecord: 0.0ms)
+Started POST "/multiple/posts" for 127.0.0.1 at 2017-05-09 21:07:24 -0400
+Processing by MultiplePostsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"5eZpJcC0JIlCYzZ8TQRGP2E7uuBEZMNxBx8ihXyMz5eKbTQUNuIjaXx+ZdmSXAWMgjN96uWeekS+SsHjVtB0mw==", "post"=>{"title"=>"A cool post", "documents_files"=>["[]", #<ActionDispatch::Http::UploadedFile:0x007fd66986b220 @tempfile=#<Tempfile:/var/folders/xs/5xpqc0cj1cj_vxzp6cwb5fp40000gn/T/RackMultipart20170509-45769-88sueq.txt>, @original_filename="hello.txt", @content_type="text/plain", @headers="Content-Disposition: form-data; name=\"post[documents_files][]\"; filename=\"hello.txt\"\r\nContent-Type: text/plain\r\n">, #<ActionDispatch::Http::UploadedFile:0x007fd66986b1a8 @tempfile=#<Tempfile:/var/folders/xs/5xpqc0cj1cj_vxzp6cwb5fp40000gn/T/RackMultipart20170509-45769-1s6c4ag.txt>, @original_filename="large.txt", @content_type="text/plain", @headers="Content-Disposition: form-data; name=\"post[documents_files][]\"; filename=\"large.txt\"\r\nContent-Type: text/plain\r\n">]}, "commit"=>"Create Post"}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  Rendering multiple_posts/form.html.erb within layouts/application
+  Rendered multiple_posts/form.html.erb within layouts/application (2.9ms)
+Completed 200 OK in 24ms (Views: 9.5ms | ActiveRecord: 0.2ms)
+Started GET "/multiple/posts/new" for 127.0.0.1 at 2017-05-09 21:07:25 -0400
+Processing by MultiplePostsController#new as HTML
+  Rendering multiple_posts/form.html.erb within layouts/application
+  Rendered multiple_posts/form.html.erb within layouts/application (1.9ms)
+Completed 200 OK in 6ms (Views: 6.3ms | ActiveRecord: 0.0ms)
+Started POST "/multiple/posts" for 127.0.0.1 at 2017-05-09 21:07:25 -0400
+Processing by MultiplePostsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"1avOWBz6nExNkMTQRb2eWJVQZnmXBZdcvOEnZORjFhh3hDJirZsCV6sfXZHvnlITMlfPD7gZ/FHykAAfR7kyjw==", "post"=>{"title"=>"A cool post", "documents_files"=>["[]", #<ActionDispatch::Http::UploadedFile:0x007fd665054450 @tempfile=#<Tempfile:/var/folders/xs/5xpqc0cj1cj_vxzp6cwb5fp40000gn/T/RackMultipart20170509-45769-djqrit.txt>, @original_filename="hello.txt", @content_type="text/plain", @headers="Content-Disposition: form-data; name=\"post[documents_files][]\"; filename=\"hello.txt\"\r\nContent-Type: text/plain\r\n">, #<ActionDispatch::Http::UploadedFile:0x007fd665054310 @tempfile=#<Tempfile:/var/folders/xs/5xpqc0cj1cj_vxzp6cwb5fp40000gn/T/RackMultipart20170509-45769-tbq34z.jpg>, @original_filename="image.jpg", @content_type="image/jpeg", @headers="Content-Disposition: form-data; name=\"post[documents_files][]\"; filename=\"image.jpg\"\r\nContent-Type: image/jpeg\r\n">]}, "commit"=>"Create Post"}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  Rendering multiple_posts/form.html.erb within layouts/application
+  Rendered multiple_posts/form.html.erb within layouts/application (1.9ms)
+Completed 200 OK in 10ms (Views: 5.8ms | ActiveRecord: 0.2ms)
+Started POST "/multiple/posts" for 127.0.0.1 at 2017-05-09 21:07:25 -0400
+Processing by MultiplePostsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"LbqKmu2hOA9Uq+tijaWj4XImj17EsSaF14j+y/9uv8+PlXagXMCmFLIkciMnhm+q1SEmKOutTYiZ+dmwXLSbWA==", "post"=>{"title"=>"A cool post", "documents_files"=>[""]}, "commit"=>"Create Post"}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "posts" ("title") VALUES (?)[0m  [["title", "A cool post"]]
+  [1m[35m (8.8ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://127.0.0.1:56120/normal/posts/18
+Completed 302 Found in 12ms (ActiveRecord: 9.2ms)
+Started GET "/normal/posts/18" for 127.0.0.1 at 2017-05-09 21:07:25 -0400
+Processing by NormalPostsController#show as HTML
+  Parameters: {"id"=>"18"}
+  [1m[36mPost Load (0.1ms)[0m  [1m[34mSELECT  "posts".* FROM "posts" WHERE "posts"."id" = ? LIMIT ?[0m  [["id", 18], ["LIMIT", 1]]
+  Rendering normal_posts/show.html.erb within layouts/application
+  [1m[36mDocument Load (0.1ms)[0m  [1m[34mSELECT "documents".* FROM "documents" WHERE "documents"."post_id" = ?[0m  [["post_id", 18]]
+  Rendered normal_posts/show.html.erb within layouts/application (1.8ms)
+Completed 200 OK in 8ms (Views: 6.0ms | ActiveRecord: 0.2ms)
+Started GET "/multiple/posts/new" for 127.0.0.1 at 2017-05-09 21:07:25 -0400
+Processing by MultiplePostsController#new as HTML
+  Rendering multiple_posts/form.html.erb within layouts/application
+  Rendered multiple_posts/form.html.erb within layouts/application (3.9ms)
+Completed 200 OK in 12ms (Views: 11.6ms | ActiveRecord: 0.0ms)
+Started POST "/multiple/posts" for 127.0.0.1 at 2017-05-09 21:07:25 -0400
+Processing by MultiplePostsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"TI184725gj2V9MIGm5vNglqBBHOGwHzu7IRyJwyKtLPaBYN5Q6M5d18uf+wfc/FB4OJfADZ7Mgt83lKux5EOlg==", "post"=>{"title"=>"", "documents_files"=>["[]", #<ActionDispatch::Http::UploadedFile:0x007fd66ee32708 @tempfile=#<Tempfile:/var/folders/xs/5xpqc0cj1cj_vxzp6cwb5fp40000gn/T/RackMultipart20170509-45769-ebqv1z.txt>, @original_filename="hello.txt", @content_type="text/plain", @headers="Content-Disposition: form-data; name=\"post[documents_files][]\"; filename=\"hello.txt\"\r\nContent-Type: text/plain\r\n">, #<ActionDispatch::Http::UploadedFile:0x007fd66ee326e0 @tempfile=#<Tempfile:/var/folders/xs/5xpqc0cj1cj_vxzp6cwb5fp40000gn/T/RackMultipart20170509-45769-4nao0t.txt>, @original_filename="world.txt", @content_type="text/plain", @headers="Content-Disposition: form-data; name=\"post[documents_files][]\"; filename=\"world.txt\"\r\nContent-Type: text/plain\r\n">]}, "commit"=>"Create Post"}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  Rendering multiple_posts/form.html.erb within layouts/application
+  Rendered multiple_posts/form.html.erb within layouts/application (3.5ms)
+Completed 200 OK in 24ms (Views: 10.0ms | ActiveRecord: 0.2ms)
+Started POST "/multiple/posts" for 127.0.0.1 at 2017-05-09 21:07:25 -0400
+Processing by MultiplePostsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"kZd414yUPxcyiWKr8aXUcCV+VnS7d9epfV0y4pSG27gHH4dNco6EXfhT30F1Teiznx0NBwvMmUztBxJrX51hnQ==", "post"=>{"title"=>"A cool post", "documents_files"=>["[{\"size\":6,\"content_type\":\"text/plain\",\"filename\":\"hello.txt\",\"id\":\"642b3c2db114a025912b5a8a8a26924ee54f473b7f9d2587577b2932547a\"},{\"size\":6,\"content_type\":\"text/plain\",\"filename\":\"world.txt\",\"id\":\"b202330908d15110011def16736aa51d36c0e47c0fd8fcd5461a40d1bfb7\"}]"]}, "commit"=>"Create Post"}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "posts" ("title") VALUES (?)[0m  [["title", "A cool post"]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "documents" ("post_id", "file_id", "file_filename", "file_content_type", "file_size") VALUES (?, ?, ?, ?, ?)[0m  [["post_id", 19], ["file_id", "64ded02067ffda51f87ac1c2fd04d237b84a290cbc7ea584ee6f402c1574"], ["file_filename", "hello.txt"], ["file_content_type", "text/plain"], ["file_size", 6]]
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "documents" ("post_id", "file_id", "file_filename", "file_content_type", "file_size") VALUES (?, ?, ?, ?, ?)[0m  [["post_id", 19], ["file_id", "1802bc73e4a396ed080b3a49174fb4e8b7692397712c33de1ab1dd6de4e4"], ["file_filename", "world.txt"], ["file_content_type", "text/plain"], ["file_size", 6]]
+  [1m[35m (0.8ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://127.0.0.1:56120/normal/posts/19
+Completed 302 Found in 9ms (ActiveRecord: 1.6ms)
+Started GET "/normal/posts/19" for 127.0.0.1 at 2017-05-09 21:07:25 -0400
+Processing by NormalPostsController#show as HTML
+  Parameters: {"id"=>"19"}
+  [1m[36mPost Load (0.1ms)[0m  [1m[34mSELECT  "posts".* FROM "posts" WHERE "posts"."id" = ? LIMIT ?[0m  [["id", 19], ["LIMIT", 1]]
+  Rendering normal_posts/show.html.erb within layouts/application
+  [1m[36mDocument Load (0.1ms)[0m  [1m[34mSELECT "documents".* FROM "documents" WHERE "documents"."post_id" = ?[0m  [["post_id", 19]]
+  Rendered normal_posts/show.html.erb within layouts/application (3.7ms)
+Completed 200 OK in 11ms (Views: 8.9ms | ActiveRecord: 0.3ms)
+Started GET "/attachments/969709e9e5e9eb9a4a533ebc63e17744f1c7ee48/store/64ded02067ffda51f87ac1c2fd04d237b84a290cbc7ea584ee6f402c1574/hello.txt" for 127.0.0.1 at 2017-05-09 21:07:25 -0400
+Refile::App: [2017-05-09 21:07:25 -0400] GET "/attachments/969709e9e5e9eb9a4a533ebc63e17744f1c7ee48/store/64ded02067ffda51f87ac1c2fd04d237b84a290cbc7ea584ee6f402c1574/hello.txt" 200 9.1ms
+
+Started GET "/attachments/04c009138309f69c57cad833a56fdd6d220809bc/store/1802bc73e4a396ed080b3a49174fb4e8b7692397712c33de1ab1dd6de4e4/world.txt" for 127.0.0.1 at 2017-05-09 21:07:25 -0400
+Refile::App: [2017-05-09 21:07:25 -0400] GET "/attachments/04c009138309f69c57cad833a56fdd6d220809bc/store/1802bc73e4a396ed080b3a49174fb4e8b7692397712c33de1ab1dd6de4e4/world.txt" 200 1.2ms
+
+Started GET "/multiple/posts/new" for 127.0.0.1 at 2017-05-09 21:07:25 -0400
+Processing by MultiplePostsController#new as HTML
+  Rendering multiple_posts/form.html.erb within layouts/application
+  Rendered multiple_posts/form.html.erb within layouts/application (2.8ms)
+Completed 200 OK in 9ms (Views: 8.3ms | ActiveRecord: 0.0ms)
+Started POST "/multiple/posts" for 127.0.0.1 at 2017-05-09 21:07:25 -0400
+Processing by MultiplePostsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"Unv0vbNluo9jGd1KuFNoBPpwMBbh+Vx8N4fGC0/Q1D5sOKiHezZqwg8PuTG2AT8iv9YEm/FEKn2q7AreE4HErg==", "post"=>{"title"=>"A cool post", "documents_files"=>["[]", #<ActionDispatch::Http::UploadedFile:0x007fd66e593de0 @tempfile=#<Tempfile:/var/folders/xs/5xpqc0cj1cj_vxzp6cwb5fp40000gn/T/RackMultipart20170509-45769-og8nga.txt>, @original_filename="hello.txt", @content_type="text/plain", @headers="Content-Disposition: form-data; name=\"post[documents_files][]\"; filename=\"hello.txt\"\r\nContent-Type: text/plain\r\n">, #<ActionDispatch::Http::UploadedFile:0x007fd66e593d40 @tempfile=#<Tempfile:/var/folders/xs/5xpqc0cj1cj_vxzp6cwb5fp40000gn/T/RackMultipart20170509-45769-wt17a3.txt>, @original_filename="world.txt", @content_type="text/plain", @headers="Content-Disposition: form-data; name=\"post[documents_files][]\"; filename=\"world.txt\"\r\nContent-Type: text/plain\r\n">]}, "commit"=>"Create Post"}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "posts" ("title") VALUES (?)[0m  [["title", "A cool post"]]
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "documents" ("post_id", "file_id", "file_filename", "file_content_type", "file_size") VALUES (?, ?, ?, ?, ?)[0m  [["post_id", 20], ["file_id", "cc393d64dbdb70a04b5441af0afa9693997506d98d06e18928056c176f15"], ["file_filename", "hello.txt"], ["file_content_type", "text/plain"], ["file_size", 6]]
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "documents" ("post_id", "file_id", "file_filename", "file_content_type", "file_size") VALUES (?, ?, ?, ?, ?)[0m  [["post_id", 20], ["file_id", "d31be29639410c62dc166fa5b199d5e5a1936df2b29fe71d0901c646243b"], ["file_filename", "world.txt"], ["file_content_type", "text/plain"], ["file_size", 6]]
+  [1m[35m (0.9ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://127.0.0.1:56120/normal/posts/20
+Completed 302 Found in 10ms (ActiveRecord: 1.5ms)
+Started GET "/normal/posts/20" for 127.0.0.1 at 2017-05-09 21:07:26 -0400
+Processing by NormalPostsController#show as HTML
+  Parameters: {"id"=>"20"}
+  [1m[36mPost Load (0.1ms)[0m  [1m[34mSELECT  "posts".* FROM "posts" WHERE "posts"."id" = ? LIMIT ?[0m  [["id", 20], ["LIMIT", 1]]
+  Rendering normal_posts/show.html.erb within layouts/application
+  [1m[36mDocument Load (0.1ms)[0m  [1m[34mSELECT "documents".* FROM "documents" WHERE "documents"."post_id" = ?[0m  [["post_id", 20]]
+  Rendered normal_posts/show.html.erb within layouts/application (3.0ms)
+Completed 200 OK in 10ms (Views: 8.1ms | ActiveRecord: 0.2ms)
+Started GET "/multiple/posts/20/edit" for 127.0.0.1 at 2017-05-09 21:07:26 -0400
+Processing by MultiplePostsController#edit as HTML
+  Parameters: {"id"=>"20"}
+  [1m[36mPost Load (0.1ms)[0m  [1m[34mSELECT  "posts".* FROM "posts" WHERE "posts"."id" = ? LIMIT ?[0m  [["id", 20], ["LIMIT", 1]]
+  Rendering multiple_posts/form.html.erb within layouts/application
+  [1m[36mDocument Load (0.1ms)[0m  [1m[34mSELECT "documents".* FROM "documents" WHERE "documents"."post_id" = ?[0m  [["post_id", 20]]
+  Rendered multiple_posts/form.html.erb within layouts/application (3.5ms)
+Completed 200 OK in 9ms (Views: 8.0ms | ActiveRecord: 0.2ms)
+Started PATCH "/multiple/posts/20" for 127.0.0.1 at 2017-05-09 21:07:26 -0400
+Processing by MultiplePostsController#update as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"fCw+jcphP+TAWUqkbgtnJ43CjmWtdX29Fn7LzdYX+rlCb2K3AjLvqaxPLt9gWTAByGS66L3IC7yLFQcYikbqKQ==", "post"=>{"title"=>"A cool post", "documents_files"=>["[]", #<ActionDispatch::Http::UploadedFile:0x007fd66a3692f8 @tempfile=#<Tempfile:/var/folders/xs/5xpqc0cj1cj_vxzp6cwb5fp40000gn/T/RackMultipart20170509-45769-15rbpk2.txt>, @original_filename="monkey.txt", @content_type="text/plain", @headers="Content-Disposition: form-data; name=\"post[documents_files][]\"; filename=\"monkey.txt\"\r\nContent-Type: text/plain\r\n">]}, "commit"=>"Update Post", "id"=>"20"}
+  [1m[36mPost Load (0.1ms)[0m  [1m[34mSELECT  "posts".* FROM "posts" WHERE "posts"."id" = ? LIMIT ?[0m  [["id", 20], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mDocument Load (0.1ms)[0m  [1m[34mSELECT "documents".* FROM "documents" WHERE "documents"."post_id" = ?[0m  [["post_id", 20]]
+  [1m[35mSQL (0.2ms)[0m  [1m[31mDELETE FROM "documents" WHERE "documents"."id" = ?[0m  [["id", 14]]
+  [1m[35mSQL (0.1ms)[0m  [1m[31mDELETE FROM "documents" WHERE "documents"."id" = ?[0m  [["id", 15]]
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "documents" ("post_id", "file_id", "file_filename", "file_content_type", "file_size") VALUES (?, ?, ?, ?, ?)[0m  [["post_id", 20], ["file_id", "8143da5dcf031c09a821727e8d0e2e7fe0da19f5b6c5513a8f04d4f8bf8c"], ["file_filename", "monkey.txt"], ["file_content_type", "text/plain"], ["file_size", 7]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://127.0.0.1:56120/normal/posts/20
+Completed 302 Found in 7ms (ActiveRecord: 1.2ms)
+Started GET "/normal/posts/20" for 127.0.0.1 at 2017-05-09 21:07:26 -0400
+Processing by NormalPostsController#show as HTML
+  Parameters: {"id"=>"20"}
+  [1m[36mPost Load (0.1ms)[0m  [1m[34mSELECT  "posts".* FROM "posts" WHERE "posts"."id" = ? LIMIT ?[0m  [["id", 20], ["LIMIT", 1]]
+  Rendering normal_posts/show.html.erb within layouts/application
+  [1m[36mDocument Load (0.1ms)[0m  [1m[34mSELECT "documents".* FROM "documents" WHERE "documents"."post_id" = ?[0m  [["post_id", 20]]
+  Rendered normal_posts/show.html.erb within layouts/application (2.0ms)
+Completed 200 OK in 7ms (Views: 5.8ms | ActiveRecord: 0.2ms)
+Started GET "/attachments/1c715b734a1511e4962c4cc51df79ffc80f4f3e3/store/8143da5dcf031c09a821727e8d0e2e7fe0da19f5b6c5513a8f04d4f8bf8c/monkey.txt" for 127.0.0.1 at 2017-05-09 21:07:26 -0400
+Refile::App: [2017-05-09 21:07:26 -0400] GET "/attachments/1c715b734a1511e4962c4cc51df79ffc80f4f3e3/store/8143da5dcf031c09a821727e8d0e2e7fe0da19f5b6c5513a8f04d4f8bf8c/monkey.txt" 200 9.4ms
+
+Started GET "/multiple/posts/new" for 127.0.0.1 at 2017-05-09 21:07:26 -0400
+Processing by MultiplePostsController#new as HTML
+  Rendering multiple_posts/form.html.erb within layouts/application
+  Rendered multiple_posts/form.html.erb within layouts/application (1.8ms)
+Completed 200 OK in 6ms (Views: 5.7ms | ActiveRecord: 0.0ms)
+Started POST "/multiple/posts" for 127.0.0.1 at 2017-05-09 21:07:26 -0400
+Processing by MultiplePostsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"Sc/UpSoOSeiXSzvDh4/aHhpksBFVkPRBg/O/Uuu6pYqbZEXt+9FBibacbdCnC84qDWAZTGvLr+Q/WRw/8iiUxA==", "post"=>{"title"=>"A cool post", "documents_files"=>["[]", #<ActionDispatch::Http::UploadedFile:0x007fd6678b28e8 @tempfile=#<Tempfile:/var/folders/xs/5xpqc0cj1cj_vxzp6cwb5fp40000gn/T/RackMultipart20170509-45769-89a0f0.txt>, @original_filename="hello.txt", @content_type="text/plain", @headers="Content-Disposition: form-data; name=\"post[documents_files][]\"; filename=\"hello.txt\"\r\nContent-Type: text/plain\r\n">, #<ActionDispatch::Http::UploadedFile:0x007fd6678b28c0 @tempfile=#<Tempfile:/var/folders/xs/5xpqc0cj1cj_vxzp6cwb5fp40000gn/T/RackMultipart20170509-45769-4ihv6u.txt>, @original_filename="world.txt", @content_type="text/plain", @headers="Content-Disposition: form-data; name=\"post[documents_files][]\"; filename=\"world.txt\"\r\nContent-Type: text/plain\r\n">]}, "commit"=>"Create Post"}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "posts" ("title") VALUES (?)[0m  [["title", "A cool post"]]
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "documents" ("post_id", "file_id", "file_filename", "file_content_type", "file_size") VALUES (?, ?, ?, ?, ?)[0m  [["post_id", 21], ["file_id", "ed82c86e15ea7318a50ab5b93a3f4426675a0484633df89fae7e90802b59"], ["file_filename", "hello.txt"], ["file_content_type", "text/plain"], ["file_size", 6]]
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "documents" ("post_id", "file_id", "file_filename", "file_content_type", "file_size") VALUES (?, ?, ?, ?, ?)[0m  [["post_id", 21], ["file_id", "91d4ffe84493b92f034aba67e1ab4b323976af6bd7090fd1bd2f450ef586"], ["file_filename", "world.txt"], ["file_content_type", "text/plain"], ["file_size", 6]]
+  [1m[35m (0.9ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://127.0.0.1:56120/normal/posts/21
+Completed 302 Found in 20ms (ActiveRecord: 1.8ms)
+Started GET "/normal/posts/21" for 127.0.0.1 at 2017-05-09 21:07:26 -0400
+Processing by NormalPostsController#show as HTML
+  Parameters: {"id"=>"21"}
+  [1m[36mPost Load (0.1ms)[0m  [1m[34mSELECT  "posts".* FROM "posts" WHERE "posts"."id" = ? LIMIT ?[0m  [["id", 21], ["LIMIT", 1]]
+  Rendering normal_posts/show.html.erb within layouts/application
+  [1m[36mDocument Load (0.1ms)[0m  [1m[34mSELECT "documents".* FROM "documents" WHERE "documents"."post_id" = ?[0m  [["post_id", 21]]
+  Rendered normal_posts/show.html.erb within layouts/application (3.5ms)
+Completed 200 OK in 11ms (Views: 9.0ms | ActiveRecord: 0.2ms)
+Started GET "/multiple/posts/21/edit" for 127.0.0.1 at 2017-05-09 21:07:26 -0400
+Processing by MultiplePostsController#edit as HTML
+  Parameters: {"id"=>"21"}
+  [1m[36mPost Load (0.1ms)[0m  [1m[34mSELECT  "posts".* FROM "posts" WHERE "posts"."id" = ? LIMIT ?[0m  [["id", 21], ["LIMIT", 1]]
+  Rendering multiple_posts/form.html.erb within layouts/application
+  [1m[36mDocument Load (0.2ms)[0m  [1m[34mSELECT "documents".* FROM "documents" WHERE "documents"."post_id" = ?[0m  [["post_id", 21]]
+  Rendered multiple_posts/form.html.erb within layouts/application (5.9ms)
+Completed 200 OK in 12ms (Views: 11.4ms | ActiveRecord: 0.3ms)
+Started PATCH "/multiple/posts/21" for 127.0.0.1 at 2017-05-09 21:07:26 -0400
+Processing by MultiplePostsController#update as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"d1aEgcgSMQI6/SXAhRy4k2A8ui3Y0zuWU6YqSqZFfDWl/RXJGc05Yxsqc9OlmKyndzgTcOaIYDPvDIknv9dNew==", "post"=>{"title"=>"A cool post", "documents_files"=>["[]"]}, "commit"=>"Update Post", "id"=>"21"}
+  [1m[36mPost Load (0.1ms)[0m  [1m[34mSELECT  "posts".* FROM "posts" WHERE "posts"."id" = ? LIMIT ?[0m  [["id", 21], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://127.0.0.1:56120/normal/posts/21
+Completed 302 Found in 3ms (ActiveRecord: 0.2ms)
+Started GET "/normal/posts/21" for 127.0.0.1 at 2017-05-09 21:07:26 -0400
+Processing by NormalPostsController#show as HTML
+  Parameters: {"id"=>"21"}
+  [1m[36mPost Load (0.1ms)[0m  [1m[34mSELECT  "posts".* FROM "posts" WHERE "posts"."id" = ? LIMIT ?[0m  [["id", 21], ["LIMIT", 1]]
+  Rendering normal_posts/show.html.erb within layouts/application
+  [1m[36mDocument Load (0.1ms)[0m  [1m[34mSELECT "documents".* FROM "documents" WHERE "documents"."post_id" = ?[0m  [["post_id", 21]]
+  Rendered normal_posts/show.html.erb within layouts/application (4.1ms)
+Completed 200 OK in 12ms (Views: 9.9ms | ActiveRecord: 0.2ms)
+Started GET "/attachments/970bc24acc8f7cde05f97ede208598cee6fff866/store/ed82c86e15ea7318a50ab5b93a3f4426675a0484633df89fae7e90802b59/hello.txt" for 127.0.0.1 at 2017-05-09 21:07:26 -0400
+Refile::App: [2017-05-09 21:07:26 -0400] GET "/attachments/970bc24acc8f7cde05f97ede208598cee6fff866/store/ed82c86e15ea7318a50ab5b93a3f4426675a0484633df89fae7e90802b59/hello.txt" 200 9.9ms
+
+Started GET "/attachments/ceee8fc9cdd7d4b4f559f0eb515aa02c520c0bd9/store/91d4ffe84493b92f034aba67e1ab4b323976af6bd7090fd1bd2f450ef586/world.txt" for 127.0.0.1 at 2017-05-09 21:07:26 -0400
+Refile::App: [2017-05-09 21:07:26 -0400] GET "/attachments/ceee8fc9cdd7d4b4f559f0eb515aa02c520c0bd9/store/91d4ffe84493b92f034aba67e1ab4b323976af6bd7090fd1bd2f450ef586/world.txt" 200 1.2ms
+
+Started GET "/direct/posts/new" for 127.0.0.1 at 2017-05-09 21:07:26 -0400
+Processing by DirectPostsController#new as HTML
+  Rendering direct_posts/new.html.erb within layouts/application
+  Rendered direct_posts/new.html.erb within layouts/application (6.2ms)
+Completed 200 OK in 13ms (Views: 11.7ms | ActiveRecord: 0.0ms)
+Started POST "/attachments/limited_cache" for 127.0.0.1 at 2017-05-09 21:07:27 -0400
+Refile::App: [2017-05-09 21:07:27 -0400] POST "/attachments/limited_cache" 200 10.4ms
+
+Started POST "/attachments/limited_cache" for 127.0.0.1 at 2017-05-09 21:07:27 -0400
+Refile::App: [2017-05-09 21:07:27 -0400] POST "/attachments/limited_cache" 200 1.1ms
+
+Started POST "/direct/posts" for 127.0.0.1 at 2017-05-09 21:07:27 -0400
+Processing by DirectPostsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"czL6k5zJfik/Reu4hM+bVDz7yc5RXUhAhY8eBld/1WHiKKa5dhtM5efyJK9ziq6mIlcBCj8qOVzXbArXAopSCQ==", "post"=>{"title"=>"A cool post", "document"=>"{}", "documents_files"=>["[{\"id\":\"5e03eddc70d81075c4023d3b62b20c154045171c64b98c25ed51533ad83f\",\"filename\":\"hello.txt\",\"content_type\":\"text/plain\",\"size\":6},{\"id\":\"18654556e03d465d6b58de8f52e1f9f355998d77f5a6545f943cf616889b\",\"filename\":\"world.txt\",\"content_type\":\"text/plain\",\"size\":6}]"], "image"=>"", "requires_document"=>"0"}, "commit"=>"Create"}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "posts" ("title", "image_id", "document_id") VALUES (?, ?, ?)[0m  [["title", "A cool post"], ["image_id", nil], ["document_id", nil]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "documents" ("post_id", "file_id", "file_filename", "file_content_type", "file_size") VALUES (?, ?, ?, ?, ?)[0m  [["post_id", 22], ["file_id", "9472ad1b059005a9c7ccdeca2c8dff759642f3c4fcbb2a601080dd5e19a9"], ["file_filename", "hello.txt"], ["file_content_type", "text/plain"], ["file_size", 6]]
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "documents" ("post_id", "file_id", "file_filename", "file_content_type", "file_size") VALUES (?, ?, ?, ?, ?)[0m  [["post_id", 22], ["file_id", "84a5d2d704b853cf920743ec2ff7ec1ce7e8981f0c7142160f364aaa0c88"], ["file_filename", "world.txt"], ["file_content_type", "text/plain"], ["file_size", 6]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://127.0.0.1:56120/normal/posts/22
+Completed 302 Found in 8ms (ActiveRecord: 1.4ms)
+Started GET "/normal/posts/22" for 127.0.0.1 at 2017-05-09 21:07:27 -0400
+Processing by NormalPostsController#show as HTML
+  Parameters: {"id"=>"22"}
+  [1m[36mPost Load (0.1ms)[0m  [1m[34mSELECT  "posts".* FROM "posts" WHERE "posts"."id" = ? LIMIT ?[0m  [["id", 22], ["LIMIT", 1]]
+  Rendering normal_posts/show.html.erb within layouts/application
+  [1m[36mDocument Load (0.1ms)[0m  [1m[34mSELECT "documents".* FROM "documents" WHERE "documents"."post_id" = ?[0m  [["post_id", 22]]
+  Rendered normal_posts/show.html.erb within layouts/application (3.9ms)
+Completed 200 OK in 12ms (Views: 9.7ms | ActiveRecord: 0.3ms)
+Started GET "/attachments/27a70e4d196bc5ae28a581d93b5d9df025181122/store/9472ad1b059005a9c7ccdeca2c8dff759642f3c4fcbb2a601080dd5e19a9/hello.txt" for 127.0.0.1 at 2017-05-09 21:07:27 -0400
+Refile::App: [2017-05-09 21:07:27 -0400] GET "/attachments/27a70e4d196bc5ae28a581d93b5d9df025181122/store/9472ad1b059005a9c7ccdeca2c8dff759642f3c4fcbb2a601080dd5e19a9/hello.txt" 200 9.8ms
+
+Started GET "/attachments/8eb9b75085cab98dfb0b96b54c449cd1fdacd39d/store/84a5d2d704b853cf920743ec2ff7ec1ce7e8981f0c7142160f364aaa0c88/world.txt" for 127.0.0.1 at 2017-05-09 21:07:27 -0400
+Refile::App: [2017-05-09 21:07:27 -0400] GET "/attachments/8eb9b75085cab98dfb0b96b54c449cd1fdacd39d/store/84a5d2d704b853cf920743ec2ff7ec1ce7e8981f0c7142160f364aaa0c88/world.txt" 200 1.4ms
+
+Started GET "/presigned/posts/new" for 127.0.0.1 at 2017-05-09 21:07:27 -0400
+Processing by PresignedPostsController#new as HTML
+  Rendering presigned_posts/new.html.erb within layouts/application
+  Rendered presigned_posts/new.html.erb within layouts/application (4.3ms)
+Completed 200 OK in 12ms (Views: 10.8ms | ActiveRecord: 0.0ms)
+Started GET "/attachments/limited_cache/presign?t=1494378447360.0" for 127.0.0.1 at 2017-05-09 21:07:27 -0400
+Refile::App: [2017-05-09 21:07:27 -0400] GET "/attachments/limited_cache/presign?t=1494378447360.0" 200 1.0ms
+
+Started GET "/attachments/limited_cache/presign?t=1494378447361.1" for 127.0.0.1 at 2017-05-09 21:07:27 -0400
+Refile::App: [2017-05-09 21:07:27 -0400] GET "/attachments/limited_cache/presign?t=1494378447361.1" 200 0.9ms
+
+Started POST "/presigned/posts/upload" for 127.0.0.1 at 2017-05-09 21:07:27 -0400
+Processing by PresignedPostsController#upload as */*
+  Parameters: {"id"=>"17d41bb4e5a2dac96a8f7cd941a5e90ea5ed43823e59ffe69f4c4ae22121", "token"=>"xyz123", "file"=>#<ActionDispatch::Http::UploadedFile:0x007fd66ead8940 @tempfile=#<Tempfile:/var/folders/xs/5xpqc0cj1cj_vxzp6cwb5fp40000gn/T/RackMultipart20170509-45769-1epv7fo.txt>, @original_filename="hello.txt", @content_type="text/plain", @headers="Content-Disposition: form-data; name=\"file\"; filename=\"hello.txt\"\r\nContent-Type: text/plain\r\n">}
+Started POST "/presigned/posts/upload" for 127.0.0.1 at 2017-05-09 21:07:27 -0400
+Processing by PresignedPostsController#upload as */*
+  Parameters: {"id"=>"4b15088292e5f67c71505279db5d90cd4f7f84f847bc5a76e9327673306d", "token"=>"xyz123", "file"=>#<ActionDispatch::Http::UploadedFile:0x007fd66eaf3880 @tempfile=#<Tempfile:/var/folders/xs/5xpqc0cj1cj_vxzp6cwb5fp40000gn/T/RackMultipart20170509-45769-19v4dmf.txt>, @original_filename="world.txt", @content_type="text/plain", @headers="Content-Disposition: form-data; name=\"file\"; filename=\"world.txt\"\r\nContent-Type: text/plain\r\n">}
+Completed 500 Internal Server Error in 35ms (ActiveRecord: 0.0ms)
+Completed 500 Internal Server Error in 41ms (ActiveRecord: 0.0ms)
+Started GET "/presigned/posts/new" for 127.0.0.1 at 2017-05-09 21:07:27 -0400
+Processing by PresignedPostsController#new as HTML
+  Rendering presigned_posts/new.html.erb within layouts/application
+  Rendered presigned_posts/new.html.erb within layouts/application (2.8ms)
+Completed 200 OK in 9ms (Views: 7.5ms | ActiveRecord: 0.0ms)
+Started GET "/attachments/limited_cache/presign?t=1494378447554.0" for 127.0.0.1 at 2017-05-09 21:07:27 -0400
+Refile::App: [2017-05-09 21:07:27 -0400] GET "/attachments/limited_cache/presign?t=1494378447554.0" 200 0.8ms
+
+Started GET "/attachments/limited_cache/presign?t=1494378447554.1" for 127.0.0.1 at 2017-05-09 21:07:27 -0400
+Refile::App: [2017-05-09 21:07:27 -0400] GET "/attachments/limited_cache/presign?t=1494378447554.1" 200 0.8ms
+
+Started POST "/presigned/posts/upload" for 127.0.0.1 at 2017-05-09 21:07:27 -0400
+Processing by PresignedPostsController#upload as */*
+  Parameters: {"id"=>"2b086b32a06655e653c4528b6501efc8e6ac0b955aa2b3a26a7623201f14", "token"=>"xyz123", "file"=>#<ActionDispatch::Http::UploadedFile:0x007fd66593b438 @tempfile=#<Tempfile:/var/folders/xs/5xpqc0cj1cj_vxzp6cwb5fp40000gn/T/RackMultipart20170509-45769-atxnnv.txt>, @original_filename="large.txt", @content_type="text/plain", @headers="Content-Disposition: form-data; name=\"file\"; filename=\"large.txt\"\r\nContent-Type: text/plain\r\n">}
+Completed 500 Internal Server Error in 17ms (ActiveRecord: 0.0ms)
+Started POST "/presigned/posts/upload" for 127.0.0.1 at 2017-05-09 21:07:27 -0400
+Processing by PresignedPostsController#upload as */*
+  Parameters: {"id"=>"a7b6fc1d7fd82edd057a1123b16a00f9e7b85d8dc80ef944292a98acfab5", "token"=>"xyz123", "file"=>#<ActionDispatch::Http::UploadedFile:0x007fd6659a3a88 @tempfile=#<Tempfile:/var/folders/xs/5xpqc0cj1cj_vxzp6cwb5fp40000gn/T/RackMultipart20170509-45769-sbb0m8.txt>, @original_filename="world.txt", @content_type="text/plain", @headers="Content-Disposition: form-data; name=\"file\"; filename=\"world.txt\"\r\nContent-Type: text/plain\r\n">}
+Completed 500 Internal Server Error in 23ms (ActiveRecord: 0.0ms)
+Started GET "/normal/posts/new" for 127.0.0.1 at 2017-05-09 21:07:27 -0400
+Processing by NormalPostsController#new as HTML
+  Rendering normal_posts/new.html.erb within layouts/application
+  Rendered normal_posts/_form.html.erb (3.3ms) [cache miss]
+  Rendered normal_posts/new.html.erb within layouts/application (5.3ms)
+Completed 200 OK in 13ms (Views: 10.8ms | ActiveRecord: 0.0ms)
+Started POST "/normal/posts" for 127.0.0.1 at 2017-05-09 21:07:27 -0400
+Processing by NormalPostsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"WEwYR+usP1nsr2adEQXZy56XIiVM0k/ptKxMRZ+i5jHtuhU50qo32PpOfAohbj/2GNqnWOI8+v9wnuhsesu5Eg==", "post"=>{"title"=>"A cool post", "document"=>#<ActionDispatch::Http::UploadedFile:0x007fd669c22d28 @tempfile=#<Tempfile:/var/folders/xs/5xpqc0cj1cj_vxzp6cwb5fp40000gn/T/RackMultipart20170509-45769-o534ar.txt>, @original_filename="hello.txt", @content_type="text/plain", @headers="Content-Disposition: form-data; name=\"post[document]\"; filename=\"hello.txt\"\r\nContent-Type: text/plain\r\nContent-Length: 6\r\n">, "remove_document"=>"0", "remote_document_url"=>""}, "commit"=>"Create Post"}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "posts" ("title", "document_id", "document_filename", "document_content_type", "document_size") VALUES (?, ?, ?, ?, ?)[0m  [["title", "A cool post"], ["document_id", "9dc43fec21a0229028c6b18e7a63f9dab4271a5adc8293a9ef96288e8a48"], ["document_filename", "hello.txt"], ["document_content_type", "text/plain"], ["document_size", 6]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://www.example.com/normal/posts/23
+Completed 302 Found in 5ms (ActiveRecord: 0.9ms)
+Started GET "/normal/posts/23" for 127.0.0.1 at 2017-05-09 21:07:27 -0400
+Processing by NormalPostsController#show as HTML
+  Parameters: {"id"=>"23"}
+  [1m[36mPost Load (0.1ms)[0m  [1m[34mSELECT  "posts".* FROM "posts" WHERE "posts"."id" = ? LIMIT ?[0m  [["id", 23], ["LIMIT", 1]]
+  Rendering normal_posts/show.html.erb within layouts/application
+  [1m[36mDocument Load (0.1ms)[0m  [1m[34mSELECT "documents".* FROM "documents" WHERE "documents"."post_id" = ?[0m  [["post_id", 23]]
+  Rendered normal_posts/show.html.erb within layouts/application (4.4ms)
+Completed 200 OK in 11ms (Views: 9.5ms | ActiveRecord: 0.3ms)
+Started GET "/attachments/b73157356521dbe4606d24b7c9b0314ea7555bf4/store/9dc43fec21a0229028c6b18e7a63f9dab4271a5adc8293a9ef96288e8a48/hello.txt" for 127.0.0.1 at 2017-05-09 21:07:27 -0400
+Refile::App: [2017-05-09 21:07:27 -0400] GET "/attachments/b73157356521dbe4606d24b7c9b0314ea7555bf4/store/9dc43fec21a0229028c6b18e7a63f9dab4271a5adc8293a9ef96288e8a48/hello.txt" 200 1.9ms
+
+Started GET "/normal/posts/new" for 127.0.0.1 at 2017-05-09 21:07:27 -0400
+Processing by NormalPostsController#new as HTML
+  Rendering normal_posts/new.html.erb within layouts/application
+  Rendered normal_posts/_form.html.erb (4.7ms) [cache miss]
+  Rendered normal_posts/new.html.erb within layouts/application (6.0ms)
+Completed 200 OK in 13ms (Views: 11.3ms | ActiveRecord: 0.0ms)
+Started POST "/normal/posts" for 127.0.0.1 at 2017-05-09 21:07:27 -0400
+Processing by NormalPostsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"OCoQ30cO/Wlbjdz9PQUtWtTiAy5V1RCF56aJxNK1UxXWw6INH+gOI63D1a3I0HuGO5In/l+RXxC4eKXCd7VrJA==", "post"=>{"title"=>"A cool post", "document"=>#<ActionDispatch::Http::UploadedFile:0x007fd66ec948d8 @tempfile=#<Tempfile:/var/folders/xs/5xpqc0cj1cj_vxzp6cwb5fp40000gn/T/RackMultipart20170509-45769-15qe6o0.txt>, @original_filename="large.txt", @content_type="text/plain", @headers="Content-Disposition: form-data; name=\"post[document]\"; filename=\"large.txt\"\r\nContent-Type: text/plain\r\nContent-Length: 2901\r\n">, "remove_document"=>"0", "remote_document_url"=>""}, "commit"=>"Create Post"}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  Rendering normal_posts/new.html.erb within layouts/application
+  Rendered normal_posts/_form.html.erb (3.0ms) [cache miss]
+  Rendered normal_posts/new.html.erb within layouts/application (4.2ms)
+Completed 200 OK in 10ms (Views: 8.5ms | ActiveRecord: 0.1ms)
+Started GET "/normal/posts/new" for 127.0.0.1 at 2017-05-09 21:07:27 -0400
+Processing by NormalPostsController#new as HTML
+  Rendering normal_posts/new.html.erb within layouts/application
+  Rendered normal_posts/_form.html.erb (6.1ms) [cache miss]
+  Rendered normal_posts/new.html.erb within layouts/application (7.4ms)
+Completed 200 OK in 13ms (Views: 11.9ms | ActiveRecord: 0.0ms)
+Started POST "/normal/posts" for 127.0.0.1 at 2017-05-09 21:07:27 -0400
+Processing by NormalPostsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"8P3bPKnzQiWNjagIjsK3SAYhiH0MTCi9oda9NRlE5vtyjKlmHTP32ms5qXaSua00zRVXsy5KsrJQOCMZRGVSFw==", "post"=>{"title"=>"A cool post", "image"=>#<ActionDispatch::Http::UploadedFile:0x007fd669e3b858 @tempfile=#<Tempfile:/var/folders/xs/5xpqc0cj1cj_vxzp6cwb5fp40000gn/T/RackMultipart20170509-45769-y221nl.txt>, @original_filename="hello.txt", @content_type="text/plain", @headers="Content-Disposition: form-data; name=\"post[image]\"; filename=\"hello.txt\"\r\nContent-Type: text/plain\r\nContent-Length: 6\r\n">, "remove_document"=>"0", "remote_document_url"=>""}, "commit"=>"Create Post"}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  Rendering normal_posts/new.html.erb within layouts/application
+  Rendered normal_posts/_form.html.erb (5.0ms) [cache miss]
+  Rendered normal_posts/new.html.erb within layouts/application (7.1ms)
+Completed 200 OK in 15ms (Views: 13.6ms | ActiveRecord: 0.1ms)
+Started GET "/normal/posts/new" for 127.0.0.1 at 2017-05-09 21:07:27 -0400
+Processing by NormalPostsController#new as HTML
+  Rendering normal_posts/new.html.erb within layouts/application
+  Rendered normal_posts/_form.html.erb (3.0ms) [cache miss]
+  Rendered normal_posts/new.html.erb within layouts/application (4.3ms)
+Completed 200 OK in 10ms (Views: 8.5ms | ActiveRecord: 0.0ms)
+Started POST "/normal/posts" for 127.0.0.1 at 2017-05-09 21:07:27 -0400
+Processing by NormalPostsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"mFPYR8FpwCJoojlCF3uaB7GYTO4tm/X6yaAmtqOWmfALRi9ZxL0QKKpKkp2Rv99/f/hJKbYnH9JGbjgedhpyiw==", "post"=>{"title"=>"A cool post", "image"=>#<ActionDispatch::Http::UploadedFile:0x007fd669fd6f00 @tempfile=#<Tempfile:/var/folders/xs/5xpqc0cj1cj_vxzp6cwb5fp40000gn/T/RackMultipart20170509-45769-oohbz2.txt>, @original_filename="hello.txt", @content_type="text/plain", @headers="Content-Disposition: form-data; name=\"post[image]\"; filename=\"hello.txt\"\r\nContent-Type: text/plain\r\nContent-Length: 6\r\n">, "remove_document"=>"0", "remote_document_url"=>""}, "commit"=>"Create Post"}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  Rendering normal_posts/new.html.erb within layouts/application
+  Rendered normal_posts/_form.html.erb (5.1ms) [cache miss]
+  Rendered normal_posts/new.html.erb within layouts/application (7.4ms)
+Completed 200 OK in 15ms (Views: 13.4ms | ActiveRecord: 0.1ms)
+Started POST "/normal/posts" for 127.0.0.1 at 2017-05-09 21:07:27 -0400
+Processing by NormalPostsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"/22StNfiSvR6LLOak0qJnu9/UU9tC/CwN5UtGV3usy1seGWq0jaa/rjEGEUVjszmIR9UiPa3Gpi4WzOxiGJYVg==", "post"=>{"title"=>"A cool post", "remove_document"=>"0", "remote_document_url"=>""}, "commit"=>"Create Post"}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "posts" ("title", "document_id") VALUES (?, ?)[0m  [["title", "A cool post"], ["document_id", nil]]
+  [1m[35m (8.7ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://www.example.com/normal/posts/24
+Completed 302 Found in 11ms (ActiveRecord: 9.0ms)
+Started GET "/normal/posts/24" for 127.0.0.1 at 2017-05-09 21:07:27 -0400
+Processing by NormalPostsController#show as HTML
+  Parameters: {"id"=>"24"}
+  [1m[36mPost Load (0.2ms)[0m  [1m[34mSELECT  "posts".* FROM "posts" WHERE "posts"."id" = ? LIMIT ?[0m  [["id", 24], ["LIMIT", 1]]
+  Rendering normal_posts/show.html.erb within layouts/application
+  [1m[36mDocument Load (0.1ms)[0m  [1m[34mSELECT "documents".* FROM "documents" WHERE "documents"."post_id" = ?[0m  [["post_id", 24]]
+  Rendered normal_posts/show.html.erb within layouts/application (2.6ms)
+Completed 200 OK in 11ms (Views: 8.1ms | ActiveRecord: 0.3ms)
+Started GET "/normal/posts/new" for 127.0.0.1 at 2017-05-09 21:07:27 -0400
+Processing by NormalPostsController#new as HTML
+  Rendering normal_posts/new.html.erb within layouts/application
+  Rendered normal_posts/_form.html.erb (3.0ms) [cache miss]
+  Rendered normal_posts/new.html.erb within layouts/application (4.2ms)
+Completed 200 OK in 9ms (Views: 8.5ms | ActiveRecord: 0.0ms)
+Started POST "/normal/posts" for 127.0.0.1 at 2017-05-09 21:07:27 -0400
+Processing by NormalPostsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"H7yChXEh02+qPfdSeiQhdYPadZR+SRdMYbb98cK4MJITJpxbJc0QNtwKF8wQWseCeErPZAir304GyvibT/12OQ==", "post"=>{"title"=>"A cool post", "image"=>#<ActionDispatch::Http::UploadedFile:0x007fd665a43380 @tempfile=#<Tempfile:/var/folders/xs/5xpqc0cj1cj_vxzp6cwb5fp40000gn/T/RackMultipart20170509-45769-o9gug7.jpg>, @original_filename="image.jpg", @content_type="image/jpeg", @headers="Content-Disposition: form-data; name=\"post[image]\"; filename=\"image.jpg\"\r\nContent-Type: image/jpeg\r\nContent-Length: 193725\r\n">, "remove_document"=>"0", "remote_document_url"=>""}, "commit"=>"Create Post"}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "posts" ("title", "image_id", "document_id") VALUES (?, ?, ?)[0m  [["title", "A cool post"], ["image_id", "b6b209ef8fe4d8ce6794b4f7b50d33f098cd5ff4e213cf995270146574af"], ["document_id", nil]]
+  [1m[35m (1.6ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://www.example.com/normal/posts/25
+Completed 302 Found in 6ms (ActiveRecord: 1.9ms)
+Started GET "/normal/posts/25" for 127.0.0.1 at 2017-05-09 21:07:27 -0400
+Processing by NormalPostsController#show as HTML
+  Parameters: {"id"=>"25"}
+  [1m[36mPost Load (0.1ms)[0m  [1m[34mSELECT  "posts".* FROM "posts" WHERE "posts"."id" = ? LIMIT ?[0m  [["id", 25], ["LIMIT", 1]]
+  Rendering normal_posts/show.html.erb within layouts/application
+  [1m[36mDocument Load (0.1ms)[0m  [1m[34mSELECT "documents".* FROM "documents" WHERE "documents"."post_id" = ?[0m  [["post_id", 25]]
+  Rendered normal_posts/show.html.erb within layouts/application (2.4ms)
+Completed 200 OK in 9ms (Views: 7.0ms | ActiveRecord: 0.2ms)
+Started GET "/normal/posts/25/edit" for 127.0.0.1 at 2017-05-09 21:07:27 -0400
+Processing by NormalPostsController#edit as HTML
+  Parameters: {"id"=>"25"}
+  [1m[36mPost Load (0.1ms)[0m  [1m[34mSELECT  "posts".* FROM "posts" WHERE "posts"."id" = ? LIMIT ?[0m  [["id", 25], ["LIMIT", 1]]
+  Rendering normal_posts/edit.html.erb within layouts/application
+  Rendered normal_posts/_form.html.erb (2.7ms) [cache miss]
+  Rendered normal_posts/edit.html.erb within layouts/application (3.9ms)
+Completed 200 OK in 10ms (Views: 7.8ms | ActiveRecord: 0.1ms)
+Started PATCH "/normal/posts/25" for 127.0.0.1 at 2017-05-09 21:07:27 -0400
+Processing by NormalPostsController#update as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"2faNydUt+QUP2qGezboJM0SYTauu5u5xFqm/zeNg7+TVbJMXgcE6XHntQQCnxO/Evwj3W9gEJnNx1bqnbiWpTw==", "post"=>{"title"=>"A very cool post", "remove_document"=>"0", "remote_document_url"=>""}, "commit"=>"Update Post", "id"=>"25"}
+  [1m[36mPost Load (0.1ms)[0m  [1m[34mSELECT  "posts".* FROM "posts" WHERE "posts"."id" = ? LIMIT ?[0m  [["id", 25], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[33mUPDATE "posts" SET "title" = ?, "document_id" = ? WHERE "posts"."id" = ?[0m  [["title", "A very cool post"], ["document_id", nil], ["id", 25]]
+  [1m[35m (1.0ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://www.example.com/normal/posts/25
+Completed 302 Found in 4ms (ActiveRecord: 1.3ms)
+Started GET "/normal/posts/25" for 127.0.0.1 at 2017-05-09 21:07:27 -0400
+Processing by NormalPostsController#show as HTML
+  Parameters: {"id"=>"25"}
+  [1m[36mPost Load (0.2ms)[0m  [1m[34mSELECT  "posts".* FROM "posts" WHERE "posts"."id" = ? LIMIT ?[0m  [["id", 25], ["LIMIT", 1]]
+  Rendering normal_posts/show.html.erb within layouts/application
+  [1m[36mDocument Load (0.1ms)[0m  [1m[34mSELECT "documents".* FROM "documents" WHERE "documents"."post_id" = ?[0m  [["post_id", 25]]
+  Rendered normal_posts/show.html.erb within layouts/application (2.4ms)
+Completed 200 OK in 10ms (Views: 7.9ms | ActiveRecord: 0.3ms)
+Started GET "/normal/posts/new" for 127.0.0.1 at 2017-05-09 21:07:27 -0400
+Processing by NormalPostsController#new as HTML
+  Rendering normal_posts/new.html.erb within layouts/application
+  Rendered normal_posts/_form.html.erb (2.6ms) [cache miss]
+  Rendered normal_posts/new.html.erb within layouts/application (3.7ms)
+Completed 200 OK in 9ms (Views: 7.8ms | ActiveRecord: 0.0ms)
+Started POST "/normal/posts" for 127.0.0.1 at 2017-05-09 21:07:28 -0400
+Processing by NormalPostsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"vq3pQGVfa+Qy6x2W4hJAU2tdUFWegxOhl592fh3uTEmp7JLfKe/m/9Xq6mR6CWo+FdJMOqacmLswZv7mKB0e1g==", "post"=>{"title"=>"", "image"=>"", "document"=>#<ActionDispatch::Http::UploadedFile:0x007fd669bd5dc0 @tempfile=#<Tempfile:/var/folders/xs/5xpqc0cj1cj_vxzp6cwb5fp40000gn/T/RackMultipart20170509-45769-g0u3jr.txt>, @original_filename="hello.txt", @content_type="text/plain", @headers="Content-Disposition: form-data; name=\"post[document]\"; filename=\"hello.txt\"\r\nContent-Type: text/plain\r\n">, "remove_document"=>"0", "remote_document_url"=>""}, "commit"=>"Create Post"}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  Rendering normal_posts/new.html.erb within layouts/application
+  Rendered normal_posts/_form.html.erb (4.0ms) [cache miss]
+  Rendered normal_posts/new.html.erb within layouts/application (5.8ms)
+Completed 200 OK in 24ms (Views: 12.9ms | ActiveRecord: 0.2ms)
+Started POST "/normal/posts" for 127.0.0.1 at 2017-05-09 21:07:28 -0400
+Processing by NormalPostsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"Q/cyuzITojN56N8sILnux/boCCyWMMoi8oFLOCpzwuxUtkkkfqMvKJ7pKN64osSqiGcUQ64vQThVeMOgH4CQcw==", "post"=>{"title"=>"A cool post", "image"=>"", "document"=>"{\"size\":6,\"content_type\":\"text/plain\",\"filename\":\"hello.txt\",\"id\":\"9bec0cb419532045ea2e785d01e85416e0c591eca016c2d9e371880b291e\"}", "remove_document"=>"0", "remote_document_url"=>""}, "commit"=>"Create Post"}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "posts" ("title", "image_id", "document_id", "document_filename", "document_content_type", "document_size") VALUES (?, ?, ?, ?, ?, ?)[0m  [["title", "A cool post"], ["image_id", nil], ["document_id", "59bc093ab2785724b76b454ebe3934c3fbb066e89a1ad3a4b4e39298c277"], ["document_filename", "hello.txt"], ["document_content_type", "text/plain"], ["document_size", 6]]
+  [1m[35m (0.8ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://127.0.0.1:56120/normal/posts/26
+Completed 302 Found in 12ms (ActiveRecord: 1.2ms)
+Started GET "/normal/posts/26" for 127.0.0.1 at 2017-05-09 21:07:28 -0400
+Processing by NormalPostsController#show as HTML
+  Parameters: {"id"=>"26"}
+  [1m[36mPost Load (0.1ms)[0m  [1m[34mSELECT  "posts".* FROM "posts" WHERE "posts"."id" = ? LIMIT ?[0m  [["id", 26], ["LIMIT", 1]]
+  Rendering normal_posts/show.html.erb within layouts/application
+  [1m[36mDocument Load (0.1ms)[0m  [1m[34mSELECT "documents".* FROM "documents" WHERE "documents"."post_id" = ?[0m  [["post_id", 26]]
+  Rendered normal_posts/show.html.erb within layouts/application (3.4ms)
+Completed 200 OK in 10ms (Views: 8.8ms | ActiveRecord: 0.2ms)
+Started GET "/attachments/41ad40e0fd68712c2ca0052136f4e2e3724035ee/store/59bc093ab2785724b76b454ebe3934c3fbb066e89a1ad3a4b4e39298c277/hello.txt" for 127.0.0.1 at 2017-05-09 21:07:28 -0400
+Refile::App: [2017-05-09 21:07:28 -0400] GET "/attachments/41ad40e0fd68712c2ca0052136f4e2e3724035ee/store/59bc093ab2785724b76b454ebe3934c3fbb066e89a1ad3a4b4e39298c277/hello.txt" 200 9.4ms
+
+Started GET "/normal/posts/new" for 127.0.0.1 at 2017-05-09 21:07:28 -0400
+Processing by NormalPostsController#new as HTML
+  Rendering normal_posts/new.html.erb within layouts/application
+  Rendered normal_posts/_form.html.erb (4.0ms) [cache miss]
+  Rendered normal_posts/new.html.erb within layouts/application (5.8ms)
+Completed 200 OK in 16ms (Views: 13.8ms | ActiveRecord: 0.0ms)
+Started POST "/normal/posts" for 127.0.0.1 at 2017-05-09 21:07:28 -0400
+Processing by NormalPostsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"BCMFqHpGMppl3DjX4FjNeiQQ/u54OgJZCabpjtPtBi9bgJQgQoUEPGj3XzTF8qQXfPYTU5sxReNk5TbbqXEyqw==", "post"=>{"title"=>"A cool post", "document"=>#<ActionDispatch::Http::UploadedFile:0x007fd665af64f8 @tempfile=#<Tempfile:/var/folders/xs/5xpqc0cj1cj_vxzp6cwb5fp40000gn/T/RackMultipart20170509-45769-12m9nb3.txt>, @original_filename="hello.txt", @content_type="text/plain", @headers="Content-Disposition: form-data; name=\"post[document]\"; filename=\"hello.txt\"\r\nContent-Type: text/plain\r\nContent-Length: 6\r\n">, "remove_document"=>"0", "remote_document_url"=>""}, "commit"=>"Create Post"}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.8ms)[0m  [1m[32mINSERT INTO "posts" ("title", "document_id", "document_filename", "document_content_type", "document_size") VALUES (?, ?, ?, ?, ?)[0m  [["title", "A cool post"], ["document_id", "22612e3cd6fff8684c88be0ebeeeed38fda9e23b77b3b3bf07ed3befcb94"], ["document_filename", "hello.txt"], ["document_content_type", "text/plain"], ["document_size", 6]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://www.example.com/normal/posts/27
+Completed 302 Found in 6ms (ActiveRecord: 1.6ms)
+Started GET "/normal/posts/27" for 127.0.0.1 at 2017-05-09 21:07:28 -0400
+Processing by NormalPostsController#show as HTML
+  Parameters: {"id"=>"27"}
+  [1m[36mPost Load (0.1ms)[0m  [1m[34mSELECT  "posts".* FROM "posts" WHERE "posts"."id" = ? LIMIT ?[0m  [["id", 27], ["LIMIT", 1]]
+  Rendering normal_posts/show.html.erb within layouts/application
+  [1m[36mDocument Load (0.1ms)[0m  [1m[34mSELECT "documents".* FROM "documents" WHERE "documents"."post_id" = ?[0m  [["post_id", 27]]
+  Rendered normal_posts/show.html.erb within layouts/application (2.2ms)
+Completed 200 OK in 8ms (Views: 6.1ms | ActiveRecord: 0.2ms)
+Started GET "/attachments/362974e8e19a513be738b104110d2e99b3a38f86/store/convert_case/22612e3cd6fff8684c88be0ebeeeed38fda9e23b77b3b3bf07ed3befcb94/hello.up" for 127.0.0.1 at 2017-05-09 21:07:28 -0400
+Refile::App: [2017-05-09 21:07:28 -0400] GET "/attachments/362974e8e19a513be738b104110d2e99b3a38f86/store/convert_case/22612e3cd6fff8684c88be0ebeeeed38fda9e23b77b3b3bf07ed3befcb94/hello.up" 200 1.4ms
+
+Started GET "/normal/posts/new" for 127.0.0.1 at 2017-05-09 21:07:28 -0400
+Processing by NormalPostsController#new as HTML
+  Rendering normal_posts/new.html.erb within layouts/application
+  Rendered normal_posts/_form.html.erb (2.5ms) [cache miss]
+  Rendered normal_posts/new.html.erb within layouts/application (3.6ms)
+Completed 200 OK in 8ms (Views: 7.4ms | ActiveRecord: 0.0ms)
+Started POST "/normal/posts" for 127.0.0.1 at 2017-05-09 21:07:28 -0400
+Processing by NormalPostsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"qrHNNrHCKX1KKbABBrXRxW3hNYyfis/LPn434ro60MxFBus4vssoSwg91xFpnzrTgiLsgVkA25tBhoptDrdKYw==", "post"=>{"title"=>"A cool post", "document"=>#<ActionDispatch::Http::UploadedFile:0x007fd66fa76fc8 @tempfile=#<Tempfile:/var/folders/xs/5xpqc0cj1cj_vxzp6cwb5fp40000gn/T/RackMultipart20170509-45769-1ozz1my.txt>, @original_filename="hello.txt", @content_type="text/plain", @headers="Content-Disposition: form-data; name=\"post[document]\"; filename=\"hello.txt\"\r\nContent-Type: text/plain\r\nContent-Length: 6\r\n">, "remove_document"=>"0", "remote_document_url"=>""}, "commit"=>"Create Post"}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "posts" ("title", "document_id", "document_filename", "document_content_type", "document_size") VALUES (?, ?, ?, ?, ?)[0m  [["title", "A cool post"], ["document_id", "f38d4b56add7deb4908afcfb9ada1363cf0ff59adfa72d64617b84bafc8b"], ["document_filename", "hello.txt"], ["document_content_type", "text/plain"], ["document_size", 6]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://www.example.com/normal/posts/28
+Completed 302 Found in 5ms (ActiveRecord: 1.1ms)
+Started GET "/normal/posts/28" for 127.0.0.1 at 2017-05-09 21:07:28 -0400
+Processing by NormalPostsController#show as HTML
+  Parameters: {"id"=>"28"}
+  [1m[36mPost Load (0.2ms)[0m  [1m[34mSELECT  "posts".* FROM "posts" WHERE "posts"."id" = ? LIMIT ?[0m  [["id", 28], ["LIMIT", 1]]
+  Rendering normal_posts/show.html.erb within layouts/application
+  [1m[36mDocument Load (0.1ms)[0m  [1m[34mSELECT "documents".* FROM "documents" WHERE "documents"."post_id" = ?[0m  [["post_id", 28]]
+  Rendered normal_posts/show.html.erb within layouts/application (2.5ms)
+Completed 200 OK in 10ms (Views: 7.8ms | ActiveRecord: 0.3ms)
+Started GET "/normal/posts/28/edit" for 127.0.0.1 at 2017-05-09 21:07:28 -0400
+Processing by NormalPostsController#edit as HTML
+  Parameters: {"id"=>"28"}
+  [1m[36mPost Load (0.1ms)[0m  [1m[34mSELECT  "posts".* FROM "posts" WHERE "posts"."id" = ? LIMIT ?[0m  [["id", 28], ["LIMIT", 1]]
+  Rendering normal_posts/edit.html.erb within layouts/application
+  Rendered normal_posts/_form.html.erb (2.9ms) [cache miss]
+  Rendered normal_posts/edit.html.erb within layouts/application (4.0ms)
+Completed 200 OK in 10ms (Views: 8.1ms | ActiveRecord: 0.1ms)
+Started PATCH "/normal/posts/28" for 127.0.0.1 at 2017-05-09 21:07:28 -0400
+Processing by NormalPostsController#update as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"iVyqkRgsLkfOCm4RnftjpqWLJF8gTFAe7xFDrGC1JYhm64yfFyUvcYweCQHy0YiwSkj9UubGRE6Q6f4j1Di/Jw==", "post"=>{"title"=>"A cool post", "remove_document"=>"1", "remote_document_url"=>""}, "commit"=>"Update Post", "id"=>"28"}
+  [1m[36mPost Load (0.1ms)[0m  [1m[34mSELECT  "posts".* FROM "posts" WHERE "posts"."id" = ? LIMIT ?[0m  [["id", 28], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[33mUPDATE "posts" SET "document_id" = ?, "document_size" = ?, "document_content_type" = ?, "document_filename" = ? WHERE "posts"."id" = ?[0m  [["document_id", nil], ["document_size", nil], ["document_content_type", nil], ["document_filename", nil], ["id", 28]]
+  [1m[35m (0.6ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://www.example.com/normal/posts/28
+Completed 302 Found in 3ms (ActiveRecord: 1.0ms)
+Started GET "/normal/posts/28" for 127.0.0.1 at 2017-05-09 21:07:28 -0400
+Processing by NormalPostsController#show as HTML
+  Parameters: {"id"=>"28"}
+  [1m[36mPost Load (0.1ms)[0m  [1m[34mSELECT  "posts".* FROM "posts" WHERE "posts"."id" = ? LIMIT ?[0m  [["id", 28], ["LIMIT", 1]]
+  Rendering normal_posts/show.html.erb within layouts/application
+  [1m[36mDocument Load (0.1ms)[0m  [1m[34mSELECT "documents".* FROM "documents" WHERE "documents"."post_id" = ?[0m  [["post_id", 28]]
+  Rendered normal_posts/show.html.erb within layouts/application (2.7ms)
+Completed 200 OK in 11ms (Views: 9.1ms | ActiveRecord: 0.3ms)
+Started GET "/normal/posts/new" for 127.0.0.1 at 2017-05-09 21:07:28 -0400
+Processing by NormalPostsController#new as HTML
+  Rendering normal_posts/new.html.erb within layouts/application
+  Rendered normal_posts/_form.html.erb (3.6ms) [cache miss]
+  Rendered normal_posts/new.html.erb within layouts/application (5.3ms)
+Completed 200 OK in 13ms (Views: 11.4ms | ActiveRecord: 0.0ms)
+Started POST "/normal/posts" for 127.0.0.1 at 2017-05-09 21:07:28 -0400
+Processing by NormalPostsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"RdSxB/QgSAUlXgEYclfMEXnDIpbWOtpcZUNS3xldCCi3jNkJT+AO6ixSU84jNPBgnZMct5GVgK15Q1hIy/6kAQ==", "post"=>{"title"=>"A cool post about to be deleted", "document"=>#<ActionDispatch::Http::UploadedFile:0x007fd664944688 @tempfile=#<Tempfile:/var/folders/xs/5xpqc0cj1cj_vxzp6cwb5fp40000gn/T/RackMultipart20170509-45769-zsmjtm.txt>, @original_filename="hello.txt", @content_type="text/plain", @headers="Content-Disposition: form-data; name=\"post[document]\"; filename=\"hello.txt\"\r\nContent-Type: text/plain\r\nContent-Length: 6\r\n">, "remove_document"=>"0", "remote_document_url"=>""}, "commit"=>"Create Post"}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "posts" ("title", "document_id", "document_filename", "document_content_type", "document_size") VALUES (?, ?, ?, ?, ?)[0m  [["title", "A cool post about to be deleted"], ["document_id", "b70a2b1f385ea39993b45f1d0abb399b55c846cac3bee286421b7b12741b"], ["document_filename", "hello.txt"], ["document_content_type", "text/plain"], ["document_size", 6]]
+  [1m[35m (0.5ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://www.example.com/normal/posts/29
+Completed 302 Found in 4ms (ActiveRecord: 0.8ms)
+Started GET "/normal/posts/29" for 127.0.0.1 at 2017-05-09 21:07:28 -0400
+Processing by NormalPostsController#show as HTML
+  Parameters: {"id"=>"29"}
+  [1m[36mPost Load (0.1ms)[0m  [1m[34mSELECT  "posts".* FROM "posts" WHERE "posts"."id" = ? LIMIT ?[0m  [["id", 29], ["LIMIT", 1]]
+  Rendering normal_posts/show.html.erb within layouts/application
+  [1m[36mDocument Load (0.1ms)[0m  [1m[34mSELECT "documents".* FROM "documents" WHERE "documents"."post_id" = ?[0m  [["post_id", 29]]
+  Rendered normal_posts/show.html.erb within layouts/application (3.4ms)
+Completed 200 OK in 10ms (Views: 8.1ms | ActiveRecord: 0.3ms)
+Started DELETE "/normal/posts/29" for 127.0.0.1 at 2017-05-09 21:07:28 -0400
+Processing by NormalPostsController#destroy as HTML
+  Parameters: {"id"=>"29"}
+  [1m[36mPost Load (0.1ms)[0m  [1m[34mSELECT  "posts".* FROM "posts" WHERE "posts"."id" = ? LIMIT ?[0m  [["id", 29], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mDocument Load (0.1ms)[0m  [1m[34mSELECT "documents".* FROM "documents" WHERE "documents"."post_id" = ?[0m  [["post_id", 29]]
+  [1m[35mSQL (0.3ms)[0m  [1m[31mDELETE FROM "posts" WHERE "posts"."id" = ?[0m  [["id", 29]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://www.example.com/normal/posts
+Completed 302 Found in 4ms (ActiveRecord: 1.3ms)
+Started GET "/normal/posts" for 127.0.0.1 at 2017-05-09 21:07:28 -0400
+Processing by NormalPostsController#index as HTML
+  Rendering normal_posts/index.html within layouts/application
+  Rendered normal_posts/index.html within layouts/application (0.3ms)
+Completed 200 OK in 9ms (Views: 7.1ms | ActiveRecord: 0.0ms)
+Started GET "/normal/posts/new" for 127.0.0.1 at 2017-05-09 21:07:28 -0400
+Processing by NormalPostsController#new as HTML
+  Rendering normal_posts/new.html.erb within layouts/application
+  Rendered normal_posts/_form.html.erb (4.8ms) [cache miss]
+  Rendered normal_posts/new.html.erb within layouts/application (6.6ms)
+Completed 200 OK in 16ms (Views: 14.6ms | ActiveRecord: 0.0ms)
+Started POST "/normal/posts" for 127.0.0.1 at 2017-05-09 21:07:28 -0400
+Processing by NormalPostsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"UvnzRfNBDhLmDc2NIeuaZ9IlfYEa3sAN6o77S5P9YfXY5K1P9/vwRDC7V14u8bUq40D3jxDhuAzNVYuEldMLEg==", "post"=>{"title"=>"A cool post", "remove_document"=>"0", "remote_document_url"=>"http://www.example.com/foo/bar/some_file.png?some-query-string=true"}, "commit"=>"Create Post"}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "posts" ("title", "document_id", "document_filename", "document_content_type", "document_size") VALUES (?, ?, ?, ?, ?)[0m  [["title", "A cool post"], ["document_id", "9363760a12635e5d226887c4c0ac54c02927be77187259f39a4e6a50e572"], ["document_filename", "some_file.png"], ["document_content_type", "image/png"], ["document_size", 3]]
+  [1m[35m (0.7ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://www.example.com/normal/posts/30
+Completed 302 Found in 18ms (ActiveRecord: 1.1ms)
+Started GET "/normal/posts/30" for 127.0.0.1 at 2017-05-09 21:07:28 -0400
+Processing by NormalPostsController#show as HTML
+  Parameters: {"id"=>"30"}
+  [1m[36mPost Load (0.1ms)[0m  [1m[34mSELECT  "posts".* FROM "posts" WHERE "posts"."id" = ? LIMIT ?[0m  [["id", 30], ["LIMIT", 1]]
+  Rendering normal_posts/show.html.erb within layouts/application
+  [1m[36mDocument Load (0.1ms)[0m  [1m[34mSELECT "documents".* FROM "documents" WHERE "documents"."post_id" = ?[0m  [["post_id", 30]]
+  Rendered normal_posts/show.html.erb within layouts/application (2.7ms)
+Completed 200 OK in 9ms (Views: 7.4ms | ActiveRecord: 0.2ms)
+Started GET "/attachments/36ef10c2a3d9e37a0da10776db5fe7ece06ef7c2/store/9363760a12635e5d226887c4c0ac54c02927be77187259f39a4e6a50e572/some_file.png" for 127.0.0.1 at 2017-05-09 21:07:28 -0400
+Refile::App: [2017-05-09 21:07:28 -0400] GET "/attachments/36ef10c2a3d9e37a0da10776db5fe7ece06ef7c2/store/9363760a12635e5d226887c4c0ac54c02927be77187259f39a4e6a50e572/some_file.png" 200 1.1ms
+
+Started GET "/presigned/posts/new" for 127.0.0.1 at 2017-05-09 21:07:28 -0400
+Processing by PresignedPostsController#new as HTML
+  Rendering presigned_posts/new.html.erb within layouts/application
+  Rendered presigned_posts/new.html.erb within layouts/application (2.8ms)
+Completed 200 OK in 9ms (Views: 7.2ms | ActiveRecord: 0.0ms)
+Started GET "/attachments/limited_cache/presign?t=1494378448719.0" for 127.0.0.1 at 2017-05-09 21:07:28 -0400
+Refile::App: [2017-05-09 21:07:28 -0400] GET "/attachments/limited_cache/presign?t=1494378448719.0" 200 0.5ms
+
+Started POST "/presigned/posts/upload" for 127.0.0.1 at 2017-05-09 21:07:28 -0400
+Processing by PresignedPostsController#upload as */*
+  Parameters: {"id"=>"74e5b901e54b02d0799d2c7cc3efbe7bcee8b0a98e6f9025f75a050bf0df", "token"=>"xyz123", "file"=>#<ActionDispatch::Http::UploadedFile:0x007fd667a3a918 @tempfile=#<Tempfile:/var/folders/xs/5xpqc0cj1cj_vxzp6cwb5fp40000gn/T/RackMultipart20170509-45769-gzyaf3.txt>, @original_filename="hello.txt", @content_type="text/plain", @headers="Content-Disposition: form-data; name=\"file\"; filename=\"hello.txt\"\r\nContent-Type: text/plain\r\n">}
+Completed 500 Internal Server Error in 22ms (ActiveRecord: 0.0ms)
+Started GET "/presigned/posts/new" for 127.0.0.1 at 2017-05-09 21:07:28 -0400
+Processing by PresignedPostsController#new as HTML
+  Rendering presigned_posts/new.html.erb within layouts/application
+  Rendered presigned_posts/new.html.erb within layouts/application (2.1ms)
+Completed 200 OK in 8ms (Views: 6.1ms | ActiveRecord: 0.0ms)
+Started GET "/attachments/limited_cache/presign?t=1494378448934.0" for 127.0.0.1 at 2017-05-09 21:07:28 -0400
+Refile::App: [2017-05-09 21:07:28 -0400] GET "/attachments/limited_cache/presign?t=1494378448934.0" 200 0.6ms
+
+Started POST "/presigned/posts/upload" for 127.0.0.1 at 2017-05-09 21:07:28 -0400
+Processing by PresignedPostsController#upload as */*
+  Parameters: {"id"=>"3f68a188b0ddd09ae202120f3d1e8f90b66422e88aea2bbf496ce15d3ced", "token"=>"xyz123", "file"=>#<ActionDispatch::Http::UploadedFile:0x007fd667cf33f8 @tempfile=#<Tempfile:/var/folders/xs/5xpqc0cj1cj_vxzp6cwb5fp40000gn/T/RackMultipart20170509-45769-f1i24k.txt>, @original_filename="large.txt", @content_type="text/plain", @headers="Content-Disposition: form-data; name=\"file\"; filename=\"large.txt\"\r\nContent-Type: text/plain\r\n">}
+Completed 500 Internal Server Error in 15ms (ActiveRecord: 0.0ms)
+Started GET "/simple_form/posts/new" for 127.0.0.1 at 2017-05-09 21:07:28 -0400
+Processing by SimpleFormPostsController#new as HTML
+  Rendering direct_posts/new.html.erb within layouts/application
+  Rendered direct_posts/new.html.erb within layouts/application (3.1ms)
+Completed 200 OK in 13ms (Views: 9.8ms | ActiveRecord: 0.0ms)

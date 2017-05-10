@@ -23,6 +23,6 @@ tmp
 mkmf.log
 
 s3.yml
-spec/refile/test_app/log
-spec/refile/test_app/tmp
-spec/refile/test_app/db/*.sqlite
+spec/pmacs_refile/test_app/log
+spec/pmacs_refile/test_app/tmp
+spec/pmacs_refile/test_app/db/*.sqlite

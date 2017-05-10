@@ -1,3 +1,8 @@
+# 1.0.0
+Release date: 2017-05-10
+
+- [CHANGED] Added Rails 5 compatibility
+
 # 0.6.2
 
 Release date: 2015-09-10
