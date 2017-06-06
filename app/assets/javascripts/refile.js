@@ -86,9 +86,11 @@
           var customFormData = formData(input.getAttribute("data-as"), file, fields)
           var scaleHeight = input.getAttribute('data-scale-height');
           var scaleWidth = input.getAttribute('data-scale-width');
+          var processor = input.getAttribute('data-processor');
           if((scaleHeight != null) && (scaleWidth != null)) {
-            customFormData.append("data_scale_height", input.getAttribute('data-scale-height'));
-            customFormData.append("data_scale_width", input.getAttribute('data-scale-width'));
+            customFormData.append("data_scale_height", scaleHeight);
+            customFormData.append("data_scale_width", scaleWidth);
+            customFormData.append("data_processor", processor);
           }
           xhr.send(customFormData);
           // rescaling patch
