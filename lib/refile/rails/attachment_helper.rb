@@ -84,6 +84,7 @@ module Refile
         options[:data].merge!(direct: true, as: "file", url: url)
         options[:data].merge!('scale-width' => options[:scale_width]) if options[:scale_width]
         options[:data].merge!('scale-height' => options[:scale_height]) if options[:scale_height]
+        options[:data].merge!('processor' => options[:processor]) if options[:processor]
         # rescaling patch
       end
 

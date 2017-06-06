@@ -73,7 +73,8 @@ module Refile
       file = backend.upload(tempfile)
       # rescale patch
       url = unless params[:data_scale_height].blank? && params[:data_scale_width].blank?
-              Refile.file_url(file, :fit, params[:data_scale_width], params[:data_scale_height], filename: filename)
+              processor = params[:data_processor].try(:to_sym) || :fill
+              Refile.file_url(file, processor, params[:data_scale_width], params[:data_scale_height], filename: filename)
             else
               Refile.file_url(file, filename: filename)
             end
