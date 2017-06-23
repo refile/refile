@@ -19,6 +19,10 @@ Refile::TestApp.routes.draw do
     end
   end
 
+  scope path: "resize_image", as: "resize_image" do
+    resources :posts, only: [:new, :create], controller: "resize_image_posts"
+  end
+
   scope path: "simple_form", as: "simple_form" do
     resources :posts, only: [:new, :create], controller: "simple_form_posts"
   end
