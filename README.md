@@ -315,6 +315,11 @@ The `:token` is a generated digest of the request path when the
 `Refile.secret_key` is configured; otherwise, the application will raise an error.
 The digest feature provides a security measure against unverified requests.
 
+**NOTICE:** If you don't set the `Refile.secret_key` we will use rails `secret_key_base`
+to generate the token. We suggest you not to change the `secret_key_base` after you
+generated and hardcoded some attachment URLs in your application (e.g. blog post images),
+because the token will change and you'll not be able to retrieve in this case, the images.
+
 ### Processing
 
 Refile provides on the fly processing of files. You can trigger it by calling
