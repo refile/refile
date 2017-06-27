@@ -8,6 +8,12 @@ module Refile
         self.multipart = true
         @template.attachment_field(@object_name, method, objectify_options(options))
       end
+
+      # @see AttachmentHelper#attachment_cache_field
+      def attachment_cache_field(method, options = {})
+        self.multipart = true
+        @template.attachment_cache_field(@object_name, method, objectify_options(options))
+      end
     end
 
     # View helper which generates a url for an attachment. This generates a URL
@@ -83,6 +89,22 @@ module Refile
       end
 
       options[:data][:reference] = SecureRandom.hex
+      options[:include_hidden] = false
+
+      attachment_cache_field(object_name, method, object: object, **options) + file_field(object_name, method, options)
+    end
+
+    # Generates a hidden form field which tracks the id of the file in the cache
+    # before it is permanently stored.
+    #
+    # @param object_name                    The name of the object to generate a field for
+    # @param method                         The name of the field
+    # @param [Hash] options
+    # @option options [Object] object       Set by the form builder
+    # @return [ActiveSupport::SafeBuffer]   The generated hidden form field
+    def attachment_cache_field(object_name, method, object:, **options)
+      options[:data] ||= {}
+      options[:data][:reference] ||= SecureRandom.hex
 
       hidden_options = {
         multiple: options[:multiple],
@@ -93,7 +115,7 @@ module Refile
       }
       hidden_options.merge!(index: options[:index]) if options.key?(:index)
 
-      hidden_field(object_name, method, hidden_options) + file_field(object_name, method, options)
+      hidden_field(object_name, method, hidden_options)
     end
   end
 end

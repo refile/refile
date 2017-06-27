@@ -237,6 +237,16 @@ describe Refile::App do
       expect(JSON.parse(last_response.body)["id"]).not_to be_empty
     end
 
+    it "returns the url of the uploaded file" do
+      file = Rack::Test::UploadedFile.new(path("hello.txt"))
+      post "/cache", file: file
+
+      expect(last_response.status).to eq(200)
+      expect(JSON.parse(last_response.body)["url"]).not_to be_empty
+      expect(JSON.parse(last_response.body)["url"]).to include("hello.txt")
+      expect(JSON.parse(last_response.body)["url"]).to include("cache")
+    end
+
     context "when unrestricted" do
       before do
         allow(Refile).to receive(:allow_uploads_to).and_return(:all)
