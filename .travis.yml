@@ -1,8 +1,9 @@
 language: ruby
+dist: trusty
 
 rvm:
-  - 2.1
-  - 2.2.4
+  - 2.1.10
+  - 2.2.7
   - 2.3.4
   - 2.4.1
   - ruby-head
@@ -21,9 +22,9 @@ before_script:
 
 matrix:
   include:
-    - rvm: 2.2.4
+    - rvm: 2.2.7
       gemfile: gemfiles/Gemfile.rails-5.0-master
   allow_failures:
     - rvm: ruby-head
-    - rvm: 2.2.4
+    - rvm: 2.2.7
       gemfile: gemfiles/Gemfile.rails-5.0-master
