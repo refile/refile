@@ -117,6 +117,7 @@ RSpec.describe Refile do
     it "adds an escaped filename" do
       expect(Refile.file_url(file, filename: "test.png")).to eq("/token/cache/#{id}/test.png")
       expect(Refile.file_url(file, filename: "tes/t.png")).to eq("/token/cache/#{id}/tes%2Ft.png")
+      expect(Refile.file_url(file, filename: "tes t.png")).to eq("/token/cache/#{id}/tes%20t.png")
     end
 
     it "adds a format" do

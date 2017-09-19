@@ -312,7 +312,7 @@ module Refile
       host ||= Refile.cdn_host
       backend_name = Refile.backends.key(file.backend)
 
-      filename = Rack::Utils.escape(filename)
+      filename = Rack::Utils.escape_path(filename)
       filename << "." << format.to_s if format
 
       base_path = ::File.join("", backend_name, *args.map(&:to_s), file.id.to_s, filename)
