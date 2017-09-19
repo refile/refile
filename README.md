@@ -308,6 +308,24 @@ Refile.mount_point = "/your-preferred-mount-point"
 You could also run the application on its own, it doesn't need to be mounted to
 work.
 
+If you are using a catch-all route (such as required by Comfy CMS), you will need to turn off Automounting and add the refile route before your catch all route.
+
+(in initializers/refile.rb)
+``` ruby
+Refile.automount = false
+```
+
+in routes.rb
+``` ruby
+  mount Refile.app, at: Refile.mount_point, as: :refile_app
+
+  # Make sure this routeset is defined last
+  comfy_route :cms, :path => '/', :sitemap => true
+
+```
+
+
+
 ### Retrieving files
 
 Files can be retrieved from the application by calling:
