@@ -14,8 +14,8 @@ gem "pry-byebug", platforms: [:mri]
 gem "aws-sdk"
 gem "rack-test", "~> 0.6.2"
 gem "rails", "~> 5.0.0"
-gem "sqlite3",                          platforms: [:ruby]
-gem "activerecord-jdbcsqlite3-adapter", platforms: [:jruby]
+gem "sqlite3",                                      platforms: [:ruby]
+gem "activerecord-jdbcsqlite3-adapter", "5.0.pre1", platforms: [:jruby]
 gem "poltergeist"
 gem "yard"
 gem "rubocop", "~>0.33.0"
