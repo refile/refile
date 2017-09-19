@@ -123,6 +123,16 @@ Refile has a global registry of backends, accessed through `Refile.backends`.
 There are two "special" backends, which are only really special in that they
 are the default backends for attachments. They are `cache` and `store`.
 
+By default files will be uploaded to `./tmp/uploads/store`. If you would like
+to persist them between deploys of your application, you can override the upload
+folder by adding an initializer like this:
+
+```ruby
+# config/initializers/refile.rb
+
+Refile.backends['store'] = Refile::Backend::FileSystem.new('/etc/projectname-uploads/')
+```
+
 The cache is intended to be transient. Files are added here before they are
 meant to be permanently stored. Usually files are then moved to the store for
 permanent storage, but this isn't always the case.
@@ -184,7 +194,7 @@ The `upload` method on backends can be called with a variety of objects. It
 requires that the object passed to it behaves similarly to Ruby IO objects, in
 particular it must implement the methods `size`, `read(length = nil, buffer =
 nil)`, `eof?`, `rewind`, and `close`. All of `File`, `Tempfile`,
-`ActionDispath::UploadedFile` and `StringIO` implement this interface, however
+`ActionDispatch::UploadedFile` and `StringIO` implement this interface, however
 `String` does not. If you want to upload a file from a `String` you must wrap
 it in a `StringIO` first.
 
@@ -402,6 +412,8 @@ no file has been uploaded:
 <%= attachment_url(@user, :profile_image, :fill, 300, 300, fallback: "default.png") %>
 <%= attachment_image_tag(@user, :profile_image, :fill, 300, 300, fallback: "default.png") %>
 ```
+
+Use `Refile.attachment_url` if you already have `attachment` in your routes.
 
 ## 5. JavaScript library
 
