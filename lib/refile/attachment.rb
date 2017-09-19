@@ -90,8 +90,8 @@ module Refile
         end
 
         define_method "presigned_#{name}_url" do |expires_in = 900|
-          _attacher = send(attacher)
-          _attacher.store.object(_attacher.id).presigned_url(:get, expires_in: expires_in) unless _attacher.id.nil?
+          attachment = send(attacher)
+          attachment.store.object(attachment.id).presigned_url(:get, expires_in: expires_in) unless attachment.id.nil?
         end
 
         define_method "#{name}_data" do
