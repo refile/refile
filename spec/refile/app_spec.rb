@@ -138,6 +138,20 @@ describe Refile::App do
             expect(last_response.body).to eq("forbidden")
           end
         end
+
+        context "missing `expires_at` in requiest when it was part of token" do
+          let(:expires_at) { (Time.now + 1.seconds).to_i }
+
+          it "returns a 403" do
+            token =
+              Refile.token("/store/#{file.id}/hello?expires_at=#{expires_at}")
+
+            get "/#{token}/store/#{file.id}/hello"
+
+            expect(last_response.status).to eq(403)
+            expect(last_response.body).to eq("forbidden")
+          end
+        end
       end
 
       it "returns a 403 for unsigned get requests" do
