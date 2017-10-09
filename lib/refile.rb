@@ -265,10 +265,10 @@ module Refile
     # {Refile.mount_point}.
     #
     # @example
-    #   Refilee.app_url
+    #   Refile.app_url
     #
     # @example With host and prefix
-    #   Refilee.app_url(host: "http://some.domain", prefix: "/refile")
+    #   Refile.app_url(host: "http://some.domain", prefix: "/refile")
     #
     # @param [String, nil] host            Override the host
     # @param [String, nil] prefix          Adds a prefix to the URL if the application is not mounted at root

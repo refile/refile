@@ -1,10 +1,10 @@
 language: ruby
 
 rvm:
-  - 2.1
-  - 2.2
-  - ruby-head
-  - jruby-9.0.1.0
+  - 2.2.8
+  - 2.3.5
+  - 2.4.2
+  - jruby-9.1.13.0
 
 gemfile:
   - Gemfile
@@ -16,13 +16,3 @@ sudo: false
 before_script:
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
-
-matrix:
-  include:
-    - rvm: 2.2.4
-      gemfile: gemfiles/Gemfile.rails-5.0-master
-  allow_failures:
-    - rvm: ruby-head
-    - rvm: 2.2.4
-      gemfile: gemfiles/Gemfile.rails-5.0-master
-
