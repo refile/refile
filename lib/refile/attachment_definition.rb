@@ -1,7 +1,7 @@
 module Refile
   # @api private
   class AttachmentDefinition
-    attr_reader :record, :name, :cache, :store, :options, :type, :valid_extensions, :valid_content_types
+    attr_reader :record, :name, :cache, :store, :options, :type, :valid_content_types
     attr_accessor :remove
 
     def initialize(name, cache:, store:, raise_errors: true, type: nil, extension: nil, content_type: nil)
@@ -10,7 +10,7 @@ module Refile
       @cache_name = cache
       @store_name = store
       @type = type
-      @valid_extensions = [extension].flatten if extension
+      @extension = extension
       @valid_content_types = [content_type].flatten if content_type
       @valid_content_types ||= Refile.types.fetch(type).content_type if type
     end
@@ -33,6 +33,15 @@ module Refile
 
     def raise_errors?
       @raise_errors
+    end
+
+    def valid_extensions
+      return unless @extension
+      if @extension.is_a?(Proc)
+        Array(@extension.call)
+      else
+        Array(@extension)
+      end
     end
 
     def validate(attacher)

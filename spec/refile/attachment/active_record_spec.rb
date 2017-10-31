@@ -73,6 +73,30 @@ describe Refile::ActiveRecord::Attachment do
           expect(post.errors[:document].length).to eq(1)
         end
       end
+
+      context "extension as Proc" do
+        context "Proc returns an array with extensions" do
+          let(:options) { { cache: :limited_cache, extension: -> { ["gif"] } } }
+
+          it "returns true when extension is included in list" do
+            post = klass.new
+            post.document = Refile::FileDouble.new("hello", "funny.gif")
+            expect(post.valid?).to be_truthy
+            expect(post.errors[:document]).to be_empty
+          end
+        end
+
+        context "Proc returns nil" do
+          let(:options) { { cache: :limited_cache, extension: -> {} } }
+
+          it "returns true when extension is included in list" do
+            post = klass.new
+            post.document = Refile::FileDouble.new("hello", "funny.gif")
+            expect(post.valid?).to be_falsey
+            expect(post.errors[:document].length).to eq(1)
+          end
+        end
+      end
     end
 
     context "with file" do
