@@ -7,7 +7,9 @@ rvm:
   - jruby-9.1.13.0
 
 gemfile:
-  - Gemfile
+ - gemsfiles/Gemfile.rest-client.1.8
+ - gemsfiles/Gemfile.rest-client.2.0
+ - gemsfiles/Gemfile.rest-client.2.1
 
 cache: bundler
 
