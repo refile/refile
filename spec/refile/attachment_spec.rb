@@ -189,7 +189,7 @@ describe Refile::Attachment do
         it "handles redirect loops by trowing errors" do
           expect do
             instance.remote_document_url = "http://www.example.com/loop"
-          end.to raise_error(RestClient::MaxRedirectsReached)
+          end.to raise_error(RestClient::Exception)
         end
       end
 
