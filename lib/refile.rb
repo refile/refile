@@ -1,7 +1,7 @@
 require "uri"
 require "fileutils"
 require "tempfile"
-require "rest_client"
+require "down"
 require "logger"
 require "mime/types"
 

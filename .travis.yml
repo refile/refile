@@ -6,11 +6,6 @@ rvm:
   - 2.4.3
   - jruby-9.1.15.0
 
-gemfile:
-  - gemfiles/Gemfile.rest-client.1.8
-  - gemfiles/Gemfile.rest-client.2.0
-  - gemfiles/Gemfile.rest-client.2.1
-
 cache: bundler
 
 sudo: false
