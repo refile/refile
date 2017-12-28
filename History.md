@@ -1,3 +1,7 @@
+# master
+
+- [FIXED] Avoid extension duplication by specifying format
+
 # 0.6.2
 
 Release date: 2015-10-29

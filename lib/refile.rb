@@ -313,7 +313,7 @@ module Refile
       backend_name = Refile.backends.key(file.backend)
 
       filename = Rack::Utils.escape(filename)
-      filename << "." << format.to_s if format
+      filename << "." << format.to_s if format && !filename.downcase.end_with?(format.to_s.downcase)
 
       base_path = ::File.join("", backend_name, *args.map(&:to_s), file.id.to_s, filename)
 

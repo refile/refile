@@ -123,6 +123,10 @@ RSpec.describe Refile do
       expect(Refile.file_url(file, format: "png", filename: "document")).to eq("/token/cache/#{id}/document.png")
     end
 
+    it "avoids extension duplication by specifying format" do
+      expect(Refile.file_url(file, format: "png", filename: "document.png")).to eq("/token/cache/#{id}/document.png")
+    end
+
     context "with no file" do
       it "returns nil" do
         expect(Refile.file_url(nil, filename: "document")).to be_nil
