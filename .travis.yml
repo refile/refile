@@ -1,10 +1,10 @@
 language: ruby
 
 rvm:
-  - 2.2.8
-  - 2.3.5
-  - 2.4.2
-  - jruby-9.1.13.0
+  - 2.2.9
+  - 2.3.6
+  - 2.4.3
+  - jruby-9.1.15.0
 
 gemfile:
  - gemfiles/Gemfile.rest-client.1.8
