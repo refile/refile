@@ -100,14 +100,58 @@ describe Refile::App do
         allow(Refile).to receive(:token).and_call_original
       end
 
-      it "accepts valid token" do
-        file = Refile.store.upload(StringIO.new("hello"))
-        token = Refile.token("/store/#{file.id}/hello")
+      context "with a valid token" do
+        let(:file) { Refile.store.upload(StringIO.new("hello")) }
+        it "accepts the token" do
+          token = Refile.token("/store/#{file.id}/hello")
 
-        get "/#{token}/store/#{file.id}/hello"
+          get "/#{token}/store/#{file.id}/hello"
 
-        expect(last_response.status).to eq(200)
-        expect(last_response.body).to eq("hello")
+          expect(last_response.status).to eq(200)
+          expect(last_response.body).to eq("hello")
+        end
+
+        context "with a valid `expires_at`" do
+          let(:expires_at) { (Time.now + 1.seconds).to_i }
+
+          it "accepts the expires at" do
+            token =
+              Refile.token("/store/#{file.id}/hello?expires_at=#{expires_at}")
+
+            get "/#{token}/store/#{file.id}/hello?expires_at=#{expires_at}"
+
+            expect(last_response.status).to eq(200)
+            expect(last_response.body).to eq("hello")
+          end
+        end
+
+        context "with an `expires_at` in the past" do
+          let(:expires_at) { (Time.now - 1.seconds).to_i }
+
+          it "returns a 403" do
+            token =
+              Refile.token("/store/#{file.id}/hello?expires_at=#{expires_at}")
+
+            get "/#{token}/store/#{file.id}/hello?expires_at=#{expires_at}"
+
+            expect(last_response.status).to eq(403)
+            expect(last_response.body).to eq("forbidden")
+          end
+        end
+
+        context "missing `expires_at` in requiest when it was part of token" do
+          let(:expires_at) { (Time.now + 1.seconds).to_i }
+
+          it "returns a 403" do
+            token =
+              Refile.token("/store/#{file.id}/hello?expires_at=#{expires_at}")
+
+            get "/#{token}/store/#{file.id}/hello"
+
+            expect(last_response.status).to eq(403)
+            expect(last_response.body).to eq("forbidden")
+          end
+        end
       end
 
       it "returns a 403 for unsigned get requests" do

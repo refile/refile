@@ -168,9 +168,14 @@ module Refile
     end
 
     def verified?
-      base_path = request.path.gsub(::File.join(request.script_name, params[:token]), "")
+      base_path = request.fullpath.gsub(::File.join(request.script_name, params[:token]), "")
 
-      Refile.valid_token?(base_path, params[:token])
+      Refile.valid_token?(base_path, params[:token]) && not_expired?(params)
+    end
+
+    def not_expired?(params)
+      params["expires_at"].nil? ||
+        (Time.at(params["expires_at"].to_i) > Time.now)
     end
   end
 end
