@@ -359,6 +359,14 @@ describe Refile::Attachment do
       expect(instance.document_attacher.valid?).to be_falsy
       expect(instance.document_attacher.errors).to eq([:invalid_content_type])
     end
+
+    it "returns false and sets errors if file with zero byte is uploaded" do
+      file = Refile::FileDouble.new("", "hello", content_type: "image/png")
+      instance.document = file
+
+      expect(instance.document_attacher.valid?).to be_falsy
+      expect(instance.document_attacher.errors).to eq([:zero_byte_detected])
+    end
   end
 
   describe ":name_attacher.extension" do
