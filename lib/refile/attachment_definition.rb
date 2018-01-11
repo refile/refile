@@ -50,6 +50,7 @@ module Refile
       errors << :invalid_extension if valid_extensions and not extension_included
       errors << :invalid_content_type if valid_content_types and not valid_content_types.include?(attacher.content_type)
       errors << :too_large if cache.max_size and attacher.size and attacher.size >= cache.max_size
+      errors << :zero_byte_detected if attacher.size.to_i.zero?
       errors
     end
   end
