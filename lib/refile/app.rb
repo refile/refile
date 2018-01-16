@@ -1,6 +1,7 @@
 require "json"
 require "sinatra/base"
 require "tempfile"
+require "cgi"
 
 module Refile
   # A Rack application which can be mounted or run on its own.
@@ -136,8 +137,9 @@ module Refile
       end
 
       filename = request.path.split("/").last
+      decoded_filename = CGI.unescape(filename)
 
-      send_file path, filename: filename, disposition: "inline", type: ::File.extname(request.path)
+      send_file path, filename: decoded_filename, disposition: "inline", type: ::File.extname(request.path)
     end
 
     def backend
