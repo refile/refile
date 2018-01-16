@@ -135,9 +135,9 @@ module Refile
         IO.copy_stream file, path
       end
 
-      filename = request.path.split("/").last
+      filename = Rack::Utils.unescape(request.path.split("/").last)
 
-      send_file path, filename: filename, disposition: "inline", type: ::File.extname(request.path)
+      send_file path, filename: filename, disposition: "inline", type: ::File.extname(filename)
     end
 
     def backend

@@ -22,6 +22,14 @@ describe Refile::App do
       expect(last_response.body).to eq("hello")
     end
 
+    it "sets appropriate filename from URL" do
+      file = Refile.store.upload(StringIO.new("hello"))
+      get "/token/store/#{file.id}/logo@2x.png"
+
+      expect(last_response.status).to eq(200)
+      expect(last_response.headers["Content-Disposition"]).to eq 'inline; filename="logo@2x.png"'
+    end
+
     it "sets appropriate content type from extension" do
       file = Refile.store.upload(StringIO.new("hello"))
       get "/token/store/#{file.id}/hello.html"
