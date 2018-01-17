@@ -480,4 +480,20 @@ describe Refile::ActiveRecord::Attachment do
       end
     end
   end
+
+  context "when assigned to an attribute that does not track changes" do
+    let(:klass) do
+      Class.new(ActiveRecord::Base) do
+        self.table_name = :posts
+
+        attachment :not_trackable_attribute
+      end
+    end
+
+    it "assigns the file to the attribute" do
+      post = klass.new
+      post.not_trackable_attribute = Refile::FileDouble.new("foo")
+      expect(post.not_trackable_attribute.read).to eq("foo")
+    end
+  end
 end
