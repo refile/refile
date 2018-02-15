@@ -426,12 +426,19 @@ There's also a helper for generating image tags:
 <%= attachment_image_tag(@user, :profile_image, :fill, 300, 300) %>
 ```
 
+
 With this helper you can specify an image/asset which is used as a fallback in case
 no file has been uploaded:
 
 ``` erb
 <%= attachment_url(@user, :profile_image, :fill, 300, 300, fallback: "default.png") %>
 <%= attachment_image_tag(@user, :profile_image, :fill, 300, 300, fallback: "default.png") %>
+```
+
+You can also set the URL to force the download of the uploaded file:
+
+``` erb
+<%= link_to "Download", attachment_url(@user, :profile_image, :force_download => true) %>
 ```
 
 Use `Refile.attachment_url` if you already have `attachment` in your routes.
