@@ -322,7 +322,7 @@ module Refile
         base_path += "?expires_at=#{expires_at.to_i}" # UNIX timestamp
       end
 
-      if (!!force_download)
+      if force_download
         base_path += "?force_download=true"
       end
 
@@ -389,7 +389,8 @@ module Refile
     # @param [String, nil] host            Override the host
     # @param [String, nil] prefix          Adds a prefix to the URL if the application is not mounted at root
     # @param [String, nil] expires_at      Adds a sulfix to the URL that sets the expiration time of the URL
-    # @param [String, nil] force_download  Adds a sulfix to the URL to force the download of the file when URL is acce    # @return [String, nil]                The generated URL
+    # @param [String, nil] force_download  Adds a sulfix to the URL to force the download of the file when URL is accessed
+    # @return [String, nil]                The generated URL
     def attachment_url(object, name, *args, expires_at: nil, host: nil, prefix: nil, filename: nil, format: nil, force_download: nil)
       attacher = object.send(:"#{name}_attacher")
       file = attacher.get

@@ -136,7 +136,7 @@ module Refile
       end
 
       filename = Rack::Utils.unescape(request.path.split("/").last)
-      disposition = force_download?(params) ? 'attachment' : 'inline'
+      disposition = force_download?(params) ? "attachment" : "inline"
 
       send_file path, filename: filename, disposition: disposition, type: ::File.extname(filename)
     end
@@ -182,6 +182,5 @@ module Refile
     def force_download?(params)
       !params["force_download"].nil?
     end
-
   end
 end
