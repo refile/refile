@@ -322,9 +322,7 @@ module Refile
         base_path += "?expires_at=#{expires_at.to_i}" # UNIX timestamp
       end
 
-      if force_download
-        base_path += "?force_download=true"
-      end
+      base_path += "?force_download=true" if force_download
 
       ::File.join(app_url(prefix: prefix, host: host), token(base_path), base_path)
     end
