@@ -20,7 +20,7 @@ Metrics/MethodLength:
   Max: 100
 
 Metrics/ParameterLists:
-  Max: 8
+  Max: 10
 
 Metrics/AbcSize:
   Enabled: false
