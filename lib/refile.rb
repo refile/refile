@@ -305,8 +305,10 @@ module Refile
     # @param [String, nil] format          A file extension to be appended to the URL
     # @param [String, nil] host            Override the host
     # @param [String, nil] prefix          Adds a prefix to the URL if the application is not mounted at root
+    # @param [String, nil] expires_at      Adds a sulfix to the URL that sets the expiration time of the URL
+    # @param [String, nil] force_download  Adds a sulfix to the URL to force the download of the file when URL is accessed
     # @return [String, nil]                The generated URL
-    def file_url(file, *args, expires_at: nil, host: nil, prefix: nil, filename:, format: nil)
+    def file_url(file, *args, expires_at: nil, host: nil, prefix: nil, filename:, format: nil, force_download: nil)
       return unless file
 
       host ||= Refile.cdn_host
@@ -319,6 +321,8 @@ module Refile
       if expires_at
         base_path += "?expires_at=#{expires_at.to_i}" # UNIX timestamp
       end
+
+      base_path += "?force_download=true" if force_download
 
       ::File.join(app_url(prefix: prefix, host: host), token(base_path), base_path)
     end
@@ -382,8 +386,10 @@ module Refile
     # @param [String, nil] format          A file extension to be appended to the URL
     # @param [String, nil] host            Override the host
     # @param [String, nil] prefix          Adds a prefix to the URL if the application is not mounted at root
+    # @param [String, nil] expires_at      Adds a sulfix to the URL that sets the expiration time of the URL
+    # @param [String, nil] force_download  Adds a sulfix to the URL to force the download of the file when URL is accessed
     # @return [String, nil]                The generated URL
-    def attachment_url(object, name, *args, expires_at: nil, host: nil, prefix: nil, filename: nil, format: nil)
+    def attachment_url(object, name, *args, expires_at: nil, host: nil, prefix: nil, filename: nil, format: nil, force_download: nil)
       attacher = object.send(:"#{name}_attacher")
       file = attacher.get
       return unless file
@@ -391,7 +397,7 @@ module Refile
       filename ||= attacher.basename || name.to_s
       format ||= attacher.extension
 
-      file_url(file, *args, expires_at: expires_at, host: host, prefix: prefix, filename: filename, format: format)
+      file_url(file, *args, expires_at: expires_at, host: host, prefix: prefix, filename: filename, format: format, force_download: force_download)
     end
 
     # Receives an instance of a class which has used the

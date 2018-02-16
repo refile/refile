@@ -39,6 +39,14 @@ describe Refile::App do
       expect(last_response.headers["Content-Type"]).to include("text/html")
     end
 
+    it "downloads the uploaded file if force download is enabled" do
+      file = Refile.store.upload(StringIO.new("hello"))
+      get "/token/store/#{file.id}/hello?force_download=true"
+
+      expect(last_response.status).to eq(200)
+      expect(last_response.headers["Content-Disposition"]).to include("attachment")
+    end
+
     it "returns a 404 if the file doesn't exist" do
       Refile.store.upload(StringIO.new("hello"))
 
