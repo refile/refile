@@ -86,7 +86,7 @@ module Refile
     # Prevent from exposing secure information unexpectedly
     #
     # @return [Hash]
-    def as_json(options={})
+    def as_json
       {
         id: id,
         backend: backend.to_s
