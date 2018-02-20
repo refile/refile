@@ -221,8 +221,7 @@ RSpec.shared_examples_for :backend do
         file = backend.upload(uploadable)
         hash = file.as_json
 
-        expect(hash).to include(:backend)
-        expect(hash[:backend]).to be_a(String)
+        expect(hash.keys).to eq [:id, :backend]
       end
     end
   end
