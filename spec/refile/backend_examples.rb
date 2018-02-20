@@ -215,5 +215,14 @@ RSpec.shared_examples_for :backend do
         expect(File.read(download.path)).to eq("hello")
       end
     end
+
+    describe "#as_json" do
+      it "returns id and stringified backend as a Hash" do
+        file = backend.upload(uploadable)
+        hash = file.as_json
+
+        expect(hash.keys).to eq [:id, :backend]
+      end
+    end
   end
 end
