@@ -45,13 +45,38 @@ module Refile
     end
 
     def validate(attacher)
+      extension = attacher.extension.to_s.downcase
+      content_type = attacher.content_type.to_s.downcase
+
       errors = []
-      extension_included = valid_extensions && valid_extensions.map(&:downcase).include?(attacher.extension.to_s.downcase)
-      errors << :invalid_extension if valid_extensions and not extension_included
-      errors << :invalid_content_type if valid_content_types and not valid_content_types.include?(attacher.content_type)
+      errors << extension_error_params(extension) if invalid_extension?(extension)
+      errors << content_type_error_params(content_type) if invalid_content_type?(content_type)
       errors << :too_large if cache.max_size and attacher.size and attacher.size >= cache.max_size
       errors << :zero_byte_detected if attacher.size.to_i.zero?
       errors
+    end
+
+  private
+
+    def extension_error_params(extension)
+      [:invalid_extension, extension: format_param(extension), permitted: valid_extensions.join(", ")]
+    end
+
+    def content_type_error_params(content_type)
+      [:invalid_content_type, content: format_param(content_type), permitted: valid_content_types.join(", ")]
+    end
+
+    def invalid_extension?(extension)
+      extension_included = valid_extensions && valid_extensions.map(&:downcase).include?(extension)
+      valid_extensions and not extension_included
+    end
+
+    def invalid_content_type?(content_type)
+      valid_content_types and not valid_content_types.include?(content_type)
+    end
+
+    def format_param(param)
+      param.empty? ? "an empty" : param
     end
   end
 end

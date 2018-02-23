@@ -26,6 +26,8 @@ describe Refile::ActiveRecord::Attachment do
       let(:options) { { cache: :limited_cache, extension: %w[Png] } }
 
       context "with file" do
+        let(:options) { { cache: :limited_cache, extension: %w[Png Gif] } }
+
         it "returns true when extension is included in list" do
           post = klass.new
           post.document = Refile::FileDouble.new("hello", "image.Png")
@@ -40,11 +42,18 @@ describe Refile::ActiveRecord::Attachment do
           expect(post.errors[:document]).to be_empty
         end
 
-        it "returns false when extension is invalid" do
+        it "returns false and an error message when extension is invalid" do
           post = klass.new
           post.document = Refile::FileDouble.new("hello", "image.jpg")
           expect(post.valid?).to be_falsy
-          expect(post.errors[:document].length).to eq(1)
+          expect(post.errors[:document]).to match_array([/not allowed to upload jpg.+Allowed types: Png[^,]?/])
+        end
+
+        it "returns false and an error message when extension is empty" do
+          post = klass.new
+          post.document = Refile::FileDouble.new("hello", "image")
+          expect(post.valid?).to be_falsy
+          expect(post.errors[:document]).to match_array([/not allowed to upload an empty.+Allowed types: Png[^,]?/])
         end
       end
 
@@ -65,12 +74,20 @@ describe Refile::ActiveRecord::Attachment do
           expect(post.errors[:document]).to be_empty
         end
 
-        it "returns false when extension is invalid" do
+        it "returns false and an error message when extension is invalid" do
           file = Refile.cache.upload(StringIO.new("hello"))
           post = klass.new
-          post.document = { id: file.id, filename: "image.jpg", size: file.size }.to_json
+          post.document = { id: file.id, filename: "image.gif", size: file.size }.to_json
           expect(post.valid?).to be_falsy
-          expect(post.errors[:document].length).to eq(1)
+          expect(post.errors[:document]).to match_array([/not allowed to upload gif.+Allowed types: Png[^,]?/])
+        end
+
+        it "returns false and an error message when extension is empty" do
+          file = Refile.cache.upload(StringIO.new("hello"))
+          post = klass.new
+          post.document = { id: file.id, filename: "image", size: file.size }.to_json
+          expect(post.valid?).to be_falsy
+          expect(post.errors[:document]).to match_array([/not allowed to upload an empty.+Allowed types: Png[^,]?/])
         end
 
         it "returns false when file size is zero" do
@@ -114,21 +131,33 @@ describe Refile::ActiveRecord::Attachment do
         expect(post.errors[:document]).to be_empty
       end
 
-      it "returns false when type is invalid" do
+      it "returns false and an error message when type is invalid" do
         post = klass.new
         post.document = Refile::FileDouble.new("hello", content_type: "text/plain")
         expect(post.valid?).to be_falsy
-        expect(post.errors[:document].length).to eq(1)
+        expect(post.errors[:document]).to match_array([%r{not allowed to upload text/plain.+Allowed types: image/jpeg, image/gif, image/png[^,]?}])
       end
 
-      it "returns false when it has multiple errors" do
+      it "returns false and an error message when type is empty" do
+        post = klass.new
+        post.document = Refile::FileDouble.new("hello", content_type: "")
+        expect(post.valid?).to be_falsy
+        expect(post.errors[:document]).to match_array([%r{not allowed to upload an empty.+Allowed types: image/jpeg, image/gif, image/png[^,]?}])
+      end
+
+      it "returns false and error messages when it has multiple errors" do
         post = klass.new
         post.document = Refile::FileDouble.new("h" * 200, content_type: "text/plain")
         expect(post.valid?).to be_falsy
-        expect(post.errors[:document].length).to eq(2)
+        expect(post.errors[:document]).to match_array(
+          [
+            %r{not allowed to upload text/plain.+Allowed types: image/jpeg, image/gif, image/png[^,]?},
+            "is too large"
+          ]
+        )
       end
 
-      it "returns true when type is invalid" do
+      it "returns true when type is valid" do
         post = klass.new
         post.document = Refile::FileDouble.new("hello", content_type: "image/png")
         expect(post.valid?).to be_truthy
@@ -165,15 +194,23 @@ describe Refile::ActiveRecord::Attachment do
         post = klass.new
         post.document = { content_type: "text/png", size: file.size }.to_json
         expect(post.valid?).to be_falsy
-        expect(post.errors[:document].length).to eq(1)
+        expect(post.errors[:document]).to match_array([%r{not allowed to upload text/png.+Allowed types: image/jpeg, image/gif, image/png[^,]?}])
       end
 
-      it "returns false when type is invalid" do
+      it "returns false and an error message when type is invalid" do
         file = Refile.cache.upload(StringIO.new("hello"))
         post = klass.new
         post.document = { id: file.id, content_type: "text/png", size: file.size }.to_json
         expect(post.valid?).to be_falsy
-        expect(post.errors[:document].length).to eq(1)
+        expect(post.errors[:document]).to match_array([%r{not allowed to upload text/png.+Allowed types: image/jpeg, image/gif, image/png[^,]?}])
+      end
+
+      it "returns false and an error message when type is empty" do
+        file = Refile.cache.upload(StringIO.new("hello"))
+        post = klass.new
+        post.document = { id: file.id, content_type: "", size: file.size }.to_json
+        expect(post.valid?).to be_falsy
+        expect(post.errors[:document]).to match_array([%r{not allowed to upload an empty.+Allowed types: image/jpeg, image/gif, image/png[^,]?}])
       end
 
       it "returns false when file size is zero" do

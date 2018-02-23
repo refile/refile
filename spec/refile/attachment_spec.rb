@@ -343,7 +343,7 @@ describe Refile::Attachment do
       expect(instance.document_attacher.valid?).to be_falsy
     end
 
-    it "returns false and if valid file is attached" do
+    it "returns true if valid file is attached" do
       file = Refile::FileDouble.new("hello", content_type: "image/png")
 
       instance.document = file
@@ -357,7 +357,7 @@ describe Refile::Attachment do
       instance.document = file
 
       expect(instance.document_attacher.valid?).to be_falsy
-      expect(instance.document_attacher.errors).to eq([:invalid_content_type])
+      expect(instance.document_attacher.errors).to match_array [[:invalid_content_type, anything]]
     end
 
     it "returns false and sets errors if file with zero byte is uploaded" do
@@ -511,7 +511,7 @@ describe Refile::Attachment do
       file = Refile::FileDouble.new("hello", "hello.php")
       instance.document = file
 
-      expect(instance.document_attacher.errors).to eq([:invalid_extension])
+      expect(instance.document_attacher.errors).to match_array [[:invalid_extension, anything]]
       expect(instance.document).to be_nil
     end
 
@@ -519,7 +519,7 @@ describe Refile::Attachment do
       file = Refile::FileDouble.new("hello")
       instance.document = file
 
-      expect(instance.document_attacher.errors).to eq([:invalid_extension])
+      expect(instance.document_attacher.errors).to match_array [[:invalid_extension, anything]]
       expect(instance.document).to be_nil
     end
   end
@@ -539,7 +539,7 @@ describe Refile::Attachment do
       file = Refile::FileDouble.new("hello", content_type: "application/php")
       instance.document = file
 
-      expect(instance.document_attacher.errors).to eq([:invalid_content_type])
+      expect(instance.document_attacher.errors).to match_array [[:invalid_content_type, anything]]
       expect(instance.document).to be_nil
     end
 
@@ -547,7 +547,7 @@ describe Refile::Attachment do
       file = Refile::FileDouble.new("hello")
       instance.document = file
 
-      expect(instance.document_attacher.errors).to eq([:invalid_content_type])
+      expect(instance.document_attacher.errors).to match_array [[:invalid_content_type, anything]]
       expect(instance.document).to be_nil
     end
   end
@@ -567,7 +567,7 @@ describe Refile::Attachment do
       file = Refile::FileDouble.new("hello", content_type: "application/php")
       instance.document = file
 
-      expect(instance.document_attacher.errors).to eq([:invalid_content_type])
+      expect(instance.document_attacher.errors).to match_array [[:invalid_content_type, anything]]
       expect(instance.document).to be_nil
     end
 
@@ -575,7 +575,7 @@ describe Refile::Attachment do
       file = Refile::FileDouble.new("hello")
       instance.document = file
 
-      expect(instance.document_attacher.errors).to eq([:invalid_content_type])
+      expect(instance.document_attacher.errors).to match_array [[:invalid_content_type, anything]]
       expect(instance.document).to be_nil
     end
   end
