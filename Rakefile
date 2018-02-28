@@ -3,7 +3,7 @@ $LOAD_PATH.unshift(File.expand_path("spec", File.dirname(__FILE__)))
 
 require "bundler/setup"
 require "bundler/gem_tasks"
-require "refile/test_app"
+require "pmacs_refile/test_app"
 require "rspec/core/rake_task"
 require "yard"
 require "rubocop/rake_task"
