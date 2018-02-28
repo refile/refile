@@ -265,10 +265,10 @@ module PmacsRefile
     # {PmacsRefile.mount_point}.
     #
     # @example
-    #   PmacsRefilee.app_url
+    #   PmacsRefile.app_url
     #
     # @example With host and prefix
-    #   PmacsRefilee.app_url(host: "http://some.domain", prefix: "/refile")
+    #   PmacsRefile.app_url(host: "http://some.domain", prefix: "/refile")
     #
     # @param [String, nil] host            Override the host
     # @param [String, nil] prefix          Adds a prefix to the URL if the application is not mounted at root
@@ -305,17 +305,24 @@ module PmacsRefile
     # @param [String, nil] format          A file extension to be appended to the URL
     # @param [String, nil] host            Override the host
     # @param [String, nil] prefix          Adds a prefix to the URL if the application is not mounted at root
+    # @param [String, nil] expires_at      Adds a sulfix to the URL that sets the expiration time of the URL
+    # @param [String, nil] force_download  Adds a sulfix to the URL to force the download of the file when URL is accessed
     # @return [String, nil]                The generated URL
-    def file_url(file, *args, host: nil, prefix: nil, filename:, format: nil)
+    def file_url(file, *args, expires_at: nil, host: nil, prefix: nil, filename:, format: nil, force_download: nil)
       return unless file
 
       host ||= PmacsRefile.cdn_host
       backend_name = PmacsRefile.backends.key(file.backend)
 
       filename = Rack::Utils.escape(filename)
-      filename << "." << format.to_s if format
+      filename << "." << format.to_s if format && !filename.downcase.end_with?(format.to_s.downcase)
 
       base_path = ::File.join("", backend_name, *args.map(&:to_s), file.id.to_s, filename)
+      if expires_at
+        base_path += "?expires_at=#{expires_at.to_i}" # UNIX timestamp
+      end
+
+      base_path += "?force_download=true" if force_download
 
       ::File.join(app_url(prefix: prefix, host: host), token(base_path), base_path)
     end
@@ -379,8 +386,10 @@ module PmacsRefile
     # @param [String, nil] format          A file extension to be appended to the URL
     # @param [String, nil] host            Override the host
     # @param [String, nil] prefix          Adds a prefix to the URL if the application is not mounted at root
+    # @param [String, nil] expires_at      Adds a sulfix to the URL that sets the expiration time of the URL
+    # @param [String, nil] force_download  Adds a sulfix to the URL to force the download of the file when URL is accessed
     # @return [String, nil]                The generated URL
-    def attachment_url(object, name, *args, host: nil, prefix: nil, filename: nil, format: nil)
+    def attachment_url(object, name, *args, expires_at: nil, host: nil, prefix: nil, filename: nil, format: nil, force_download: nil)
       attacher = object.send(:"#{name}_attacher")
       file = attacher.get
       return unless file
@@ -388,7 +397,7 @@ module PmacsRefile
       filename ||= attacher.basename || name.to_s
       format ||= attacher.extension
 
-      file_url(file, *args, host: host, prefix: prefix, filename: filename, format: format)
+      file_url(file, *args, expires_at: expires_at, host: host, prefix: prefix, filename: filename, format: format, force_download: force_download)
     end
 
     # Receives an instance of a class which has used the
@@ -475,18 +484,18 @@ module PmacsRefile
     end
   end
 
-  require "pmacs_refile/version"
-  require "pmacs_refile/signature"
-  require "pmacs_refile/type"
-  require "pmacs_refile/backend_macros"
-  require "pmacs_refile/attachment_definition"
-  require "pmacs_refile/attacher"
-  require "pmacs_refile/attachment"
-  require "pmacs_refile/random_hasher"
-  require "pmacs_refile/file"
-  require "pmacs_refile/custom_logger"
-  require "pmacs_refile/app"
-  require "pmacs_refile/backend/file_system"
+  require "refile/version"
+  require "refile/signature"
+  require "refile/type"
+  require "refile/backend_macros"
+  require "refile/attachment_definition"
+  require "refile/attacher"
+  require "refile/attachment"
+  require "refile/random_hasher"
+  require "refile/file"
+  require "refile/custom_logger"
+  require "refile/app"
+  require "refile/backend/file_system"
 end
 
 PmacsRefile.configure do |config|

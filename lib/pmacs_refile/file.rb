@@ -83,6 +83,16 @@ module PmacsRefile
       @io = nil
     end
 
+    # Prevent from exposing secure information unexpectedly
+    #
+    # @return [Hash]
+    def as_json
+      {
+        id: id,
+        backend: backend.to_s
+      }
+    end
+
   private
 
     def io

@@ -113,6 +113,28 @@ describe PmacsRefile::Attachment do
     end
   end
 
+  describe "presigned_:name_url=" do
+    it "generates presigned URL" do
+      file = Refile.store.upload(Refile::FileDouble.new("hello"))
+      instance.document_id = file.id
+
+      allow(Refile.store).to receive_message_chain(:object, :presigned_url).with(file.id).with(:get, expires_in: 900).and_return("PRESIGNED_URL")
+      expect(instance.presigned_document_url).to eq("PRESIGNED_URL")
+    end
+
+    it "generates presigned URL with custom expiration" do
+      file = Refile.store.upload(Refile::FileDouble.new("hello"))
+      instance.document_id = file.id
+
+      allow(Refile.store).to receive_message_chain(:object, :presigned_url).with(file.id).with(:get, expires_in: 901).and_return("PRESIGNED_URL")
+      expect(instance.presigned_document_url(901)).to eq("PRESIGNED_URL")
+    end
+
+    it "does nothing when id is nill" do
+      expect(instance.presigned_document_url).to be_nil
+    end
+  end
+
   describe "remote_:name_url=" do
     it "does nothing when nil is assigned" do
       instance.remote_document_url = nil
@@ -167,7 +189,7 @@ describe PmacsRefile::Attachment do
         it "handles redirect loops by trowing errors" do
           expect do
             instance.remote_document_url = "http://www.example.com/loop"
-          end.to raise_error(RestClient::MaxRedirectsReached)
+          end.to raise_error(RestClient::Exception)
         end
       end
 
@@ -336,6 +358,14 @@ describe PmacsRefile::Attachment do
 
       expect(instance.document_attacher.valid?).to be_falsy
       expect(instance.document_attacher.errors).to eq([:invalid_content_type])
+    end
+
+    it "returns false and sets errors if file with zero byte is uploaded" do
+      file = Refile::FileDouble.new("", "hello", content_type: "image/png")
+      instance.document = file
+
+      expect(instance.document_attacher.valid?).to be_falsy
+      expect(instance.document_attacher.errors).to eq([:zero_byte_detected])
     end
   end
 

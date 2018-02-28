@@ -11,7 +11,7 @@ module PmacsRefile
   #   end
   #
   # @example as standalone app
-  #   require "pmacs_refile"
+  #   require "refile"
   #
   #   run PmacsRefile::App.new
   class App < Sinatra::Base
@@ -135,9 +135,10 @@ module PmacsRefile
         IO.copy_stream file, path
       end
 
-      filename = request.path.split("/").last
+      filename = Rack::Utils.unescape(request.path.split("/").last)
+      disposition = force_download?(params) ? "attachment" : "inline"
 
-      send_file path, filename: filename, disposition: "inline", type: ::File.extname(request.path)
+      send_file path, filename: filename, disposition: disposition, type: ::File.extname(filename)
     end
 
     def backend
@@ -168,9 +169,18 @@ module PmacsRefile
     end
 
     def verified?
-      base_path = request.path.gsub(::File.join(request.script_name, params[:token]), "")
+      base_path = request.fullpath.gsub(::File.join(request.script_name, params[:token]), "")
 
-      PmacsRefile.valid_token?(base_path, params[:token])
+      PmacsRefile.valid_token?(base_path, params[:token]) && not_expired?(params)
+    end
+
+    def not_expired?(params)
+      params["expires_at"].nil? ||
+        (Time.at(params["expires_at"].to_i) > Time.now)
+    end
+
+    def force_download?(params)
+      !params["force_download"].nil?
     end
   end
 end

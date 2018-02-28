@@ -24,7 +24,7 @@ module PmacsRefile
         end
 
         define_method "#{name}=" do |value|
-          send("#{name}_id_will_change!")
+          send("#{name}_id_will_change!") if respond_to?("#{name}_id_will_change!")
           super(value)
         end
 

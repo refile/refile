@@ -2,6 +2,8 @@ AllCops:
   Exclude:
     - 'gemfiles/**/*'
     - 'vendor/**/*'
+  DisplayCopNames: true
+
 Metrics/LineLength:
   Max: 150 # TODO: we should decrease this to 120
 
@@ -11,11 +13,14 @@ Metrics/ClassLength:
 Metrics/ModuleLength:
   Max: 300
 
+Metrics/BlockLength:
+  Max: 500
+
 Metrics/MethodLength:
   Max: 100
 
 Metrics/ParameterLists:
-  Max: 8
+  Max: 10
 
 Metrics/AbcSize:
   Enabled: false
@@ -26,7 +31,7 @@ Metrics/CyclomaticComplexity:
 Metrics/PerceivedComplexity:
   Enabled: false
 
-Style/AlignParameters:
+Layout/AlignParameters:
   EnforcedStyle: with_fixed_indentation
 
 Style/StringLiterals:
@@ -35,7 +40,7 @@ Style/StringLiterals:
 Style/StringLiteralsInInterpolation:
   EnforcedStyle: double_quotes
 
-Style/ClosingParenthesisIndentation:
+Layout/ClosingParenthesisIndentation:
   Enabled: false
 
 Style/OneLineConditional:
@@ -50,7 +55,7 @@ Style/Not:
 Documentation:
   Enabled: false # TODO: Enable again once we have more docs
 
-Style/CaseIndentation:
+Layout/CaseIndentation:
   EnforcedStyle: case
   SupportedStyles:
     - case
@@ -62,13 +67,13 @@ Style/PercentLiteralDelimiters:
     '%w': "[]"
     '%W': "[]"
 
-Style/AccessModifierIndentation:
+Layout/AccessModifierIndentation:
   EnforcedStyle: outdent
 
 Style/SignalException:
   Enabled: false
 
-Style/IndentationWidth:
+Layout/IndentationWidth:
   Enabled: false
 
 Style/TrivialAccessors:
@@ -87,4 +92,28 @@ Style/SpecialGlobalVars:
   Enabled: false
 
 Style/TrivialAccessors:
+  Enabled: false
+
+Style/SymbolArray:
+  Enabled: false
+
+Style/EmptyMethod:
+  Enabled: false
+
+Bundler/OrderedGems:
+  Enabled: false
+
+Lint/AmbiguousBlockAssociation:
+  Enabled: false
+
+Performance/RedundantMerge:
+  Enabled: false
+
+Style/MutableConstant:
+  Enabled: false
+
+Style/GuardClause:
+  Enabled: false
+
+Layout/MultilineMethodCallBraceLayout:
   Enabled: false

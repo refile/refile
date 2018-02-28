@@ -22,6 +22,14 @@ describe PmacsRefile::App do
       expect(last_response.body).to eq("hello")
     end
 
+    it "sets appropriate filename from URL" do
+      file = Refile.store.upload(StringIO.new("hello"))
+      get "/token/store/#{file.id}/logo@2x.png"
+
+      expect(last_response.status).to eq(200)
+      expect(last_response.headers["Content-Disposition"]).to eq 'inline; filename="logo@2x.png"'
+    end
+
     it "sets appropriate content type from extension" do
       file = PmacsRefile.store.upload(StringIO.new("hello"))
       get "/token/store/#{file.id}/hello.html"
@@ -29,6 +37,14 @@ describe PmacsRefile::App do
       expect(last_response.status).to eq(200)
       expect(last_response.body).to eq("hello")
       expect(last_response.headers["Content-Type"]).to include("text/html")
+    end
+
+    it "downloads the uploaded file if force download is enabled" do
+      file = Refile.store.upload(StringIO.new("hello"))
+      get "/token/store/#{file.id}/hello?force_download=true"
+
+      expect(last_response.status).to eq(200)
+      expect(last_response.headers["Content-Disposition"]).to include("attachment")
     end
 
     it "returns a 404 if the file doesn't exist" do
@@ -100,14 +116,64 @@ describe PmacsRefile::App do
         allow(PmacsRefile).to receive(:token).and_call_original
       end
 
+<<<<<<< HEAD:spec/pmacs_refile/app_spec.rb
       it "accepts valid token" do
         file = PmacsRefile.store.upload(StringIO.new("hello"))
         token = PmacsRefile.token("/store/#{file.id}/hello")
+=======
+      context "with a valid token" do
+        let(:file) { Refile.store.upload(StringIO.new("hello")) }
+        it "accepts the token" do
+          token = Refile.token("/store/#{file.id}/hello")
+>>>>>>> upstream/master:spec/refile/app_spec.rb
 
-        get "/#{token}/store/#{file.id}/hello"
+          get "/#{token}/store/#{file.id}/hello"
 
-        expect(last_response.status).to eq(200)
-        expect(last_response.body).to eq("hello")
+          expect(last_response.status).to eq(200)
+          expect(last_response.body).to eq("hello")
+        end
+
+        context "with a valid `expires_at`" do
+          let(:expires_at) { (Time.now + 1.seconds).to_i }
+
+          it "accepts the expires at" do
+            token =
+              Refile.token("/store/#{file.id}/hello?expires_at=#{expires_at}")
+
+            get "/#{token}/store/#{file.id}/hello?expires_at=#{expires_at}"
+
+            expect(last_response.status).to eq(200)
+            expect(last_response.body).to eq("hello")
+          end
+        end
+
+        context "with an `expires_at` in the past" do
+          let(:expires_at) { (Time.now - 1.seconds).to_i }
+
+          it "returns a 403" do
+            token =
+              Refile.token("/store/#{file.id}/hello?expires_at=#{expires_at}")
+
+            get "/#{token}/store/#{file.id}/hello?expires_at=#{expires_at}"
+
+            expect(last_response.status).to eq(403)
+            expect(last_response.body).to eq("forbidden")
+          end
+        end
+
+        context "missing `expires_at` in requiest when it was part of token" do
+          let(:expires_at) { (Time.now + 1.seconds).to_i }
+
+          it "returns a 403" do
+            token =
+              Refile.token("/store/#{file.id}/hello?expires_at=#{expires_at}")
+
+            get "/#{token}/store/#{file.id}/hello"
+
+            expect(last_response.status).to eq(403)
+            expect(last_response.body).to eq("forbidden")
+          end
+        end
       end
 
       it "returns a 403 for unsigned get requests" do
