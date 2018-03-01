@@ -59,11 +59,11 @@ module Refile
   private
 
     def extension_error_params(extension)
-      [:invalid_extension, extension: format_param(extension), permitted: valid_extensions.join(", ")]
+      [:invalid_extension, extension: format_param(extension), permitted: valid_extensions.to_sentence]
     end
 
     def content_type_error_params(content_type)
-      [:invalid_content_type, content: format_param(content_type), permitted: valid_content_types.join(", ")]
+      [:invalid_content_type, content: format_param(content_type), permitted: valid_content_types.to_sentence]
     end
 
     def invalid_extension?(extension)
@@ -76,7 +76,7 @@ module Refile
     end
 
     def format_param(param)
-      param.empty? ? "an empty" : param
+      param.empty? ? I18n.t('refile.empty_param') : param
     end
   end
 end
