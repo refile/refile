@@ -76,7 +76,7 @@ module Refile
     end
 
     def format_param(param)
-      param.empty? ? I18n.t('refile.empty_param') : param
+      param.empty? ? I18n.t("refile.empty_param") : param
     end
   end
 end

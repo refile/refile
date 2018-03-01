@@ -135,14 +135,18 @@ describe Refile::ActiveRecord::Attachment do
         post = klass.new
         post.document = Refile::FileDouble.new("hello", content_type: "text/plain")
         expect(post.valid?).to be_falsy
-        expect(post.errors[:document]).to match_array([%r{not allowed to upload text/plain.+Allowed types: image/jpeg, image/gif, and image/png[^,]?}])
+        expect(post.errors[:document]).to match_array(
+          [%r{not allowed to upload text/plain.+Allowed types: image/jpeg, image/gif, and image/png[^,]?}]
+        )
       end
 
       it "returns false and an error message when type is empty" do
         post = klass.new
         post.document = Refile::FileDouble.new("hello", content_type: "")
         expect(post.valid?).to be_falsy
-        expect(post.errors[:document]).to match_array([%r{not allowed to upload an empty.+Allowed types: image/jpeg, image/gif, and image/png[^,]?}])
+        expect(post.errors[:document]).to match_array(
+          [%r{not allowed to upload an empty.+Allowed types: image/jpeg, image/gif, and image/png[^,]?}]
+        )
       end
 
       it "returns false and error messages when it has multiple errors" do
