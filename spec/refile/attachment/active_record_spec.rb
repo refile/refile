@@ -331,6 +331,19 @@ describe Refile::ActiveRecord::Attachment do
     let(:post) { post_class.new }
 
     describe "#:association_:name" do
+      let(:wrong_method) { "files" }
+      let(:wrong_association_message) do
+        "wrong association name #{wrong_method}, use like this documents_files"
+      end
+
+      it "returns a friendly error message for wrong association name" do
+        expect { post.send(wrong_method) }.to raise_error(wrong_association_message)
+      end
+
+      it "return method missing" do
+        expect { post.foo }.to_not raise_error(wrong_association_message)
+      end
+
       it "builds records from assigned files" do
         post.documents_files = [Refile::FileDouble.new("hello"), Refile::FileDouble.new("world")]
         expect(post.documents[0].file.read).to eq("hello")
