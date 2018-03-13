@@ -426,6 +426,29 @@ There's also a helper for generating image tags:
 <%= attachment_image_tag(@user, :profile_image, :fill, 300, 300) %>
 ```
 
+You can also provide a limit to the image:
+
+``` erb
+<%= link_to "Image", attachment_url(@user, :profile_image, :limit, 400, 500) %>
+```
+
+If you don't care about the aspect ratio and want an exact dimension, you can use `!`:
+
+``` erb
+<%= link_to "Image", attachment_url(@user, :profile_image, :limit, 400, "1000!") %>
+```
+
+Keep in mind that it's also important to remember you can not stretch the image, even you set
+a larger width or height the image will keep its default dimensions. For example: if you set
+`400x1000!` for an image `600x800` it'll keep its height of `400x800`.
+
+If you just care about limit only one dimension, you can use `nil` in widht or height:
+
+``` erb
+<%= link_to "Image", attachment_url(@user, :profile_image, :limit, 400, nil) %>
+<%= link_to "Image", attachment_url(@user, :profile_image, :limit, nil, 400) %>
+```
+
 With this helper you can specify an image/asset which is used as a fallback in case
 no file has been uploaded:
 
