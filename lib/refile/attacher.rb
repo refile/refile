@@ -38,8 +38,7 @@ module Refile
     end
 
     def content_type
-      content_type = Presence[@metadata[:content_type] || read(:content_type)]
-      content_type.split(";").first if content_type
+      Presence[@metadata[:content_type] || read(:content_type)]
     end
 
     def cache_id
