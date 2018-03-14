@@ -47,6 +47,7 @@ module Refile
     def validate(attacher)
       extension = attacher.extension.to_s.downcase
       content_type = attacher.content_type.to_s.downcase
+      content_type = content_type.split(";").first unless content_type.empty?
 
       errors = []
       errors << extension_error_params(extension) if invalid_extension?(extension)

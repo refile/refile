@@ -167,6 +167,13 @@ describe Refile::ActiveRecord::Attachment do
         expect(post.valid?).to be_truthy
         expect(post.errors[:document]).to be_empty
       end
+
+      it "returns true when an encoding is appended to a valid type" do
+        post = klass.new
+        post.document = Refile::FileDouble.new("hello", content_type: "image/png;charset=UTF-8")
+        expect(post.valid?).to be_truthy
+        expect(post.errors[:document]).to be_empty
+      end
     end
 
     context "when file is required" do
@@ -229,6 +236,14 @@ describe Refile::ActiveRecord::Attachment do
         file = Refile.cache.upload(StringIO.new("hello"))
         post = klass.new
         post.document = { id: file.id, content_type: "image/png", size: file.size }.to_json
+        expect(post.valid?).to be_truthy
+        expect(post.errors[:document]).to be_empty
+      end
+
+      it "returns true when an encoding is appended to a valid type" do
+        file = Refile.cache.upload(StringIO.new("hello"))
+        post = klass.new
+        post.document = { id: file.id, content_type: "image/png;charset=UTF-8", size: file.size }.to_json
         expect(post.valid?).to be_truthy
         expect(post.errors[:document]).to be_empty
       end
