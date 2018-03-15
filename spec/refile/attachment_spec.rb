@@ -1,3 +1,6 @@
+require "refile/active_record_helper"
+require_relative "support/accepts_attachments_for_shared_examples"
+
 describe Refile::Attachment do
   let(:options) { {} }
   let(:klass) do
@@ -585,5 +588,56 @@ describe Refile::Attachment do
       .to output(/Refile::Attachment\(document\)/).to_stdout
     expect { p klass.ancestors }
       .to output(/Refile::Attachment\(document\)/).to_stdout
+  end
+
+  describe ".accepts_nested_attributes_for" do
+    it_should_behave_like "accepts_attachments_for" do
+      let(:options) { {} }
+
+      # This class is a PORO, but it's implementing an interface that's similar
+      # to ActiveRecord's in order to simplify specs via shared examples.
+      let(:post_class) do
+        opts = options
+        foo = document_class
+
+        Class.new do
+          extend Refile::Attachment
+
+          attr_accessor :documents
+
+          accepts_attachments_for(
+            :documents,
+            accessor_prefix: "documents_files",
+            collection_class: foo,
+            **opts
+          )
+
+          def initialize(attributes)
+            @documents = attributes[:documents]
+          end
+
+          def save!; end
+
+          def update_attributes!(attributes)
+            attributes.each { |k, v| public_send("#{k}=", v) }
+          end
+        end
+      end
+
+      let(:document_class) do
+        Class.new do
+          extend Refile::Attachment
+          attr_accessor :file_id
+
+          attachment :file, type: :image, extension: %w[jpeg], raise_errors: false
+
+          def initialize(attributes = {})
+            self.file = attributes[:file]
+          end
+        end
+      end
+
+      let(:post) { post_class.new(documents: []) }
+    end
   end
 end

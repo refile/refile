@@ -491,6 +491,7 @@ module Refile
   require "refile/attachment_definition"
   require "refile/attacher"
   require "refile/attachment"
+  require "refile/attachment/multiple_attachments"
   require "refile/random_hasher"
   require "refile/file"
   require "refile/custom_logger"
