@@ -77,11 +77,20 @@ module Refile
       # @return [void]
       def accepts_attachments_for(association_name, attachment: :file, append: false)
         association = reflect_on_association(association_name)
-        name = "#{association_name}_#{attachment.to_s.pluralize}"
+        attachment_pluralized = attachment.to_s.pluralize
+        name = "#{association_name}_#{attachment_pluralized}"
 
         mod = Module.new do
           define_method :"#{name}_attachment_definition" do
             association.klass.send("#{attachment}_attachment_definition")
+          end
+
+          define_method(:method_missing) do |method|
+            if method == attachment_pluralized.to_sym
+              raise NoMethodError, "wrong association name #{method}, use like this #{name}"
+            else
+              super(method)
+            end
           end
 
           define_method :"#{name}_data" do
