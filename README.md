@@ -60,7 +60,10 @@ end
 Generate a migration:
 
 ``` sh
-rails generate migration add_profile_image_to_users profile_image_id:string
+rails generate migration add_profile_image_to_users profile_image_id:string &&
+profile_image_filename:string && profile_image_content_size:string &&
+profile_image_content_type:string
+
 rake db:migrate
 ```
 
@@ -123,6 +126,16 @@ Refile has a global registry of backends, accessed through `Refile.backends`.
 There are two "special" backends, which are only really special in that they
 are the default backends for attachments. They are `cache` and `store`.
 
+By default files will be uploaded to `./tmp/uploads/store`. If you would like
+to persist them between deploys of your application, you can override the upload
+folder by adding an initializer like this:
+
+```ruby
+# config/initializers/refile.rb
+
+Refile.backends['store'] = Refile::Backend::FileSystem.new('/etc/projectname-uploads/')
+```
+
 The cache is intended to be transient. Files are added here before they are
 meant to be permanently stored. Usually files are then moved to the store for
 permanent storage, but this isn't always the case.
@@ -184,7 +197,7 @@ The `upload` method on backends can be called with a variety of objects. It
 requires that the object passed to it behaves similarly to Ruby IO objects, in
 particular it must implement the methods `size`, `read(length = nil, buffer =
 nil)`, `eof?`, `rewind`, and `close`. All of `File`, `Tempfile`,
-`ActionDispath::UploadedFile` and `StringIO` implement this interface, however
+`ActionDispatch::UploadedFile` and `StringIO` implement this interface, however
 `String` does not. If you want to upload a file from a `String` you must wrap
 it in a `StringIO` first.
 
@@ -298,6 +311,24 @@ Refile.mount_point = "/your-preferred-mount-point"
 You could also run the application on its own, it doesn't need to be mounted to
 work.
 
+If you are using a catch-all route (such as required by Comfy CMS), you will need to turn off Automounting and add the refile route before your catch all route.
+
+(in initializers/refile.rb)
+``` ruby
+Refile.automount = false
+```
+
+in routes.rb
+``` ruby
+  mount Refile.app, at: Refile.mount_point, as: :refile_app
+
+  # Make sure this routeset is defined last
+  comfy_route :cms, :path => '/', :sitemap => true
+
+```
+
+
+
 ### Retrieving files
 
 Files can be retrieved from the application by calling:
@@ -395,6 +426,29 @@ There's also a helper for generating image tags:
 <%= attachment_image_tag(@user, :profile_image, :fill, 300, 300) %>
 ```
 
+You can also provide a limit to the image:
+
+``` erb
+<%= link_to "Image", attachment_url(@user, :profile_image, :limit, 400, 500) %>
+```
+
+If you don't care about the aspect ratio and want an exact dimension, you can use `!`:
+
+``` erb
+<%= link_to "Image", attachment_url(@user, :profile_image, :limit, 400, "1000!") %>
+```
+
+Keep in mind that it's also important to remember you can not stretch the image, even you set
+a larger width or height the image will keep its default dimensions. For example: if you set
+`400x1000!` for an image `600x800` it'll keep its height of `400x800`.
+
+If you just care about limit only one dimension, you can use `nil` in widht or height:
+
+``` erb
+<%= link_to "Image", attachment_url(@user, :profile_image, :limit, 400, nil) %>
+<%= link_to "Image", attachment_url(@user, :profile_image, :limit, nil, 400) %>
+```
+
 With this helper you can specify an image/asset which is used as a fallback in case
 no file has been uploaded:
 
@@ -402,6 +456,14 @@ no file has been uploaded:
 <%= attachment_url(@user, :profile_image, :fill, 300, 300, fallback: "default.png") %>
 <%= attachment_image_tag(@user, :profile_image, :fill, 300, 300, fallback: "default.png") %>
 ```
+
+You can also set the URL to force the download of the uploaded file:
+
+``` erb
+<%= link_to "Download", attachment_url(@user, :profile_image, force_download: true) %>
+```
+
+Use `Refile.attachment_url` if you already have `attachment` in your routes.
 
 ## 5. JavaScript library
 

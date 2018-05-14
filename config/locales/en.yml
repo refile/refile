@@ -4,5 +4,7 @@ en:
       messages:
         too_large: "is too large"
         download_failed: "could not be downloaded"
-        invalid_content_type: "has an invalid file format"
-        invalid_extension: "has an invalid file format"
+        invalid_content_type: "You are not allowed to upload %{content} file format. Allowed types: %{permitted}."
+        invalid_extension: "You are not allowed to upload %{extension} file extension. Allowed types: %{permitted}."
+  refile:
+    empty_param: "an empty"

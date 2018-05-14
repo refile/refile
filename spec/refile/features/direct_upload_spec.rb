@@ -58,6 +58,6 @@ feature "Direct HTTP post file uploads", :js do
     click_button "Create"
 
     expect(page).to have_selector(".field_with_errors")
-    expect(page).to have_content("Image has an invalid file format")
+    expect(page).to have_content("You are not allowed to upload text/plain file format. Allowed types: image/jpeg, image/gif, and image/png.")
   end
 end
