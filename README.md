@@ -482,6 +482,9 @@ simply include it like this:
 //= require refile
 ```
 
+You can also separately install the JavaScript library with NPM or Yarn using
+`npm install --save refile` or `yarn add refile`.
+
 Otherwise you can grab a copy [here](https://raw.githubusercontent.com/refile/refile/master/app/assets/javascripts/refile.js).
 Be sure to always update your copy of this file when you upgrade to the latest
 Refile version.
