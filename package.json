@@ -1,0 +1,15 @@
+{
+  "name": "refile",
+  "version": "0.6.2",
+  "description": "Refile is a modern file upload library for Ruby applications. It is simple, yet powerful.",
+  "main": "app/assets/javascripts/refile.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/refile/refile.git"
+  },
+  "files": [
+    "app/assets/javascripts/refile.js"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/refile/refile#readme"
+}
