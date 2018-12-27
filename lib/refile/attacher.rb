@@ -73,6 +73,7 @@ module Refile
     end
 
     def set(value)
+      self.remove = false
       case value
         when nil then self.remove = true
         when String, Hash then retrieve!(value)

@@ -273,6 +273,18 @@ describe Refile::ActiveRecord::Attachment do
       expect(Refile.store.read(post.document.id)).to eq("hello")
       expect(post.document.id).not_to be eq old_document.id
     end
+
+    it "replaces a attachment which was nil" do
+      post = klass.new
+      post.document = nil
+      post.save
+
+      post.document = Refile::FileDouble.new("hello")
+      post.save
+
+      expect(Refile.store.read(post.document.id)).to eq("hello")
+      expect(post.document).not_to be_nil
+    end
   end
 
   describe "#destroy" do
