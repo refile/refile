@@ -128,7 +128,7 @@ describe Refile::App do
         end
 
         context "with a valid `expires_at`" do
-          let(:expires_at) { (Time.now + 1.seconds).to_i }
+          let(:expires_at) { (Time.now + 1.minute).to_i }
 
           it "accepts the expires at" do
             token =
