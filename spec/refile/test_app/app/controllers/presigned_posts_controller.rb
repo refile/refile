@@ -19,12 +19,12 @@ class PresignedPostsController < ApplicationController
         File.open(File.join(Refile.backends["limited_cache"].directory, params[:id]), "wb") do |file|
           file.write(params[:file].read)
         end
-        render text: "token accepted"
+        render plain: "token accepted"
       else
-        render text: "too large", status: 413
+        render plain: "too large", status: 413
       end
     else
-      render text: "token rejected", status: 403
+      render plain: "token rejected", status: 403
     end
   end
 end

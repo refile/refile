@@ -8,7 +8,7 @@ ActiveRecord::Base.establish_connection(
   verbosity: "quiet"
 )
 
-class TestMigration < ActiveRecord::Migration
+class TestMigration < ActiveRecord::Migration[5.0]
   def self.up
     create_table :posts, force: true do |t|
       t.integer :user_id
