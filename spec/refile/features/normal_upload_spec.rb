@@ -139,6 +139,6 @@ feature "Normal HTTP Post file uploads" do
     expect(download_link("Document")).to eq("abc")
     expect(page).to have_selector(".content-type", text: "image/png")
     expect(page).to have_selector(".size", text: "3")
-    expect(page).to have_selector(".filename", text: "some_file.png", exact: true)
+    expect(page).to have_selector(".filename", text: "some_file.png")
   end
 end
