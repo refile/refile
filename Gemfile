@@ -2,7 +2,7 @@ source "https://rubygems.org"
 
 gemspec
 
-gem "webmock", "~> 2.3.1"
+gem "webmock", "~> 3.5.1"
 gem "bundler", "~> 1.6"
 gem "rake", "< 11.0"
 gem "rspec", "~> 3.0"
@@ -22,3 +22,4 @@ gem "rubocop", "~> 0.49.0"
 gem "puma"
 gem "mini_magick"
 gem "simple_form"
+gem "i18n", "~> 1.2.0", platforms: [:jruby]
