@@ -6,13 +6,20 @@ rvm:
   - 2.4.5
   - 2.5.3
   - 2.6.0
-  - jruby-9.1.17.0
   - jruby-9.2.5.0
 
 gemfile:
-  - gemfiles/Gemfile.rest-client.1.8
-  - gemfiles/Gemfile.rest-client.2.0
-  - gemfiles/Gemfile.rest-client.2.1
+  - gemfiles/rails_5.0/Gemfile.rest-client.1.8
+  - gemfiles/rails_5.0/Gemfile.rest-client.2.0
+  - gemfiles/rails_5.0/Gemfile.rest-client.2.1
+
+  - gemfiles/rails_5.1/Gemfile.rest-client.1.8
+  - gemfiles/rails_5.1/Gemfile.rest-client.2.0
+  - gemfiles/rails_5.1/Gemfile.rest-client.2.1
+
+  - gemfiles/rails_5.2/Gemfile.rest-client.1.8
+  - gemfiles/rails_5.2/Gemfile.rest-client.2.0
+  - gemfiles/rails_5.2/Gemfile.rest-client.2.1
 
 cache: bundler
 
