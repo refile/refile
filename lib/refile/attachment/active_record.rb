@@ -85,11 +85,11 @@ module Refile
             association.klass.send("#{attachment}_attachment_definition")
           end
 
-          define_method(:method_missing) do |method|
+          define_method(:method_missing) do |method, *args|
             if method == attachment_pluralized.to_sym
               raise NoMethodError, "wrong association name #{method}, use like this #{name}"
             else
-              super(method)
+              super(method, *args)
             end
           end
 

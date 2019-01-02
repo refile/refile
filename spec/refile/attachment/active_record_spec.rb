@@ -371,6 +371,10 @@ describe Refile::ActiveRecord::Attachment do
         expect { post.foo }.to_not raise_error(wrong_association_message)
       end
 
+      it "shouldn't raise error on setter method_missing" do
+        expect { post.creator = nil }.to_not raise_error(ArgumentError)
+      end
+
       it "builds records from assigned files" do
         post.documents_files = [Refile::FileDouble.new("hello"), Refile::FileDouble.new("world")]
         expect(post.documents[0].file.read).to eq("hello")
