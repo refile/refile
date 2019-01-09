@@ -22,4 +22,8 @@ Refile::TestApp.routes.draw do
   scope path: "simple_form", as: "simple_form" do
     resources :posts, only: [:new, :create], controller: "simple_form_posts"
   end
+
+  scope path: "single", as: "single" do
+    resources :posts, controller: "single_posts"
+  end
 end
