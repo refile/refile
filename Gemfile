@@ -3,7 +3,7 @@ source "https://rubygems.org"
 gemspec
 
 gem "webmock", "~> 3.5.1"
-gem "bundler", "~> 1.6"
+gem "bundler", ">= 1.7", "<= 2.0.1"
 gem "rake", "< 11.0"
 gem "rspec", "~> 3.0"
 gem "rspec-rails", "~> 3.3"
