@@ -42,7 +42,7 @@ module Refile
     def size
       cache_key = ::Refile.backend_cache_path / @id
       if ::File.exist?(cache_key)
-        ::File.size(cache_key)
+        ::File.size(cache_key) rescue backend.size(id)
       else
         backend.size(id)
       end
@@ -107,9 +107,9 @@ module Refile
         cache_key = ::Refile.backend_cache_path / @id
         if ::File.exist?(cache_key)
           if Rails.env.production?
-            Redis.new.incrby("Refile.backend_cache.total_hit", ::File.size(cache_key))
+            Redis.new.incrby("Refile.backend_cache.total_hit", ::File.size(cache_key) rescue 0) rescue nil
           end
-          @io = ::File.open(cache_key, 'r')
+          @io = ::File.open(cache_key, 'r') rescue backend.open(id)
         else
           @io = backend.open(id)
           if @io.is_a?(Tempfile) && @io.respond_to?(:stat) && @io.stat.size > 0
