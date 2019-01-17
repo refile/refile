@@ -38,7 +38,12 @@ module Refile
 
     # @return [Integer] the size of the file in bytes
     def size
-      backend.size(id)
+      cache_key = ::Refile.backend_cache_path / @id
+      if ::File.exist?(cache_key)
+        ::File.size(cache_key)
+      else
+        backend.size(id)
+      end
     end
 
     # Remove the file from the backend.
@@ -96,7 +101,18 @@ module Refile
   private
 
     def io
-      @io ||= backend.open(id)
+      unless @io
+        cache_key = ::Refile.backend_cache_path / @id
+        if ::File.exist?(cache_key)
+          @io = ::File.open(cache_key, 'r')
+        else
+          @io = backend.open(id)
+          if @io.is_a?(Tempfile) && @io.respond_to?(:stat) && @io.stat.size > 0
+            ::FileUtils.cp(@io.path, cache_key)
+          end
+        end
+      end
+      @io
     end
   end
 end

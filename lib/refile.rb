@@ -129,6 +129,8 @@ module Refile
     # @return [String]
     attr_accessor :secret_key
 
+    attr_accessor :backend_cache_path
+
     # A global registry of backends.
     #
     # @return [Hash{String => Backend}]
