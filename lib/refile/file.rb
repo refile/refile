@@ -1,3 +1,5 @@
+require "redis"
+
 module Refile
   class File
     # @return [Backend] the backend the file is stored in
@@ -104,6 +106,9 @@ module Refile
       unless @io
         cache_key = ::Refile.backend_cache_path / @id
         if ::File.exist?(cache_key)
+          if Rails.env.production?
+            Redis.new.incrby("Refile.backend_cache.total_hit", ::File.size(cache_key))
+          end
           @io = ::File.open(cache_key, 'r')
         else
           @io = backend.open(id)
