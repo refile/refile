@@ -24,17 +24,17 @@ module Refile
         end
 
         define_method "#{name}=" do |value|
-          send("#{name}_id_will_change!") if respond_to?("#{name}_id_will_change!")
+          send("will_save_change_to_#{name}_id?") if respond_to?("#{name}_id_will_change!")
           super(value)
         end
 
         define_method "remove_#{name}=" do |value|
-          send("#{name}_id_will_change!")
+          send("will_save_change_to_#{name}_id?")
           super(value)
         end
 
         define_method "remote_#{name}_url=" do |value|
-          send("#{name}_id_will_change!")
+          send("will_save_change_to_#{name}_id?")
           super(value)
         end
 
