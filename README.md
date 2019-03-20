@@ -784,6 +784,69 @@ class Post < ActiveRecord::Base
   accepts_attachments_for :images, append: true
 end
 ```
+### Multiple file uploads for pure Ruby classes
+
+You can also use `accepts_attachments_for` macro in pure Ruby classes.
+
+Suppose you have a `Document` class to be associated with a `Post` class.
+A post has many documents, and each document has a file.
+First, you will need to use the `attachment` macro in the `Document` class to
+declare your `:file` attachment, and also implement a constructor to receive
+the attachment:
+
+```ruby
+class Document
+  extend Refile::Attachment
+  attr_accessor :file_id
+
+  attachment :file
+
+  def initialize(attributes = {})
+    self.file = attributes[:file]
+  end
+end
+```
+
+In the `Post` class, you will need a constructor to initialize the `@documents`
+variable and an `attr_accessor :documents`. Then you can use the `accepts_attachments_for`
+macro for declaring the `:documents` collection:
+
+```ruby
+class Post
+  extend Refile::Attachment
+  include ActiveModel::Model
+
+  attr_accessor :documents
+
+  accepts_attachments_for(
+    :documents,
+    accessor_prefix: 'documents_files',
+    collection_class: Document
+  )
+
+  def initialize(attributes = {})
+    @documents = attributes[:documents] || []
+  end
+end
+```
+
+In this example, we specified the following options:
+
+- `collection_class` is the attachments class, `Document`
+- `accessor_prefix` gives a prefix to the generated accessors, `documents_files`.
+
+Now you can append attachments with your HTML form in the following way:
+
+```erb
+<%= form_for @post do |form| %>
+  <%= form.label :documents_files %>
+  <%= form.attachment_field :documents_files, multiple: true %>
+<% end %>
+```
+
+The default values for the `accepts_attachments_for` macro are
+`{ attachment: :file, append: false }`. Everything else should be similar to
+the Active Record version of this macro.
 
 ## Single file upload
 

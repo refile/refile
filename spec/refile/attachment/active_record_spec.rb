@@ -1,5 +1,6 @@
 require "refile/active_record_helper"
 require "refile/attachment/active_record"
+require_relative "../support/accepts_attachments_for_shared_examples"
 
 describe Refile::ActiveRecord::Attachment do
   let(:options) { {} }
@@ -351,122 +352,30 @@ describe Refile::ActiveRecord::Attachment do
           "Document"
         end
 
-        attachment :file
+        attachment :file, type: :image
       end
     end
 
     let(:post) { post_class.new }
 
-    describe "#:association_:name" do
+    it_should_behave_like "accepts_attachments_for"
+
+    it "shouldn't raise error on setter method_missing" do
+      expect { post.creator = nil }.to_not raise_error(ArgumentError)
+    end
+
+    context "when a wrong association is called" do
       let(:wrong_method) { "files" }
       let(:wrong_association_message) do
         "wrong association name #{wrong_method}, use like this documents_files"
       end
 
-      it "returns a friendly error message for wrong association name" do
+      it "returns a friendly error message" do
         expect { post.send(wrong_method) }.to raise_error(wrong_association_message)
       end
 
       it "return method missing" do
         expect { post.foo }.to_not raise_error(wrong_association_message)
-      end
-
-      it "shouldn't raise error on setter method_missing" do
-        expect { post.creator = nil }.to_not raise_error(ArgumentError)
-      end
-
-      it "builds records from assigned files" do
-        post.documents_files = [Refile::FileDouble.new("hello"), Refile::FileDouble.new("world")]
-        expect(post.documents[0].file.read).to eq("hello")
-        expect(post.documents[1].file.read).to eq("world")
-        expect(post.documents.size).to eq(2)
-      end
-
-      it "builds records from cache" do
-        post.documents_files = [
-          [
-            { id: Refile.cache.upload(Refile::FileDouble.new("hello")).id },
-            { id: Refile.cache.upload(Refile::FileDouble.new("world")).id }
-          ].to_json
-        ]
-        expect(post.documents[0].file.read).to eq("hello")
-        expect(post.documents[1].file.read).to eq("world")
-        expect(post.documents.size).to eq(2)
-      end
-
-      it "prefers newly uploaded files over cache" do
-        post.documents_files = [
-          [
-            { id: Refile.cache.upload(Refile::FileDouble.new("moo")).id }
-          ].to_json,
-          Refile::FileDouble.new("hello"),
-          Refile::FileDouble.new("world")
-        ]
-        expect(post.documents[0].file.read).to eq("hello")
-        expect(post.documents[1].file.read).to eq("world")
-        expect(post.documents.size).to eq(2)
-      end
-
-      it "clears previously assigned files" do
-        post.documents_files = [
-          Refile::FileDouble.new("hello"),
-          Refile::FileDouble.new("world")
-        ]
-        post.save
-        post.update_attributes documents_files: [
-          Refile::FileDouble.new("foo")
-        ]
-        retrieved = post_class.find(post.id)
-        expect(retrieved.documents[0].file.read).to eq("foo")
-        expect(retrieved.documents.size).to eq(1)
-      end
-
-      context "with append: true" do
-        let(:options) { { append: true } }
-
-        it "appends to previously assigned files" do
-          post.documents_files = [
-            Refile::FileDouble.new("hello"),
-            Refile::FileDouble.new("world")
-          ]
-          post.save
-          post.update_attributes documents_files: [
-            Refile::FileDouble.new("foo")
-          ]
-          retrieved = post_class.find(post.id)
-          expect(retrieved.documents[0].file.read).to eq("hello")
-          expect(retrieved.documents[1].file.read).to eq("world")
-          expect(retrieved.documents[2].file.read).to eq("foo")
-          expect(retrieved.documents.size).to eq(3)
-        end
-
-        it "appends to previously assigned files with cached files" do
-          post.documents_files = [
-            Refile::FileDouble.new("hello"),
-            Refile::FileDouble.new("world")
-          ]
-          post.save
-          post.update_attributes documents_files: [
-            [{
-              id: Refile.cache.upload(Refile::FileDouble.new("hello")).id,
-              filename: "some.jpg",
-              content_type: "image/jpeg",
-              size: 1234
-            }].to_json
-          ]
-          retrieved = post_class.find(post.id)
-          expect(retrieved.documents.size).to eq(3)
-        end
-      end
-    end
-
-    describe "#:association_:name_data" do
-      it "returns metadata of all files" do
-        post.documents_files = [nil, Refile::FileDouble.new("hello"), Refile::FileDouble.new("world")]
-        data = post.documents_files_data
-        expect(Refile.cache.read(data[0][:id])).to eq("hello")
-        expect(Refile.cache.read(data[1][:id])).to eq("world")
-        expect(data.size).to eq(2)
       end
     end
   end
