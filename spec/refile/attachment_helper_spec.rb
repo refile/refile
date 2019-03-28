@@ -42,7 +42,7 @@ describe Refile::AttachmentHelper do
     subject(:field) { attachment_field("post", :document, field_options) }
     let(:field_options) { { object: klass.new } }
     let(:html) { Capybara.string(field) }
-    let(:expected_field_name) { 'post[0][document]' }
+    let(:expected_field_name) { "post[0][document]" }
     let(:selector_css) { "input[name='#{expected_field_name}'][type=hidden]" }
     let(:input_css) { "input[name='post[document]'][type=hidden]" }
 
@@ -57,18 +57,18 @@ describe Refile::AttachmentHelper do
 
     context "when attacher value is blank" do
       let(:field_options) { super().merge object: klass.new(document: nil) }
-       it "generates metadata hidden with disabled attribute" do
+      it "generates metadata hidden with disabled attribute" do
         expect(html.find(input_css, visible: false)["disabled"]).to eq "disabled"
       end
     end
 
-    context 'when attacher value is present' do
+    context "when attacher value is present" do
       let(:field_options) do
-        super().merge object: klass.new(document: StringIO.new('New params'))
+        super().merge object: klass.new(document: StringIO.new("New params"))
       end
 
-      it 'generates metadata input without disabled attribute' do
-        expect(html.find(input_css, visible: false)['disabled']).to be_nil
+      it "generates metadata input without disabled attribute" do
+        expect(html.find(input_css, visible: false)["disabled"]).to be_nil
       end
     end
   end
