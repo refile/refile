@@ -106,10 +106,13 @@ module Refile
       options[:data] ||= {}
       options[:data][:reference] ||= SecureRandom.hex
 
+      attacher_value = object.send("#{method}_data")
+
       hidden_options = {
         multiple: options[:multiple],
-        value: object.send("#{method}_data").try(:to_json),
+        value: attacher_value.try(:to_json),
         object: object,
+        disabled: attacher_value.blank?,
         id: nil,
         data: { reference: options[:data][:reference] }
       }
