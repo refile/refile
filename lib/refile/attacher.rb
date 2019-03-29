@@ -106,21 +106,20 @@ module Refile
 
     def download(url)
       unless url.to_s.empty?
-        response = RestClient::Request.new(method: :get, url: url, raw_response: true).execute
+        download = Refile::Download.new(url)
         @metadata = {
-          size: response.file.size,
-          filename: URI.parse(url).path.split("/").last,
-          content_type: response.headers[:content_type]
+          size: download.size,
+          filename: download.original_filename,
+          content_type: download.content_type
         }
         if valid?
-          response.file.open if response.file.closed? # https://github.com/refile/refile/pull/210
-          @metadata[:id] = cache.upload(response.file).id
+          @metadata[:id] = cache.upload(download.io).id
           write_metadata
         elsif @definition.raise_errors?
           raise Refile::Invalid, @errors.join(", ")
         end
       end
-    rescue RestClient::Exception
+    rescue Refile::Error
       @errors = [:download_failed]
       raise if @definition.raise_errors?
     end

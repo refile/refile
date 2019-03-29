@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-gemspec path: '../../'
+gemspec path: '../'
 
 gem "webmock", "~> 3.5.1"
 gem "bundler", ">= 1.7", "<= 2.0.1"
@@ -23,4 +23,3 @@ gem "puma"
 gem "mini_magick"
 gem "simple_form"
 gem "i18n", "~> 1.2.0", platforms: [:jruby]
-gem "rest-client", "~> 2.0"
