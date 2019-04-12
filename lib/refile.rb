@@ -1,13 +1,15 @@
 require "uri"
 require "fileutils"
 require "tempfile"
-require "rest_client"
 require "logger"
 require "mime/types"
 
 module Refile
   # @api private
-  class Invalid < StandardError; end
+  class Error < StandardError; end
+
+  # @api private
+  class Invalid < Error; end
 
   # @api private
   class InvalidID < Invalid; end
@@ -17,6 +19,12 @@ module Refile
 
   # @api private
   class InvalidFile < Invalid; end
+
+  # Raised when the given URL couldn't be parsed.
+  class InvalidUrl < Error; end
+
+  # Raised when the given URL redirects more than allowed.
+  class TooManyRedirects < Error; end
 
   # @api private
   class Confirm < StandardError
@@ -489,6 +497,7 @@ module Refile
   require "refile/type"
   require "refile/backend_macros"
   require "refile/attachment_definition"
+  require "refile/download"
   require "refile/attacher"
   require "refile/attachment"
   require "refile/attachment/multiple_attachments"
