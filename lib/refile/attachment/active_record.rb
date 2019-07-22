@@ -64,7 +64,7 @@ module Refile
       #
       # @example in associated model
       #   class Image
-      #     attachment :image
+      #     attachment :file
       #   end
       #
       # @example in form
