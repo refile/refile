@@ -9,8 +9,6 @@ gem "rspec", "~> 3.0"
 gem "rspec-rails", "~> 3.3"
 gem "jquery-rails"
 gem "capybara", "< 3.16"
-gem "pry"
-gem "pry-byebug", platforms: [:mri]
 gem "aws-sdk-s3"
 gem "rack-test", "~> 0.6.2"
 gem "rails", "~> 5.2.2"
