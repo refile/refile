@@ -4,6 +4,9 @@ cache: bundler
 services:
   - xvfb
 
+before_install:
+  - gem install bundler -v '< 2'
+
 jobs:
   include:
   - rvm: 2.2
@@ -17,7 +20,3 @@ jobs:
   - rvm: 2.6
     gemfile: gemfiles/Gemfile_Rails_5_2
 
-sudo: false
-
-before_install:
-  - gem install bundler -v '< 2'
