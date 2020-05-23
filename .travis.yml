@@ -1,19 +1,18 @@
 language: ruby
-
-rvm:
-  - 2.2.10
-  - 2.3.8
-  - 2.4.5
-  - 2.5.3
-  - 2.6.0
-  - jruby-9.2.5.0
-
-gemfile:
-  - gemfiles/Gemfile_Rails_5_0
-  - gemfiles/Gemfile_Rails_5_1
-  - gemfiles/Gemfile_Rails_5_2
-
 cache: bundler
+
+jobs:
+  include:
+  - rvm: 2.2
+    gemfile: gemfiles/Gemfile_Rails_5_2
+  - rvm: 2.3
+    gemfile: gemfiles/Gemfile_Rails_5_2
+  - rvm: 2.4
+    gemfile: gemfiles/Gemfile_Rails_5_2
+  - rvm: 2.5
+    gemfile: gemfiles/Gemfile_Rails_5_2
+  - rvm: 2.6
+    gemfile: gemfiles/Gemfile_Rails_5_2
 
 sudo: false
 
