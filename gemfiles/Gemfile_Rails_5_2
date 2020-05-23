@@ -11,7 +11,7 @@ gem "jquery-rails"
 gem "capybara", "< 3.16"
 gem "pry"
 gem "pry-byebug", platforms: [:mri]
-gem "aws-sdk"
+gem "aws-sdk-s3"
 gem "rack-test", "~> 0.6.2"
 gem "rails", "~> 5.2.2"
 gem "sqlite3", "~> 1.3.6",                         platforms: [:ruby]
