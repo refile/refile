@@ -9,8 +9,13 @@ before_install:
 
 jobs:
   include:
-  - rvm: 2.2
-    gemfile: gemfiles/Gemfile_Rails_5_2
+  # Rails 5.2 doesn't really work with Ruby 2.2 anymore, only if you use the
+  # 5-2-stable branch.
+  #
+  # See https://github.com/rails/rails/commit/892eab777c418135ce0646e91bc9ebb08a29ab9b
+  #
+  # - rvm: 2.2
+  #   gemfile: gemfiles/Gemfile_Rails_5_2
   - rvm: 2.3
     gemfile: gemfiles/Gemfile_Rails_5_2
   - rvm: 2.4
