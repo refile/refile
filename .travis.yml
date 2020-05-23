@@ -1,6 +1,9 @@
 language: ruby
 cache: bundler
 
+services:
+  - xvfb
+
 jobs:
   include:
   - rvm: 2.2
@@ -18,7 +21,3 @@ sudo: false
 
 before_install:
   - gem install bundler -v '< 2'
-
-before_script:
-  - export DISPLAY=:99.0
-  - sh -e /etc/init.d/xvfb start
