@@ -2,7 +2,7 @@
 
 If you have found a security related issue, please do not file an issue on
 GitHub or send a PR addressing the issue. Contact
-[Jonas](mailto:jonas.nicklas@gmail.com) directly. You will be given public
+[Gabriel Sobrinho](mailto:gabriel.sobrinho@gmail.com) directly. You will be given public
 credit for your disclosure.
 
 ## Reporting issues

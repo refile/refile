@@ -1,4 +1,4 @@
-Copyright (c) 2014 Jonas Nicklas
+Copyright (c) 2014-2020 Jonas Nicklas, Gabriel Sobrinho
 
 MIT License
 

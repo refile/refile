@@ -3,8 +3,8 @@ require "./lib/refile/version"
 Gem::Specification.new do |spec|
   spec.name          = "refile"
   spec.version       = Refile::VERSION
-  spec.authors       = ["Jonas Nicklas"]
-  spec.email         = ["jonas.nicklas@gmail.com"]
+  spec.authors       = ["Jonas Nicklas", "Gabriel Sobrinho"]
+  spec.email         = ["jonas.nicklas@gmail.com", "gabriel.sobrinho@gmail.com"]
   spec.summary       = "Simple and powerful file upload library"
   spec.homepage      = "https://github.com/refile/refile"
   spec.license       = "MIT"
