@@ -44,22 +44,22 @@ module Refile
 
     get "/:token/:backend/:processor/:id/:file_basename.:extension" do
       halt 404 unless download_allowed?
-      stream_file processor.call(file, format: params[:extension], quality: params[:quality])
+      stream_file processor.call(file, format: params[:extension])
     end
 
     get "/:token/:backend/:processor/:id/:filename" do
       halt 404 unless download_allowed?
-      stream_file processor.call(file, quality: params[:quality])
+      stream_file processor.call(file)
     end
 
     get "/:token/:backend/:processor/*/:id/:file_basename.:extension" do
       halt 404 unless download_allowed?
-      stream_file processor.call(file, *params[:splat].first.split("/"), format: params[:extension], quality: params[:quality])
+      stream_file processor.call(file, *params[:splat].first.split("/"), format: params[:extension])
     end
 
     get "/:token/:backend/:processor/*/:id/:filename" do
       halt 404 unless download_allowed?
-      stream_file processor.call(file, *params[:splat].first.split("/"), quality: params[:quality])
+      stream_file processor.call(file, *params[:splat].first.split("/"))
     end
 
     options "/:backend" do
