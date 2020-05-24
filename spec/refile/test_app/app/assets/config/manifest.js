@@ -1,1 +1,1 @@
-{}
+//= link application.js
