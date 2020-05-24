@@ -1,25 +1,27 @@
 language: ruby
-
-rvm:
-  - 2.2.10
-  - 2.3.8
-  - 2.4.5
-  - 2.5.3
-  - 2.6.0
-  - jruby-9.2.5.0
-
-gemfile:
-  - gemfiles/Gemfile_Rails_5_0
-  - gemfiles/Gemfile_Rails_5_1
-  - gemfiles/Gemfile_Rails_5_2
-
 cache: bundler
 
-sudo: false
+services:
+  - xvfb
 
 before_install:
   - gem install bundler -v '< 2'
 
-before_script:
-  - export DISPLAY=:99.0
-  - sh -e /etc/init.d/xvfb start
+jobs:
+  include:
+  # Rails 5.2 doesn't really work with Ruby 2.2 anymore, only if you use the
+  # 5-2-stable branch.
+  #
+  # See https://github.com/rails/rails/commit/892eab777c418135ce0646e91bc9ebb08a29ab9b
+  #
+  # - rvm: 2.2
+  #   gemfile: gemfiles/Gemfile_Rails_5_2
+  - rvm: 2.3
+    gemfile: gemfiles/Gemfile_Rails_5_2
+  - rvm: 2.4
+    gemfile: gemfiles/Gemfile_Rails_5_2
+  - rvm: 2.5
+    gemfile: gemfiles/Gemfile_Rails_5_2
+  - rvm: 2.6
+    gemfile: gemfiles/Gemfile_Rails_5_2
+
