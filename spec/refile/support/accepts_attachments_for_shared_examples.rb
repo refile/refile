@@ -18,9 +18,10 @@ RSpec.shared_examples "accepts_attachments_for" do
         Refile::FileDouble.new("world", content_type: "image/jpeg")
       ]
       post.save!
-      post.update_attributes! documents_files: [
+      post.documents_files = [
         Refile::FileDouble.new("foo", content_type: "image/jpeg")
       ]
+      post.save!
 
       expect(post.documents[0].file.read).to eq("foo")
       expect(post.documents.size).to eq(1)
@@ -118,9 +119,10 @@ RSpec.shared_examples "accepts_attachments_for" do
           Refile::FileDouble.new("world", content_type: "image/jpeg")
         ]
         post.save!
-        post.update_attributes! documents_files: [
+        post.documents_files = [
           Refile::FileDouble.new("foo", content_type: "image/jpeg")
         ]
+        post.save!
 
         expect(post.documents.size).to eq(3)
         expect(post.documents[0].file.read).to eq("hello")
@@ -134,7 +136,7 @@ RSpec.shared_examples "accepts_attachments_for" do
           Refile::FileDouble.new("world", content_type: "image/jpeg")
         ]
         post.save!
-        post.update_attributes! documents_files: [
+        post.documents_files = [
           [{
             id: Refile.cache.upload(Refile::FileDouble.new("hello world")).id,
             filename: "some.jpg",
@@ -142,6 +144,7 @@ RSpec.shared_examples "accepts_attachments_for" do
             size: 1234
           }].to_json
         ]
+        post.save!
 
         expect(post.documents.size).to eq(3)
         expect(post.documents[0].file.read).to eq("hello")
