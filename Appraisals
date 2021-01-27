@@ -1,0 +1,40 @@
+appraise "rails_52" do
+  gem "webmock", "~> 3.5.1"
+  gem "rspec", "~> 3.0"
+  gem "rspec-rails", "~> 3.3"
+  gem "jquery-rails"
+  gem "capybara"
+  gem "aws-sdk-s3"
+  gem "rack-test", "~> 0.6.2"
+  gem "rails", "~> 5.2"
+  gem "sqlite3", "~> 1.3.6",                         platforms: [:ruby]
+  gem "activerecord-jdbcsqlite3-adapter", "~> 52.1", platforms: [:jruby]
+  gem "poltergeist"
+  gem "yard"
+  gem "rubocop", "~> 0.49.0"
+  gem "puma"
+  gem "mini_magick"
+  gem "simple_form"
+  gem "i18n", "~> 1.2.0"
+end
+
+appraise "rails_61" do
+  gem "webmock"
+  gem "rake"
+  gem "rspec"
+  gem "rspec-rails"
+  gem "jquery-rails"
+  gem "capybara"
+  gem "aws-sdk-s3"
+  gem "rack-test"
+  gem "rails", "~> 6.1.1"
+  gem "sqlite3", ">= 1.3.6",                         platforms: [:ruby]
+  gem "activerecord-jdbcsqlite3-adapter", ">= 52.1", platforms: [:jruby]
+  gem "poltergeist"
+  gem "yard"
+  gem "rubocop", ">= 0.49.0"
+  gem "puma"
+  gem "mini_magick"
+  gem "simple_form"
+  gem "i18n", ">= 1.2.0", "< 1.60"
+end
