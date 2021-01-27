@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Refile
   # A type represents an alias for one or multiple content types.
   # By adding types, you could simplify this:

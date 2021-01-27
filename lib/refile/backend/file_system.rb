@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Refile
   module Backend
     # A backend which stores uploaded files in the local filesystem
@@ -104,6 +106,7 @@ module Refile
       # @return [void]
       def clear!(confirm = nil)
         raise Refile::Confirm unless confirm == :confirm
+
         FileUtils.rm_rf(@directory)
         FileUtils.mkdir_p(@directory)
       end

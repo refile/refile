@@ -1,10 +1,12 @@
+require:
+  - rubocop-performance
 AllCops:
   Exclude:
     - 'gemfiles/**/*'
     - 'vendor/**/*'
   DisplayCopNames: true
 
-Metrics/LineLength:
+Layout/LineLength:
   Max: 150 # TODO: we should decrease this to 120
 
 Metrics/ClassLength:
@@ -31,7 +33,7 @@ Metrics/CyclomaticComplexity:
 Metrics/PerceivedComplexity:
   Enabled: false
 
-Layout/AlignParameters:
+Layout/ParameterAlignment:
   EnforcedStyle: with_fixed_indentation
 
 Style/StringLiterals:
@@ -79,13 +81,13 @@ Layout/IndentationWidth:
 Style/TrivialAccessors:
   ExactNameMatch: true
 
-Lint/EndAlignment:
+Layout/EndAlignment:
   EnforcedStyleAlignWith: variable
 
-Lint/DefEndAlignment:
+Layout/DefEndAlignment:
   Enabled: false
 
-Lint/HandleExceptions:
+Lint/SuppressedException:
   Enabled: false
 
 Style/SpecialGlobalVars:
@@ -117,3 +119,6 @@ Style/GuardClause:
 
 Layout/MultilineMethodCallBraceLayout:
   Enabled: false
+
+Naming/MethodParameterName:
+ MinNameLength: 2

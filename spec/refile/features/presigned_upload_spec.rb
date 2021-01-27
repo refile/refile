@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "refile/test_app"
 
 feature "Direct HTTP post file uploads", :js do

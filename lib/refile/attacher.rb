@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Refile
   # @api private
   class Attacher
@@ -82,9 +84,10 @@ module Refile
     end
 
     def retrieve!(value)
-      if value.is_a?(String)
+      case value
+        when String
         @metadata = Refile.parse_json(value, symbolize_names: true) || {}
-      elsif value.is_a?(Hash)
+        when Hash
         @metadata = value
       end
       write_metadata if cache_id
@@ -163,14 +166,15 @@ module Refile
 
   private
 
-    def read(column, strict = false)
+    def read(column, strict: false)
       m = "#{name}_#{column}"
       value ||= record.send(m) if strict or record.respond_to?(m)
       value
     end
 
-    def write(column, value, strict = false)
+    def write(column, value, strict: false)
       return if record.frozen?
+
       m = "#{name}_#{column}="
       record.send(m, value) if strict or record.respond_to?(m)
     end

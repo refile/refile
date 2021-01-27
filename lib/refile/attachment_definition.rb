@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 module Refile
   # @api private
   class AttachmentDefinition
-    attr_reader :record, :name, :cache, :store, :options, :type, :valid_content_types
+    attr_reader :record, :name, :options, :type, :valid_content_types
     attr_accessor :remove
 
     def initialize(name, cache:, store:, raise_errors: true, type: nil, extension: nil, content_type: nil)
@@ -37,6 +39,7 @@ module Refile
 
     def valid_extensions
       return unless @extension
+
       if @extension.is_a?(Proc)
         Array(@extension.call)
       else
@@ -60,15 +63,15 @@ module Refile
   private
 
     def extension_error_params(extension)
-      [:invalid_extension, extension: format_param(extension), permitted: valid_extensions.to_sentence]
+      [:invalid_extension, { extension: format_param(extension), permitted: valid_extensions.to_sentence }]
     end
 
     def content_type_error_params(content_type)
-      [:invalid_content_type, content: format_param(content_type), permitted: valid_content_types.to_sentence]
+      [:invalid_content_type, { content: format_param(content_type), permitted: valid_content_types.to_sentence }]
     end
 
     def invalid_extension?(extension)
-      extension_included = valid_extensions && valid_extensions.map(&:downcase).include?(extension)
+      extension_included = valid_extensions&.map(&:downcase)&.include?(extension)
       valid_extensions and not extension_included
     end
 

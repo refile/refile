@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe Refile::BackendMacros do
   let(:klass) do
     Class.new do

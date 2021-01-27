@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Refile
   class File
     # @return [Backend] the backend the file is stored in

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "uri"
 require "fileutils"
 require "tempfile"
@@ -259,7 +261,7 @@ module Refile
         filename = extract_filename(uploadable)
         if filename
           content_type = MIME::Types.of(filename).first
-          content_type.to_s if content_type
+          content_type&.to_s
         end
       end
     end
@@ -316,7 +318,7 @@ module Refile
     # @param [String, nil] expires_at      Adds a sulfix to the URL that sets the expiration time of the URL
     # @param [String, nil] force_download  Adds a sulfix to the URL to force the download of the file when URL is accessed
     # @return [String, nil]                The generated URL
-    def file_url(file, *args, expires_at: nil, host: nil, prefix: nil, filename:, format: nil, force_download: nil)
+    def file_url(file, *args, filename:, expires_at: nil, host: nil, prefix: nil, format: nil, force_download: nil)
       return unless file
 
       host ||= Refile.cdn_host
@@ -512,7 +514,7 @@ Refile.configure do |config|
   config.allow_uploads_to = ["cache"]
   config.allow_downloads_from = :all
   config.allow_origin = "*"
-  config.logger = Logger.new(STDOUT) unless ENV["RACK_ENV"] == "test"
+  config.logger = Logger.new($stdout) unless ENV["RACK_ENV"] == "test"
   config.mount_point = "/attachments"
   config.automount = true
   config.content_max_age = 60 * 60 * 24 * 365

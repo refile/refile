@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "refile/custom_logger"
 
 describe Refile::CustomLogger do

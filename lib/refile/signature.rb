@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Refile
   # A signature summarizes an HTTP request a client can make to upload a file
   # to directly upload a file to a backend. This signature is usually generated

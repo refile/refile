@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PresignedPostsController < ApplicationController
   def new
     @post = Post.new

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.shared_examples_for :backend do
   def uploadable(data = "hello")
     Refile::FileDouble.new(data)

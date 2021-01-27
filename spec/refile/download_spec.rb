@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe Refile::Download do
   context "without redirects" do
     it "fetches the file" do

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.shared_examples "accepts_attachments_for" do
   describe "#:association_:name=" do
     it "builds records from assigned files" do

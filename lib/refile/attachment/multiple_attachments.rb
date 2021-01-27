@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Refile
   module Attachment
     # Builds a module to be used by "accepts_attachments_for"
@@ -30,9 +32,7 @@ module Refile
             cache = cache.reject(&:empty?)
             files = files.compact
 
-            if not append and (!files.empty? or !cache.empty?)
-              send("#{collection_name}=", [])
-            end
+            send("#{collection_name}=", []) if not append and (!files.empty? or !cache.empty?)
 
             collection = send(collection_name)
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 appraise "rails_52" do
   gem "webmock", "~> 3.5.1"
   gem "rspec", "~> 3.0"
@@ -11,7 +13,8 @@ appraise "rails_52" do
   gem "activerecord-jdbcsqlite3-adapter", "~> 52.1", platforms: [:jruby]
   gem "poltergeist"
   gem "yard"
-  gem "rubocop", "~> 0.49.0"
+  gem "rubocop", ">= 0.49.0"
+  gem "rubocop-performance"
   gem "puma"
   gem "mini_magick"
   gem "simple_form"
@@ -33,6 +36,7 @@ appraise "rails_61" do
   gem "poltergeist"
   gem "yard"
   gem "rubocop", ">= 0.49.0"
+  gem "rubocop-performance"
   gem "puma"
   gem "mini_magick"
   gem "simple_form"

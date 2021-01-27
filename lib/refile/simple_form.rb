@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # make attachment_field behave like a normal input type so we get nice wrapper and labels
 # <%= f.input :cover_image, as: :attachment, direct: true, presigned: true %>
 module SimpleForm

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class DirectPostsController < ApplicationController
   def new
     @post = Post.new

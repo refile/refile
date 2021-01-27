@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "refile/active_record_helper"
 require "refile/attachment/active_record"
 require_relative "../support/accepts_attachments_for_shared_examples"
