@@ -1,4 +1,4 @@
-# frozen_string_literal: true
+# frozen_string_literal: false
 
 module Refile
   # @api private
@@ -166,13 +166,13 @@ module Refile
 
   private
 
-    def read(column, strict: false)
+    def read(column, strict= false)
       m = "#{name}_#{column}"
       value ||= record.send(m) if strict or record.respond_to?(m)
       value
     end
 
-    def write(column, value, strict: false)
+    def write(column, value, strict= false)
       return if record.frozen?
 
       m = "#{name}_#{column}="

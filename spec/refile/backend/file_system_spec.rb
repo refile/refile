@@ -1,4 +1,4 @@
-# frozen_string_literal: true
+# frozen_string_literal: false
 
 RSpec.describe Refile::Backend::FileSystem do
   let(:backend) { Refile::Backend::FileSystem.new(File.expand_path("tmp/store1", Dir.pwd), max_size: 100) }

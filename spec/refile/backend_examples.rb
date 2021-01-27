@@ -1,4 +1,4 @@
-# frozen_string_literal: true
+# frozen_string_literal: false
 
 RSpec.shared_examples_for :backend do
   def uploadable(data = "hello")
