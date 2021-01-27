@@ -122,3 +122,6 @@ Layout/MultilineMethodCallBraceLayout:
 
 Naming/MethodParameterName:
  MinNameLength: 2
+
+Style/OptionalBooleanParameter:
+  Enabled: false
