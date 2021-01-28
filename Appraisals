@@ -13,7 +13,7 @@ appraise "rails_52" do
   gem "activerecord-jdbcsqlite3-adapter", "~> 52.1", platforms: [:jruby]
   gem "poltergeist"
   gem "yard"
-  gem "rubocop", ">= 0.49.0"
+  gem "rubocop", "~> 0.81.0"
   gem "rubocop-performance"
   gem "puma"
   gem "mini_magick"
