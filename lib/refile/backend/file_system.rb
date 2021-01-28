@@ -39,7 +39,7 @@ module Refile
         IO.copy_stream(uploadable, path(id))
 
         Refile::File.new(self, id)
-      ensure
+                        ensure
         uploadable.close
       end
 
