@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
-appraise "rails_52" do
+appraise "rails_5_2" do
   gem "webmock", "~> 3.5.1"
+  gem "bundler"
+  gem "rake"
   gem "rspec", "~> 3.0"
   gem "rspec-rails", "~> 3.3"
   gem "jquery-rails"
@@ -18,11 +20,12 @@ appraise "rails_52" do
   gem "puma"
   gem "mini_magick"
   gem "simple_form"
-  gem "i18n", "~> 1.2.0"
+  gem "i18n", "~> 1.2.0", "< 1.60"
 end
 
-appraise "rails_61" do
+appraise "rails_6_1" do
   gem "webmock"
+  gem "bundler"
   gem "rake"
   gem "rspec"
   gem "rspec-rails"
