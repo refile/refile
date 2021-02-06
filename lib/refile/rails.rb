@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "refile"
 require "refile/rails/attachment_helper"
 
@@ -17,8 +19,8 @@ module Refile
         require "refile/attachment/active_record"
       end
 
-      ActionView::Base.send(:include, Refile::AttachmentHelper)
-      ActionView::Helpers::FormBuilder.send(:include, AttachmentHelper::FormBuilder)
+      ActionView::Base.include Refile::AttachmentHelper
+      ActionView::Helpers::FormBuilder.include AttachmentHelper::FormBuilder
     end
 
     initializer "refile.app" do

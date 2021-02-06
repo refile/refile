@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "open-uri"
 require "forwardable"
 require "cgi"
@@ -43,19 +45,17 @@ module Refile
 
       begin
         uri.open(OPTIONS)
-      rescue OpenURI::HTTPRedirect => exception
+      rescue OpenURI::HTTPRedirect => e
         raise Refile::TooManyRedirects if follows_remaining.zero?
 
-        uri = ensure_uri(exception.uri)
+        uri = ensure_uri(e.uri)
         follows_remaining -= 1
 
         retry
-      rescue OpenURI::HTTPError => exception
-        if exception.message.include?("(Invalid Location URI)")
-          raise Refile::InvalidUrl, "Invalid Redirect URI: #{response["Location"]}"
-        end
+      rescue OpenURI::HTTPError => e
+        raise Refile::InvalidUrl, "Invalid Redirect URI: #{response["Location"]}" if e.message.include?("(Invalid Location URI)")
 
-        raise exception
+        raise e
       end
     end
 
@@ -66,9 +66,7 @@ module Refile
         raise Refile::InvalidUrl, "Invalid URI: #{uri.inspect}"
       end
 
-      unless uri.is_a?(URI::HTTP)
-        raise Refile::InvalidUrl, "URL scheme needs to be http or https: #{uri}"
-      end
+      raise Refile::InvalidUrl, "URL scheme needs to be http or https: #{uri}" unless uri.is_a?(URI::HTTP)
 
       uri
     end

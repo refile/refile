@@ -15,13 +15,25 @@ jobs:
   # See https://github.com/rails/rails/commit/892eab777c418135ce0646e91bc9ebb08a29ab9b
   #
   # - rvm: 2.2
-  #   gemfile: gemfiles/Gemfile_Rails_5_2
+  #   gemfile: 
+  #     - gemfiles/rails_5_2.gemfile
+  #
   - rvm: 2.3
-    gemfile: gemfiles/Gemfile_Rails_5_2
+    gemfile: 
+      - gemfiles/rails_5_2.gemfile
   - rvm: 2.4
-    gemfile: gemfiles/Gemfile_Rails_5_2
+    gemfile:
+      - gemfiles/rails_5_2.gemfile
   - rvm: 2.5
-    gemfile: gemfiles/Gemfile_Rails_5_2
+    gemfile:
+      - gemfiles/rails_5_2.gemfile
+      #- gemfiles/rails_6_1.gemfile
   - rvm: 2.6
-    gemfile: gemfiles/Gemfile_Rails_5_2
+    gemfile:
+      - gemfiles/rails_5_2.gemfile
+      #- gemfiles/rails_6_1.gemfile
+  - rvm: 2.7
+    gemfile:
+      - gemfiles/rails_5_2.gemfile
+      #- gemfiles/rails_6_1.gemfile
 

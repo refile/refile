@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class MultiplePostsController < ApplicationController
   def new
     @post = Post.new

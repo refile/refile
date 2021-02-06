@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Refile
   # A file hasher which ignores the file contents and always returns a random string.
   class RandomHasher

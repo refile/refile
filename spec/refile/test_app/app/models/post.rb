@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Post < ActiveRecord::Base
   attr_accessor :requires_document
 

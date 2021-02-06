@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Refile::TestApp.routes.draw do
   root to: "home#index"
 

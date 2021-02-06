@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Refile
   module Attachment
     # Macro which generates accessors for the given column which make it
@@ -38,12 +40,12 @@ module Refile
     # @return [void]
     def attachment(name, cache: :cache, store: :store, raise_errors: true, type: nil, extension: nil, content_type: nil)
       definition = AttachmentDefinition.new(name,
-        cache: cache,
-        store: store,
-        raise_errors: raise_errors,
-        type: type,
-        extension: extension,
-        content_type: content_type
+                                            cache: cache,
+                                            store: store,
+                                            raise_errors: raise_errors,
+                                            type: type,
+                                            extension: extension,
+                                            content_type: content_type
       )
 
       define_singleton_method :"#{name}_attachment_definition" do

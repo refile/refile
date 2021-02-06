@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Refile
   # Rails view helpers which aid in using Refile from views.
   module AttachmentHelper
@@ -30,7 +32,7 @@ module Refile
     # @param [String, nil] host            Override the host
     # @return [String, nil]                The generated URL
     def attachment_url(record, name, *args, fallback: nil, **opts)
-      file = record && record.public_send(name)
+      file = record&.public_send(name)
       if file
         Refile.attachment_url(record, name, *args, **opts)
       elsif fallback
@@ -49,7 +51,7 @@ module Refile
     # @see #attachment_url
     # @return [ActiveSupport::SafeBuffer, nil]   The generated image tag
     def attachment_image_tag(record, name, *args, fallback: nil, host: nil, prefix: nil, format: nil, **options)
-      file = record && record.public_send(name)
+      file = record&.public_send(name)
       classes = ["attachment", (record.class.model_name.singular if record), name, *options[:class]]
 
       if file

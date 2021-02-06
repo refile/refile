@@ -1,3 +1,5 @@
+# frozen_string_literal: false
+
 module Refile
   module ActiveRecord
     module Attachment
@@ -80,7 +82,7 @@ module Refile
         association = reflect_on_association(association_name)
         attachment_pluralized = attachment.to_s.pluralize
         name = "#{association_name}_#{attachment_pluralized}"
-        collection_class = association && association.klass
+        collection_class = association&.klass
 
         options = {
           collection_class: collection_class,

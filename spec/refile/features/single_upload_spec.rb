@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "refile/test_app"
 
 feature "single attribute form upload" do

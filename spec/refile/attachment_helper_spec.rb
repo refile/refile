@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "refile/rails/attachment_helper"
 require "refile/active_record_helper"
 require "refile/attachment/active_record"

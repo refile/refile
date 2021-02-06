@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Refile
   # Macros which make it easier to write secure backends.
   #
@@ -21,13 +23,10 @@ module Refile
       mod = Module.new do
         define_method(method) do |uploadable|
           [:size, :read, :eof?, :rewind, :close].each do |m|
-            unless uploadable.respond_to?(m)
-              raise Refile::InvalidFile, "does not respond to `#{m}`."
-            end
+            raise Refile::InvalidFile, "does not respond to `#{m}`." unless uploadable.respond_to?(m)
           end
-          if max_size and uploadable.size > max_size
-            raise Refile::InvalidMaxSize, "#{uploadable.inspect} is too large"
-          end
+          raise Refile::InvalidMaxSize, "#{uploadable.inspect} is too large" if max_size and uploadable.size > max_size
+
           super(uploadable)
         end
       end
