@@ -16,7 +16,7 @@ jobs:
   #
   # - rvm: 2.2
   #   gemfile: 
-  #     - gemfiles/Gemfile_Rails_5_2
+  #     - gemfiles/rails_5_2.gemfile
   #
   - rvm: 2.3
     gemfile: 
