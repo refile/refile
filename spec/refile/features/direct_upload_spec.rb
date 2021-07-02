@@ -29,6 +29,18 @@ feature "Direct HTTP post file uploads", :js do
     expect(page).to have_content("Upload failure error")
   end
 
+  scenario "Fail to upload due to connection error" do
+    page.driver.browser.url_blacklist = ["#{Refile.app_host}/attachments"]
+
+    visit "/direct/posts/new"
+    fill_in "Title", with: "A cool post"
+    attach_file "Document", path("hello.txt")
+
+    expect(page).to have_content("Upload started")
+    expect(page).to have_content("Upload failure")
+    expect(page).to have_content("Upload complete")
+  end
+
   scenario "Upload a file after validation failure" do
     visit "/direct/posts/new"
     fill_in "Title", with: "A cool post"

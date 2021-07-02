@@ -43,7 +43,7 @@
 
         xhr.file = file;
 
-        xhr.addEventListener("load", function() {
+        xhr.addEventListener("loadend", function() {
           xhr.complete = true;
           if(requests.every(function(xhr) { return xhr.complete })) {
             finalizeUpload();
@@ -64,7 +64,7 @@
           dispatchEvent(input, "presign:start");
           var presignXhr = new XMLHttpRequest();
           var presignUrl = url + "?t=" + Date.now() + "." + index;
-          presignXhr.addEventListener("load", function() {
+          presignXhr.addEventListener("loadend", function() {
             dispatchEvent(input, "presign:complete");
             if(isSuccess(presignXhr)) {
               dispatchEvent(input, "presign:success");

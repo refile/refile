@@ -28,4 +28,17 @@ feature "Direct HTTP post file uploads", :js do
     expect(page).to have_content("Upload started")
     expect(page).to have_content("Upload failure too large")
   end
+
+  scenario "Fail to upload due to connection error" do
+    page.driver.browser.url_blacklist = ["#{Refile.app_host}/attachments"]
+
+    visit "/presigned/posts/new"
+    fill_in "Title", with: "A cool post"
+    attach_file "Document", path("hello.txt")
+
+    expect(page).to have_content("Presign start")
+    expect(page).to have_content("Presign complete")
+    expect(page).to have_content("Presign failure")
+    expect(page).not_to have_content("Upload started")
+  end
 end
