@@ -6,7 +6,7 @@ module Refile
       # @see AttachmentHelper#attachment_field
       def attachment_field(method, options = {})
         self.multipart = true
-        @template.attachment_field(@object_name, method, objectify_options(options))
+        @template.attachment_field(@object_name, method, **objectify_options(options))
       end
 
       # @see AttachmentHelper#attachment_cache_field
@@ -72,7 +72,8 @@ module Refile
     # @option options [Boolean] direct      If set to true, adds the appropriate data attributes for direct uploads with refile.js.
     # @option options [Boolean] presign     If set to true, adds the appropriate data attributes for presigned uploads with refile.js.
     # @return [ActiveSupport::SafeBuffer]   The generated form field
-    def attachment_field(object_name, method, object:, **options)
+    def attachment_field(object_name, method, **options)
+      object = options[:object]
       options[:data] ||= {}
 
       definition = object.send(:"#{method}_attachment_definition")
