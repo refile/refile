@@ -18,7 +18,7 @@ module Refile
             send(attacher).valid?
             errors = send(attacher).errors
             errors.each do |error_type, error|
-              self.errors.add(name, error_type, **error)
+              self.errors.add(name, error_type, **(error || {}))
             end
           end
         end
