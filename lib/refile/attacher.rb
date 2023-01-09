@@ -148,7 +148,7 @@ module Refile
       value = remove.to_s
 
       value.present? &&
-        value.match?(/\A0|false\z/)
+        !value.match?(/\A0|false\z/)
     end
 
     def present?
