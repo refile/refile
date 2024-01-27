@@ -145,7 +145,10 @@ module Refile
     end
 
     def remove?
-      remove and remove != "" and remove !~ /\A0|false$\z/
+      value = remove.to_s
+
+      value.present? &&
+        !value.match?(/\A0|false\z/)
     end
 
     def present?
