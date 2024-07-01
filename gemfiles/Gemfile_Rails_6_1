@@ -1,0 +1,21 @@
+source 'https://rubygems.org'
+
+gemspec path: '../'
+
+ruby '3.0.3'
+
+gem 'aws-sdk-s3'
+gem 'bundler'
+gem 'capybara'
+gem 'jquery-rails'
+gem 'poltergeist'
+gem 'puma'
+gem 'rack', '~> 2.2.0'
+gem 'rails', '~> 6.1'
+gem 'rake'
+gem 'rspec'
+gem 'rspec-rails'
+gem 'rubocop', '~> 0.49.0'
+gem 'sqlite3', '~> 1.5.0'
+gem 'webmock'
+gem 'yard'

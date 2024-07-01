@@ -618,7 +618,7 @@ describe Refile::Attachment do
 
           def save!; end
 
-          def update_attributes!(attributes)
+          def update!(attributes)
             attributes.each { |k, v| public_send("#{k}=", v) }
           end
         end

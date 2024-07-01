@@ -11,17 +11,20 @@ module Refile
       def attachment(name, raise_errors: false, destroy: true, **options)
         super(name, raise_errors: raise_errors, **options)
 
-        attacher = "#{name}_attacher"
+        attacher_method = "#{name}_attacher"
 
         validate do
-          if send(attacher).present?
-            send(attacher).valid?
-            errors = send(attacher).errors
-            errors.each do |error|
-              self.errors.add(name, *error)
-            end
+          next if !(attacher = send(attacher_method)).present? || attacher.valid?
+
+          attacher.errors.each do |error_data|
+            error_type, error_options = Array(error_data) << {}
+            errors.add(name, error_type, **error_options)
           end
         end
+
+        before_save { send(attacher_method).store! }
+
+        after_destroy { send(attacher_method).delete! if destroy }
 
         define_method "#{name}=" do |value|
           send("#{name}_id_will_change!") if respond_to?("#{name}_id_will_change!")
@@ -36,14 +39,6 @@ module Refile
         define_method "remote_#{name}_url=" do |value|
           send("#{name}_id_will_change!")
           super(value)
-        end
-
-        before_save do
-          send(attacher).store!
-        end
-
-        after_destroy do
-          send(attacher).delete! if destroy
         end
       end
 

@@ -39,7 +39,7 @@ describe Refile::AttachmentHelper do
   end
 
   describe "#attachment_field" do
-    subject(:field) { attachment_field("post", :document, field_options) }
+    subject(:field) { attachment_field("post", :document, **field_options) }
     let(:field_options) { { object: klass.new } }
     let(:html) { Capybara.string(field) }
     let(:expected_field_name) { "post[0][document]" }

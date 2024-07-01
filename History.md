@@ -1,4 +1,10 @@
-# master
+# 0.7.1
+
+- [ADDED] Support for Rails 6 and Rails 7 using Ruby 3
+- [FIXED] `ArgumentError` on Refile validation errors when using Rails 6 or 7
+- [FIXED] `ArgumentError` on `AttachmentHelper` methods (`attachment_field` and `attachment_cache_field`)
+
+# 0.7.0
 
 - [ADDED] Allow to keep uploaded files when the record is destroyed #362
 - [ADDED] Make Refile::FileDouble available to users #394

@@ -24,4 +24,7 @@ jobs:
     gemfile: gemfiles/Gemfile_Rails_5_2
   - rvm: 2.6
     gemfile: gemfiles/Gemfile_Rails_5_2
-
+  - rvm: 3.0
+    gemfile: gemfiles/Gemfile_Rails_6_1
+  - rvm: 3.0
+    gemfile: gemfiles/Gemfile_Rails_7_1
