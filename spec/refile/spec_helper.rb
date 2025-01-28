@@ -4,6 +4,7 @@ require "refile"
 require "refile/backend_examples"
 require "webmock/rspec"
 require "refile/file_double"
+require 'byebug'
 
 tmp_path = Dir.mktmpdir
 

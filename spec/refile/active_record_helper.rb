@@ -1,6 +1,7 @@
 require "active_record"
 
 I18n.enforce_available_locales = true
+I18n.load_path += Dir[::File.expand_path("test_app/config/locales/*.yml", ::File.dirname(__FILE__))]
 
 ActiveRecord::Base.establish_connection(
   adapter: "sqlite3",

@@ -28,7 +28,7 @@ class NormalPostsController < ApplicationController
   def update
     @post = Post.find(params[:id])
 
-    if @post.update_attributes(post_params)
+    if @post.update(post_params)
       redirect_to [:normal, @post]
     else
       render :edit

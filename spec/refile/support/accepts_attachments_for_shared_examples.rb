@@ -18,7 +18,7 @@ RSpec.shared_examples "accepts_attachments_for" do
         Refile::FileDouble.new("world", content_type: "image/jpeg")
       ]
       post.save!
-      post.update_attributes! documents_files: [
+      post.update! documents_files: [
         Refile::FileDouble.new("foo", content_type: "image/jpeg")
       ]
 
@@ -118,7 +118,7 @@ RSpec.shared_examples "accepts_attachments_for" do
           Refile::FileDouble.new("world", content_type: "image/jpeg")
         ]
         post.save!
-        post.update_attributes! documents_files: [
+        post.update! documents_files: [
           Refile::FileDouble.new("foo", content_type: "image/jpeg")
         ]
 
@@ -134,7 +134,7 @@ RSpec.shared_examples "accepts_attachments_for" do
           Refile::FileDouble.new("world", content_type: "image/jpeg")
         ]
         post.save!
-        post.update_attributes! documents_files: [
+        post.update! documents_files: [
           [{
             id: Refile.cache.upload(Refile::FileDouble.new("hello world")).id,
             filename: "some.jpg",

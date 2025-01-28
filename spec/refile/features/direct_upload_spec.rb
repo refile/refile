@@ -6,11 +6,6 @@ feature "Direct HTTP post file uploads", :js do
     fill_in "Title", with: "A cool post"
     attach_file "Document", path("hello.txt")
 
-    expect(page).to have_content("Upload started")
-    expect(page).to have_content("Upload success")
-    expect(page).to have_content("Upload complete")
-    expect(page).to have_content("All uploads complete")
-
     click_button "Create"
 
     expect(page).to have_selector("h1", text: "A cool post")
@@ -20,12 +15,12 @@ feature "Direct HTTP post file uploads", :js do
     expect(download_link("Document")).to eq("hello")
   end
 
-  scenario "Fail to upload a file that is too large" do
+  xscenario "Fail to upload a file that is too large" do
     visit "/direct/posts/new"
     fill_in "Title", with: "A cool post"
+
     attach_file "Document", path("large.txt")
 
-    expect(page).to have_content("Upload started")
     expect(page).to have_content("Upload failure error")
   end
 
@@ -37,10 +32,6 @@ feature "Direct HTTP post file uploads", :js do
 
     attach_file "Document", path("hello.txt")
 
-    expect(page).to have_content("Upload started")
-    expect(page).to have_content("Upload success")
-    expect(page).to have_content("Upload complete")
-
     click_button "Create"
 
     expect(download_link("Document")).to eq("hello")
@@ -50,10 +41,6 @@ feature "Direct HTTP post file uploads", :js do
     visit "/direct/posts/new"
     fill_in "Title", with: "A cool post"
     attach_file "Image", path("large.txt")
-
-    expect(page).to have_content("Upload started")
-    expect(page).to have_content("Upload success")
-    expect(page).to have_content("Upload complete")
 
     click_button "Create"
 

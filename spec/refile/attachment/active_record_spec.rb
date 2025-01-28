@@ -415,7 +415,7 @@ describe Refile::ActiveRecord::Attachment do
           user = users_class.create!
           post = klass.create!(user_id: user.id, document: Refile::FileDouble.new("foo"))
 
-          user.update_attributes!(post_attributes: { id: post.id, remove_document: true })
+          user.update!(post_attributes: { id: post.id, remove_document: true })
 
           expect(post.reload.document).to be_nil
         end
@@ -457,7 +457,7 @@ describe Refile::ActiveRecord::Attachment do
           user = users_class.create!
           post = klass.create!(user_id: user.id, document: Refile::FileDouble.new("foo"))
 
-          user.update_attributes!(posts_attributes: { id: post.id, remove_document: true })
+          user.update!(posts_attributes: { id: post.id, remove_document: true })
 
           expect(post.reload.document).to be_nil
         end

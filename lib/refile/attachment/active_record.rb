@@ -16,9 +16,11 @@ module Refile
         validate do
           if send(attacher).present?
             send(attacher).valid?
+
             errors = send(attacher).errors
-            errors.each do |error|
-              self.errors.add(name, *error)
+
+            errors.each do |error_type, error|
+              self.errors.add(name, error_type&.to_sym, **(error || {}))
             end
           end
         end

@@ -7,14 +7,18 @@ require "jquery/rails"
 
 module Refile
   class TestApp < Rails::Application
-    config.middleware.delete "ActionDispatch::Cookies"
-    config.middleware.delete "ActionDispatch::Session::CookieStore"
-    config.middleware.delete "ActionDispatch::Flash"
+    if Rails::VERSION::MAJOR < 7
+      config.middleware.delete "ActionDispatch::Cookies"
+      config.middleware.delete "ActionDispatch::Session::CookieStore"
+      config.middleware.delete "ActionDispatch::Flash"
+    end
+
     config.active_support.deprecation = :log
     config.eager_load = false
     config.action_dispatch.show_exceptions = false
     config.consider_all_requests_local = true
     config.root = ::File.expand_path("test_app", ::File.dirname(__FILE__))
+    config.i18n.enforce_available_locales = true
   end
 
   Rails.backtrace_cleaner.remove_silencers!
@@ -27,7 +31,6 @@ require "capybara/rails"
 require "capybara/rspec"
 require "refile/spec_helper"
 require "refile/active_record_helper"
-require "capybara/poltergeist"
 
 if ENV["SAUCE_BROWSER"]
   Capybara.register_driver :selenium do |app|
@@ -37,6 +40,16 @@ if ENV["SAUCE_BROWSER"]
     driver.browser.file_detector = ->(args) { args.first if File.exist?(args.first) }
     driver
   end
+end
+
+require 'capybara/poltergeist'
+require 'phantomjs'
+
+Phantomjs.path # Force install on require
+
+Capybara.register_driver :poltergeist do |app|
+  driver = Capybara::Poltergeist::Driver.new(app, :phantomjs => Phantomjs.path)
+  driver
 end
 
 Capybara.javascript_driver = :poltergeist
